@@ -1,4 +1,3 @@
-
 <div class="content">
     <div class="container-fluid">
         @if ($mode=='add')
@@ -32,20 +31,15 @@
                                         </div>
                                     @enderror
                                 </div>
-                                
                                 <div class="mb-3 form-group form-check-primary form-check">
-
                                     <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
-    
-                                    <label class="form-check-label" for="class_status">Inactive Academic Year</label>
+                                    <label class="form-check-label" for="class_status">In-Active Academic Year</label>
                                     @error('status')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
-                                
-                                
                                 <button type="submit"  class="btn btn-primary waves-effect waves-light">Save Data</button>
                             </form>
                         </div>
@@ -83,20 +77,15 @@
                                         </div>
                                     @enderror
                                 </div>
-                                
                                 <div class="mb-3 form-group form-check-primary form-check">
-
                                     <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ $status==1?'checked':''; }} id="class_status"  wire:model="status" >
-    
-                                    <label class="form-check-label" for="class_status">Inactive Academic Year</label>
+                                    <label class="form-check-label" for="class_status">In-Active Academic Year</label>
                                     @error('status')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
-                                
-                                
                                 <button type="submit"  class="btn btn-primary waves-effect waves-light">Update Data</button>
                             </form>
                         </div>
@@ -139,7 +128,7 @@
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->year }}</td>       
-                                                <td>{{  $item->status==0?'Active':'Inactive'; }}</td> 
+                                                <td>{{  $item->status==0?'Active':'In-Active'; }}</td> 
                                                 <td>
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
                                                     <a wire:loading.attr="disabled" wire:click="delete({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>

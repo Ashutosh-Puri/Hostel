@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('classes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('stream');
+            $table->string('type');
             $table->tinyInteger('status')->nullable()->default('0')->comment('0-active ,1-inactive');
             $table->timestamps();
         });

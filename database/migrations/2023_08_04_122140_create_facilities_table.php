@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('facilities', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('room_id');
             $table->string('name');
             $table->tinyInteger('status')->nullable()->default('0')->comment('0-available ,1-unavailable');
             $table->timestamps();
+            $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
         });
     }
 
