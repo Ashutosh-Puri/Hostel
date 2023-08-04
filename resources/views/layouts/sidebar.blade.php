@@ -11,7 +11,7 @@
                 </li>
                     <li class="menu-title mt-2">Menu</li>
                   
-                    {{-- {{ route('all_class') }} --}}
+                   
                         <li>
                             <a href="" > 
                                 <i class="far fa-building"></i>
