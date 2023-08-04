@@ -42,4 +42,8 @@ class Student extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+
+
 }

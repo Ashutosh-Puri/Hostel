@@ -2,21 +2,19 @@
 
 namespace App\Models;
 
-
-use App\Models\Room;
+use App\Models\AcademicYear;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Facility extends Model
+class Fine extends Model
 {
     use HasFactory;
-
     protected $guarded=[];
 
 
-    public function Room()
-    {
-        return $this->belongsTo(Room::class, 'room_id', 'id');
-    }
 
+    public function AcademicYear()
+    {
+        return $this->belongsTo(AcademicYear::class, 'academic_year_id', 'id');
+    }
 }

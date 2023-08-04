@@ -121,7 +121,7 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Name</th>
+                                            <th>Building Name</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
