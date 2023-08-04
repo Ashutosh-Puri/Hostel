@@ -1,18 +1,3 @@
-@extends('layouts.admin')
-
-@section('admin')
-
-<h6>
-
-    Admin Dashboard  {{ auth()->user()->name }}
-
-
-   
-</h6>
-
-@php
-    $mode=''; $class=[];
-@endphp
 
 <div class="content">
     <div class="container-fluid">
@@ -123,6 +108,9 @@
                 @section('title')
                     All Classes
                 @endsection
+                @section('scripts')
+              
+                @endsection
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box">
@@ -140,7 +128,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="header-title"></h4>
-                                <table id="data-table" class="table table-striped dt-responsive nowrap w-100">
+                                <table id="data-table" class=" table table-striped dt-responsive nowrap w-100">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -168,14 +156,11 @@
                     </div>
                 </div>
             </div>
+           
         @endif
     </div>
+   
 </div>
 
 
-@endsection
 
-@section('scripts')
-
-
-@endsection

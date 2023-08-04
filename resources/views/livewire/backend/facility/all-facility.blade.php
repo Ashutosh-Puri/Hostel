@@ -1,24 +1,9 @@
-@extends('layouts.admin')
-
-@section('admin')
-
-<h6>
-
-    Admin Dashboard  {{ auth()->user()->name }}
-
-
-   
-</h6>
-
-@php
-    $mode=''; $class=[];
-@endphp
 
 <div class="content">
     <div class="container-fluid">
         @if ($mode=='add')
             @section('title')
-                Add Class
+                Add Facility
             @endsection
             <div class="row">
                 <div class="col-12">
@@ -28,7 +13,7 @@
                                 Back<span class="btn-label-right"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
                         </div>
-                        <h4 class="page-title">Add Class</h4>
+                        <h4 class="page-title">Add Facility</h4>
                     </div>
                 </div>
             </div>
@@ -39,7 +24,7 @@
                             <form  wire:submit.prevent="save" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="mb-3 form-group">
-                                    <label for="name" class="form-label">Class Name</label>
+                                    <label for="name" class="form-label">Facility Name</label>
                                     <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
                                     @error('name')
                                         <div class="invalid-feedback">
@@ -52,7 +37,7 @@
 
                                     <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
     
-                                    <label class="form-check-label" for="class_status">Inactive Class</label>
+                                    <label class="form-check-label" for="class_status">Inactive Facility</label>
                                     @error('status')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -69,7 +54,7 @@
             </div>
         @elseif($mode=='edit')
             @section('title')
-                Edit Class
+                Edit Facility
             @endsection
             <div class="row">
                 <div class="col-12">
@@ -79,7 +64,7 @@
                                 Back<span class="btn-label-right"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
                         </div>
-                        <h4 class="page-title">Edit Class</h4>
+                        <h4 class="page-title">Edit Facility</h4>
                     </div>
                 </div>
             </div>
@@ -90,7 +75,7 @@
                             <form  wire:submit.prevent="update({{ isset($C_id)?$C_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="mb-3 form-group">
-                                    <label for="name" class="form-label">Class Name</label>
+                                    <label for="name" class="form-label">Facility Name</label>
                                     <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ $name }}" id="name" placeholder="Enter Name">
                                     @error('name')
                                         <div class="invalid-feedback">
@@ -103,7 +88,7 @@
 
                                     <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ $status==1?'checked':''; }} id="class_status"  wire:model="status" >
     
-                                    <label class="form-check-label" for="class_status">Inactive Class</label>
+                                    <label class="form-check-label" for="class_status">Inactive Facility</label>
                                     @error('status')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -121,17 +106,17 @@
         @else
             <div>
                 @section('title')
-                    All Classes
+                    All Facilityes
                 @endsection
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box">
                             <div class="page-title-right">
                                 <a wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
-                                    Add Class<span class="btn-label-right"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
+                                    Add Facility<span class="btn-label-right"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
                                 </a>
                             </div>
-                            <h4 class="page-title">Data Classes</h4>
+                            <h4 class="page-title">Data Facilityes</h4>
                         </div>
                     </div>
                 </div>
@@ -150,7 +135,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($class as $key => $item)
+                                        @foreach ($facility as $key => $item)
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->name }}</td>       
@@ -172,10 +157,3 @@
     </div>
 </div>
 
-
-@endsection
-
-@section('scripts')
-
-
-@endsection

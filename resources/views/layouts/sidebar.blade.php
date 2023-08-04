@@ -13,13 +13,13 @@
                   
                    
                         <li>
-                            <a href="" > 
+                            <a href="{{ route('all_class') }}" > 
                                 <i class="far fa-building"></i>
                                 <span> Classes </span>
                             </a>
                         </li>
 
-                        {{-- <li>
+                        <li>
                             <a href="{{ route('all_facility') }}" >
                                 <i class="far fa-building"></i>
                                 <span> Facilities </span>
@@ -37,7 +37,7 @@
                                 <i class="far fa-building"></i>
                                 <span> Buildings </span>
                             </a>
-                        </li> --}}
+                        </li>
                   
                         
                   

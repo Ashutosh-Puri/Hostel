@@ -3,6 +3,10 @@
 use App\Http\Livewire\ClassTable;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Livewire\Backend\Class\AllClass;
+use App\Http\Livewire\Backend\Building\AllBuilding;
+use App\Http\Livewire\Backend\Facility\AllFacility;
+use App\Http\Livewire\Backend\AcademicYear\AllAcademicYear;
 
 
 
@@ -35,7 +39,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
 });
 
-
+Route::get('all_class',AllClass::class)->name('all_class');
+Route::get('all_building',AllBuilding::class)->name('all_building');
+Route::get('all_academic_year',AllAcademicYear::class)->name('all_academic_year');
+Route::get('all_facility',AllFacility::class)->name('all_facility');
+// Route::get('all_class',AllClass::class)->name('all_class');
 
 
 

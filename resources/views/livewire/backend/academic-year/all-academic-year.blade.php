@@ -1,24 +1,9 @@
-@extends('layouts.admin')
-
-@section('admin')
-
-<h6>
-
-    Admin Dashboard  {{ auth()->user()->name }}
-
-
-   
-</h6>
-
-@php
-    $mode=''; $class=[];
-@endphp
 
 <div class="content">
     <div class="container-fluid">
         @if ($mode=='add')
             @section('title')
-                Add Class
+                Add Academic Year
             @endsection
             <div class="row">
                 <div class="col-12">
@@ -28,7 +13,7 @@
                                 Back<span class="btn-label-right"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
                         </div>
-                        <h4 class="page-title">Add Class</h4>
+                        <h4 class="page-title">Add Academic Year</h4>
                     </div>
                 </div>
             </div>
@@ -39,9 +24,9 @@
                             <form  wire:submit.prevent="save" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="mb-3 form-group">
-                                    <label for="name" class="form-label">Class Name</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
-                                    @error('name')
+                                    <label for="year" class="form-label">Academic Year</label>
+                                    <input type="text" class="form-control @error('year') is-invalid @enderror" wire:model="year" value="{{ old('year') }}" id="year" placeholder="Enter Academic Year">
+                                    @error('year')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -52,7 +37,7 @@
 
                                     <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
     
-                                    <label class="form-check-label" for="class_status">Inactive Class</label>
+                                    <label class="form-check-label" for="class_status">Inactive Academic Year</label>
                                     @error('status')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -69,7 +54,7 @@
             </div>
         @elseif($mode=='edit')
             @section('title')
-                Edit Class
+                Edit Academic Year
             @endsection
             <div class="row">
                 <div class="col-12">
@@ -79,7 +64,7 @@
                                 Back<span class="btn-label-right"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
                         </div>
-                        <h4 class="page-title">Edit Class</h4>
+                        <h4 class="page-title">Edit Academic Year</h4>
                     </div>
                 </div>
             </div>
@@ -90,9 +75,9 @@
                             <form  wire:submit.prevent="update({{ isset($C_id)?$C_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="mb-3 form-group">
-                                    <label for="name" class="form-label">Class Name</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ $name }}" id="name" placeholder="Enter Name">
-                                    @error('name')
+                                    <label for="year" class="form-label">Academic Year</label>
+                                    <input type="text" class="form-control @error('year') is-invalid @enderror" wire:model="year" value="{{ $year }}" id="year" placeholder="Enter Academic Year">
+                                    @error('year')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -103,7 +88,7 @@
 
                                     <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ $status==1?'checked':''; }} id="class_status"  wire:model="status" >
     
-                                    <label class="form-check-label" for="class_status">Inactive Class</label>
+                                    <label class="form-check-label" for="class_status">Inactive Academic Year</label>
                                     @error('status')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -121,17 +106,17 @@
         @else
             <div>
                 @section('title')
-                    All Classes
+                    All Academic Years
                 @endsection
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box">
                             <div class="page-title-right">
                                 <a wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
-                                    Add Class<span class="btn-label-right"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
+                                    Add Academic Year<span class="btn-label-right"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
                                 </a>
                             </div>
-                            <h4 class="page-title">Data Classes</h4>
+                            <h4 class="page-title">Data Academic Years</h4>
                         </div>
                     </div>
                 </div>
@@ -144,16 +129,16 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Name</th>
+                                            <th>Year</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($class as $key => $item)
+                                        @foreach ($academicyear as $key => $item)
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
-                                                <td>{{ $item->name }}</td>       
+                                                <td>{{ $item->year }}</td>       
                                                 <td>{{  $item->status==0?'Active':'Inactive'; }}</td> 
                                                 <td>
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
@@ -173,9 +158,3 @@
 </div>
 
 
-@endsection
-
-@section('scripts')
-
-
-@endsection

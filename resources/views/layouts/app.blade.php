@@ -29,8 +29,6 @@
     <!-- 3 Jquery-->
     <script type="text/javascript" src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
 
-    <!-- 4 Toastr CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/toastr.css') }}"  type="text/css" >
 
 
     <!-- 5 Fontawesome CSS -->
@@ -41,6 +39,9 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+
+    <!-- data Table-->
+    <link rel="stylesheet" href="{{ asset('assets/datatable/jquery.dataTables.min.css') }}">
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -59,72 +60,52 @@
     @livewireScripts()
 
    
+     <!-- data Table-->
+     <script src="{{ asset('assets/datatable/jquery.dataTables.min.js') }}"></script>
 
-  
+     
 
     <!-- Vendor js -->
     <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
     
 
-    <!-- Toastr JS -->
-    <script type="text/javascript" src="{{ asset('assets/js/toastr.min.js') }}"></script>
-    <script>
-        toastr.options = {
-            "closeButton": true,
-            "debug": false,
-            "newestOnTop": false,
-            "progressBar": true,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        }
-
-        @if(Session::has('message'))
-
-        dd(Session::get('message'));
-            var type = "{{ Session::get('alert-type','info') }}"
-
-            switch(type){
-
-                case 'info':
-                toastr.info(" {{ json_encode(Session::get('message'));  }} ");
-                break;
-
-                case 'success':
-                toastr.success(" {{ json_encode(Session::get('message'));  }}  ");
-                break;
-
-                case 'warning':
-                toastr.warning(" {{ json_encode(Session::get('message'));  }}  ");
-                break;
-
-                case 'error':
-                toastr.error(" {{ json_encode(Session::get('message'));  }}  ");
-                break;
-            }
-
-        @endif
-
-    </script>
 
 
     <!-- Sweet Alert JS -->
     <script src="{{ asset('assets/js/sweetalert.js') }}"></script>
 
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top',
+            showConfirmButton: false,
+            showCloseButton: true,
+            timer: 5000,
+            timerProgressBar:true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        });
+    
+        window.addEventListener('alert',({detail:{type,message}})=>{
+            Toast.fire({
+                icon:type,
+                title:message
+            })
 
+           
+            let table = new DataTable('#data-table');
+            
+        })
+    </script>
 
     <!-- Template JS-->
     <script type="text/javascript" src="{{ asset('assets/js/app.min.js') }}"></script> 
-
-
+    <script>
+         let table = new DataTable('#data-table');
+    </script>
+    
     @yield('scripts')
 </body>
 </html>
