@@ -2,18 +2,18 @@
 
 namespace App\Models;
 
-use App\Models\Quota;
+use App\Models\StudentPayment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Classes extends Model
+class Admission extends Model
 {
     use HasFactory;
-
     protected $guarded = [];
 
-    public function Quotas()
+
+    public function StudentPayments()
     {
-        return $this->hasMany(Quota::class, 'class_id', 'id');
+        return $this->hasMany(StudentPayment::class, 'admission_id', 'id');
     }
 }

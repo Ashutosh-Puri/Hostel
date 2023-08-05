@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\StudentFine;
+use App\Models\StudentPayment;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class Student extends Authenticatable implements MustVerifyEmail
 {
@@ -21,6 +23,7 @@ class Student extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'status'
     ];
 
     /**
@@ -43,7 +46,15 @@ class Student extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
+    public function StudentFines()
+    {
+        return $this->hasMany(StudentFine::class, 'student_id', 'id');
+    }
 
+    public function StudentPayments()
+    {
+        return $this->hasMany(StudentPayment::class, 'student_id', 'id');
+    }
 
 
 }

@@ -58,6 +58,26 @@
                         <span> Fines </span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('all_student_fine') }}" >
+                        <i class="fas fa-money-check-alt"></i>
+                        <span>Student Fines </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('all_student_payment') }}" >
+                        <i class="fas fa-money-check-alt"></i>
+                        <span>Student Payments </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('all_quota') }}" >
+                        <i class="fas fa-money-check-alt"></i>
+                        <span>Quotas </span>
+                    </a>
+                </li>
+                
+
                   
                         
                   
