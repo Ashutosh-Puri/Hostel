@@ -4,20 +4,20 @@ namespace App\Http\Livewire\Backend\Building;
 
 use Livewire\Component;
 use App\Models\Building;
+use Illuminate\Validation\Rule;
 
 class AllBuilding extends Component
 {   
-    public $mode='', $building;
-    public $name,$status;
+    public $mode='all', $building;
+    public $name;
+    public $status;
     public $c_id;
  
-    protected $rules = [
-        'name' => ['required','string'],
-    ];
- 
-    public function updated($propertyName)
+    public function resetinput()
     {
-        $this->validateOnly($propertyName);
+        $this->name=null;
+        $this->status=null;
+        $this->c_id=null;
     }
 
     public function setmode($mode)
@@ -27,19 +27,19 @@ class AllBuilding extends Component
  
     public function save()
     {
-        $validatedData = $this->validate();
-       
+        $validatedData = $validatedData = $this->validate([
+            'name' => ['required','string', Rule::unique('buildings', 'name')],
+        ]);
         $building= new Building;
-        
         $building->name = $validatedData['name'];
         $building->status = $this->status==1?1:0;
         $building->save();
+        $this->resetinput();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Building Created Successfully!!"
         ]);
-
-        $this->setmode('');
     }
 
     public function edit($id)
@@ -48,44 +48,40 @@ class AllBuilding extends Component
         $this->C_id=$building->id;
         $this->status = $building->status;
         $this->name = $building->name;
-        
         $this->setmode('edit');
     }
 
     public function update($id)
     {   
-     
-        $validatedData = $this->validate();
+        $validatedData = $this->validate([
+            'name' => ['required','string', Rule::unique('buildings', 'name')->ignore($this->name, 'name')],
+        ]);
         $building = Building::find($id);
         $building->name = $validatedData['name'];
         $building->status = $this->status==1?1:0;
         $building->update();
-
+        $this->resetinput();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Building Updated Successfully!!"
-        ]);
-
-        $this->setmode('');
+        ]); 
     }
 
     public function delete($id)
     { 
         $building = Building::find($id);
         $building->delete();
-        
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Building Deleted Successfully!!"
         ]);
-
-        $this->setmode('');
     }
 
     public function render()
     {   
-        $this->building=Building::all();
+        $this->building=Building::latest()->get();
         return view('livewire.backend.building.all-building')->extends('layouts.admin')->section('admin');
     }
-    
 }

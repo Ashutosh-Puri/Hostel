@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('building_id');
             $table->tinyInteger('floor')->comment('0-Ground Floor ,1-First Floor ,2..');
-            $table->string('lable');
+            $table->string('label');
             $table->integer('capacity');
             $table->tinyInteger('type')->comment('2-Seated ,3-Seated ,4-Seated');
             $table->timestamps();

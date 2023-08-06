@@ -8,7 +8,7 @@
                 <div class="col-12">
                     <div class="page-title-box">
                         <div class="page-title-right">
-                            <a wire:loading.attr="disabled" wire:click="setmode('')"class="btn btn-success waves-effect waves-light">
+                            <a wire:loading.attr="disabled" wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
                                 Back<span class="btn-label-right"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
                         </div>
@@ -54,7 +54,7 @@
                 <div class="col-12">
                     <div class="page-title-box">
                         <div class="page-title-right">
-                            <a wire:loading.attr="disabled" wire:click="setmode('')"class="btn btn-success waves-effect waves-light">
+                            <a wire:loading.attr="disabled" wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
                                 Back<span class="btn-label-right"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
                         </div>
@@ -92,7 +92,7 @@
                     </div>
                 </div>
             </div>
-        @else
+        @elseif($mode=='all')
             <div>
                 @section('title')
                     All Academic Years
@@ -101,7 +101,7 @@
                     <div class="col-12">
                         <div class="page-title-box">
                             <div class="page-title-right">
-                                <a wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
+                                <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
                                     Add Academic Year<span class="btn-label-right"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
                                 </a>
                             </div>
@@ -118,7 +118,7 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Year</th>
+                                            <th>Academic Year</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -128,7 +128,13 @@
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->year }}</td>       
-                                                <td>{{  $item->status==0?'Active':'In-Active'; }}</td> 
+                                                <td>
+                                                    @if ( $item->status == '0')
+                                                        <span class="badge bg-success text-white">Active</span>
+                                                    @else
+                                                        <span class="badge bg-danger text-white">In-Active</span>
+                                                    @endif
+                                                </td> 
                                                 <td>
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
                                                     <a wire:loading.attr="disabled" wire:click="delete({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>

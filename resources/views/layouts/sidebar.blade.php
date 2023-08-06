@@ -76,6 +76,18 @@
                         <span>Quotas </span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('all_student') }}" >
+                        <i class="fas fa-money-check-alt"></i>
+                        <span>Students </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('all_student_profile') }}" >
+                        <i class="fas fa-money-check-alt"></i>
+                        <span>Student Profiles </span>
+                    </a>
+                </li>
                 
 
                   

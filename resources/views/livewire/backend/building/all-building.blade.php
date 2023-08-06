@@ -8,7 +8,7 @@
                 <div class="col-12">
                     <div class="page-title-box">
                         <div class="page-title-right">
-                            <a wire:loading.attr="disabled" wire:click="setmode('')"class="btn btn-success waves-effect waves-light">
+                            <a wire:loading.attr="disabled" wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
                                 Back<span class="btn-label-right"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
                         </div>
@@ -54,7 +54,7 @@
                 <div class="col-12">
                     <div class="page-title-box">
                         <div class="page-title-right">
-                            <a wire:loading.attr="disabled" wire:click="setmode('')"class="btn btn-success waves-effect waves-light">
+                            <a wire:loading.attr="disabled" wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
                                 Back<span class="btn-label-right"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
                         </div>
@@ -77,11 +77,8 @@
                                         </div>
                                     @enderror
                                 </div>
-                                
                                 <div class="mb-3 form-group form-check-primary form-check">
-
                                     <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ $status==1?'checked':''; }} id="class_status"  wire:model="status" >
-    
                                     <label class="form-check-label" for="class_status">In-Active Building</label>
                                     @error('status')
                                         <div class="invalid-feedback">
@@ -104,11 +101,11 @@
                     <div class="col-12">
                         <div class="page-title-box">
                             <div class="page-title-right">
-                                <a wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
+                                <a wire:loading.attr="disabled" wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
                                     Add Building<span class="btn-label-right"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
                                 </a>
                             </div>
-                            <h4 class="page-title">Data Buildinges</h4>
+                            <h4 class="page-title">Data Buildings</h4>
                         </div>
                     </div>
                 </div>
@@ -131,7 +128,13 @@
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->name }}</td>       
-                                                <td>{{  $item->status==0?'Active':'In-Active'; }}</td> 
+                                                <td>
+                                                    @if ( $item->status == '0')
+                                                        <span class="badge bg-success text-white">Active</span>
+                                                    @else
+                                                        <span class="badge bg-danger text-white">In-Active</span>
+                                                    @endif
+                                                </td> 
                                                 <td>
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
                                                     <a wire:loading.attr="disabled" wire:click="delete({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>

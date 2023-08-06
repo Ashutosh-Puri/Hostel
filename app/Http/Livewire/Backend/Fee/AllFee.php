@@ -82,7 +82,7 @@ class AllFee extends Component
 
     public function render()
     {   $this->academic_years=AcademicYear::where('status',0)->get();
-        $this->fees=Fee::all();
+        $this->fees=Fee::latest()->get();
         return view('livewire.backend.fee.all-fee')->extends('layouts.admin')->section('admin');
     }
 

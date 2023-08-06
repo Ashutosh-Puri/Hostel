@@ -4,31 +4,19 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Backend\Bed\AllBed;
 use App\Http\Livewire\Backend\Fee\AllFee;
-use App\Http\Controllers\ProfileController;
 use App\Http\Livewire\Backend\Fine\AllFine;
 use App\Http\Livewire\Backend\Room\AllRoom;
 use App\Http\Livewire\Backend\Class\AllClass;
 use App\Http\Livewire\Backend\Qutota\AllQuota;
+use App\Http\Livewire\Backend\Student\AllStudent;
 use App\Http\Livewire\Backend\Building\AllBuilding;
 use App\Http\Livewire\Backend\Facility\AllFacility;
 use App\Http\Livewire\Backend\StudentFine\AllStudentFine;
 use App\Http\Livewire\Backend\AcademicYear\AllAcademicYear;
 use App\Http\Livewire\Backend\StudentPayment\AllStudentPayment;
+use App\Http\Livewire\Backend\StudentProfile\AllStudentProfile;
 
 
-
-
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 Route::get('/', function () {
     return view('welcome');
@@ -58,6 +46,8 @@ Route::get('all_fine',AllFine::class)->name('all_fine');
 Route::get('all_student_fine', AllStudentFine::class)->name('all_student_fine');
 Route::get('all_student_payment',AllStudentPayment::class)->name('all_student_payment');
 Route::get('all_quota',AllQuota::class)->name('all_quota');
+Route::get('all_student',AllStudent::class)->name('all_student');
+Route::get('all_student_profile',AllStudentProfile::class)->name('all_student_profile');
 
 
 

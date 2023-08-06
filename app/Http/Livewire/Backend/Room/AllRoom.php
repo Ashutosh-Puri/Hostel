@@ -9,13 +9,24 @@ use Illuminate\Support\Facades\DB;
 
 class AllRoom extends Component
 {   
-    public $mode='', $rooms ,$buildings;
+    public $mode='all', $rooms ,$buildings;
     public $label;
     public $building_id;
     public $capacity;
     public $floor;
     public $type;
     public $c_id;
+
+
+    public function resetinput()
+    {
+        $this->label=null;
+        $this->building_id=null;
+        $this->capacity=null;
+        $this->floor=null;
+        $this->type=null;
+        $this->c_id=null;
+    }
  
     protected $rules = [
         'label' => ['required','string'],
@@ -45,11 +56,12 @@ class AllRoom extends Component
         $room->floor = $validatedData['floor'];
         $room->type = $validatedData['type'];
         $room->save();
+        $this->resetinput();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Room Created Successfully!!"
         ]);
-        $this->setmode('');
     }
 
     public function edit($id)
@@ -74,28 +86,29 @@ class AllRoom extends Component
         $room->floor = $validatedData['floor'];
         $room->type = $validatedData['type'];
         $room->update();
+        $this->resetinput();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Room Updated Successfully!!"
         ]);
-        $this->setmode('');
     }
 
     public function delete($id)
     { 
         $room = Room::find($id);
         $room->delete();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Room Deleted Successfully!!"
         ]);
-        $this->setmode('');
     }
 
     public function render()
     {   
         $this->rooms=Room::all();
-        $this->buildings=Building::where('status',0)->get();
+        $this->buildings=Building::where('status',0)->latest()->get();
         return view('livewire.backend.room.all-room')->extends('layouts.admin')->section('admin');
     }
 }

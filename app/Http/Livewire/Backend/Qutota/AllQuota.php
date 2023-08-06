@@ -89,7 +89,7 @@ class AllQuota extends Component
     public function render()
     {   $this->academic_years=AcademicYear::where('status',0)->get();
         $this->classes=Classes::where('status',0)->get();
-        $this->quotas=Quota::all();
+        $this->quotas=Quota::latest()->get();
         return view('livewire.backend.qutota.all-quota')->extends('layouts.admin')->section('admin');
     }
 

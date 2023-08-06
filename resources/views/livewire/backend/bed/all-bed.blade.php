@@ -140,7 +140,13 @@
                                             <tr>
                                                 <td>{{ $key+1 }}</td>                                     
                                                 <td>{{ $item->Room->label }}</td>    
-                                                <td>{{  $item->status==0?'Availabel':'Un-Availabel'; }}</td> 
+                                                <td>
+                                                    @if ( $item->status == '1')
+                                                        <span class="badge bg-success text-white">Availabel</span>
+                                                    @else
+                                                        <span class="badge bg-danger text-white">Un-Availabel</span>
+                                                    @endif
+                                                </td>
                                                 <td>
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
                                                     <a wire:loading.attr="disabled" wire:click="delete({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>

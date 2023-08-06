@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\StudentFine;
 use App\Models\StudentPayment;
+use App\Models\StudentProfile;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -23,7 +24,14 @@ class Student extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
-        'status'
+        'status',
+        'mobile',
+        'photo',
+        'member_id',
+        'prn',
+        'abc_id',
+        'eligibility_no',
+        'last_login',
     ];
 
     /**
@@ -42,6 +50,7 @@ class Student extends Authenticatable implements MustVerifyEmail
      * @var array<string, string>
      */
     protected $casts = [
+        'mobile_verified_at' => 'datetime',
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
@@ -54,6 +63,11 @@ class Student extends Authenticatable implements MustVerifyEmail
     public function StudentPayments()
     {
         return $this->hasMany(StudentPayment::class, 'student_id', 'id');
+    }
+
+    public function StudentProfile()
+    {
+        return $this->hasOne(StudentProfile::class, 'student_id', 'id');
     }
 
 

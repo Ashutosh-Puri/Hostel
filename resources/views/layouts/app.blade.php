@@ -71,6 +71,13 @@
 
 
 
+    
+
+    <!-- Template JS-->
+    <script type="text/javascript" src="{{ asset('assets/js/app.min.js') }}"></script> 
+    <script>
+         let table = new DataTable('#data-table');
+    </script>
     <!-- Sweet Alert JS -->
     <script src="{{ asset('assets/js/sweetalert.js') }}"></script>
 
@@ -80,7 +87,7 @@
             position: 'top',
             showConfirmButton: false,
             showCloseButton: true,
-            timer: 5000,
+            timer: 3000,
             timerProgressBar:true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -98,14 +105,8 @@
             let table = new DataTable('#data-table');
             
         })
-    </script>
 
-    <!-- Template JS-->
-    <script type="text/javascript" src="{{ asset('assets/js/app.min.js') }}"></script> 
-    <script>
-         let table = new DataTable('#data-table');
     </script>
-    
     @yield('scripts')
 </body>
 </html>

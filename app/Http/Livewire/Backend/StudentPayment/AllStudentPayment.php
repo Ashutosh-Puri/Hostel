@@ -91,7 +91,7 @@ class AllStudentPayment extends Component
     {   $this->academic_years=AcademicYear::where('status',0)->get();
         $this->students=Student::where('status',0)->get();
         $this->admissions=Admission::all();
-        $this->student_payments=StudentPayment::all();
+        $this->student_payments=StudentPayment::latest()->get();
         return view('livewire.backend.student-payment.all-student-payment')->extends('layouts.admin')->section('admin');
     }
 

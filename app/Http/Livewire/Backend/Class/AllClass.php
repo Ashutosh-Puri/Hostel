@@ -4,25 +4,24 @@ namespace App\Http\Livewire\Backend\Class;
 
 use App\Models\Classes;
 use Livewire\Component;
+use Illuminate\Validation\Rule;
 
 class AllClass extends Component
 {    
-    public $mode='', $class;
+    public $mode='all', $class;
     public $name;
     public $stream;
     public $type;
     public $status;
     public $c_id;
- 
-    protected $rules = [
-        'name' => ['required','string'],
-        'stream' => ['required','string'],
-        'type' => ['required','string'],
-    ];
- 
-    public function updated($propertyName)
+
+    public function resetinput()
     {
-        $this->validateOnly($propertyName);
+        $this->name=null;
+        $this->stream=null;
+        $this->type=null;
+        $this->status=null;
+        $this->c_id=null;
     }
 
     public function setmode($mode)
@@ -32,19 +31,23 @@ class AllClass extends Component
  
     public function save()
     {
-        $validatedData = $this->validate();
-       
+        $validatedData = $this->validate([
+            'name' => ['required','string',Rule::unique('classes', 'name')],
+            'stream' => ['required','string'],
+            'type' => ['required','string'],
+        ]);
         $class= new Classes;
         $class->name = $validatedData['name'];
         $class->stream = $validatedData['stream'];
         $class->type = $validatedData['type'];
         $class->status = $this->status==1?1:0;
         $class->save();
+        $this->resetinput();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Class Created Successfully!!"
         ]);
-        $this->setmode('');
     }
 
     public function edit($id)
@@ -60,34 +63,39 @@ class AllClass extends Component
 
     public function update($id)
     {   
-        $validatedData = $this->validate();
+        $validatedData = $this->validate([
+            'name' => ['required','string', Rule::unique('classes', 'name')->ignore($this->name, 'name')],
+            'stream' => ['required','string'],
+            'type' => ['required','string'],
+        ]);
         $class = Classes::find($id);
         $class->name = $validatedData['name'];
         $class->stream = $validatedData['stream'];
         $class->type = $validatedData['type'];
         $class->status = $this->status==1?'1':'0';
         $class->update();
+        $this->resetinput();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Class Updated Successfully!!"
         ]);
-        $this->setmode('');
     }
 
     public function delete($id)
     { 
         $class = Classes::find($id);
         $class->delete();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Class Deleted Successfully!!"
         ]);
-        $this->setmode('');
     }
 
     public function render()
     {   
-        $this->class=Classes::all();
+        $this->class=Classes::latest()->get();
         return view('livewire.backend.class.all-class')->extends('layouts.admin')->section('admin');
     }
 }

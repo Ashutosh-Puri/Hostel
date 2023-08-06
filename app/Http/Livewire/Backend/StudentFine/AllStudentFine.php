@@ -96,7 +96,7 @@ class AllStudentFine extends Component
     {   $this->academic_years=AcademicYear::where('status',0)->get();
         $this->students=Student::where('status',0)->get();
         $this->fines=Fine::where('status',0)->get();
-        $this->student_fines=StudentFine::all();
+        $this->student_fines=StudentFine::latest()->get();
         return view('livewire.backend.student-fine.all-student-fine')->extends('layouts.admin')->section('admin');
     }
 

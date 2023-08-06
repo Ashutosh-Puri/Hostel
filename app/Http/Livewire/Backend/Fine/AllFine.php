@@ -87,7 +87,7 @@ class AllFine extends Component
 
     public function render()
     {   $this->academic_years=AcademicYear::where('status',0)->get();
-        $this->fines=Fine::all();
+        $this->fines=Fine::latest()->get();
         return view('livewire.backend.fine.all-fine')->extends('layouts.admin')->section('admin');
     }
 

@@ -82,7 +82,7 @@ class AllFacility extends Component
 
     public function render()
     {   $this->rooms=Room::all();
-        $this->facility=Facility::all();
+        $this->facility=Facility::latest()->get();
         return view('livewire.backend.facility.all-facility')->extends('layouts.admin')->section('admin');
     }
    

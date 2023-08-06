@@ -77,7 +77,7 @@ class AllBed extends Component
 
     public function render()
     {   $this->rooms=Room::all();
-        $this->beds=Bed::all();
+        $this->beds=Bed::latest()->get();
         return view('livewire.backend.bed.all-bed')->extends('layouts.admin')->section('admin');
     }
 
