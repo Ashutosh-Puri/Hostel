@@ -97,10 +97,6 @@ class AllClass extends Component
             'message'=>"Class Deleted Successfully!!"
         ]);
     }
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
 
     public function render()
     {   

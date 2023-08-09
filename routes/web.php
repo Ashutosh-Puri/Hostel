@@ -12,10 +12,13 @@ use App\Http\Livewire\Backend\Admin\AllAdmin;
 use App\Http\Livewire\Backend\Class\AllClass;
 use App\Http\Livewire\Backend\Qutota\AllQuota;
 use App\Http\Livewire\Backend\Admin\AdminLogin;
+use App\Http\Livewire\Backend\Hostel\AllHostel;
+use App\Http\Livewire\Backend\College\AllCollege;
 use App\Http\Livewire\Backend\Student\AllStudent;
 use App\Http\Livewire\Backend\Admin\AdminDashboard;
 use App\Http\Livewire\Backend\Building\AllBuilding;
 use App\Http\Livewire\Backend\Facility\AllFacility;
+use App\Http\Livewire\Backend\Admission\AllAdmission;
 use App\Http\Livewire\Backend\StudentFine\AllStudentFine;
 use App\Http\Livewire\Backend\AcademicYear\AllAcademicYear;
 use App\Http\Livewire\Backend\StudentPayment\AllStudentPayment;
@@ -72,6 +75,12 @@ Route::middleware(['auth:admin','check.role:superadmin'])->group(function () {
     // All Classes
     Route::get('all_class',AllClass::class)->name('all_class');
 
+    // All College
+    Route::get('all_college',AllCollege::class)->name('all_college');
+
+    // All Hostel
+    Route::get('all_hostel',AllHostel::class)->name('all_hostel');
+
     // All Building
     Route::get('all_building',AllBuilding::class)->name('all_building');
 
@@ -113,6 +122,9 @@ Route::middleware(['auth:admin','check.role:superadmin'])->group(function () {
 
     // All Role
     Route::get('all_role',AllRole::class)->name('all_role');
+
+    // All Admission
+    Route::get('all_admission',AllAdmission::class)->name('all_admission');
 
 
 

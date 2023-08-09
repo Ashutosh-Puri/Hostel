@@ -112,11 +112,6 @@ class AllRoom extends Component
         ]);
     }
 
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
     public function render()
     {   
         $buildings=Building::where('status',0)->orderBy('name', 'ASC')->get();

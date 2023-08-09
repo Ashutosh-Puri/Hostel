@@ -90,10 +90,6 @@ class AllAcademicYear extends Component
             'message'=>"Academic Year Deleted Successfully!!"
         ]);
     }
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
 
     public function render()
     {   

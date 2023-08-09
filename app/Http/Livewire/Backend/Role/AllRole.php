@@ -84,11 +84,6 @@ class AllRole extends Component
         ]);
     }
 
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
     public function render()
     {   
         $roles=Role::where('role', 'like', '%'.$this->search.'%')->orderBy('role', 'ASC')->paginate($this->per_page);

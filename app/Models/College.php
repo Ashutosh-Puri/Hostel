@@ -2,17 +2,18 @@
 
 namespace App\Models;
 
-use App\Models\Admin;
+use App\Models\Hostel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Role extends Model
+class College extends Model
 {
     use HasFactory;
     protected $guarded=[];
 
-    public function Admins()
+
+    public function Hostels()
     {
-        return $this->hasMany(Admin::class, 'role_id', 'id');
+        return $this->hasMany(Hostel::class, 'hostel_id', 'id');
     }
 }

@@ -2,13 +2,13 @@
     <div class="container-fluid">
         @if ($mode=='add')
             @section('title')
-                Add Fee
+                Add College
             @endsection
             <div class="row">
                 <div class="col-12">
                     <div class="bg-success">
                         <div class="float-start pt-2 px-2">
-                            <h2>Add Fee</h2>
+                            <h2>Add College</h2>
                         </div>
                         <div class="float-end">
                             <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
@@ -25,32 +25,9 @@
                             <form  wire:submit.prevent="save" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="mb-3 form-group">
-                                    <label for="academic_year_id" class="form-label">Select Academic Year</label>
-                                    <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
-                                        <option value="" hidden>Select Academic Year</option>
-                                        @foreach ($academic_years as $item1)
-                                            <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
-                                        @endforeach
-                                    </select>
-                                    @error('academic_year_id')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="type" class="form-label">Seat Type</label>
-                                    <input type="number" min="1" class="form-control @error('type') is-invalid @enderror" wire:model="type" value="{{ old('type') }}" id="type" placeholder="Enter Fee Type Ex.( 2-Seated , 3-Seated )">
-                                    @error('type')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="amount" class="form-label">Amount</label>
-                                    <input type="number" min="0" class="form-control @error('amount') is-invalid @enderror" wire:model="amount" value="{{ old('amount') }}" id="amount" placeholder="Enter Fee Type Ex.( 2-Seated , 3-Seated )">
-                                    @error('amount')
+                                    <label for="name" class="form-label">College Name</label>
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
+                                    @error('name')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -58,7 +35,7 @@
                                 </div>
                                 <div class="mb-3 form-group ">
                                     <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
-                                    <label class="form-check-label m-1" for="class_status">In-Active Fee</label>
+                                    <label class="form-check-label m-1" for="class_status">In-Active College</label>
                                     @error('status')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -73,13 +50,13 @@
             </div>
         @elseif($mode=='edit')
             @section('title')
-                Edit Fee
+                Edit College
             @endsection
             <div class="row">
                 <div class="col-12">
                     <div class="bg-success">
                         <div class="float-start pt-2 px-2">
-                            <h2>Edit Fee</h2>
+                            <h2>Edit College</h2>
                         </div>
                         <div class="float-end">
                             <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
@@ -96,32 +73,9 @@
                             <form  wire:submit.prevent="update({{ isset($C_id)?$C_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="mb-3 form-group">
-                                    <label for="academic_year_id" class="form-label">Select Academic Year</label>
-                                    <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
-                                        <option value="" hidden>Select Academic Year</option>
-                                        @foreach ($academic_years as $item1)
-                                            <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
-                                        @endforeach
-                                    </select>
-                                    @error('academic_year_id')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="type" class="form-label">Seat Type</label>
-                                    <input type="number" min="1" class="form-control @error('type') is-invalid @enderror" wire:model="type" value="{{ $type }}" id="type" placeholder="Enter Fee Type Ex.( 2-Seated , 3-Seated )">
-                                    @error('type')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="amount" class="form-label">Amount</label>
-                                    <input type="number" min="0" class="form-control @error('amount') is-invalid @enderror" wire:model="amount" value="{{ old('amount') }}" id="amount" placeholder="Enter Fee Type Ex.( 2-Seated , 3-Seated )">
-                                    @error('amount')
+                                    <label for="name" class="form-label">College Name</label>
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ $name }}" id="name" placeholder="Enter Name">
+                                    @error('name')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -129,7 +83,7 @@
                                 </div>
                                 <div class="mb-3 form-group ">
                                     <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ $status==1?'checked':''; }} id="class_status"  wire:model="status" >
-                                    <label class="form-check-label m-1" for="class_status">In-Active Fee</label>
+                                    <label class="form-check-label m-1" for="class_status">In-Active College</label>
                                     @error('status')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -145,17 +99,17 @@
         @elseif($mode="all")
             <div>
                 @section('title')
-                    All Fees
+                    All Colleges
                 @endsection
                 <div class="row">
                     <div class="col-12">
                         <div class="bg-success">
                             <div class="float-start pt-2 px-2">
-                                <h2>Data Fees</h2>
+                                <h2>Data Colleges</h2>
                             </div>
                             <div class="float-end">
                                 <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
-                                    Add Fee<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
+                                    Add College<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
                                 </a>
                             </div>
                         </div>
@@ -183,7 +137,7 @@
                                                     <label class="w-100 p-1  text-sm-center">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input class="w-100" wire:model="search" type="search" placeholder="Academic Year">
+                                                <input class="w-100" wire:model="search" type="search" placeholder="College Name">
                                             </div>
                                         </span>
                                     </span>
@@ -194,27 +148,23 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Academic Year</th>
-                                            <th>Seat Type</th>
-                                            <th>Amount</th>
+                                            <th>College Name</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($fees as $key => $item)
+                                        @foreach ($colleges as $key => $item)
                                             <tr>
-                                                <td>{{ $key+1 }}</td>                                     
-                                                <td>{{ $item->AcademicYear->year }}</td>
-                                                <td>{{ $item->type }} Seated</td>     
-                                                <td>{{ $item->amount }}</td>   
+                                                <td>{{ $key+1 }}</td>
+                                                <td>{{ $item->name }}</td>       
                                                 <td>
                                                     @if ( $item->status == '0')
                                                         <span class="badge bg-success text-white">Active</span>
                                                     @else
                                                         <span class="badge bg-danger text-white">In-Active</span>
                                                     @endif
-                                                </td>
+                                                </td> 
                                                 <td>
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
                                                     <a wire:loading.attr="disabled" wire:click="delete({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
@@ -224,7 +174,7 @@
                                     </tbody>
                                 </table>
                                 <div class="mt-4">
-                                    {{ $fees->links('pagination::bootstrap-5') }}
+                                    {{ $colleges->links('pagination::bootstrap-5') }}
                                 </div>
                             </div>
                         </div>

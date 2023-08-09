@@ -17,6 +17,7 @@ class AllFee extends Component
     public $type;
     public $academic_year_id;
     public $status;
+    public $amount;
     public $c_id;
 
     public function resetinput()
@@ -25,12 +26,14 @@ class AllFee extends Component
         $this->academic_year_id=null;
         $this->type=null;
         $this->status=null;
+        $this->amount=null;
         $this->c_id=null;
     }
  
     protected $rules = [
         'type' => ['required','integer'],
         'academic_year_id' => ['required','integer'],
+        'amount' => ['required','integer'],
     ];
  
     public function updated($propertyName)
@@ -49,6 +52,7 @@ class AllFee extends Component
         $fee= new Fee;
         $fee->academic_year_id = $validatedData['academic_year_id'];
         $fee->type = $validatedData['type'];
+        $fee->amount = $validatedData['amount'];
         $fee->status = $this->status==1?1:0;
         $fee->save();
         $this->resetinput();
@@ -66,6 +70,7 @@ class AllFee extends Component
         $this->academic_year_id=$fee->academic_year_id;
         $this->type = $fee->type;
         $this->status = $fee->status;
+        $this->amount = $fee->amount;
         $this->setmode('edit');
     }
 
@@ -75,6 +80,7 @@ class AllFee extends Component
         $fee = Fee::find($id);
         $fee->academic_year_id = $validatedData['academic_year_id'];
         $fee->type = $validatedData['type'];
+        $fee->amount = $validatedData['amount'];
         $fee->status = $this->status==1?'1':'0';
         $fee->update();
         $this->resetinput();
@@ -97,10 +103,6 @@ class AllFee extends Component
         ]);
     }
 
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }  
 
     public function render()
     {   

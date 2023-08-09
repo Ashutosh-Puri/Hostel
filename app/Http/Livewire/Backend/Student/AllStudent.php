@@ -157,11 +157,6 @@ class AllStudent extends Component
         ]);
     }
 
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
     public function render()
     {   
         $students=Student::where('name', 'like', '%'.$this->search.'%')->orderBy('name', 'ASC')->paginate($this->per_page);

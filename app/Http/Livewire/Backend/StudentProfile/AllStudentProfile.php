@@ -166,11 +166,6 @@ class AllStudentProfile extends Component
         ]);
     }
 
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
     public function render()
     {   
         $students = Student::where('status', 0)->orderBy('name', 'ASC') ->get();

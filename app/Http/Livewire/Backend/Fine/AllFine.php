@@ -104,12 +104,6 @@ class AllFine extends Component
         ]);
     }
 
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }  
-
-
     public function render()
     {   
         $academic_years=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();

@@ -55,6 +55,6 @@ class AdminLogin extends Component
     
     public function render()
     {
-        return view('livewire.backend.admin.admin-login')->extends('layouts.student')->section('student');
+        return view('livewire.backend.admin.admin-login')->extends('layouts.guest')->section('guest');
     }
 }

@@ -95,11 +95,6 @@ class AllFacility extends Component
         ]);
     }
 
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }  
-
     public function render()
     {   
         $rooms=Room::orderBy('floor', 'ASC')->get();

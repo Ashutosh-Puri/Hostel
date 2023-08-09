@@ -25,6 +25,20 @@
                             <form  wire:submit.prevent="save" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="mb-3 form-group">
+                                    <label for="hostel_id" class="form-label">Select Hostel</label>
+                                    <select class="form-select @error('hostel_id') is-invalid @enderror" id="hostel_id" wire:model="hostel_id" >
+                                        <option hidden value="" >Select Hostel</option>
+                                        @foreach ($hostels as $item1)
+                                            <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
+                                        @endforeach
+                                    </select>
+                                    @error('hostel_id')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 form-group">
                                     <label for="name" class="form-label">Building Name</label>
                                     <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
                                     @error('name')
@@ -72,6 +86,20 @@
                         <div class="card-body">
                             <form  wire:submit.prevent="update({{ isset($C_id)?$C_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
+                                <div class="mb-3 form-group">
+                                    <label for="hostel_id" class="form-label">Select Hostel</label>
+                                    <select class="form-select @error('hostel_id') is-invalid @enderror" id="hostel_id" wire:model="hostel_id" >
+                                        <option hidden value="" >Select Hostel</option>
+                                        @foreach ($hostels as $item1)
+                                            <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
+                                        @endforeach
+                                    </select>
+                                    @error('hostel_id')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
                                 <div class="mb-3 form-group">
                                     <label for="name" class="form-label">Building Name</label>
                                     <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ $name }}" id="name" placeholder="Enter Name">
@@ -131,13 +159,16 @@
                                     <label class=" col-4 col-md-1  py-1  ">Records</label>
                                     <span class="col-12 col-md-9 p-0">
                                         <span class="row">
-                                            <div class="col-12 col-md-6 ">
+                                            <div class="col-12 col-md-3 ">
                                             </div>
                                             <div class="col-12 col-md-3 ">
                                                     <label class="w-100 p-1  text-sm-center">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input class="w-100" wire:model="search" type="search" placeholder="Building Name">
+                                                <input class="w-100" wire:model="hostel_name" type="search" placeholder="Hostel Name">
+                                            </div>
+                                            <div class="col-12 col-md-3">
+                                                <input class="w-100" wire:model="building_name" type="search" placeholder="Building Name">
                                             </div>
                                         </span>
                                     </span>
@@ -148,6 +179,7 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
+                                            <th>Hostel Name</th>
                                             <th>Building Name</th>
                                             <th>Status</th>
                                             <th>Action</th>
@@ -157,6 +189,7 @@
                                         @foreach ($building as $key => $item)
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
+                                                <td>{{ $item->Hostel->name}}</td>  
                                                 <td>{{ $item->name }}</td>       
                                                 <td>
                                                     @if ( $item->status == '0')

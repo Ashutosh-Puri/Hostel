@@ -142,11 +142,6 @@ class AllAdmin extends Component
         ]);
     }
     
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
     public function render()
     {   
         $roles=Role::where('status',0)->orderBy('role', 'ASC')->get();

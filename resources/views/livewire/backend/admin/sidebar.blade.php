@@ -1,16 +1,20 @@
-  <!-- Sidebar Start -->
+<div>
+      <!-- Sidebar Start -->
+      
   <nav class=" sidebar-bg text-white sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
+      <li class="nav-item nav-category">Livewire Sidebar</li>
       <li class="nav-item nav-category">Navigation</li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.dashboard') }}">
+      {{-- <li class="nav-item">
+        <a class="nav-link">
           <span class="icon-bg"><i class="mdi mdi-view-dashboard-outline menu-icon"></i></span>
           <span class="menu-title">Dashboard</span>
         </a>
-      </li>
+      </li> --}}
       <li class="nav-item nav-category">Main</li>
       <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_role') }}">
+        <button wire:click="all_role">All role</button>
+        <a class="nav-link" wire:click="$emit('all_role')">
           <span class="icon-bg"><i class="mdi mdi-account-key menu-icon"></i></span>
           <span class="menu-title">Role's</span>
         </a>
@@ -43,18 +47,6 @@
         <a class="nav-link" href="{{ route('all_class') }}">
           <span class="icon-bg"><i class="mdi mdi-calendar-today menu-icon"></i></span>
           <span class="menu-title">Class's</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_college') }}">
-          <span class="icon-bg"><i class="mdi mdi-hospital-building menu-icon"></i></span>
-          <span class="menu-title">College's</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_hostel') }}">
-          <span class="icon-bg"><i class="mdi mdi-hospital-building menu-icon"></i></span>
-          <span class="menu-title">Hostel's</span>
         </a>
       </li>
       <li class="nav-item">
@@ -109,12 +101,6 @@
         <a class="nav-link" href="{{ route('all_quota') }}">
           <span class="icon-bg"><i class="mdi mdi-codepen menu-icon"></i></span>
           <span class="menu-title">Quota's</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_admission') }}">
-          <span class="icon-bg"><i class="mdi mdi-codepen menu-icon"></i></span>
-          <span class="menu-title">Admission's</span>
         </a>
       </li>
       {{-- <li class="nav-item">
@@ -190,4 +176,5 @@
   <!-- Sidebar End -->
 
 
-         
+              
+</div>
