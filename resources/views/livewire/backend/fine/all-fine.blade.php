@@ -6,13 +6,15 @@
             @endsection
             <div class="row">
                 <div class="col-12">
-                    <div class="page-title-box">
-                        <div class="page-title-right">
-                            <a wire:loading.attr="disabled" wire:click="setmode('')"class="btn btn-success waves-effect waves-light">
-                                Back<span class="btn-label-right"><i class="mdi mdi-arrow-left-thick"></i></span>
+                    <div class="bg-success">
+                        <div class="float-start pt-2 px-2">
+                            <h2>Add Fine</h2>
+                        </div>
+                        <div class="float-end">
+                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
+                                Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
                         </div>
-                        <h4 class="page-title">Add Fine</h4>
                     </div>
                 </div>
             </div>
@@ -54,9 +56,9 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <div class="mb-3 form-group form-check-primary form-check">
+                                <div class="mb-3 form-group ">
                                     <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
-                                    <label class="form-check-label" for="class_status">In-Active Fine</label>
+                                    <label class="form-check-label m-1" for="class_status">In-Active Fine</label>
                                     @error('status')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -75,13 +77,15 @@
             @endsection
             <div class="row">
                 <div class="col-12">
-                    <div class="page-title-box">
-                        <div class="page-title-right">
-                            <a wire:loading.attr="disabled" wire:click="setmode('')"class="btn btn-success waves-effect waves-light">
-                                Back<span class="btn-label-right"><i class="mdi mdi-arrow-left-thick"></i></span>
+                    <div class="bg-success">
+                        <div class="float-start pt-2 px-2">
+                            <h2>Edit Fine</h2>
+                        </div>
+                        <div class="float-end">
+                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
+                                Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
                         </div>
-                        <h4 class="page-title">Edit Fine</h4>
                     </div>
                 </div>
             </div>
@@ -123,9 +127,9 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <div class="mb-3 form-group form-check-primary form-check">
+                                <div class="mb-3 form-group ">
                                     <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ $status==1?'checked':''; }} id="class_status"  wire:model="status" >
-                                    <label class="form-check-label" for="class_status">In-Active Fine</label>
+                                    <label class="form-check-label m-1" for="class_status">In-Active Fine</label>
                                     @error('status')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -138,34 +142,63 @@
                     </div>
                 </div>
             </div>
-        @else
+        @elseif($mode="all")
             <div>
                 @section('title')
                     All Fine
-                @endsection
+                @endsection            
                 <div class="row">
                     <div class="col-12">
-                        <div class="page-title-box">
-                            <div class="page-title-right">
-                                <a wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
-                                    Add Fine<span class="btn-label-right"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
+                        <div class="bg-success">
+                            <div class="float-start pt-2 px-2">
+                                 <h2>Data Fines</h2>
+                            </div>
+                            <div class="float-end">
+                                <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
+                                    Add Fine<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
                                 </a>
                             </div>
-                            <h4 class="page-title">Data Fines</h4>
                         </div>
-                    </div>
+                    </div> 
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-body">
-                                <h4 class="header-title"></h4>
-                                <table id="data-table" class="table table-striped dt-responsive nowrap w-100">
+                            <div class="card-header">
+                                <div class="row">
+                                    <label class=" col-4 col-md-1 py-1 ">Per Page</label>
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                        <option value="10">10</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                        <option value="500">500</option>
+                                        <option value="1000">1000</option>
+                                    </select>
+                                    <label class=" col-4 col-md-1  py-1 ">Records</label>
+                                    <span class="col-12 col-md-9 p-0">
+                                            <div class="row ">
+                                                <div class="col-12 col-md-3 ">
+                                                </div>
+                                                <div class="col-12 col-md-3 ">
+                                                    <label class="w-100 p-1  text-sm-center">Search</label>
+                                                </div>
+                                                <div class="col-12 col-md-3">
+                                                    <input class="w-100" wire:model="year" type="search" placeholder="Academic Year">
+                                                </div>
+                                                <div class="col-12 col-md-3">
+                                                    <input class="w-100"  wire:model="fine_name" type="search" placeholder="Fine Name">
+                                                </div>
+                                            </div>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-body table-responsive">
+                                <table id="data-table" class="table  dt-responsive nowrap w-100">
                                     <thead>
                                         <tr>
                                             <th>No</th>
                                             <th>Academic Year</th>
-                                            <th>Name</th>
+                                            <th>Fine Name</th>
                                             <th>Amount</th>
                                             <th>Status</th>
                                             <th>Action</th>
@@ -179,7 +212,7 @@
                                                 <td>{{ $item->name }}</td>  
                                                 <td>{{ $item->amount }}</td>       
                                                 <td>
-                                                    @if ( $item->status == '1')
+                                                    @if ( $item->status == '0')
                                                         <span class="badge bg-success text-white">Active</span>
                                                     @else
                                                         <span class="badge bg-danger text-white">In-Active</span>
@@ -193,6 +226,9 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                <div class="mt-4">
+                                    {{ $fines->links('pagination::bootstrap-5') }}
+                                </div>
                             </div>
                         </div>
                     </div>

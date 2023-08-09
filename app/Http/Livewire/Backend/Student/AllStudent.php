@@ -4,13 +4,18 @@ namespace App\Http\Livewire\Backend\Student;
 
 use App\Models\Student;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 
 class AllStudent extends Component
 {   
     use WithFileUploads;
-    public $mode='', $students ;
+    use WithPagination;
+    public $search = '';
+    public $per_page = 10;
+    public $mode='all';
     public $c_id;
     public $status;
     public $name;
@@ -18,10 +23,29 @@ class AllStudent extends Component
     public $password;
     public $mobile;
     public $photo;
+    public $photoold;
     public $member_id;
     public $prn;
     public $abc_id;
     public $eligibility_no;
+
+
+    public function resetinput()
+    {
+        $this->eligibility_no=null;
+        $this->abc_id=null;
+        $this->prn=null;
+        $this->member_id=null;
+        $this->search=null;
+        $this->photoold=null;
+        $this->photo=null;
+        $this->mobile=null;
+        $this->password=null;
+        $this->email=null;
+        $this->name=null;
+        $this->status=null;
+        $this->c_id=null;
+    }
  
     protected $rules = [
         'name' => ['required', 'string', 'max:255'],
@@ -66,11 +90,12 @@ class AllStudent extends Component
             $this->reset('photo');
         }
         $student->save();
+        $this->resetinput();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Student Created Successfully!!"
         ]);
-        $this->setmode('');
     }
 
     public function edit($id)
@@ -82,6 +107,7 @@ class AllStudent extends Component
         $this->mobile=$student->mobile;
         $this->member_id=$student->member_id;
         $this->prn=$student->prn;
+        $this->photoold=$student->photo;
         $this->abc_id=$student->abc_id;
         $this->eligibility_no=$student->eligibility_no;
         $this->status =$student->status;
@@ -94,7 +120,6 @@ class AllStudent extends Component
         $student = Student::find($id);
         $student->name = $validatedData['name'];
         $student->email= $validatedData['email'];
-        $student->password= Hash::make($validatedData['password']);
         $student->mobile= $validatedData['mobile'];
         $student->member_id= $validatedData['member_id'];
         $student->prn= $validatedData['prn'];
@@ -109,28 +134,38 @@ class AllStudent extends Component
             $this->reset('photo');
         }
         $student->update();
+        $this->resetinput();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Student Updated Successfully!!"
         ]);
-        $this->setmode('');
     }
 
     public function delete($id)
     { 
         $student = Student::find($id);
+        if($student->photo)
+        {
+            File::delete($student->photo);
+        }
         $student->delete();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Student Deleted Successfully!!"
         ]);
-        $this->setmode('');
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
     }
 
     public function render()
     {   
-        $this->students=Student::latest()->get();
-        return view('livewire.backend.student.all-student')->extends('layouts.admin')->section('admin');
+        $students=Student::where('name', 'like', '%'.$this->search.'%')->orderBy('name', 'ASC')->paginate($this->per_page);
+        return view('livewire.backend.student.all-student',compact('students'))->extends('layouts.admin')->section('admin');
     }
 
 }

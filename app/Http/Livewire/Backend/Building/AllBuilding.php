@@ -4,11 +4,16 @@ namespace App\Http\Livewire\Backend\Building;
 
 use Livewire\Component;
 use App\Models\Building;
+use Livewire\WithPagination;
 use Illuminate\Validation\Rule;
 
 class AllBuilding extends Component
 {   
-    public $mode='all', $building;
+
+    use WithPagination;
+    public $search = '';
+    public $per_page = 10;
+    public $mode='all';
     public $name;
     public $status;
     public $c_id;
@@ -18,6 +23,7 @@ class AllBuilding extends Component
         $this->name=null;
         $this->status=null;
         $this->c_id=null;
+        $this->earch =null;
     }
 
     public function setmode($mode)
@@ -78,10 +84,14 @@ class AllBuilding extends Component
             'message'=>"Building Deleted Successfully!!"
         ]);
     }
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
 
     public function render()
     {   
-        $this->building=Building::latest()->get();
-        return view('livewire.backend.building.all-building')->extends('layouts.admin')->section('admin');
+        $building=Building::where('name', 'like', '%'.$this->search.'%')->orderBy('name', 'ASC')->paginate($this->per_page);
+        return view('livewire.backend.building.all-building',compact('building'))->extends('layouts.admin')->section('admin');
     }
 }

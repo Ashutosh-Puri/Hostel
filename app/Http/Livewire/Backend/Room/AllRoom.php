@@ -5,11 +5,15 @@ namespace App\Http\Livewire\Backend\Room;
 use App\Models\Room;
 use Livewire\Component;
 use App\Models\Building;
+use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
 
 class AllRoom extends Component
 {   
-    public $mode='all', $rooms ,$buildings;
+    use WithPagination;
+    public $r = '',$b = '',$f = '';
+    public $per_page = 10;
+    public $mode='all';
     public $label;
     public $building_id;
     public $capacity;
@@ -20,6 +24,9 @@ class AllRoom extends Component
 
     public function resetinput()
     {
+        $this->r=null;
+        $this->b=null;
+        $this->f=null;
         $this->label=null;
         $this->building_id=null;
         $this->capacity=null;
@@ -105,10 +112,20 @@ class AllRoom extends Component
         ]);
     }
 
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {   
-        $this->rooms=Room::all();
-        $this->buildings=Building::where('status',0)->latest()->get();
-        return view('livewire.backend.room.all-room')->extends('layouts.admin')->section('admin');
+        $buildings=Building::where('status',0)->orderBy('name', 'ASC')->get();
+        $query =Room::orderBy('label', 'ASC');      
+        if ($this->b) {
+            $buldingIds = Building::where('status', 0)->where('name', 'like', '%' . $this->b. '%')->pluck('id');
+            $query->whereIn('building_id', $buldingIds);
+        }
+        $rooms = $query->where('floor', 'like',$this->f.'%')->where('label', 'like', '%'.$this->r.'%')->paginate($this->per_page);
+        return view('livewire.backend.room.all-room',compact('rooms','buildings'))->extends('layouts.admin')->section('admin');
     }
 }

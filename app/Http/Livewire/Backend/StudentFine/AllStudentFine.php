@@ -7,16 +7,37 @@ use App\Models\Student;
 use Livewire\Component;
 use App\Models\StudentFine;
 use App\Models\AcademicYear;
+use Livewire\WithPagination;
 
 class AllStudentFine extends Component
-{
-    public $mode='', $student_fines ,$academic_years,$fines,$students;
+{   
+
+    use WithPagination;
+    public $year = '';
+    public $fine_name = '';
+    public $student_name = '';
+    public $per_page = 10;
+    public $mode='all';
     public $amount;
     public $academic_year_id;
     public $fine_id;
     public $student_id;
     public $status;
     public $c_id;
+
+    public function resetinput()
+    {
+        $this->year =null;
+        $this->fine_name =null;
+        $this->student_name =null;
+        $this->mode=null;
+        $this->amount=null;
+        $this->academic_year_id=null;
+        $this->fine_id=null;
+        $this->student_id=null;
+        $this->status=null;
+        $this->c_id=null;
+    }
  
     protected $rules = [
         'amount' => ['required','integer'],
@@ -45,11 +66,12 @@ class AllStudentFine extends Component
         $studentfine->amount = $validatedData['amount'];
         $studentfine->status = $this->status==1?1:0;
         $studentfine->save();
+        $this->resetinput();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Student Fine Created Successfully!!"
         ]);
-        $this->setmode('');
     }
 
     public function edit($id)
@@ -74,30 +96,50 @@ class AllStudentFine extends Component
         $studentfine->amount = $validatedData['amount'];
         $studentfine->status = $this->status==1?'1':'0';
         $studentfine->update();
+        $this->resetinput();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Student Fine Updated Successfully!!"
         ]);
-        $this->setmode('');
     }
 
     public function delete($id)
     { 
         $studentfine = StudentFine::find($id);
         $studentfine->delete();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Student Fine Deleted Successfully!!"
         ]);
-        $this->setmode('');
     }
+
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    } 
 
     public function render()
-    {   $this->academic_years=AcademicYear::where('status',0)->get();
-        $this->students=Student::where('status',0)->get();
-        $this->fines=Fine::where('status',0)->get();
-        $this->student_fines=StudentFine::latest()->get();
-        return view('livewire.backend.student-fine.all-student-fine')->extends('layouts.admin')->section('admin');
+    {   
+        $academic_years=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
+        $students=Student::where('status',0)->get();
+        $fines=Fine::where('status',0)->get();
+        $query = StudentFine::orderBy('academic_year_id', 'DESC');
+        if ($this->year) {
+            $AcademicYearid = AcademicYear::where('year', 'like', '%' . $this->year . '%')->pluck('id');
+            $query->whereIn('academic_year_id', $AcademicYearid);
+        }
+        if ($this->student_name) {
+            $Studentid = Student::where('name', 'like', '%' . $this->student_name . '%')->pluck('id');
+            $query->whereIn('student_id', $Studentid);
+        }
+        if ($this->fine_name) {
+            $fineid = Fine::where('name', 'like', '%' . $this->fine_name . '%')->pluck('id');
+            $query->whereIn('fine_id', $fineid);
+        }
+        $student_fines = $query->paginate($this->per_page);
+        return view('livewire.backend.student-fine.all-student-fine',compact('academic_years','students','fines','student_fines'))->extends('layouts.admin')->section('admin');
     }
-
 }

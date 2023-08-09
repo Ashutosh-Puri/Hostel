@@ -40,6 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'students',
         ],
+
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins', // Change this to your admin provider (if different from 'users')
+        ],
     ],
 
     /*
@@ -63,6 +68,12 @@ return [
         'students' => [
             'driver' => 'eloquent',
             'model' => App\Models\Student::class,
+        ],
+
+        // Add the admin provider entry
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class, // Replace 'App\Models\Admin' with the actual model for admin authentication
         ],
 
         // 'users' => [

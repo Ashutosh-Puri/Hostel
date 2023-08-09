@@ -5,14 +5,27 @@ namespace App\Http\Livewire\Backend\Facility;
 use App\Models\Room;
 use Livewire\Component;
 use App\Models\Facility;
+use Livewire\WithPagination;
 
 class AllFacility extends Component
 {   
-    public $mode='', $facility ,$rooms;
+    use WithPagination;
+    public $search = '';
+    public $per_page = 10;
+    public $mode='all';
     public $name;
     public $room_id;
     public $status;
     public $c_id;
+
+    public function resetinput()
+    {
+        $this->search=null;
+        $this->name=null;
+        $this->room_id=null;
+        $this->status=null;
+        $this->c_id=null;
+    }
  
     protected $rules = [
         'name' => ['required','string'],
@@ -37,11 +50,12 @@ class AllFacility extends Component
         $facility->name = $validatedData['name'];
         $facility->status = $this->status==1?1:0;
         $facility->save();
+        $this->resetinput();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Facility Created Successfully!!"
         ]);
-        $this->setmode('');
     }
 
     public function edit($id)
@@ -62,28 +76,39 @@ class AllFacility extends Component
         $facility->name = $validatedData['name'];
         $facility->status = $this->status==1?'1':'0';
         $facility->update();
+        $this->resetinput();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Facility Updated Successfully!!"
         ]);
-        $this->setmode('');
     }
 
     public function delete($id)
     { 
         $facility = Facility::find($id);
         $facility->delete();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Facility Deleted Successfully!!"
         ]);
-        $this->setmode('');
     }
 
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }  
+
     public function render()
-    {   $this->rooms=Room::all();
-        $this->facility=Facility::latest()->get();
-        return view('livewire.backend.facility.all-facility')->extends('layouts.admin')->section('admin');
+    {   
+        $rooms=Room::orderBy('floor', 'ASC')->get();
+        $query = Facility::orderBy('room_id', 'ASC');
+        if ($this->search) {
+            $roomIds = Room::where('label', 'like', '%' . $this->search . '%')->pluck('id');
+            $query->whereIn('room_id', $roomIds);
+        }
+        $facility = $query->paginate($this->per_page);
+        return view('livewire.backend.facility.all-facility',compact('facility','rooms'))->extends('layouts.admin')->section('admin');
     }
-   
 }

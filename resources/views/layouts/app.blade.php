@@ -2,12 +2,8 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    
-    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-
-    <meta content="Coderthemes" name="author" />
    
     <!-- App favicon -->
     <link rel="shortcut icon" href="  ">
@@ -18,69 +14,54 @@
     <!-- Title -->
     <title>{{preg_replace('/(?<!\ )[A-Z]/', ' $0', config('app.name', 'Laravel'))  }} | @yield('title')</title>
 
-
-    <!-- 1 Bootstrap CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}"  type="text/css" >
-
-    <!-- 2 Icons -->
-    <link rel="stylesheet" href="{{ asset('assets/css/icons.min.css') }}"  type="text/css" >
-
-
-    <!-- 3 Jquery-->
-    <script type="text/javascript" src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
-
-
-
-    <!-- 5 Fontawesome CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}">
-
-    <!-- 6 Admin Dashboard CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}" type="text/css" id="app-style">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-
+    <!-- admin template -->
+    <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --><!-- admin template --> 
+    <!-- admin template -->     <link rel="stylesheet" href="{{ asset('assets/admin_template/vendors/mdi/css/materialdesignicons.min.css') }}">                                                <!-- admin template -->
+    <!-- admin template -->    {{-- <link rel="stylesheet" href="{{ asset('assets/admin_template/vendors/flag-icon-css/css/flag-icon.min.css') }}"> --}}                                     <!-- admin template -->
+    <!-- admin template -->    {{-- <link rel="stylesheet" href="{{ asset('assets/admin_template/vendors/css/vendor.bundle.base.css') }}"> --}}                                              <!-- admin template -->
+    <!-- admin template -->    {{-- <link rel="stylesheet" href="{{ asset('assets/admin_template/vendors/font-awesome/css/font-awesome.min.css') }}"> --}}                                   <!-- admin template -->
+    <!-- admin template -->    {{-- <link rel="stylesheet" href="{{ asset('assets/admin_template/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css') }}"> --}}                        <!-- admin template -->
+    <!-- admin template -->     <link rel="stylesheet" href="{{ asset('assets/admin_template/css/style.css') }}">                                                                             <!-- admin template -->                                                                                                                                                                        <!-- admin template -->
+    <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --><!-- admin template -->
+    
+    
     <!-- data Table-->
     <link rel="stylesheet" href="{{ asset('assets/datatable/jquery.dataTables.min.css') }}">
-
+   
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- Styles-->
+    @yield('styles')
 
     <!-- Livewire Styles-->
     @livewireStyles()
 </head>
 <body>
     <div id="app">
-        <main class="">
-            @yield('content')
-        </main>
+        @yield('content')
     </div>
 
     <!-- Livewire JS -->
     @livewireScripts()
 
-   
-     <!-- data Table-->
-     <script src="{{ asset('assets/datatable/jquery.dataTables.min.js') }}"></script>
-
-     
-
-    <!-- Vendor js -->
-    <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
+    <!-- admin template -->
+    <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --><!-- admin template -->
+    <!-- admin template -->     <script src="{{ asset('assets/admin_template/vendors/js/vendor.bundle.base.js') }}" type="text/javascript"></script>                                        <!-- admin template -->
+    <!-- admin template -->    {{-- <script src="{{ asset('assets/admin_template/vendors/chart.js/Chart.min.js') }}" type="text/javascript"></script> --}}                                  <!-- admin template -->
+    <!-- admin template -->    {{-- <script src="{{ asset('assets/admin_template/vendors/jquery-circle-progress/js/circle-progress.min.js') }}" type="text/javascript"></script> --}}       <!-- admin template -->
+    <!-- admin template -->    {{-- <script src="{{ asset('assets/admin_template/js/jquery.cookie.js') }}" type="text/javascript"></script> --}}                                            <!-- admin template -->
+    <!-- admin template -->     <script src="{{ asset('assets/admin_template/js/off-canvas.js') }}" type="text/javascript"></script>                                                        <!-- admin template -->
+    <!-- admin template -->    {{-- <script src="{{ asset('assets/admin_template/js/hoverable-collapse.js') }}" type="text/javascript"></script> --}}                                       <!-- admin template -->
+    <!-- admin template -->     <script src="{{ asset('assets/admin_template/js/misc.js') }}" type="text/javascript"></script>                                                              <!-- admin template -->
+    <!-- admin template -->    {{-- <script src="{{ asset('assets/admin_template/js/dashboard.js') }}" type="text/javascript"></script> --}}                                                <!-- admin template -->
+    <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --><!-- admin template -->
     
+    <!-- data Table-->
+    <script src="{{ asset('assets/datatable/jquery.dataTables.min.js') }}"></script>
 
-
-
-    
-
-    <!-- Template JS-->
-    <script type="text/javascript" src="{{ asset('assets/js/app.min.js') }}"></script> 
-    <script>
-         let table = new DataTable('#data-table');
-    </script>
     <!-- Sweet Alert JS -->
-    <script src="{{ asset('assets/js/sweetalert.js') }}"></script>
-
+    <script src="{{ asset('assets/sweetalert/sweetalert.js') }}"></script>
     <script>
         const Toast = Swal.mixin({
             toast: true,
@@ -101,11 +82,7 @@
                 title:message
             })
 
-           
-            let table = new DataTable('#data-table');
-            
         })
-
     </script>
     @yield('scripts')
 </body>

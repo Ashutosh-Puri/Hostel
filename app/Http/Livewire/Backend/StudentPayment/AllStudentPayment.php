@@ -6,15 +6,33 @@ use App\Models\Student;
 use Livewire\Component;
 use App\Models\Admission;
 use App\Models\AcademicYear;
+use Livewire\WithPagination;
 use App\Models\StudentPayment;
 
 class AllStudentPayment extends Component
-{   public $mode='', $student_payments ,$academic_years,$admissions,$students;
+{   
+    use WithPagination;
+    public $year = '';
+    public $student_name = '';
+    public $admission_name = '';
+    public $per_page = 10;
+    public $mode='all';
     public $totalamount;
     public $academic_year_id;
     public $admission_id;
     public $student_id;
     public $c_id;
+
+    public function resetinput()
+    {
+        $this->year = null;
+        $this->student_name = null;
+        $this->admission_name = null;
+        $this->totalamount= null;
+        $this->academic_year_id= null;
+        $this->admission_id= null;
+        $this->c_id= null;
+    }
  
     protected $rules = [
         'totalamount' => ['required','integer'],
@@ -42,11 +60,12 @@ class AllStudentPayment extends Component
         $studentpayment->admission_id = $validatedData['admission_id'];
         $studentpayment->total_amount = $validatedData['totalamount'];
         $studentpayment->save();
+        $this->resetinput();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Student Payment Created Successfully!!"
         ]);
-        $this->setmode('');
     }
 
     public function edit($id)
@@ -69,30 +88,49 @@ class AllStudentPayment extends Component
         $studentpayment->admission_id = $validatedData['admission_id'];
         $studentpayment->total_amount = $validatedData['totalamount'];
         $studentpayment->update();
+        $this->resetinput();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Student Payment Updated Successfully!!"
         ]);
-        $this->setmode('');
     }
 
     public function delete($id)
     { 
         $studentpayment = StudentPayment::find($id);
         $studentpayment->delete();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Student Payment Deleted Successfully!!"
         ]);
-        $this->setmode('');
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
     }
 
     public function render()
-    {   $this->academic_years=AcademicYear::where('status',0)->get();
-        $this->students=Student::where('status',0)->get();
-        $this->admissions=Admission::all();
-        $this->student_payments=StudentPayment::latest()->get();
-        return view('livewire.backend.student-payment.all-student-payment')->extends('layouts.admin')->section('admin');
+    {   
+        $academic_years=AcademicYear::where('status',0)->get();
+        $students=Student::where('status',0)->get();
+        $admissions=Admission::all();
+        $query = StudentPayment::orderBy('academic_year_id', 'DESC');
+        if ($this->year) {
+            $AcademicYearid = AcademicYear::where('year', 'like', '%' . $this->year . '%')->pluck('id');
+            $query->whereIn('academic_year_id', $AcademicYearid);
+        }
+        if ($this->student_name) {
+            $Studentid = Student::where('name', 'like', '%' . $this->student_name . '%')->pluck('id');
+            $query->whereIn('student_id', $Studentid);
+        }
+        if ($this->admission_name) {
+            $Admissionid = Admission::where('name', 'like', '%' . $this->admission_name . '%')->pluck('id');
+            $query->whereIn('admission_id', $Admissionid);
+        }
+        $student_payments = $query->paginate($this->per_page);
+        return view('livewire.backend.student-payment.all-student-payment',compact('academic_years','students','admissions','student_payments'))->extends('layouts.admin')->section('admin');
     }
-
 }

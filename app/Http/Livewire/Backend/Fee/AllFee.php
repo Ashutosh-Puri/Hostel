@@ -5,14 +5,28 @@ namespace App\Http\Livewire\Backend\Fee;
 use App\Models\Fee;
 use Livewire\Component;
 use App\Models\AcademicYear;
+use Livewire\WithPagination;
 
 class AllFee extends Component
 {   
-    public $mode='', $fees ,$academic_years;
+
+    use WithPagination;
+    public $search = '';
+    public $per_page = 10;
+    public $mode='all';
     public $type;
     public $academic_year_id;
     public $status;
     public $c_id;
+
+    public function resetinput()
+    {
+        $this->search=null;
+        $this->academic_year_id=null;
+        $this->type=null;
+        $this->status=null;
+        $this->c_id=null;
+    }
  
     protected $rules = [
         'type' => ['required','integer'],
@@ -37,11 +51,12 @@ class AllFee extends Component
         $fee->type = $validatedData['type'];
         $fee->status = $this->status==1?1:0;
         $fee->save();
+        $this->resetinput();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Fee Created Successfully!!"
-        ]);
-        $this->setmode('');
+        ]); 
     }
 
     public function edit($id)
@@ -62,28 +77,40 @@ class AllFee extends Component
         $fee->type = $validatedData['type'];
         $fee->status = $this->status==1?'1':'0';
         $fee->update();
+        $this->resetinput();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Fee Updated Successfully!!"
         ]);
-        $this->setmode('');
     }
 
     public function delete($id)
     { 
         $fee = Fee::find($id);
         $fee->delete();
+        $this->resetinput();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Fee Deleted Successfully!!"
         ]);
-        $this->setmode('');
     }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }  
 
     public function render()
-    {   $this->academic_years=AcademicYear::where('status',0)->get();
-        $this->fees=Fee::latest()->get();
-        return view('livewire.backend.fee.all-fee')->extends('layouts.admin')->section('admin');
+    {   
+        $academic_years=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
+        $query = Fee::orderBy('academic_year_id', 'ASC');
+        if ($this->search) {
+            $roomIds = AcademicYear::where('year', 'like', '%' . $this->search . '%')->pluck('id');
+            $query->whereIn('academic_year_id', $roomIds);
+        }
+        $fees = $query->paginate($this->per_page);
+        return view('livewire.backend.fee.all-fee',compact('academic_years','fees'))->extends('layouts.admin')->section('admin');
     }
-
 }

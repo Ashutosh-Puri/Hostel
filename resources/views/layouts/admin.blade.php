@@ -1,19 +1,56 @@
 @extends('layouts.app')
 @section('content')
+<div>   
+    @section('styles')
+        <style>
+            .card{
+                background-color: #36404a;
+            }
 
-<!-- body start -->
-<body data-layout-mode="default" data-theme="dark" data-topbar-color="dark" data-menu-position="fixed" data-leftbar-color="dark" data-leftbar-size='default' data-sidebar-user='false'>
+            input,input:active , textarea,option {
+                background-color: #3b4651;
+               
+                color: white;
+                }
+                select {
+                  background: #3b4651;
+                  color: #fff;
+                }
 
-    <!-- Begin page -->
-    <div id="wrapper">
-    @include('layouts.header')
 
-        @include('layouts.sidebar')
-        <div class="content-page py-4">
-           @yield('admin')
+        </style>
+    @endsection
+        <!-- Container Start -->
+        <div class="container-scroller">
+            <!-- Navbar -->
+              @include('layouts.admin.navbar')
+            <!-- navbar End -->
+      
+            <!-- Body start -->
+            <div class="container-fluid page-body-wrapper">
+              <!-- Sidebar Start -->
+                  @include('layouts.admin.sidebar')
+              <!-- Sidebar End -->
+      
+              <!-- Main Start -->
+              <div class="main-panel">
+                <!-- Content Wrapper Start  -->
+                <div class="content-wrapper   body-bg">
+                   <!-- Content Start-->
+                     @yield('admin')
+                    <!-- Content End-->
+                </div>
+                <!-- Content Wrapper End  -->
+      
+                  <!-- Footer Start -->
+                      @include('layouts.admin.footer')
+                  <!-- Footer End -->
+              </div>
+              <!-- Main End -->
+            </div>
+            <!-- Body End -->
+          </div>
+           <!-- Container Enter -->
+</div>
 
-            @include('layouts.footer')
-        </div>
-    </div>
-</body>
 @endsection

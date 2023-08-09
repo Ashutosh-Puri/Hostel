@@ -6,13 +6,15 @@
             @endsection
             <div class="row">
                 <div class="col-12">
-                    <div class="page-title-box">
-                        <div class="page-title-right">
-                            <a wire:loading.attr="disabled" wire:click="setmode('')"class="btn btn-success waves-effect waves-light">
-                                Back<span class="btn-label-right"><i class="mdi mdi-arrow-left-thick"></i></span>
+                    <div class="bg-success">
+                        <div class="float-start pt-2 px-2">
+                            <h2>Add Room</h2>
+                        </div>
+                        <div class="float-end">
+                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
+                                Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
                         </div>
-                        <h4 class="page-title">Add Room</h4>
                     </div>
                 </div>
             </div>
@@ -84,13 +86,15 @@
             @endsection
             <div class="row">
                 <div class="col-12">
-                    <div class="page-title-box">
-                        <div class="page-title-right">
-                            <a wire:loading.attr="disabled" wire:click="setmode('')"class="btn btn-success waves-effect waves-light">
-                                Back<span class="btn-label-right"><i class="mdi mdi-arrow-left-thick"></i></span>
+                    <div class="bg-success">
+                        <div class="float-start pt-2 px-2">
+                            <h2>Edit Room</h2>
+                        </div>
+                        <div class="float-end">
+                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
+                                Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
                         </div>
-                        <h4 class="page-title">Edit Room</h4>
                     </div>
                 </div>
             </div>
@@ -156,29 +160,59 @@
                     </div>
                 </div>
             </div>
-        @else
+        @elseif($mode="all")
             <div>
                 @section('title')
                     All Roomes
                 @endsection
                 <div class="row">
                     <div class="col-12">
-                        <div class="page-title-box">
-                            <div class="page-title-right">
-                                <a wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
-                                    Add Room<span class="btn-label-right"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
+                        <div class="bg-success">
+                            <div class="float-start pt-2 px-2">
+                                <h2>Data Rooms</h2>
+                            </div>
+                            <div class="float-end">
+                                <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
+                                    Add Room<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
                                 </a>
                             </div>
-                            <h4 class="page-title">Data Rooms</h4>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-body">
-                                <h4 class="header-title"></h4>
-                                <table id="data-table" class="table table-striped dt-responsive nowrap w-100">
+                            <div class="card-header">
+                                <div class="row">
+                                    <label class=" col-4 col-md-1 py-1 ">Per Page</label>
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                        <option value="10">10</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                        <option value="500">500</option>
+                                        <option value="1000">1000</option>
+                                    </select>
+                                    <label class=" col-4 col-md-1  py-1  ">Records</label>
+                                    <span class="col-12 col-md-9 p-0">
+                                        <span class="row">
+                                            <div class="col-12 col-md-3 ">
+                                                    <label class="w-100 p-1  text-sm-center">Search</label>
+                                            </div>
+                                            <div class="col-12 col-md-3">
+                                                    <input class="w-100" wire:model="b" type="search" placeholder="Building Name">
+                                            </div>
+                                            <div class="col-12 col-md-3">
+                                                    <input class="w-100" wire:model="f" type="number" min="0" placeholder="Floor Number">
+                                            </div>
+                                            <div class="col-12 col-md-3">
+                                                    <input class="w-100" wire:model="r" type="search" placeholder="Room Label">
+                                            </div>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-body table-responsive">
+                                <table id="data-table" class="table  dt-responsive nowrap w-100">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -221,6 +255,15 @@
                                                     @case(7)
                                                         Seventh
                                                     @break
+                                                    @case(8)
+                                                        Eighth
+                                                    @break
+                                                    @case(9)
+                                                        Nineth
+                                                    @break
+                                                    @case(10)
+                                                        Tenth
+                                                    @break
                                                     @default
                                                         {{ $item->floor }} 
                                                     @endswitch
@@ -237,6 +280,9 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                <div class="mt-4">
+                                    {{ $rooms->links('pagination::bootstrap-5') }}
+                                </div>
                             </div>
                         </div>
                     </div>

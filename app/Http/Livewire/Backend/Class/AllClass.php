@@ -4,11 +4,15 @@ namespace App\Http\Livewire\Backend\Class;
 
 use App\Models\Classes;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Illuminate\Validation\Rule;
 
 class AllClass extends Component
 {    
-    public $mode='all', $class;
+    use WithPagination;
+    public $search = '';
+    public $per_page = 10;
+    public $mode='all';
     public $name;
     public $stream;
     public $type;
@@ -22,6 +26,7 @@ class AllClass extends Component
         $this->type=null;
         $this->status=null;
         $this->c_id=null;
+        $this->search=null;
     }
 
     public function setmode($mode)
@@ -92,10 +97,14 @@ class AllClass extends Component
             'message'=>"Class Deleted Successfully!!"
         ]);
     }
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
 
     public function render()
     {   
-        $this->class=Classes::latest()->get();
-        return view('livewire.backend.class.all-class')->extends('layouts.admin')->section('admin');
+        $class=Classes::where('name', 'like', '%'.$this->search.'%')->orderBy('name', 'ASC')->paginate($this->per_page);
+        return view('livewire.backend.class.all-class',compact('class'))->extends('layouts.admin')->section('admin');
     }
 }

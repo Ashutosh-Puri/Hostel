@@ -4,11 +4,15 @@ namespace App\Http\Livewire\Backend\AcademicYear;
 
 use Livewire\Component;
 use App\Models\AcademicYear;
+use Livewire\WithPagination;
 use Illuminate\Validation\Rule;
 
 class AllAcademicYear extends Component
 {   
-    public $mode='all', $academicyear;
+    use WithPagination;
+    public $search = '';
+    public $per_page = 10;
+    public $mode='all';
     public $year;
     public $status;
     public $c_id;
@@ -18,6 +22,7 @@ class AllAcademicYear extends Component
        $this->year=null;
        $this->status=null;
        $this->c_id=null;
+       $this->search =null;
     }
 
     public function setmode($mode)
@@ -85,10 +90,14 @@ class AllAcademicYear extends Component
             'message'=>"Academic Year Deleted Successfully!!"
         ]);
     }
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
 
     public function render()
     {   
-        $this->academicyear=AcademicYear::latest()->get();
-        return view('livewire.backend.academic-year.all-academic-year')->extends('layouts.admin')->section('admin');
+        $academicyear=AcademicYear::where('year', 'like', '%'.$this->search.'%')->orderBy('year', 'DESC')->paginate($this->per_page);
+        return view('livewire.backend.academic-year.all-academic-year',compact('academicyear'))->extends('layouts.admin')->section('admin');
     }
 }

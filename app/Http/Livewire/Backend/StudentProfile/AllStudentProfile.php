@@ -4,11 +4,15 @@ namespace App\Http\Livewire\Backend\StudentProfile;
 
 use App\Models\Student;
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\StudentProfile;
 
 class AllStudentProfile extends Component
 {
-    public $mode='',$student_profiles ,$students ;
+    use WithPagination;
+    public $search = '';
+    public $per_page = 10;
+    public $mode='all';
     public $c_id;
     public $student_id;
     public $mother_name;
@@ -26,9 +30,9 @@ class AllStudentProfile extends Component
     public $is_allergy;
     public $is_ragging;
 
-
     public function resetinput()
-    {
+    {   
+        $this->search = null;
         $this->c_id = null;
         $this->student_id = null;
         $this->mother_name = null;
@@ -93,12 +97,12 @@ class AllStudentProfile extends Component
         $studentprofile->address_type=$this->address_type==1?'1':'0';
         $studentprofile->is_ragging = $this->is_ragging==1?'1':'0';
         $studentprofile->save();
+        $this->resetinput();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Student Profile Created Successfully!!"
         ]);
-        $this->resetinput();
-        $this->setmode('');
     }
 
     public function edit($id)
@@ -143,32 +147,39 @@ class AllStudentProfile extends Component
         $studentprofile->address_type=$this->address_type==1?'1':'0';
         $studentprofile->is_ragging = $this->is_ragging==1?'1':'0';
         $studentprofile->update();
+        $this->resetinput();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Student Profile Updated Successfully!!"
         ]);
-        $this->resetinput();
-        $this->setmode('');
     }
 
     public function delete($id)
     { 
         $studentprofile = StudentProfile::find($id);
-        $studentprofile->delete();      
+        $studentprofile->delete();  
+        $this->setmode('all');    
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Student Profile Deleted Successfully!!"
         ]);
-        $this->setmode('');
     }
 
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
 
     public function render()
     {   
-       
-
-        $this->students=Student::all();
-        $this->student_profiles=StudentProfile::latest()->get();
-        return view('livewire.backend.student-profile.all-student-profile')->extends('layouts.admin')->section('admin');
+        $students = Student::where('status', 0)->orderBy('name', 'ASC') ->get();
+        $query = StudentProfile::orderBy('mother_name', 'ASC');
+        if ($this->search) {
+            $studentIds = Student::where('status', 0)->where('name', 'like', '%' . $this->search . '%')->pluck('id');
+            $query->whereIn('student_id', $studentIds);
+        }
+        $student_profiles = $query->paginate($this->per_page);
+        return view('livewire.backend.student-profile.all-student-profile',compact('students','student_profiles'))->extends('layouts.admin')->section('admin');
     }
 }

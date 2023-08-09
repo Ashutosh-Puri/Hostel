@@ -6,13 +6,15 @@
             @endsection
             <div class="row">
                 <div class="col-12">
-                    <div class="page-title-box">
-                        <div class="page-title-right">
-                            <a wire:loading.attr="disabled" wire:click="setmode('')"class="btn btn-success waves-effect waves-light">
-                                Back<span class="btn-label-right"><i class="mdi mdi-arrow-left-thick"></i></span>
+                    <div class="bg-success">
+                        <div class="float-start pt-2 px-2">
+                            <h2>Add Student Profile</h2>
+                        </div>
+                        <div class="float-end">
+                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
+                                Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
                         </div>
-                        <h4 class="page-title">Add Student Profile</h4>
                     </div>
                 </div>
             </div>
@@ -211,9 +213,9 @@
                                     <div class="col-12 col-md-6">
                                          <div class="mb-3 form-group">
                                             <label for="is_ragging" class="form-label">Were you involved in ragging earlier?</label>
-                                            <div class="form-group form-check-primary form-check">
+                                            <div class="form-group ">
                                                 <input class="form-check-input @error('is_ragging') is-invalid @enderror" type="checkbox" value="1" {{ $is_ragging==1?'checked':''; }} id="class_is_ragging"  wire:model.debounce.1000ms="is_ragging" >
-                                                <label class="form-check-label" for="class_is_ragging">Yes</label>
+                                                <label class="form-check-label m-1" for="class_is_ragging">Yes</label>
                                                 @error('is_ragging')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -235,13 +237,15 @@
             @endsection
             <div class="row">
                 <div class="col-12">
-                    <div class="page-title-box">
-                        <div class="page-title-right">
-                            <a wire:loading.attr="disabled" wire:click="setmode('')"class="btn btn-success waves-effect waves-light">
-                                Back<span class="btn-label-right"><i class="mdi mdi-arrow-left-thick"></i></span>
+                    <div class="bg-success">
+                        <div class="float-start pt-2 px-2">
+                            <h2>Edit Student Profile</h2>
+                        </div>
+                        <div class="float-end">
+                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
+                                Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
                         </div>
-                        <h4 class="page-title">Edit Student Profile</h4>
                     </div>
                 </div>
             </div>
@@ -440,9 +444,9 @@
                                     <div class="col-12 col-md-6">
                                          <div class="mb-3 form-group">
                                             <label for="is_ragging" class="form-label">Were you involved in ragging earlier?</label>
-                                            <div class="form-group form-check-primary form-check">
+                                            <div class="form-group ">
                                                 <input class="form-check-input @error('is_ragging') is-invalid @enderror" type="checkbox" value="1" {{ $is_ragging==1?'checked':''; }} id="class_is_ragging"  wire:model.debounce.1000ms="is_ragging" >
-                                                <label class="form-check-label" for="class_is_ragging">Yes</label>
+                                                <label class="form-check-label m-1" for="class_is_ragging">Yes</label>
                                                 @error('is_ragging')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -458,29 +462,55 @@
                     </div>
                 </div>
             </div>
-        @else
+        @elseif($mode="all")
             <div >
                 @section('title')
                     All Student Profilees
                 @endsection
                 <div class="row">
                     <div class="col-12">
-                        <div class="page-title-box">
-                            <div class="page-title-right">
-                                <a wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
-                                    Add Student Profile<span class="btn-label-right"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
+                        <div class="bg-success">
+                            <div class="float-start pt-2 px-2">
+                                <h2>Data Student Profiles</h2>
+                            </div>
+                            <div class="float-end">
+                                <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
+                                    Add Student Profile<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
                                 </a>
                             </div>
-                            <h4 class="page-title">Data Student Profiles</h4>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-body">
-                                <h4 class="header-title"></h4>
-                                <table id="data-table" class="table table-striped dt-responsive nowrap w-100">
+                            <div class="card-body table-responsive">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <label class=" col-4 col-md-1 py-1 ">Per Page</label>
+                                        <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                            <option value="10">10</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                            <option value="500">500</option>
+                                            <option value="1000">1000</option>
+                                        </select>
+                                        <label class=" col-4 col-md-1  py-1 ">Records</label>
+                                        <span class="col-12 col-md-9 p-0">
+                                                <div class="row ">
+                                                    <div class="col-12 col-md-6 ">
+                                                    </div>
+                                                    <div class="col-12 col-md-3 ">
+                                                        <label class="w-100 p-1  text-sm-center">Search</label>
+                                                    </div>
+                                                    <div class="col-12 col-md-3">
+                                                        <input class="w-100" wire:model="search" type="search" placeholder="Student Name">
+                                                    </div>
+                                                </div>
+                                        </span>
+                                    </div>
+                                </div> 
+                                <table id="data-table" class="table  dt-responsive nowrap w-100">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -488,9 +518,6 @@
                                             <th>Mother Name</th>
                                             <th>Date Of Birth</th>
                                             <th>Parent Name</th>
-                                            <th>Parent Mobile Number</th>
-                                            <th>Adress Type</th>
-                                            <th>Parent Address</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -501,10 +528,7 @@
                                                 <td>{{ $item->Student->name}}</td>      
                                                 <td>{{ $item->mother_name}}</td>     
                                                 <td>{{ $item->dob}}</td> 
-                                                <td>{{ $item->parent_name}}</td>    
-                                                <td>{{ $item->parent_mobile}}</td>    
-                                                <td>{{ $item->address_type==0?'Rural':'Urbon'; }}</td>  
-                                                <td>{{ $item->parent_address }}</td>                                   
+                                                <td>{{ $item->parent_name}}</td>                                   
                                                 <td>
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
                                                     <a wire:loading.attr="disabled" wire:click="delete({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
@@ -513,6 +537,9 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                <div class="mt-4">
+                                    {{ $student_profiles->links('pagination::bootstrap-5') }}
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -5,15 +5,32 @@ namespace App\Http\Livewire\Backend\Fine;
 use App\Models\Fine;
 use Livewire\Component;
 use App\Models\AcademicYear;
+use Livewire\WithPagination;
 
 class AllFine extends Component
 {   
-    public $mode='', $fines ,$academic_years;
+    use WithPagination;
+    public $year = '';
+    public $fine_name = '';
+    public $per_page = 10;
+    public $mode='all';
     public $name;
     public $amount;
     public $academic_year_id;
     public $status;
     public $c_id;
+
+    public function resetinput()
+    {
+        $this->year=null;
+        $this->fine_name=null;
+        $this->type=null;
+        $this->name=null;
+        $this->amount=null;
+        $this->academic_year_id=null;
+        $this->status=null;
+        $this->c_id=null;
+    }
  
     protected $rules = [
         'amount' => ['required','integer'],
@@ -40,11 +57,12 @@ class AllFine extends Component
         $fine->amount = $validatedData['amount'];
         $fine->status = $this->status==1?1:0;
         $fine->save();
+        $this->resetinput();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Fine Created Successfully!!"
         ]);
-        $this->setmode('');
     }
 
     public function edit($id)
@@ -67,28 +85,41 @@ class AllFine extends Component
         $fine->amount = $validatedData['amount'];
         $fine->status = $this->status==1?'1':'0';
         $fine->update();
+        $this->resetinput();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Fine Updated Successfully!!"
         ]);
-        $this->setmode('');
     }
 
     public function delete($id)
     { 
         $fine = Fine::find($id);
         $fine->delete();
+        $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Fine Deleted Successfully!!"
         ]);
-        $this->setmode('');
     }
 
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }  
+
+
     public function render()
-    {   $this->academic_years=AcademicYear::where('status',0)->get();
-        $this->fines=Fine::latest()->get();
-        return view('livewire.backend.fine.all-fine')->extends('layouts.admin')->section('admin');
+    {   
+        $academic_years=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
+        $query = Fine::orderBy('academic_year_id', 'DESC');
+        if ($this->year) {
+            $roomIds = AcademicYear::where('year', 'like', '%' . $this->year . '%')->pluck('id');
+            $query->whereIn('academic_year_id', $roomIds);
+        }
+        $fines = $query->where('name', 'like', '%' . $this->fine_name . '%')->paginate($this->per_page);
+        return view('livewire.backend.fine.all-fine',compact('academic_years','fines'))->extends('layouts.admin')->section('admin');
     }
 
 }

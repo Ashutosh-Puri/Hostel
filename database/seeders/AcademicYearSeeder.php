@@ -15,11 +15,10 @@ class AcademicYearSeeder extends Seeder
     public function run(): void
     {
         $faker = Faker::create();
-
-        // Insert 1000 fake records into the Classes table
+        $year=2023;
         for ($i = 0; $i < 100; $i++) {
             AcademicYear::create([
-                'year' => $faker->numberBetween(2020,2024),
+                'year' => $year--,
                 'status' => $faker->numberBetween(0, 1),
             ]);
         }
