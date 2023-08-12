@@ -160,7 +160,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($allocations as $key => $item)
-                                            @if ( $item->Admission->status==2)
+                                            @if ( $item->Admission->status==1)
                                             <tr>
                                                 <td>{{ $key+1 }}</td>                                     
                                                 <td>{{ $item->Admission->id }}</td>                                     

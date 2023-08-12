@@ -16,6 +16,6 @@ class Cast extends Model
 
     public function Categorys()
     {
-        return $this->hasMany(Category::class, 'category_id', 'id');
+        return $this->hasMany(Category::class, 'cast_id', 'id');
     }
 }

@@ -15,20 +15,23 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        Admin::create([[
+        Admin::create([
             'name' => 'Admin',
             'email' => 'cmdsofts@gmail.com',
             'password' => Hash::make('123456789'),
             'mobile'=>'9373545745',
             'status' => '0',
             'role_id' => '1',
-        ],[
+        ]);
+
+        Admin::create([
             'name' => 'Tejas',
             'email' => 'rsofts74@gmail.com',
             'password' => Hash::make('123456789'),
             'mobile'=>'8888448451',
             'status' => '0',
             'role_id' => '1',
-        ]]);
+        ]);
+
     }
 }

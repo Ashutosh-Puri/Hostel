@@ -14,6 +14,6 @@ class Category extends Model
 
     public function Cast()
     {
-        return $this->hasMany(Cast::class, 'category_id', 'id');
+        return $this->belongsTo(Cast::class, 'cast_id', 'id');
     }
 }
