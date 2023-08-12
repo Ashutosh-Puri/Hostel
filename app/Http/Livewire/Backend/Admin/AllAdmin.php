@@ -8,6 +8,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -29,6 +30,25 @@ class AllAdmin extends Component
     public $password_confirmation;
     public $photo;
     public $photoold;
+
+
+    protected function rules()
+    {
+        return [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255','unique:admins,email,'.($this->mode=='edit'? Auth::user()->id :'')], 
+            'password' => [($this->password=null? 'nullable' : 'required'),'required','string', 'min:8', 'max:255'],
+            'mobile' => ['nullable', 'numeric', 'digits:10','unique:admins,mobile,'.($this->mode=='edit'? Auth::user()->id :'')], 
+            'photo' => ['nullable', 'image', 'mimes:jpg,png,jpeg', 'max:1024'],
+            'role_id' => ['required', 'integer',],
+        ];
+    }
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
+
  
     public function resetinput()
     {
@@ -52,14 +72,7 @@ class AllAdmin extends Component
  
     public function save()
     {  
-        $validatedData =  $validatedData = $validatedData=$this->validate([
-            'name' => ['required', 'string', 'max:255',Rule::unique('admins', 'name')],
-            'email' => ['required', 'string', 'email', 'max:255',Rule::unique('admins', 'email')], 
-            'password' => ['required','string', 'min:8', 'max:255','confirmed'],
-            'mobile' => ['nullable', 'numeric', 'digits:10',Rule::unique('admins', 'mobile')], 
-            'photo' => ['nullable', 'image', 'mimes:jpg,png,jpeg', 'max:1024'],
-            'role_id' => ['required', 'integer',],
-        ]);   
+        $validatedData =    $this->validate();  
         $admin= new Admin;
         $admin->role_id = $validatedData['role_id'];
         $admin->name = $validatedData['name'];
@@ -98,13 +111,7 @@ class AllAdmin extends Component
 
     public function update($id)
     {   
-        $validatedData = $validatedData=$this->validate([
-            'name' => ['required', 'string', 'max:255',Rule::unique('admins', 'name')->ignore($this->name, 'name'),],
-            'email' => ['required', 'string', 'email', 'max:255',Rule::unique('admins', 'email')->ignore($this->email, 'email'),], 
-            'mobile' => ['nullable', 'numeric', 'digits:10',Rule::unique('admins', 'mobile')->ignore($this->mobile, 'mobile'),], 
-            'photo' => ['nullable', 'image', 'mimes:jpg,png,jpeg', 'max:1024'],
-            'role_id' => ['required', 'integer',],
-        ]);
+        $validatedData =  $this->validate();  
         $admin = Admin::find($id);
         $admin->role_id = $validatedData['role_id'];
         $admin->name = $validatedData['name'];

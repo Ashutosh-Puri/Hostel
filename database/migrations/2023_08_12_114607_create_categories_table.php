@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('allocations', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('admission_id');
-            $table->unsignedBigInteger('fee_id')->nullable();
-            $table->foreign('admission_id')->references('id')->on('admissions')->onDelete('cascade');
-            $table->foreign('fee_id')->references('id')->on('fees')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('allocations');
+        Schema::dropIfExists('categories');
     }
 };

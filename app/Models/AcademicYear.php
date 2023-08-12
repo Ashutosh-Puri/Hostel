@@ -54,8 +54,5 @@ class AcademicYear extends Model
         return $this->hasMany(Admission::class, 'academic_year_id', 'id');
     }
 
-    public function Allocations()
-    {
-        return $this->hasMany(Allocation::class, 'academic_year_id', 'id');
-    }
+
 }

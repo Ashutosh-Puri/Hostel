@@ -62,84 +62,6 @@
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
-                                            <label for="mobile" class="form-label">Mobile</label>
-                                            <input type="number"   class="form-control @error('mobile') is-invalid @enderror" wire:model.debounce.1000ms="mobile" value="{{ old('mobile') }}" id="mobile" placeholder="Enter Mobile">
-                                            @error('mobile')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="mb-3 form-group">
-                                            <label for="member_id" class="form-label">Member ID</label>
-                                            <input type="number" min="0"  class="form-control @error('member_id') is-invalid @enderror" wire:model.debounce.1000ms="member_id" value="{{ old('member_id') }}" id="member_id" placeholder="Enter Member ID">
-                                            @error('member_id')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="mb-3 form-group">
-                                            <label for="prn" class="form-label">P.R.N. Number</label>
-                                            <input type="number" min="0"  class="form-control @error('prn') is-invalid @enderror" wire:model.debounce.1000ms="prn" value="{{ old('prn') }}" id="prn" placeholder="Enter PRN Number">
-                                            @error('prn')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="mb-3 form-group">
-                                            <label for="abc_id" class="form-label">ABC ID</label>
-                                            <input type="number" min="0"  class="form-control @error('abc_id') is-invalid @enderror" wire:model.debounce.1000ms="abc_id" value="{{ old('abc_id') }}" id="abc_id" placeholder="Enter ABC ID">
-                                            @error('abc_id')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="mb-3 form-group">
-                                            <label for="eligibility_no" class="form-label">Eligibility Number</label>
-                                            <input type="number" min="0"  class="form-control @error('eligibility_no') is-invalid @enderror" wire:model.debounce.1000ms="eligibility_no" value="{{ old('eligibility_no') }}" id="eligibility_no" placeholder="Enter Eligibility Number">
-                                            @error('eligibility_no')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 col-md-5">
-                                        <div class="mb-3 form-group">
-                                            <label for="photo" class="form-label">Photo</label>
-                                            <input type="file" class="form-control  @error('photo') is-invalid @enderror" wire:model.debounce.1000ms="photo" id="photo"   >
-                                            @error('photo')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-1">
-                                        <div class="mb-3 form-group">
-                                            <label for="photo" class="form-label"></label>
-                                            <img id="showImage" src="{{ isset($photo)?asset($photo->temporaryUrl()):asset('assets/images/no_image.jpg'); }}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="mb-3 form-group">
                                             <label for="status" class="form-label">Status</label>
                                             <div class="form-group ">
                                                 <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ $status==1?'checked':''; }} id="class_status"  wire:model.debounce.1000ms="status" >
@@ -159,7 +81,6 @@
                     </div>
                 </div>
             </div>
-            
         @elseif($mode=='edit')
             @section('title')
                 Edit Student
@@ -211,65 +132,6 @@
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
-                                            <label for="mobile" class="form-label">Mobile</label>
-                                            <input type="number"   class="form-control @error('mobile') is-invalid @enderror" wire:model.debounce.1000ms="mobile" value="{{ old('mobile') }}" id="mobile" placeholder="Enter Mobile">
-                                            @error('mobile')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="mb-3 form-group">
-                                            <label for="member_id" class="form-label">Member ID</label>
-                                            <input type="number" min="0"  class="form-control @error('member_id') is-invalid @enderror" wire:model.debounce.1000ms="member_id" value="{{ old('member_id') }}" id="member_id" placeholder="Enter Member ID">
-                                            @error('member_id')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="mb-3 form-group">
-                                            <label for="prn" class="form-label">P.R.N. Number</label>
-                                            <input type="number" min="0"  class="form-control @error('prn') is-invalid @enderror" wire:model.debounce.1000ms="prn" value="{{ old('prn') }}" id="prn" placeholder="Enter PRN Number">
-                                            @error('prn')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="mb-3 form-group">
-                                            <label for="abc_id" class="form-label">ABC ID</label>
-                                            <input type="number" min="0"  class="form-control @error('abc_id') is-invalid @enderror" wire:model.debounce.1000ms="abc_id" value="{{ old('abc_id') }}" id="abc_id" placeholder="Enter ABC ID">
-                                            @error('abc_id')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">  
-                                    <div class="col-12 col-md-6">
-                                        <div class="mb-3 form-group">
-                                            <label for="eligibility_no" class="form-label">Eligibility Number</label>
-                                            <input type="number" min="0"  class="form-control @error('eligibility_no') is-invalid @enderror" wire:model.debounce.1000ms="eligibility_no" value="{{ old('eligibility_no') }}" id="eligibility_no" placeholder="Enter Eligibility Number">
-                                            @error('eligibility_no')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="mb-3 form-group">
                                             <label for="status" class="form-label">Status</label>
                                             <div class="form-group ">
                                                 <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ $status==1?'checked':''; }} id="class_status"  wire:model.debounce.1000ms="status" >
@@ -280,31 +142,6 @@
                                                     </div>
                                                 @enderror
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="mb-3 form-group">
-                                            <label for="photo" class="form-label">Photo</label>
-                                            <input type="file" class="form-control  @error('photo') is-invalid @enderror" wire:model.debounce.1000ms="photo" id="photo"   >
-                                            @error('photo')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-1">
-                                        <div class="mb-3 form-group">
-                                            <label for="photo" class="form-label"></label>
-                                            <img id="showImage" src="{{ isset($photo)?asset($photo->temporaryUrl()):asset('assets/images/no_image.jpg'); }}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-1">
-                                        <div class="mb-3 form-group">
-                                            <label for="photo" class="form-label"></label>
-                                            <img id="showImage" src="{{ isset($photoold)?asset($photoold):asset('assets/images/no_image.jpg'); }}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
                                         </div>
                                     </div>
                                 </div>
@@ -366,10 +203,9 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Image</th>
+                                            {{-- <th>Image</th> --}}
                                             <th>Student Username</th>
                                             <th>Email</th>
-                                            <th>Mobile</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -378,12 +214,12 @@
                                         @foreach ($students as $key => $item)
                                             <tr>
                                                 <td>{{ $key+1 }}</td>  
-                                                <td>
+                                                {{-- <td>
                                                     <img id="showImage" src="{{ (!empty($item->photo)) ? asset($item->photo) : asset('assets/images/no_image.jpg') }}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image" style="height: 45px; width:45px;">
-                                                </td>                                   
+                                                </td>                                    --}}
                                                 <td>{{ $item->username }}</td>
                                                 <td>{{ $item->email }}</td>
-                                                <td>{{ $item->mobile }}</td>
+                                                {{-- <td>{{ $item->mobile }}</td> --}}
                                                 <td>
                                                     @if ( $item->status == '0')
                                                         <span class="badge bg-success text-white">Active</span>

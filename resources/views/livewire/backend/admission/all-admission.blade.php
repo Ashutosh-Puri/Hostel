@@ -937,12 +937,16 @@
                         <div class="card">
                             <div class="card-body ">
                                 <div class="row">
-                                   <div class="col-12 col-md-2">
+                                    <div class="col-6 col-md-2 mb-3">
+                                        <a wire:loading.attr="disabled"  wire:click="confirm({{ $viewadmission[0]->id }})" class=" d-inline btn btn-success waves-effect waves-light"><i class="mdi mdi-thumb-up"></i></a>
+                                        <a wire:loading.attr="disabled"  wire:click="cancel({{ $viewadmission[0]->id }})" class="d-inline btn btn-danger waves-effect waves-light"><i class="mdi mdi-thumb-down"></i></a>
+                                    </div>
+                                    <div class="col-6 col-md-2 mb-3">
                                         <label for="">Admission ID :</label>
                                         <label for="">{{ $viewadmission[0]->id }}</label>
                                     </div>
-                                    <div class="col-12 col-md-3 mb-2">
-                                        <label for="">Admission Status :</label>
+                                    <div class="col-6 col-md-2 mb-3">
+                                        <label for="">Status :</label>
                                         <label>
                                             @if ( $viewadmission[0]->status == '0')
                                                 <span class="badge bg-warning text-white">Wating</span>
@@ -953,26 +957,19 @@
                                             @endif
                                         </label>
                                     </div>
-                                    <div class="col-12 col-md-2 mb-2">
-                                        <label for="">Seat Type :</label>
-                                        <label for="">{{ $viewadmission[0]->Class->type }}</label>
-                                    </div>
-                                    <div class="col-12 col-md-3 mb-2">
-                                        <label for="">Bed Status :</label>
+                                    <div class="col-6 col-md-3 mb-3">
+                                        <label for="">Bed:</label>
                                         <label for="">
                                             @if ( $viewadmission[0]->bed_id==null)
-                                                <span class="badge bg-danger text-white">Not Allocated</span>
+                                            <span class="badge bg-danger text-white">Not Allocated</span>
                                             @else
-                                                <span class="badge bg-success text-white">Allocated</span><span class="badge bg-success mx-1 text-white">{{ $viewadmission[0]->bed_id }}</span>
+                                            <span class="badge bg-success text-white">Allocated</span><span class="badge bg-success mx-1 text-white">{{ $viewadmission[0]->bed_id }}</span>
                                             @endif
                                         </label>
                                     </div>
-                                    <div class="col-12 col-md-1 mb-2">
-                                        @if ($viewadmission[0]->status == '0')
-                                            <a wire:loading.attr="disabled" wire:click="allocate({{ $viewadmission[0]->id }})"  class="badge text-decoration-none  bg-success waves-effect waves-light">Allocate</a>
-                                        @elseif ($viewadmission[0]->status == '1')
-                                            <a wire:loading.attr="disabled" wire:click="reallocate({{ $viewadmission[0]->id }})"  class="badge text-decoration-none  bg-warning waves-effect waves-light">Re Allocate</a>
-                                        @endif
+                                    <div class="col-12 col-md-3 mb-3">
+                                        <label for="">Seat Type :</label>
+                                        <label for="">{{ $viewadmission[0]->Class->type }}</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 text-center mb-3">
@@ -1141,96 +1138,6 @@
                     </div>
                 </div>
             </div>
-        @elseif($mode=="allocate")
-            <div>
-                @section('title')
-                    Allocate Bed
-                @endsection
-                <div class="row">
-                    <div class="col-12">
-                        <div class="bg-success">
-                            <div class="float-start pt-2 px-2">
-                                <h2>Allocate Bed</h2>
-                            </div>
-                            <div class="float-end">
-                                <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
-                                    Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-5">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="row">
-                                <div class="col-12 mb-3 h3">
-                                    Current Bed Status
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 col-md-3">
-                                    <label for="">Admission ID :</label>
-                                    <label for="">{{ $viewadmission[0]->id }}</label>
-                                </div>
-                                <div class="col-12 col-md-3 mb-2">
-                                    <label for="">Admission Status :</label>
-                                    <label>
-                                        @if ( $viewadmission[0]->status == '0')
-                                            <span class="badge bg-warning text-white">Wating</span>
-                                        @elseif( $viewadmission[0]->status == '1')
-                                            <span class="badge bg-success text-white">Confirmed</span>
-                                        @else
-                                            <span class="badge bg-danger text-white">Canceled</span>
-                                        @endif
-                                    </label>
-                                </div>
-                                <div class="col-12 col-md-3 mb-2">
-                                    <label for="">Seat Type :</label>
-                                    <label for="">{{ $viewadmission[0]->Class->type }}</label>
-                                </div>
-                                <div class="col-12 col-md-3 mb-2">
-                                    <label for="">Bed Status :</label>
-                                    <label for="">
-                                        @if ( $viewadmission[0]->bed_id==null)
-                                            <span class="badge bg-danger text-white">Not Allocated</span>
-                                        @else
-                                            <span class="badge bg-success text-white">Allocated</span><span class="badge bg-success mx-1 text-white">{{ $viewadmission[0]->bed_id }}</span>
-                                        @endif
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @elseif($mode=="reallocate")
-            <div>
-                @section('title')
-                    Re Allocate Bed
-                @endsection
-                <div class="row">
-                    <div class="col-12">
-                        <div class="bg-success">
-                            <div class="float-start pt-2 px-2">
-                                <h2>Re Allocate Bed</h2>
-                            </div>
-                            <div class="float-end">
-                                <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
-                                    Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-5">
-                    <div class="col-12">
-                        <div class="card">
-                           
-                        </div>
-                    </div>
-                </div>
-            </div>
         @elseif($mode=="all")
             <div>
                 @section('title')
@@ -1328,7 +1235,9 @@
                                                 </td> 
                                                 <td>
                                                     <a wire:loading.attr="disabled"  wire:click="view({{ $item->id }})" class="btn btn-info waves-effect waves-light"><i class="mdi mdi-eye"></i></a>
-                                                    <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                    <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                    <a wire:loading.attr="disabled"  wire:click="confirm({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-thumb-up"></i></a>
+                                                    <a wire:loading.attr="disabled"  wire:click="cancel({{ $item->id }})" class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-thumb-down"></i></a>
                                                     <a wire:loading.attr="disabled" wire:click="delete({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
                                                 </td>
                                             </tr>

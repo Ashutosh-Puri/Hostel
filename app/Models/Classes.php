@@ -31,8 +31,5 @@ class Classes extends Model
         return $this->hasMany(Admission::class, 'class_id', 'id');
     }
 
-    public function Allocations()
-    {
-        return $this->hasMany(Allocation::class, 'class_id', 'id');
-    }
+
 }

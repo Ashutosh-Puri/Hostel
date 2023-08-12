@@ -7,6 +7,7 @@ use App\Models\Classes;
 use App\Models\Student;
 use Livewire\Component;
 use App\Models\Admission;
+use App\Models\Allocation;
 use App\Models\AcademicYear;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
@@ -192,6 +193,10 @@ class AllAdmission extends Component
         $admission->class_id = $validatedData['class_id'];
         $admission->status = '0';
         $admission->save();
+        
+        $allocation =new Allocation;
+        $allocation->admission_id= $admission->id;
+        $allocation->save();
 
         $education = new StudentEducation;
         $education->admission_id = $admission->id;
@@ -333,22 +338,35 @@ class AllAdmission extends Component
             'message'=>"Admission Updated Successfully!!"
         ]);
     }
+    
     public function view($id)
     { 
         $this->viewid=$id;
         $this->setmode('view');
     }
 
-    public function allocate($id)
+    public function confirm($id)
     { 
-        $this->allocateid=$id;
-        $this->setmode('allocate');
+        $admission=Admission::find($id);
+        $admission->status=1;
+        $admission->update();
+        $this->setmode('all');
+        $this->dispatchBrowserEvent('alert',[
+            'type'=>'success',
+            'message'=>"Admission Confirm Successfully!!"
+        ]);
     }
 
-    public function reallocate($id)
+    public function cancel($id)
     { 
-        $this->reallocateid=$id;
-        $this->setmode('reallocate');
+        $admission=Admission::find($id);
+        $admission->status=2;
+        $admission->update();
+        $this->setmode('all');
+        $this->dispatchBrowserEvent('alert',[
+            'type'=>'success',
+            'message'=>"Admission Cancelled Successfully!!"
+        ]);
     }
 
     public function delete($id)
@@ -434,27 +452,16 @@ class AllAdmission extends Component
         }
 
         $admissions = $query->paginate($this->per_page);
+
         if($this->viewid!=null)
         {
             $viewadmission=Admission::where('id',$this->viewid)->get();
-            $beds=null;
         }
-        elseif($this->allocateid!=null)
-        {
-            $viewadmission=Admission::where('id',$this->allocateid)->get();
-            $beds=Bed::where('status',0)->get();
-        }
-        elseif($this->reallocateid!=null)
-        {
-            $viewadmission=Admission::where('id',$this->reallocateid)->get();
-            $beds=Bed::where('status',0)->get();
-        }
-        else
+       else
         {
             $viewadmission=null;
-            $beds=null;
         }
    
-        return view('livewire.backend.Admission.all-Admission',compact('beds','viewadmission','students','admissions','classes','streams','types','lastclasses','academicyears'))->extends('layouts.admin')->section('admin');
+        return view('livewire.backend.Admission.all-Admission',compact('viewadmission','students','admissions','classes','streams','types','lastclasses','academicyears'))->extends('layouts.admin')->section('admin');
     }
 }

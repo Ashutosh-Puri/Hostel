@@ -79,9 +79,4 @@ class Student extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Admission::class, 'student_id', 'id');
     }
 
-    public function Allocations()
-    {
-        return $this->hasMany(Allocation::class, 'student_id', 'id');
-    }
-
 }

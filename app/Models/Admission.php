@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Bed;
 use App\Models\Classes;
 use App\Models\Student;
+use App\Models\Allocation;
 use App\Models\AcademicYear;
 use App\Models\StudentPayment;
 use App\Models\StudentEducation;
@@ -45,5 +46,10 @@ class Admission extends Model
     public function StudentEducations()
     {
         return $this->hasMany(StudentEducation::class, 'admission_id', 'id');
+    }
+
+    public function Allocations()
+    {
+        return $this->hasMany(Allocation::class, 'admission_id', 'id');
     }
 }

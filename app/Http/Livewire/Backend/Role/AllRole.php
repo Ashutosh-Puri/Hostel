@@ -6,6 +6,7 @@ use App\Models\Role;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class AllRole extends Component
 {   
@@ -16,6 +17,19 @@ class AllRole extends Component
     public $role;
     public $status;
     public $c_id;
+
+    protected function rules()
+    {
+        return [
+            'role' => ['required','string','unique:roles,role,'.($this->mode=='edit'? Auth::user()->id :''),],
+        ];
+    }
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
+
 
     public function resetinput()
     {
@@ -32,9 +46,7 @@ class AllRole extends Component
  
     public function save()
     {
-        $validatedData = $this->validate([
-            'role' => ['required','string', Rule::unique('roles', 'role')],
-        ]);
+        $validatedData = $this->validate();
         $role= new Role;
         $role->role = $validatedData['role'];
         $role->status = $this->status==1?1:0;
@@ -58,9 +70,7 @@ class AllRole extends Component
 
     public function update($id)
     {   
-        $validatedData = $this->validate([
-            'role' => ['required','string', Rule::unique('roles', 'role')->ignore($this->role, 'role')],
-        ]);
+        $validatedData = $this->validate();
         $role = Role::find($id);
         $role->role = $validatedData['role'];
         $role->status = $this->status==1?'1':'0';

@@ -26,8 +26,5 @@ class Bed extends Model
     }
 
 
-    public function Allocations()
-    {
-        return $this->hasMany(Allocation::class, 'bed_id', 'id');
-    }
+
 }

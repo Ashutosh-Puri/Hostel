@@ -17,9 +17,7 @@ class AllAllocation extends Component
     public $a = '',$s = '',$c = '';
     public $per_page = 10;
     public $mode='all';
-    public $student_id;
-    public $academic_year_id;
-    public $class_id;
+    public $admission_id;
     public $bed_id;
     public $fee_id;
     public $c_id;
@@ -30,17 +28,12 @@ class AllAllocation extends Component
         $this->a=null;
         $this->s=null;
         $this->c=null;
-        $this->student_id=null;
-        $this->academic_year_id=null;
-        $this->class_id=null;
         $this->c_id=null;
         $this->bed_id=null;
         $this->fee_id=null;
     }
  
     protected $rules = [
-        'student_id' => ['required','integer'],
-        'academic_year_id' => ['required','integer'],
         'class_id' => ['required','integer'],
         'fee_id' => ['required','integer'],
         'bed_id' => ['required','integer'],
@@ -74,16 +67,10 @@ class AllAllocation extends Component
         ]);
     }
 
-    public function edit($id)
+    public function allocate($id)
     {   
-        $allocation = Allocation::find($id);
-        $this->C_id=$allocation->id;
-        $this->academic_year_id = $allocation->academic_year_id;
-        $this->bed_id = $allocation->bed_id;
-        $this->student_id = $allocation->student_id;
-        $this->class_id =  $allocation->class_id;
-        $this->fee_id =  $allocation->fee_id;
-        $this->setmode('edit');
+        $this->alloacteid=$id;
+        $this->setmode('allocate');
     }
 
     public function update($id)
@@ -123,20 +110,9 @@ class AllAllocation extends Component
         $fees=Fee::where('status',0)->get();
         $students=Student::where('status',0)->orderBy('name', 'ASC')->get();
         $query =Allocation::orderBy('student_id', 'ASC');    
-        if ($this->a) {
-            $academicyearIds = AcademicYear::where('status', 0)->where('year', 'like', '%' . $this->a. '%')->pluck('id');
-            $query->whereIn('academic_year_id', $academicyearIds);
-        }  
-        if ($this->s) {
-            $studentIds = Student::where('status', 0)->where('name', 'like', '%' . $this->s. '%')->pluck('id');
-            $query->whereIn('student_id', $studentIds);
-        }
-        if ($this->c) {
-            $classIds = Classes::where('status', 0)->where('name', 'like', '%' . $this->c. '%')->pluck('id');
-            $query->whereIn('class_id', $classIds);
-        }
-        $allocations = $query->paginate($this->per_page);
-        return view('livewire.backend.allocation.all-allocation',compact('fees','beds','classes','academicyears','allocations','students'))->extends('layouts.admin')->section('admin');
+       
+        $allocations =Allocation::paginate($this->per_page);
+        return view('livewire.backend.allocation.all-allocation',compact('fees','beds','allocations'))->extends('layouts.admin')->section('admin');
     }
 
 }
