@@ -18,7 +18,7 @@ class AllStudent extends Component
     public $mode='all';
     public $c_id;
     public $status;
-    public $name;
+    public $username;
     public $email;
     public $password;
     public $mobile;
@@ -42,13 +42,13 @@ class AllStudent extends Component
         $this->mobile=null;
         $this->password=null;
         $this->email=null;
-        $this->name=null;
+        $this->username=null;
         $this->status=null;
         $this->c_id=null;
     }
  
     protected $rules = [
-        'name' => ['required', 'string', 'max:255'],
+        'username' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'email', 'max:255'], 
         'password' => ['required','string', 'min:8', 'max:255'],
         'mobile' => ['nullable', 'integer', 'digits:10'], 
@@ -73,7 +73,7 @@ class AllStudent extends Component
     {  
         $validatedData = $this->validate();    
         $student= new Student;
-        $student->name = $validatedData['name'];
+        $student->username = $validatedData['username'];
         $student->email= $validatedData['email'];
         $student->password= Hash::make($validatedData['password']);
         $student->mobile= $validatedData['mobile'];
@@ -102,7 +102,7 @@ class AllStudent extends Component
     {   
         $student = Student::find($id);
         $this->C_id=$student->id;
-        $this->name=$student->name;
+        $this->username=$student->username;
         $this->email=$student->email;
         $this->mobile=$student->mobile;
         $this->member_id=$student->member_id;
@@ -118,7 +118,7 @@ class AllStudent extends Component
     {   
         $validatedData = $this->validate();
         $student = Student::find($id);
-        $student->name = $validatedData['name'];
+        $student->username = $validatedData['username'];
         $student->email= $validatedData['email'];
         $student->mobile= $validatedData['mobile'];
         $student->member_id= $validatedData['member_id'];
@@ -159,7 +159,7 @@ class AllStudent extends Component
 
     public function render()
     {   
-        $students=Student::where('name', 'like', '%'.$this->search.'%')->orderBy('name', 'ASC')->paginate($this->per_page);
+        $students=Student::where('username', 'like', '%'.$this->search.'%')->orderBy('username', 'ASC')->paginate($this->per_page);
         return view('livewire.backend.student.all-student',compact('students'))->extends('layouts.admin')->section('admin');
     }
 

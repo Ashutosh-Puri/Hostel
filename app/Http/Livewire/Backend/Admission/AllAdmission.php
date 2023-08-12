@@ -2,23 +2,51 @@
 
 namespace App\Http\Livewire\Backend\Admission;
 
+use App\Models\Bed;
+use App\Models\Classes;
 use App\Models\Student;
 use Livewire\Component;
 use App\Models\Admission;
+use App\Models\AcademicYear;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
+use Illuminate\Validation\Rule;
+use App\Models\StudentEducation;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class AllAdmission extends Component
 {   
     use WithPagination;
-    public $student_name = '';
+    use WithFileUploads;
+    public $ad = '';
+    public $s = '';
+    public $a = '';
+    public $c = '';
+    public $stream = '';
+    public $stream_type = '';
     public $per_page = 10;
-    public $mode='add';
+    public $mode='all';
     public $c_id;
+    public $academic_year_id;
     public $student_id;
-    public $mother_name;
-    public $dob;
+    public $class_id;
+    public $last_class_id;
+    public $sgpa=0.00;
+    public $percentage;
+    public $name;
+    public $first_name;
+    public $middle_name;
+    public $last_name;
+    public $mobile;
+    public $photo;
     public $cast;
     public $category;
+    public $dob;
+    public $blood_group;
+    public $is_allergy;
+    public $is_ragging=0;
+    public $mother_name;
     public $parent_name;
     public $parent_mobile;
     public $parent_address;
@@ -26,21 +54,91 @@ class AllAdmission extends Component
     public $local_parent_mobile;
     public $local_parent_address;
     public $address_type;
-    public $blood_group;
-    public $is_allergy;
-    public $is_ragging;
+    public $member_id;
+    public $photoold;
+    public $viewid=null;
+    public $allocateid=null;
+    public $reallocateid=null;
 
     public function resetinput()
     {
         $this->name=null;
         $this->c_id=null;
-        $this->student_name =null;
+        $this->ad =null;
+        $this->a =null;
+        $this->s =null;
+        $this->c =null;
+        $this->academic_year_id=null;
+        $this->student_id=null;
+        $this->class_id = null;
+        $this->stream=null;
+        $this->stream_type=null;
+        $this->status =null;
+        $this->last_name = null;
+        $this->first_name =null;
+        $this->middle_name =null;
+        $this->mobile =null;
+        $this->mother_name =null;
+        $this->dob =null;
+        $this->cast =null;
+        $this->category =null;
+        $this->parent_name =null;
+        $this->parent_mobile =null;
+        $this->parent_address =null;
+        $this->local_parent_name =null;
+        $this->local_parent_mobile =null;
+        $this->local_parent_address =null;
+        $this->blood_group =null;
+        $this->is_allergy =null;
+        $this->is_ragging =null;
+        $this->address_type=null;
+        $this->member_id =null;
+        $this->photoold =null;
+        $this->photo =null;
+        $this->last_class_id=null;
+        $this->sgpa=null;
+        $this->percentage=null;
+        $this->viewid=null;
+        $this->allocateid=null;
+        $this->reallocateid=null;
     }
- 
-    protected $rules = [
-        'name' => ['required','string'],
-    ];
- 
+    
+    protected function rules()
+    {
+        return [
+            'student_id'=>['required','integer'],
+            'academic_year_id'=>['required','integer'],
+            'first_name'=>['required','string','max:255'],
+            'first_name'=>['required','string','max:255'],
+            'middle_name'=>['required','string','max:255'],
+            'last_name'=>['required','string','max:255'], 
+            'dob'=>['required','date'],
+            'cast'=>['required','string','max:255'],
+            'category'=>['required','string','max:255'],
+            'blood_group'=>['required','string','max:255'],    
+            'stream'=>['required','string','max:255'],
+            'stream_type'=>['required','string','max:255'],  
+            'class_id'=>['required','integer'],
+            'last_class_id'=>['required','integer'],
+            'percentage'=>['required','numeric','min:0','max:100'],
+            'sgpa'=>['nullable','numeric','min:0.00','max:10.00'],
+            'parent_name'=>['required','string','max:255'],
+            'mother_name'=>['required','string','max:255'],
+            'parent_mobile'=>['required','numeric','digits:10','unique:students,parent_mobile,'.($this->mode=='edit'? Auth::user()->id :''),],
+            'parent_address'=>['required','string','max:255'],
+            'local_parent_name'=>['nullable','string','max:255'],
+            'local_parent_mobile'=>['nullable','numeric','digits:10','unique:students,local_parent_mobile,'.($this->mode=='edit'? Auth::user()->id :''),],
+            'local_parent_address'=>['nullable','string','max:255'],
+            'address_type'=>['required','integer','max:255'],
+            'is_allergy'=>['nullable','string','max:255'],
+            'is_ragging'=>['nullable'],
+            'mobile'=>['required','numeric','digits:10','unique:students,mobile,'.($this->mode=='edit'? Auth::user()->id :''),],
+            'member_id'=>['required','numeric','unique:students,member_id,'.($this->mode=='edit'? Auth::user()->id :''),],
+            'photo'=>[($this->mode=='edit'? 'nullable' : 'required'),'image','mimes:jpeg,jpg,png','max:1024'], 
+        ];
+    }
+
+
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
@@ -52,11 +150,58 @@ class AllAdmission extends Component
     }
  
     public function save()
-    {
-        $validatedData = $this->validate();    
-        $admission= new Admission;
-        $admission->name = $validatedData['name'];
+    {    
+      
+        $validatedData = $this->validate();  
+
+        $student = Student::find($this->student_id);
+        if ($student) {
+            $student->name = $this->name;
+            $student->mobile = $this->mobile;
+            $student->mother_name = $validatedData['mother_name'];
+            $student->dob = $validatedData['dob'];
+            $student->cast = $validatedData['cast'];
+            $student->category = $validatedData['category'];
+            $student->parent_name = $validatedData['parent_name'];
+            $student->parent_mobile = $validatedData['parent_mobile'];
+            $student->parent_address = $validatedData['parent_address'];
+            $student->local_parent_name = $validatedData['local_parent_name'];
+            $student->local_parent_mobile = $validatedData['local_parent_mobile'];
+            $student->local_parent_address = $validatedData['local_parent_address'];
+            $student->blood_group = $validatedData['blood_group'];
+            $student->is_allergy = $validatedData['is_allergy'];
+            $student->is_ragging = $this->is_ragging == 1 ? '1' : '0';
+            $student->address_type = $this->address_type == 1 ? '1' : '0';
+            $student->member_id = $this->member_id;
+
+            if ($this->photo) {
+                $path = 'uploads/profile/photo/';
+                $fileName = 'user-' . time(). '.' . $this->photo->getClientOriginalExtension();
+                $this->photo->storeAs($path, $fileName, 'public');
+                $student->photo = 'storage/' . $path . $fileName;
+                $this->reset('photo');
+            }
+
+            $student->update();
+        }
+
+        
+        $admission = new Admission;
+        $admission->academic_year_id = $this->academic_year_id;
+        $admission->student_id = $this->student_id;
+        $admission->class_id = $validatedData['class_id'];
+        $admission->status = '0';
         $admission->save();
+
+        $education = new StudentEducation;
+        $education->admission_id = $admission->id;
+        $education->academic_year_id = $this->academic_year_id;
+        $education->student_id = $this->student_id;
+        $education->last_class_id = $validatedData['last_class_id'];
+        $education->sgpa = $validatedData['sgpa'];
+        $education->percentage = $validatedData['percentage'];
+        $education->save();
+
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -68,17 +213,119 @@ class AllAdmission extends Component
     public function edit($id)
     {   
         $admission = Admission::find($id);
-        $this->C_id=$admission->id;
-        $this->name=$admission->name;
+        if ($admission) 
+        {
+            $this->C_id = $admission->id;
+            $this->academic_year_id = $admission->academic_year_id;
+            $this->student_id = $admission->student_id;
+            $this->class_id = $admission->class_id;
+            $this->status = '0';
+
+            $class = Classes::where('id', $admission->class_id)->latest()->first();
+            if ($class) 
+            {
+                $this->stream = $class->stream;
+                $this->stream_type = $class->type;
+            }
+        }
+
+        $student = Student::find($this->student_id);
+        if ($student) 
+        {
+            $nameParts = explode(' ', $student->name);
+            $this->last_name = isset($nameParts[0]) ? $nameParts[0] : '';
+            $this->first_name = isset($nameParts[1]) ? $nameParts[1] : '';
+            $this->middle_name = isset($nameParts[2]) ? $nameParts[2] : '';
+            $this->mobile = $student->mobile;
+            $this->mother_name = $student->mother_name;
+            $this->dob = $student->dob;
+            $this->cast = $student->cast;
+            $this->category = $student->category;
+            $this->parent_name = $student->parent_name;
+            $this->parent_mobile = $student->parent_mobile;
+            $this->parent_address = $student->parent_address;
+            $this->local_parent_name = $student->local_parent_name;
+            $this->local_parent_mobile = $student->local_parent_mobile;
+            $this->local_parent_address = $student->local_parent_address;
+            $this->blood_group = $student->blood_group;
+            $this->is_allergy = $student->is_allergy;
+            $this->is_ragging = $student->is_ragging;
+            $this->address_type = $student->address_type;
+            $this->member_id = $student->member_id;
+            $this->photoold = $student->photo;
+        }
+
+        $education = StudentEducation::where('academic_year_id', $this->academic_year_id)->where('student_id', $this->student_id)->latest()->first();
+        if ($education) 
+        {
+            $this->last_class_id = $education->last_class_id;
+            $this->sgpa = $education->sgpa;
+            $this->percentage = $education->percentage;
+        }
+
         $this->setmode('edit');
     }
 
     public function update($id)
     {   
-        $validatedData = $this->validate();
+
+        $validatedData = $this->validate();   
+
+        // Admission
         $admission = Admission::find($id);
-        $admission->name = $validatedData['name'];
-        $admission->update();
+        $oldyearid=$admission->academic_year_id;
+        $oldstudentid=$admission->student_id;
+        if($admission)
+        {
+            $admission->academic_year_id=$this->academic_year_id;
+            $admission->student_id= $this->student_id;
+            $admission->class_id = $validatedData['class_id'];
+            $admission->status ='0';
+            $admission->update();
+        }
+
+        $education =StudentEducation::where('admission_id', $id)->where('academic_year_id', $oldyearid)->where('student_id', $oldstudentid)->latest()->first();
+        if ($education) 
+        {
+            $education->update([
+                'academic_year_id' => $validatedData['academic_year_id'],
+                'last_class_id' => $validatedData['last_class_id'],
+                'sgpa' => $validatedData['sgpa'],
+                'percentage' => $validatedData['percentage'],
+            ]);
+        }
+
+        // Student
+        $student= Student::find($this->student_id);
+        if($student)
+        {
+            $student->name = $this->name;
+            $student->mobile = $this->mobile;
+            $student->mother_name = $validatedData['mother_name'];
+            $student->dob = $validatedData['dob'];
+            $student->cast = $validatedData['cast'];
+            $student->category = $validatedData['category'];
+            $student->parent_name = $validatedData['parent_name'];
+            $student->parent_mobile = $validatedData['parent_mobile'];
+            $student->parent_address = $validatedData['parent_address'];
+            $student->local_parent_name = $validatedData['local_parent_name'];
+            $student->local_parent_mobile = $validatedData['local_parent_mobile'];
+            $student->local_parent_address = $validatedData['local_parent_address'];
+            $student->blood_group = $validatedData['blood_group'];
+            $student->is_allergy = $validatedData['is_allergy'];
+            $student->is_ragging = $this->is_ragging==1?'1':'0';
+            $student->address_type = $this->address_type==1?'1':'0';
+            $student->member_id = $this->member_id;
+            if($this->photo)
+            {   $path='uploads/profile/photo/';
+                $FileName = 'user-'.time().'.'.$this->photo->getClientOriginalExtension();
+                $this->photo->storeAs($path,$FileName,'public');
+                $student->photo='storage/'.$path.$FileName ;
+                $this->reset('photo');
+            }
+            $student->update();
+        }
+
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -86,11 +333,66 @@ class AllAdmission extends Component
             'message'=>"Admission Updated Successfully!!"
         ]);
     }
+    public function view($id)
+    { 
+        $this->viewid=$id;
+        $this->setmode('view');
+    }
+
+    public function allocate($id)
+    { 
+        $this->allocateid=$id;
+        $this->setmode('allocate');
+    }
+
+    public function reallocate($id)
+    { 
+        $this->reallocateid=$id;
+        $this->setmode('reallocate');
+    }
 
     public function delete($id)
     { 
         $admission = Admission::find($id);
-        $admission->delete();
+
+        if ($admission) 
+        {
+            // Delete StudentEducation
+            StudentEducation::where('student_id', $admission->student_id)->where('academic_year_id', $admission->academic_year_id)->delete();
+
+            // Update Student record
+            $student = Student::find($admission->student_id);
+            if ($student) 
+            {
+                $student->name = null;
+                $student->mobile = null;
+                $student->mother_name = null;
+                $student->dob = null;
+                $student->cast = null;
+                $student->category = null;
+                $student->parent_name = null;
+                $student->parent_mobile = null;
+                $student->parent_address = null;
+                $student->local_parent_name = null;
+                $student->local_parent_mobile = null;
+                $student->local_parent_address = null;
+                $student->blood_group = null;
+                $student->is_allergy = null;
+                $student->is_ragging = null;
+                $student->address_type = null;
+                $student->member_id = null;
+                if($student->photo)
+                {
+                    File::delete($student->photo);
+                }
+                $student->photo = null;
+                $student->update();
+            }
+
+            $admission->delete();
+        }
+
+        $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
@@ -98,17 +400,61 @@ class AllAdmission extends Component
         ]);
     }
 
-
     public function render()
     {   
-        // $rooms=Room::orderBy('floor', 'ASC')->get();
-        // $query = Admission::orderBy('room_id', 'ASC');
-        // if ($this->search) {
-        //     $roomIds = Room::where('label', 'like', '%' . $this->search . '%')->pluck('id');
-        //     $query->whereIn('room_id', $roomIds);
-        // }
-        // $admissions = $query->paginate($this->per_page);
-        $admissions =Admission::orderBy('name', 'ASC')->paginate($this->per_page);
-        return view('livewire.backend.Admission.all-Admission',compact('admissions','students'))->extends('layouts.admin')->section('admin');
+        $this->name = $this->last_name." ".$this->first_name." ".$this->middle_name;
+
+        if (is_numeric($this->sgpa) && $this->sgpa > 0) {
+            $this->percentage = (($this->sgpa * 10) - 7.5);
+        }
+        $academicyears = AcademicYear::where('status', 0)->orderBy('year', 'DESC')->get();
+        $streams=Classes::select('stream')->where('status',0)->distinct('stream')->get();
+        $types=Classes::select('type')->where('status',0)->where('stream',$this->stream)->distinct('type')->get();
+        $classes=Classes::select('id','name')->where('status',0)->where('type',$this->stream_type)->orderBy('name',"ASC")->get();
+        $lastclasses=Classes::select('id','name')->where('status',0)->where('stream',$this->stream)->whereNot('id',$this->class_id)->orderBy('name',"ASC")->get();
+        $students=Student::where('status',0)->orderBy('username',"ASC")->get();
+
+
+        $query =Admission::orderBy('academic_year_id', 'DESC');    
+        if ($this->ad) {
+            $admissionIds = Admission::where('id', 'like',$this->ad. '%')->pluck('id');
+            $query->whereIn('id', $admissionIds);
+        }
+        if ($this->a) {
+            $academicyearIds = AcademicYear::where('status', 0)->where('year', 'like', '%' . $this->a. '%')->pluck('id');
+            $query->whereIn('academic_year_id', $academicyearIds);
+        }  
+        if ($this->s) {
+            $studentIds = Student::where('name', 'like', $this->s. '%')->pluck('id');
+            $query->whereIn('student_id', $studentIds);
+        }
+        if ($this->c) {
+            $classIds = Classes::where('status', 0)->where('name', 'like', '%' . $this->c. '%')->pluck('id');
+            $query->whereIn('class_id', $classIds);
+        }
+
+        $admissions = $query->paginate($this->per_page);
+        if($this->viewid!=null)
+        {
+            $viewadmission=Admission::where('id',$this->viewid)->get();
+            $beds=null;
+        }
+        elseif($this->allocateid!=null)
+        {
+            $viewadmission=Admission::where('id',$this->allocateid)->get();
+            $beds=Bed::where('status',0)->get();
+        }
+        elseif($this->reallocateid!=null)
+        {
+            $viewadmission=Admission::where('id',$this->reallocateid)->get();
+            $beds=Bed::where('status',0)->get();
+        }
+        else
+        {
+            $viewadmission=null;
+            $beds=null;
+        }
+   
+        return view('livewire.backend.Admission.all-Admission',compact('beds','viewadmission','students','admissions','classes','streams','types','lastclasses','academicyears'))->extends('layouts.admin')->section('admin');
     }
 }

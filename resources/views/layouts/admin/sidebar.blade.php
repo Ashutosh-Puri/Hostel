@@ -28,12 +28,6 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_student_profile') }}">
-          <span class="icon-bg"><i class="mdi mdi-account-card-details menu-icon"></i></span>
-          <span class="menu-title">Student Profile's</span>
-        </a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link" href="{{ route('all_academic_year') }}">
           <span class="icon-bg"><i class="mdi mdi-calendar-today menu-icon"></i></span>
           <span class="menu-title">Academic Year's</span>
@@ -115,6 +109,18 @@
         <a class="nav-link" href="{{ route('all_admission') }}">
           <span class="icon-bg"><i class="mdi mdi-codepen menu-icon"></i></span>
           <span class="menu-title">Admission's</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_student_education') }}">
+          <span class="icon-bg"><i class="mdi mdi-account-card-details menu-icon"></i></span>
+          <span class="menu-title">Student Education's</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_allocation') }}">
+          <span class="icon-bg"><i class="mdi mdi-account-card-details menu-icon"></i></span>
+          <span class="menu-title">Allocation's</span>
         </a>
       </li>
       {{-- <li class="nav-item">

@@ -20,6 +20,17 @@ class AllBuilding extends Component
     public $status;
     public $hostel_id;
     public $c_id;
+
+
+    protected $rules = [
+        'name' => ['required','string'],
+        'hostel_id' => ['required','integer'],
+    ];
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
  
     public function resetinput()
     {
@@ -38,10 +49,7 @@ class AllBuilding extends Component
  
     public function save()
     {
-        $validatedData = $validatedData = $this->validate([
-            'name' => ['required','string', Rule::unique('buildings', 'name')],
-            'hostel_id' => ['required','integer'],
-        ]);
+        $validatedData =  $this->validate();
         $building= new Building;
         $building->name = $validatedData['name'];
         $building->hostel_id = $validatedData['hostel_id'];
@@ -67,10 +75,7 @@ class AllBuilding extends Component
 
     public function update($id)
     {   
-        $validatedData = $this->validate([
-            'name' => ['required','string', Rule::unique('buildings', 'name')->ignore($this->name, 'name')],
-            'hostel_id' => ['required','integer'],
-        ]);
+        $validatedData =  $this->validate();
         $building = Building::find($id);
         $building->name = $validatedData['name'];
         $building->hostel_id = $validatedData['hostel_id'];

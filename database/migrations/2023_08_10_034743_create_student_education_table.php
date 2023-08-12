@@ -11,19 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('admissions', function (Blueprint $table) {
+        Schema::create('student_education', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('academic_year_id');
             $table->unsignedBigInteger('student_id');
-            $table->unsignedBigInteger('class_id');
-            $table->unsignedBigInteger('bed_id')->nullable();
-            $table->unsignedBigInteger('fee_type_id')->nullable();
-            $table->string('seat_type')->nullable();
-            $table->tinyInteger('status')->nullable()->default('0')->comment('0-Waiting ,1-Confirm ,2-Cancel');
+            $table->unsignedBigInteger('admission_id');
+            $table->unsignedBigInteger('last_class_id');
+            $table->string('sgpa')->nullable()->default(0.00);
+            $table->string('percentage');
             $table->foreign('academic_year_id')->references('id')->on('academic_years')->onDelete('cascade');
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
-            $table->foreign('class_id')->references('id')->on('classes')->onDelete('cascade');
-            $table->foreign('bed_id')->references('id')->on('beds')->onDelete('cascade');
+            $table->foreign('last_class_id')->references('id')->on('classes')->onDelete('cascade');
+            $table->foreign('admission_id')->references('id')->on('admissions')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('admissions');
+        Schema::dropIfExists('student_education');
     }
 };

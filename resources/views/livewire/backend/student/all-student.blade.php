@@ -27,9 +27,9 @@
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
-                                            <label for="name" class="form-label">Name</label>
-                                            <input type="text"  class="form-control @error('name') is-invalid @enderror" wire:model.debounce.1000ms="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
-                                            @error('name')
+                                            <label for="username" class="form-label">Username</label>
+                                            <input type="text"  class="form-control @error('username') is-invalid @enderror" wire:model.debounce.1000ms="username" value="{{ old('username') }}" id="username" placeholder="Enter Username">
+                                            @error('username')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -187,9 +187,9 @@
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
-                                            <label for="name" class="form-label">Name</label>
-                                            <input type="text"  class="form-control @error('name') is-invalid @enderror" wire:model.debounce.1000ms="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
-                                            @error('name')
+                                            <label for="username" class="form-label">Username</label>
+                                            <input type="text"  class="form-control @error('username') is-invalid @enderror" wire:model.debounce.1000ms="username" value="{{ old('username') }}" id="username" placeholder="Enter Username">
+                                            @error('username')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -355,7 +355,7 @@
                                                     <label class="w-100 p-1  text-sm-center">Search</label>
                                                 </div>
                                                 <div class="col-12 col-md-3">
-                                                    <input class="w-100" wire:model="search" type="search" placeholder="Student Name">
+                                                    <input class="w-100" wire:model="search" type="search" placeholder="Student Username">
                                                 </div>
                                             </div>
                                     </span>
@@ -367,7 +367,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Image</th>
-                                            <th>Student Name</th>
+                                            <th>Student Username</th>
                                             <th>Email</th>
                                             <th>Mobile</th>
                                             <th>Status</th>
@@ -381,7 +381,7 @@
                                                 <td>
                                                     <img id="showImage" src="{{ (!empty($item->photo)) ? asset($item->photo) : asset('assets/images/no_image.jpg') }}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image" style="height: 45px; width:45px;">
                                                 </td>                                   
-                                                <td>{{ $item->name }}</td>
+                                                <td>{{ $item->username }}</td>
                                                 <td>{{ $item->email }}</td>
                                                 <td>{{ $item->mobile }}</td>
                                                 <td>

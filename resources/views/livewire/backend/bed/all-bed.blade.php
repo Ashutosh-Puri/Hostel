@@ -30,7 +30,7 @@
                                         <option hidden value="">Select Room</option>
                                         @foreach ($rooms as $item2)
                                             @php
-                                                $temp = "B - " . $item2->Building->name . "---> F - " . $item2->floor . " ---> R - " . $item2->label;
+                                                $temp = "H - " . $item2->Building->Hostel->name . " ---> B - " . $item2->Building->name . " ---> F - " . $item2->floor . " ---> R - " . $item2->label;
                                             @endphp
                                             <option value="{{ $item2->id }}">{{ $temp }}</option>
                                         @endforeach
@@ -86,7 +86,7 @@
                                         <option hidden value="">Select Room</option>
                                         @foreach ($rooms as $item2)
                                             @php
-                                                $temp = "B - " . $item2->Building->name . "---> F - " . $item2->floor . " ---> R - " . $item2->label;
+                                                $temp = "H - " . $item2->Building->Hostel->name . " ---> B - " . $item2->Building->name . " ---> F - " . $item2->floor . " ---> R - " . $item2->label;
                                             @endphp
                                             <option value="{{ $item2->id }}">{{ $temp }}</option>
                                         @endforeach

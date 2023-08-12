@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Admission;
+use App\Models\Allocation;
 use App\Models\StudentFine;
 use App\Models\StudentPayment;
 use App\Models\StudentProfile;
+use App\Models\StudentEducation;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -22,7 +25,7 @@ class Student extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
         'status',
@@ -66,10 +69,19 @@ class Student extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(StudentPayment::class, 'student_id', 'id');
     }
 
-    public function StudentProfile()
+    public function StudentEducations()
     {
-        return $this->hasOne(StudentProfile::class, 'student_id', 'id');
+        return $this->hasMany(StudentEducation::class, 'student_id', 'id');
     }
 
+    public function Admissions()
+    {
+        return $this->hasMany(Admission::class, 'student_id', 'id');
+    }
+
+    public function Allocations()
+    {
+        return $this->hasMany(Allocation::class, 'student_id', 'id');
+    }
 
 }

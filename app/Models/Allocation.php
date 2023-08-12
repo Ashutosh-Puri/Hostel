@@ -2,34 +2,28 @@
 
 namespace App\Models;
 
-use App\Models\Bed;
+use App\Models\Fee;
 use App\Models\Classes;
-use App\Models\Student;
-use App\Models\AcademicYear;
-use App\Models\StudentPayment;
-use App\Models\StudentEducation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Admission extends Model
+class Allocation extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
 
-    public function StudentPayments()
-    {
-        return $this->hasMany(StudentPayment::class, 'admission_id', 'id');
-    }
+
 
     public function Student()
     {
         return $this->belongsTo(Student::class, 'student_id', 'id');
     }
 
-    public function Class()
+    public function Fee()
     {
-        return $this->belongsTo(Classes::class, 'class_id', 'id');
+        return $this->belongsTo(Fee::class, 'fee_id', 'id');
     }
 
     public function Bed()
@@ -42,8 +36,9 @@ class Admission extends Model
         return $this->belongsTo(AcademicYear::class, 'academic_year_id', 'id');
     }
 
-    public function StudentEducations()
+    public function Class()
     {
-        return $this->hasMany(StudentEducation::class, 'admission_id', 'id');
+        return $this->belongsTo(Classes::class, 'class_id', 'id');
     }
+
 }

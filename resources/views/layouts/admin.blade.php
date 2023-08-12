@@ -2,23 +2,58 @@
 @section('content')
 <div>   
     @section('styles')
-        <style>
-            .card{
-                background-color: #36404a;
-            }
+      <style>
+        .card
+        {
+          background-color: #36404a;
+        }
 
-            input,input:active , textarea,option {
-                background-color: #3b4651;
-               
-                color: white;
-                }
-                select {
-                  background: #3b4651;
-                  color: #fff;
-                }
+        input, textarea,option 
+        {
+          background-color: #3b4651;
+          color: white;
+        }
+        .form-control 
+        {
+          color: white;
+          background-color: #3b4651;
+          border: 1px solid rgba(151, 151, 151, 0.3);
+          font-family: "nunito-regular", sans-serif;
+          font-size: 12px;
+          height: 45px;
+        }
+        .form-control::placeholder 
+        {
+          color: white;
+        }
 
+        .form-control:focus::placeholder
+        {
+          color: black; 
+        }
 
-        </style>
+        option 
+        {
+          color: white;
+          background-color: #3b4651;
+        }
+
+        .form-select 
+        {
+          color: white;
+          background-color: #3b4651;
+          border: 1px solid rgba(151, 151, 151, 0.3);
+          font-family: "nunito-regular", sans-serif;
+          font-size: 12px;
+          height: 45px;
+        }
+
+        .form-select:focus
+        {
+          color: black; 
+          background-color: white;
+        }             
+      </style>
     @endsection
         <!-- Container Start -->
         <div class="container-scroller">

@@ -14,7 +14,8 @@ class AllStudentProfile extends Component
     public $per_page = 10;
     public $mode='all';
     public $c_id;
-    public $student_id;
+    
+    public $name;
     public $mother_name;
     public $dob;
     public $cast;

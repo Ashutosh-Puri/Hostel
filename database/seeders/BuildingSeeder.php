@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Hostel;
 use App\Models\Building;
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
@@ -20,6 +21,7 @@ class BuildingSeeder extends Seeder
             Building::create([
                 'name' => $faker->unique()->name,
                 'status' => $faker->numberBetween(0, 1),
+                'hostel_id' => Hostel::inRandomOrder()->first()->id,
             ]);
         }
     }

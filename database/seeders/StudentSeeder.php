@@ -3,10 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\Student;
+use Faker\Factory as Faker;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Faker\Factory as Faker;
 
 class StudentSeeder extends Seeder
 {
@@ -16,7 +17,7 @@ class StudentSeeder extends Seeder
     public function run(): void
     {   
         Student::create([
-            'name' => 'Ashutosh',
+            'username' => 'Ashutosh',
             'email' => 'ashutoshpuri2000@gmail.com',
             'password' => Hash::make('123456789'),
             'status' => '0',
@@ -26,6 +27,7 @@ class StudentSeeder extends Seeder
         $mobileNumberFormat = '##########';
         for ($i = 0; $i < 100; $i++) {
             Student::create([
+                'username' => Str::slug($faker->unique()->userName, '_'),
                 'name' => $faker->name,
                 'email' => $faker->unique()->safeEmail,
                 'mobile' => $faker->unique()->numerify($mobileNumberFormat),
@@ -39,6 +41,20 @@ class StudentSeeder extends Seeder
                 'last_login' => $faker->dateTime,
                 'password' =>  $faker->password,
                 'status' => $faker->numberBetween(0, 1),
+                'mother_name' => $faker->name,
+                'dob' =>  $faker->dateTimeBetween('-65 years', '-18 years')->format('Y-m-d'),
+                'cast' => $faker->name,
+                'category' => $faker->name,
+                'parent_name' => $faker->name,
+                'parent_address' => $faker->jobTitle,
+                'parent_mobile' =>$faker->unique()->numerify($mobileNumberFormat),
+                'local_parent_name' => $faker->name,
+                'local_parent_address' => $faker->jobTitle,
+                'local_parent_mobile' => $faker->unique()->numerify($mobileNumberFormat),
+                'address_type' => $faker->numberBetween(0, 1),
+                'blood_group' => $faker->randomElement(['A-', 'A+','AB-', 'AB+','O-', 'O+','B-', 'B+']),
+                'is_allergy' => $faker->name,
+                'is_ragging' => $faker->numberBetween(0, 1),
             ]);
         }
     }  

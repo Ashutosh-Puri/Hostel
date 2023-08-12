@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Models\Fee;
 use App\Models\Fine;
 use App\Models\Quota;
+use App\Models\Admission;
+use App\Models\Allocation;
 use App\Models\StudentFine;
 use App\Models\AcademicYear;
 use App\Models\StudentPayment;
@@ -37,8 +39,23 @@ class AcademicYear extends Model
         return $this->hasMany(StudentPayment::class, 'academic_year_id', 'id');
     }
 
-    public function Quota()
+    public function Quotas()
     {
         return $this->hasMany(Quota::class, 'academic_year_id', 'id');
+    }
+
+    public function StudentEducations()
+    {
+        return $this->hasMany(AcademicYear::class, 'academic_year_id', 'id');
+    }
+
+    public function Admissions()
+    {
+        return $this->hasMany(Admission::class, 'academic_year_id', 'id');
+    }
+
+    public function Allocations()
+    {
+        return $this->hasMany(Allocation::class, 'academic_year_id', 'id');
     }
 }

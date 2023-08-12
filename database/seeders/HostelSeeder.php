@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\Fee;
-use Faker\Factory as Faker;
-use App\Models\AcademicYear;
+use App\Models\Hostel;
+use App\Models\College;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Faker\Factory as Faker;
 
-class FeeSeeder extends Seeder
+class HostelSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -19,11 +19,10 @@ class FeeSeeder extends Seeder
 
         // Insert 1000 fake records into the Classes table
         for ($i = 0; $i < 100; $i++) {
-            Fee::create([
+            Hostel::create([
+                'name' => $faker->randomElement(['Fan', 'Table', 'Bed']),
                 'status' => $faker->numberBetween(0, 1),
-                'type' => $faker->numberBetween(1, 4),
-                'amount' => $faker->numberBetween(500, 14000),
-                'academic_year_id' => AcademicYear::inRandomOrder()->first()->id,
+                'college_id' => College::inRandomOrder()->first()->id,
             ]);
         }
     }

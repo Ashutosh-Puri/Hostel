@@ -2,15 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\Fine;
+use App\Models\Classes;
 use App\Models\Student;
-use App\Models\StudentFine;
-use Faker\Factory as Faker;
+use App\Models\Admission;
 use App\Models\AcademicYear;
 use Illuminate\Database\Seeder;
+use App\Models\StudentEducation;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Faker\Factory as Faker;
 
-class StudentFineSeeder extends Seeder
+class StudentEducationSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -20,12 +21,13 @@ class StudentFineSeeder extends Seeder
         $faker = Faker::create();
 
         for ($i = 0; $i < 100; $i++) {
-            StudentFine::create([
-                'status' => $faker->numberBetween(0, 1),
-                'amount' => $faker->numberBetween(100,1000),
+            StudentEducation::create([
+                'admission_id' => Admission::inRandomOrder()->first()->id,
                 'academic_year_id' => AcademicYear::inRandomOrder()->first()->id,
                 'student_id' => Student::inRandomOrder()->first()->id,
-                'fine_id' => Fine::inRandomOrder()->first()->id,
+                'last_class_id' => Classes::inRandomOrder()->first()->id,
+                'sgpa' => $faker->numberBetween(0.00,10.00),
+                'percentage' => $faker->numberBetween(0,100),
             ]);
         }
     }
