@@ -102,7 +102,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12 col-md-5">
+                                    <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
                                             <label for="photo" class="form-label">Photo</label>
                                             <input type="file" class="form-control  @error('photo') is-invalid @enderror" wire:model.debounce.1000ms="photo" id="photo"   >
@@ -113,10 +113,10 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-1">
+                                    <div class="col-12 col-md-2">
                                         <div class="mb-3 form-group">
                                             <label for="photo" class="form-label"></label>
-                                            <img id="showImage" src="{{ isset($photo)?asset($photo->temporaryUrl()):asset('assets/images/no_image.jpg'); }}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
+                                            <img id="showImage" src="{{ isset($photo)?asset($photo->temporaryUrl()):asset('assets/images/no_image.jpg'); }}"  alt="Image" class="img-fluid rounded-circle mb-3" style="height: 80px; width:80px;">
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
@@ -218,7 +218,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12 col-md-5">
+                                    <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
                                             <label for="photo" class="form-label">Photo</label>
                                             <input type="file" class="form-control  @error('photo') is-invalid @enderror" wire:model.debounce.1000ms="photo" id="photo"   >
@@ -229,19 +229,22 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-1">
-                                        <div class="mb-3 form-group">
-                                            <label for="photo" class="form-label"></label>
-                                            <img id="showImage" src="{{ isset($photo)?asset($photo->temporaryUrl()):asset('assets/images/no_image.jpg'); }}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
+                                    @if ($photo) 
+                                        <div class="col-12 col-md-2">
+                                            <div class="mb-3 form-group">
+                                                <label for="photo" class="form-label"></label>
+                                                <img id="showImage" src="{{ isset($photo)?asset($photo->temporaryUrl()):asset('assets/images/no_image.jpg'); }}"  alt="Image" class="img-fluid rounded-circle mb-3" style="height: 80px; width:80px;">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-12 col-md-1">
-                                        <div class="mb-3 form-group">
-                                            <label for="photo" class="form-label"></label>
-                                            <img id="showImage" src="{{ isset($photoold)?asset($photoold):asset('assets/images/no_image.jpg'); }}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
+                                    @else
+                                        <div class="col-12 col-md-2">
+                                            <div class="mb-3 form-group">
+                                                <label for="photo" class="form-label"></label>
+                                                <img id="showImage" src="{{ isset($photoold)?asset($photoold):asset('assets/images/no_image.jpg'); }}"  alt="Image" class="img-fluid rounded-circle mb-3" style="height: 80px; width:80px;">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-12 col-md-5">
+                                    @endif
+                                    <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="status" class="form-label">Status</label>
                                             <div class="form-group ">

@@ -165,7 +165,7 @@
                                                     <label class="w-100 p-1  text-sm-center">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input class="w-100" wire:model="college_name" type="search" placeholder="Hostel Name">
+                                                <input class="w-100" wire:model="college_name" type="search" placeholder="College Name">
                                             </div>
                                             <div class="col-12 col-md-3">
                                                 <input class="w-100" wire:model="hostel_name" type="search" placeholder="Hostel Name">

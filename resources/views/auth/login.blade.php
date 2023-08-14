@@ -1,8 +1,8 @@
-@extends('layouts.student')
+@extends('layouts.guest.guest')
 @section('title')
     Login
 @endsection
-@section('student')
+@section('guest')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">

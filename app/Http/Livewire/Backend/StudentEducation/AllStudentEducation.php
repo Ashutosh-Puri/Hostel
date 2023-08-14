@@ -39,16 +39,19 @@ class AllStudentEducation extends Component
         $this->c_id=null;
         $this->admission_id=null;
     }
- 
-    protected $rules = [
-        'student_id' => ['required','integer'],
-        'academic_year_id' => ['required','integer'],
-        'last_class_id' => ['required','integer'],
-        'admission_id' => ['required','integer'],
-        'sgpa' => ['required','numeric','min:0.00','max:10.00'],
-        'percentage' => ['required','numeric','min:0','max:100'],
-    ];
- 
+    
+    protected function rules()
+    {   
+        return [
+            'student_id' => ['required','integer'],
+            'academic_year_id' => ['required','integer'],
+            'last_class_id' => ['required','integer'],
+            'admission_id' => ['required','integer'],
+            'sgpa' => ['required','numeric','min:0.00','max:10.00'],
+            'percentage' => ['required','numeric','min:0','max:100'], 
+        ];
+    }
+
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
@@ -63,13 +66,20 @@ class AllStudentEducation extends Component
     {  
         $validatedData = $this->validate();    
         $student_education= new StudentEducation;
-        $student_education->admission_id = $validatedData['admission_id'];
-        $student_education->academic_year_id = $validatedData['academic_year_id'];
-        $student_education->student_id = $validatedData['student_id'];
-        $student_education->last_class_id = $validatedData['last_class_id'];
-        $student_education->percentage = $validatedData['percentage'];
-        $student_education->sgpa = $validatedData['sgpa'];
-        $student_education->save();
+        if($student_education){
+            $student_education->admission_id = $validatedData['admission_id'];
+            $student_education->academic_year_id = $validatedData['academic_year_id'];
+            $student_education->student_id = $validatedData['student_id'];
+            $student_education->last_class_id = $validatedData['last_class_id'];
+            $student_education->percentage = $validatedData['percentage'];
+            $student_education->sgpa = $validatedData['sgpa'];
+            $student_education->save();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -81,13 +91,21 @@ class AllStudentEducation extends Component
     public function edit($id)
     {   
         $student_education = StudentEducation::find($id);
-        $this->C_id=$student_education->id;
-        $this->academic_year_id = $student_education->academic_year_id;
-        $this->admission_id = $student_education->admission_id;
-        $this->student_id = $student_education->student_id;
-        $this->last_class_id =  $student_education->last_class_id;
-        $this->percentage = $student_education->percentage;
-        $this->sgpa = $student_education->sgpa;
+        if($student_education){
+            $this->C_id=$student_education->id;
+            $this->academic_year_id = $student_education->academic_year_id;
+            $this->admission_id = $student_education->admission_id;
+            $this->student_id = $student_education->student_id;
+            $this->last_class_id =  $student_education->last_class_id;
+            $this->percentage = $student_education->percentage;
+            $this->sgpa = $student_education->sgpa;
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
+        
         $this->setmode('edit');
     }
 
@@ -95,13 +113,20 @@ class AllStudentEducation extends Component
     {   
         $validatedData = $this->validate();
         $student_education = StudentEducation::find($id);
-        $student_education->academic_year_id = $validatedData['academic_year_id'];
-        $student_education->admission_id = $validatedData['admission_id'];
-        $student_education->student_id = $validatedData['student_id'];
-        $student_education->last_class_id = $validatedData['last_class_id'];
-        $student_education->percentage = $validatedData['percentage'];
-        $student_education->sgpa = $validatedData['sgpa'];
-        $student_education->update();
+        if($student_education){
+            $student_education->academic_year_id = $validatedData['academic_year_id'];
+            $student_education->admission_id = $validatedData['admission_id'];
+            $student_education->student_id = $validatedData['student_id'];
+            $student_education->last_class_id = $validatedData['last_class_id'];
+            $student_education->percentage = $validatedData['percentage'];
+            $student_education->sgpa = $validatedData['sgpa'];
+            $student_education->update();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -113,7 +138,14 @@ class AllStudentEducation extends Component
     public function delete($id)
     { 
         $student_education = StudentEducation::find($id);
-        $student_education->delete();
+        if($student_education){
+            $student_education->delete();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
@@ -123,30 +155,33 @@ class AllStudentEducation extends Component
 
     public function render()
     {   
+        if (is_numeric($this->sgpa) && $this->sgpa > 0) {
+            $this->percentage = (($this->sgpa * 10) - 7.5);
+        }
         $academicyears=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
         $classes=Classes::where('status',0)->orderBy('name', 'ASC')->get();
         $admissions=Admission::orderBy('academic_year_id', 'DESC')->get();
-
         $students=Student::where('status',0)->orderBy('name', 'ASC')->get();
-        $query =StudentEducation::orderBy('student_id', 'ASC');    
-        if ($this->ad) {
-            $admissionIds = Admission::where('id', 'like', '%' . $this->ad. '%')->pluck('id');
-            $query->whereIn('admission_id', $admissionIds);
-        }
-        if ($this->a) {
-            $academicyearIds = AcademicYear::where('status', 0)->where('year', 'like', '%' . $this->a. '%')->pluck('id');
-            $query->whereIn('academic_year_id', $academicyearIds);
-        }  
-        if ($this->s) {
-            $studentIds = Student::where('status', 0)->where('name', 'like', '%' . $this->s. '%')->pluck('id');
-            $query->whereIn('student_id', $studentIds);
-        }
-        if ($this->c) {
-            $classIds = Classes::where('status', 0)->where('name', 'like', '%' . $this->c. '%')->pluck('id');
-            $query->whereIn('last_class_id', $classIds);
-        }
+
+        $query = StudentEducation::orderBy('student_id', 'ASC')->when($this->ad, function ($query) {
+            $query->whereIn('admission_id', function ($subQuery) {
+                $subQuery->select('id')->from('admissions')->where('id', 'like', '%' . $this->ad . '%');
+            });
+        })->when($this->a, function ($query) {
+            $query->whereIn('academic_year_id', function ($subQuery) {
+                $subQuery->select('id')->from('academic_years')->where('status', 0)->where('year', 'like', '%' . $this->a . '%');
+            });
+        })->when($this->s, function ($query) {
+            $query->whereIn('student_id', function ($subQuery) {
+                $subQuery->select('id')->from('students')->where('status', 0)->where('name', 'like', '%' . $this->s . '%');
+            });
+        })->when($this->c, function ($query) {
+            $query->whereIn('last_class_id', function ($subQuery) {
+                $subQuery->select('id')->from('classes')->where('status', 0)->where('name', 'like', '%' . $this->c . '%');
+            });
+        });
         $student_educations = $query->paginate($this->per_page);
-        return view('livewire.backend.student-education.all-student-education',compact('admissions','classes','academicyears','student_educations','students'))->extends('layouts.admin')->section('admin');
+        return view('livewire.backend.student-education.all-student-education',compact('admissions','classes','academicyears','student_educations','students'))->extends('layouts.admin.admin')->section('admin');
     }
 
 }

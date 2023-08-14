@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('hostels', function (Blueprint $table) {
-            $table->id();
+            $table->id()->index();
             $table->unsignedBigInteger('college_id');
-            $table->string('name');
+            $table->string('name')->unique()->index();
             $table->tinyInteger('status')->default('0')->comment('0-active ,1-inactive');
             $table->timestamps();
             $table->foreign('college_id')->references('id')->on('colleges')->onDelete('cascade');

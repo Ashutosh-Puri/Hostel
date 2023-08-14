@@ -29,10 +29,12 @@ class AdminLogin extends Component
 
             return redirect()->route('admin.dashboard');
             $this->resetinput();
+
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'info',
                 'message'=>"Welcome To Admin Dashboard !!"
-            ]);   
+            ]);
+              
         } 
         else 
         {
@@ -45,16 +47,16 @@ class AdminLogin extends Component
 
     public function logout()
     {
-        Auth::guard('admin')->logout();   
-        return redirect()->route('admin.login');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'info',
             'message'=>"Admin Logout Successfully!!"
         ]);
+        Auth::guard('admin')->logout();   
+        return redirect()->route('admin.login');
     }
     
     public function render()
     {
-        return view('livewire.backend.admin.admin-login')->extends('layouts.guest')->section('guest');
+        return view('livewire.backend.admin.admin-login')->extends('layouts.guest.guest')->section('guest');
     }
 }

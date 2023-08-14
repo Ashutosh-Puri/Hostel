@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->id();
+            $table->id()->index();
             $table->string('username');
-            $table->string('name')->nullable();
+            $table->string('name')->nullable()->index();
             $table->string('email')->unique();
             $table->string('password');
             $table->string('mobile')->nullable()->unique();
@@ -23,11 +23,11 @@ return new class extends Migration
             $table->string('dob')->nullable();
             $table->string('cast')->nullable();
             $table->string('category')->nullable();
-            $table->string('parent_name')->nullable();
+            $table->string('parent_name')->nullable()->unique();
             $table->string('parent_mobile')->nullable();
             $table->string('parent_address')->nullable();
             $table->string('local_parent_name')->nullable();
-            $table->string('local_parent_mobile')->nullable();
+            $table->string('local_parent_mobile')->nullable()->unique();
             $table->string('local_parent_address')->nullable();
             $table->string('blood_group')->nullable();
             $table->string('is_allergy')->nullable();

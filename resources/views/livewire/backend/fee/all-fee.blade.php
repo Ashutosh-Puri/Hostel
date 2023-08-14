@@ -39,8 +39,14 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 form-group">
-                                    <label for="type" class="form-label">Seat Type</label>
-                                    <input type="number" min="1" class="form-control @error('type') is-invalid @enderror" wire:model="type" value="{{ old('type') }}" id="type" placeholder="Enter Fee Type Ex.( 2-Seated , 3-Seated )">
+                                    <label for="type" class="form-label">Select Room Seated</label>
+                                    <input type="number"  list="typelist" class="form-control @error('type') is-invalid @enderror" wire:model="type" value="{{ old('type') }}" id="type" placeholder="Select Room Seated">
+                                    <datalist  name="typelist" id="typelist">
+                                        <option value="1">Seated</option>
+                                        <option value="2">Seated</option>
+                                        <option value="3">Seated</option>
+                                        <option value="4">Seated</option>
+                                    </datalist>
                                     @error('type')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -49,7 +55,7 @@
                                 </div>
                                 <div class="mb-3 form-group">
                                     <label for="amount" class="form-label">Amount</label>
-                                    <input type="number" min="0" class="form-control @error('amount') is-invalid @enderror" wire:model="amount" value="{{ old('amount') }}" id="amount" placeholder="Enter Fee Type Ex.( 2-Seated , 3-Seated )">
+                                    <input type="number" min="0" class="form-control @error('amount') is-invalid @enderror" wire:model="amount" value="{{ old('amount') }}" id="amount" placeholder="Enter Fee Amount">
                                     @error('amount')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -110,8 +116,14 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 form-group">
-                                    <label for="type" class="form-label">Seat Type</label>
-                                    <input type="number" min="1" class="form-control @error('type') is-invalid @enderror" wire:model="type" value="{{ $type }}" id="type" placeholder="Enter Fee Type Ex.( 2-Seated , 3-Seated )">
+                                    <label for="type" class="form-label">Select Room Seated</label>
+                                    <input type="number"  list="typelist" class="form-control @error('type') is-invalid @enderror" wire:model="type" value="{{ old('type') }}" id="type" placeholder="Select Room Seated">
+                                    <datalist  name="typelist" id="typelist">
+                                        <option value="1">Seated</option>
+                                        <option value="2">Seated</option>
+                                        <option value="3">Seated</option>
+                                        <option value="4">Seated</option>
+                                    </datalist>
                                     @error('type')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -120,7 +132,7 @@
                                 </div>
                                 <div class="mb-3 form-group">
                                     <label for="amount" class="form-label">Amount</label>
-                                    <input type="number" min="0" class="form-control @error('amount') is-invalid @enderror" wire:model="amount" value="{{ old('amount') }}" id="amount" placeholder="Enter Fee Type Ex.( 2-Seated , 3-Seated )">
+                                    <input type="number" min="0" class="form-control @error('amount') is-invalid @enderror" wire:model="amount" value="{{ old('amount') }}" id="amount" placeholder="Enter Fee Amount">
                                     @error('amount')
                                         <div class="invalid-feedback">
                                             {{ $message }}

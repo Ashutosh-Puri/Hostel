@@ -57,7 +57,7 @@
                                     <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model="student_id" >
                                         <option value="" hidden>Select Student</option>
                                         @foreach ($students as $item1)
-                                            <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
+                                            <option  value="{{ $item1->id }}"> {{ $item1->name!=null?$item1->name:$item1->username; }} </option>
                                         @endforeach
                                     </select>
                                     @error('student_id')
@@ -161,7 +161,7 @@
                                     <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model="student_id" >
                                         <option value="" hidden>Select Student</option>
                                         @foreach ($students as $item1)
-                                            <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
+                                            <option  value="{{ $item1->id }}"> {{ $item1->name!=null?$item1->name:$item1->username; }} </option>
                                         @endforeach
                                     </select>
                                     @error('student_id')
@@ -274,7 +274,6 @@
                                             <th>Class Name</th>
                                             <th>SGPA</th>
                                             <th>Percentage</th>
-                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -284,7 +283,7 @@
                                                 <td>{{ $key+1 }}</td>                                     
                                                 <td>{{ $item->admission_id}}</td>
                                                 <td>{{ $item->AcademicYear->year}}</td>
-                                                <td>{{ $item->Student->name }}</td>  
+                                                <td>{{ $item->Student->name!=null?$item->Student->name:$item->Student->username; }}</td>  
                                                 <td>{{ $item->Class->name }}</td>  
                                                 <td>{{ $item->sgpa }}</td>        
                                                 <td>{{ $item->percentage }}</td>        

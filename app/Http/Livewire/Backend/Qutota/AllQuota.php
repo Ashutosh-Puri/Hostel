@@ -34,7 +34,7 @@ class AllQuota extends Component
     }
  
     protected $rules = [
-        'max_capacity' => ['required','integer','min:0'],
+        'max_capacity' => ['required','integer','min:1'],
         'academic_year_id' => ['required','integer'],
         'class_id' => ['required','integer'],
     ];
@@ -53,11 +53,18 @@ class AllQuota extends Component
     {
         $validatedData = $this->validate();    
         $quota= new Quota;
-        $quota->academic_year_id = $validatedData['academic_year_id'];
-        $quota->class_id = $validatedData['class_id'];
-        $quota->max_capacity = $validatedData['max_capacity'];
-        $quota->status = $this->status==1?1:0;
-        $quota->save();
+        if($quota){
+            $quota->academic_year_id = $validatedData['academic_year_id'];
+            $quota->class_id = $validatedData['class_id'];
+            $quota->max_capacity = $validatedData['max_capacity'];
+            $quota->status = $this->status==1?1:0;
+            $quota->save();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -69,11 +76,18 @@ class AllQuota extends Component
     public function edit($id)
     {   
         $quota = Quota::find($id);
-        $this->C_id=$quota->id;
-        $this->academic_year_id=$quota->academic_year_id;
-        $this->class_id=$quota->class_id;
-        $this->max_capacity = $quota->max_capacity;
-        $this->status = $quota->status;
+        if($quota){
+            $this->C_id=$quota->id;
+            $this->academic_year_id=$quota->academic_year_id;
+            $this->class_id=$quota->class_id;
+            $this->max_capacity = $quota->max_capacity;
+            $this->status = $quota->status;
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->setmode('edit');
     }
 
@@ -81,11 +95,18 @@ class AllQuota extends Component
     {   
         $validatedData = $this->validate();
         $quota = Quota::find($id);
-        $quota->academic_year_id = $validatedData['academic_year_id'];
-        $quota->class_id = $validatedData['class_id'];
-        $quota->max_capacity = $validatedData['max_capacity'];
-        $quota->status = $this->status==1?'1':'0';
-        $quota->update();
+        if($quota){
+            $quota->academic_year_id = $validatedData['academic_year_id'];
+            $quota->class_id = $validatedData['class_id'];
+            $quota->max_capacity = $validatedData['max_capacity'];
+            $quota->status = $this->status==1?'1':'0';
+            $quota->update();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -97,7 +118,14 @@ class AllQuota extends Component
     public function delete($id)
     { 
         $quota = Quota::find($id);
-        $quota->delete();
+        if($quota){
+            $quota->delete();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
@@ -109,17 +137,19 @@ class AllQuota extends Component
     {  
         $academic_years=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
         $classes=Classes::where('status',0)->get();   
-        $query = Quota::orderBy('academic_year_id', 'DESC');
+        $query = Quota::with('AcademicYear', 'Class')->orderBy('academic_year_id', 'DESC');
         if ($this->year) {
-            $AcademicYearid = AcademicYear::where('year', 'like', '%' . $this->year . '%')->pluck('id');
-            $query->whereIn('academic_year_id', $AcademicYearid);
+            $query->whereHas('AcademicYear', function ($query) {
+                $query->where('year', 'like', '%' . $this->year . '%');
+            });
         }
         if ($this->class_name) {
-            $Studentid = Classes::where('name', 'like', '%' . $this->class_name . '%')->pluck('id');
-            $query->whereIn('class_id', $Studentid);
+            $query->whereHas('Class', function ($query) {
+                $query->where('name', 'like', '%' . $this->class_name . '%');
+            });
         }
         $quotas = $query->paginate($this->per_page);
-        return view('livewire.backend.qutota.all-quota',compact('quotas','classes','academic_years'))->extends('layouts.admin')->section('admin');
+        return view('livewire.backend.qutota.all-quota',compact('quotas','classes','academic_years'))->extends('layouts.admin.admin')->section('admin');
     }
 
 }

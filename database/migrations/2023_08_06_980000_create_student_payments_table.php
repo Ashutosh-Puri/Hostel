@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('student_payments', function (Blueprint $table) {
-            $table->id();
+            $table->id()->index();
             $table->unsignedBigInteger('academic_year_id');
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('admission_id');
             $table->integer('total_amount');
-            $table->tinyInteger('status')->nullable()->default('0')->comment('0-Active ,1-In Active');
+            $table->tinyInteger('status')->nullable()->default('0')->comment('0-Not Paid,1-Paid,2-Cancel');
             $table->timestamps();
             $table->foreign('academic_year_id')->references('id')->on('academic_years')->onDelete('cascade');
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');

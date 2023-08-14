@@ -24,6 +24,23 @@ class AllStudentFine extends Component
     public $student_id;
     public $status;
     public $c_id;
+    public $current_id;
+
+    protected function rules()
+    {
+        return [
+            'amount' => ['required','integer'],
+            'academic_year_id' => ['required','integer'],
+            'fine_id' => ['required','integer'],
+            'student_id' => ['required','integer'],
+        ];
+    }
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
+
 
     public function resetinput()
     {
@@ -37,20 +54,9 @@ class AllStudentFine extends Component
         $this->student_id=null;
         $this->status=null;
         $this->c_id=null;
+        $this->current_id=null;
     }
  
-    protected $rules = [
-        'amount' => ['required','integer'],
-        'academic_year_id' => ['required','integer'],
-        'fine_id' => ['required','integer'],
-        'student_id' => ['required','integer'],
-    ];
- 
-    public function updated($propertyName)
-    {
-        $this->validateOnly($propertyName);
-    }
-
     public function setmode($mode)
     {
         $this->mode=$mode;
@@ -60,12 +66,19 @@ class AllStudentFine extends Component
     {
         $validatedData = $this->validate();    
         $studentfine= new StudentFine;
-        $studentfine->academic_year_id = $validatedData['academic_year_id'];
-        $studentfine->student_id = $validatedData['student_id'];
-        $studentfine->fine_id = $validatedData['fine_id'];
-        $studentfine->amount = $validatedData['amount'];
-        $studentfine->status = $this->status==1?1:0;
-        $studentfine->save();
+        if($studentfine){
+            $studentfine->academic_year_id = $validatedData['academic_year_id'];
+            $studentfine->student_id = $validatedData['student_id'];
+            $studentfine->fine_id = $validatedData['fine_id'];
+            $studentfine->amount = $validatedData['amount'];
+            $studentfine->status = $this->status==1?1:0;
+            $studentfine->save();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -76,13 +89,22 @@ class AllStudentFine extends Component
 
     public function edit($id)
     {   
+        $this->current_id=$id;
         $studentfine = StudentFine::find($id);
-        $this->C_id=$studentfine->id;
-        $this->academic_year_id=$studentfine->academic_year_id;
-        $this->student_id = $studentfine->student_id;
-        $this->fine_id = $studentfine->fine_id;
-        $this->amount = $studentfine->amount;
-        $this->status = $studentfine->status;
+        if($studentfine){
+            $this->C_id=$studentfine->id;
+            $this->academic_year_id=$studentfine->academic_year_id;
+            $this->student_id = $studentfine->student_id;
+            $this->fine_id = $studentfine->fine_id;
+            $this->amount = $studentfine->amount;
+            $this->status = $studentfine->status;
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
+        
         $this->setmode('edit');
     }
 
@@ -90,12 +112,19 @@ class AllStudentFine extends Component
     {   
         $validatedData = $this->validate();
         $studentfine = StudentFine::find($id);
-        $studentfine->academic_year_id = $validatedData['academic_year_id'];
-        $studentfine->student_id = $validatedData['student_id'];
-        $studentfine->fine_id = $validatedData['fine_id'];
-        $studentfine->amount = $validatedData['amount'];
-        $studentfine->status = $this->status==1?'1':'0';
-        $studentfine->update();
+        if($studentfine){
+            $studentfine->academic_year_id = $validatedData['academic_year_id'];
+            $studentfine->student_id = $validatedData['student_id'];
+            $studentfine->fine_id = $validatedData['fine_id'];
+            $studentfine->amount = $validatedData['amount'];
+            $studentfine->status = $this->status==1?'1':'0';
+            $studentfine->update();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -107,7 +136,14 @@ class AllStudentFine extends Component
     public function delete($id)
     { 
         $studentfine = StudentFine::find($id);
-        $studentfine->delete();
+        if($studentfine){
+            $studentfine->delete();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
@@ -120,20 +156,20 @@ class AllStudentFine extends Component
         $academic_years=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
         $students=Student::where('status',0)->get();
         $fines=Fine::where('status',0)->get();
-        $query = StudentFine::orderBy('academic_year_id', 'DESC');
-        if ($this->year) {
-            $AcademicYearid = AcademicYear::where('year', 'like', '%' . $this->year . '%')->pluck('id');
-            $query->whereIn('academic_year_id', $AcademicYearid);
-        }
-        if ($this->student_name) {
-            $Studentid = Student::where('name', 'like', '%' . $this->student_name . '%')->pluck('id');
-            $query->whereIn('student_id', $Studentid);
-        }
-        if ($this->fine_name) {
-            $fineid = Fine::where('name', 'like', '%' . $this->fine_name . '%')->pluck('id');
-            $query->whereIn('fine_id', $fineid);
-        }
+        $query = StudentFine::orderBy('academic_year_id', 'DESC')->when($this->year, function ($query) {
+            $query->whereIn('academic_year_id', function ($subQuery) {
+                $subQuery->select('id')->from('academic_years')->where('year', 'like', '%' . $this->year . '%');
+            });
+        })->when($this->student_name, function ($query) {
+            $query->whereIn('student_id', function ($subQuery) {
+                $subQuery->select('id')->from('students')->where('name', 'like', '%' . $this->student_name . '%');
+            });
+        })->when($this->fine_name, function ($query) {
+            $query->whereIn('fine_id', function ($subQuery) {
+                $subQuery->select('id')->from('fines')->where('name', 'like', '%' . $this->fine_name . '%');
+            });
+        });
         $student_fines = $query->paginate($this->per_page);
-        return view('livewire.backend.student-fine.all-student-fine',compact('academic_years','students','fines','student_fines'))->extends('layouts.admin')->section('admin');
+        return view('livewire.backend.student-fine.all-student-fine',compact('academic_years','students','fines','student_fines'))->extends('layouts.admin.admin')->section('admin');
     }
 }

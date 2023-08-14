@@ -17,6 +17,20 @@ class AllFacility extends Component
     public $room_id;
     public $status;
     public $c_id;
+    public $current_id;
+
+    protected function rules()
+    {
+        return [
+            'name' => ['required', 'string', 'max:255','unique:facilities,name,'.($this->mode=='edit'? $this->current_id :'')],
+            'room_id' => ['required','integer'],
+        ];
+    }
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
 
     public function resetinput()
     {
@@ -25,16 +39,7 @@ class AllFacility extends Component
         $this->room_id=null;
         $this->status=null;
         $this->c_id=null;
-    }
- 
-    protected $rules = [
-        'name' => ['required','string'],
-        'room_id' => ['required','integer'],
-    ];
- 
-    public function updated($propertyName)
-    {
-        $this->validateOnly($propertyName);
+        $this->current_id=null;
     }
 
     public function setmode($mode)
@@ -46,10 +51,17 @@ class AllFacility extends Component
     {
         $validatedData = $this->validate();    
         $facility= new Facility;
-        $facility->room_id = $validatedData['room_id'];
-        $facility->name = $validatedData['name'];
-        $facility->status = $this->status==1?1:0;
-        $facility->save();
+        if($facility){
+            $facility->room_id = $validatedData['room_id'];
+            $facility->name = $validatedData['name'];
+            $facility->status = $this->status==1?1:0;
+            $facility->save();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -60,11 +72,19 @@ class AllFacility extends Component
 
     public function edit($id)
     {   
+        $this->current_id=$id;
         $facility = Facility::find($id);
-        $this->C_id=$facility->id;
-        $this->room_id=$facility->room_id;
-        $this->name = $facility->name;
-        $this->status = $facility->status;
+        if($facility){
+            $this->C_id=$facility->id;
+            $this->room_id=$facility->room_id;
+            $this->name = $facility->name;
+            $this->status = $facility->status;
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->setmode('edit');
     }
 
@@ -72,10 +92,17 @@ class AllFacility extends Component
     {   
         $validatedData = $this->validate();
         $facility = Facility::find($id);
-        $facility->room_id = $validatedData['room_id'];
-        $facility->name = $validatedData['name'];
-        $facility->status = $this->status==1?'1':'0';
-        $facility->update();
+        if($facility){
+            $facility->room_id = $validatedData['room_id'];
+            $facility->name = $validatedData['name'];
+            $facility->status = $this->status==1?'1':'0';
+            $facility->update();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -87,7 +114,14 @@ class AllFacility extends Component
     public function delete($id)
     { 
         $facility = Facility::find($id);
-        $facility->delete();
+        if($facility){
+            $facility->delete();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
@@ -98,12 +132,13 @@ class AllFacility extends Component
     public function render()
     {   
         $rooms=Room::orderBy('floor', 'ASC')->get();
-        $query = Facility::orderBy('room_id', 'ASC');
+        $facilityQuery = Facility::orderBy('room_id', 'ASC');
         if ($this->search) {
-            $roomIds = Room::where('label', 'like', '%' . $this->search . '%')->pluck('id');
-            $query->whereIn('room_id', $roomIds);
+            $facilityQuery->whereHas('room', function ($query) {
+                $query->where('label', 'like', '%' . $this->search . '%');
+            });
         }
-        $facility = $query->paginate($this->per_page);
-        return view('livewire.backend.facility.all-facility',compact('facility','rooms'))->extends('layouts.admin')->section('admin');
+        $facility = $facilityQuery->paginate($this->per_page);
+        return view('livewire.backend.facility.all-facility',compact('facility','rooms'))->extends('layouts.admin.admin')->section('admin');
     }
 }

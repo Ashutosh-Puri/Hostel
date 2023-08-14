@@ -6,6 +6,7 @@ use App\Models\Fee;
 use Livewire\Component;
 use App\Models\AcademicYear;
 use Livewire\WithPagination;
+use Illuminate\Validation\Rule;
 
 class AllFee extends Component
 {   
@@ -19,6 +20,24 @@ class AllFee extends Component
     public $status;
     public $amount;
     public $c_id;
+    public $current_id;
+
+    protected function rules()
+    {
+        return [
+            'academic_year_id' => ['required','integer'],
+            'amount' => ['required', 'numeric'],
+            'type' => ['required','integer',Rule::unique('fees')->where(function ($query) {
+                return $query->where('academic_year_id', $this->academic_year_id);
+            })->ignore($this->current_id)],
+        ];
+    }
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
+
 
     public function resetinput()
     {
@@ -28,18 +47,9 @@ class AllFee extends Component
         $this->status=null;
         $this->amount=null;
         $this->c_id=null;
+        $this->current_id=null;
     }
  
-    protected $rules = [
-        'type' => ['required','integer'],
-        'academic_year_id' => ['required','integer'],
-        'amount' => ['required','integer'],
-    ];
- 
-    public function updated($propertyName)
-    {
-        $this->validateOnly($propertyName);
-    }
 
     public function setmode($mode)
     {
@@ -50,11 +60,18 @@ class AllFee extends Component
     {
         $validatedData = $this->validate();    
         $fee= new Fee;
-        $fee->academic_year_id = $validatedData['academic_year_id'];
-        $fee->type = $validatedData['type'];
-        $fee->amount = $validatedData['amount'];
-        $fee->status = $this->status==1?1:0;
-        $fee->save();
+        if($fee){
+            $fee->academic_year_id = $validatedData['academic_year_id'];
+            $fee->type = $validatedData['type'];
+            $fee->amount = $validatedData['amount'];
+            $fee->status = $this->status==1?1:0;
+            $fee->save();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -65,12 +82,20 @@ class AllFee extends Component
 
     public function edit($id)
     {   
+        $this->current_id=$id;
         $fee = Fee::find($id);
-        $this->C_id=$fee->id;
-        $this->academic_year_id=$fee->academic_year_id;
-        $this->type = $fee->type;
-        $this->status = $fee->status;
-        $this->amount = $fee->amount;
+        if($fee){
+            $this->C_id=$fee->id;
+            $this->academic_year_id=$fee->academic_year_id;
+            $this->type = $fee->type;
+            $this->status = $fee->status;
+            $this->amount = $fee->amount;
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->setmode('edit');
     }
 
@@ -78,11 +103,18 @@ class AllFee extends Component
     {   
         $validatedData = $this->validate();
         $fee = Fee::find($id);
-        $fee->academic_year_id = $validatedData['academic_year_id'];
-        $fee->type = $validatedData['type'];
-        $fee->amount = $validatedData['amount'];
-        $fee->status = $this->status==1?'1':'0';
-        $fee->update();
+        if($fee){
+            $fee->academic_year_id = $validatedData['academic_year_id'];
+            $fee->type = $validatedData['type'];
+            $fee->amount = $validatedData['amount'];
+            $fee->status = $this->status==1?'1':'0';
+            $fee->update();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -94,7 +126,14 @@ class AllFee extends Component
     public function delete($id)
     { 
         $fee = Fee::find($id);
-        $fee->delete();
+        if($fee){
+            $fee->delete();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -107,12 +146,13 @@ class AllFee extends Component
     public function render()
     {   
         $academic_years=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
-        $query = Fee::orderBy('academic_year_id', 'ASC');
+        $feesQuery = Fee::orderBy('academic_year_id', 'ASC');
         if ($this->search) {
-            $roomIds = AcademicYear::where('year', 'like', '%' . $this->search . '%')->pluck('id');
-            $query->whereIn('academic_year_id', $roomIds);
+            $feesQuery->whereHas('AcademicYear', function ($query) {
+                $query->where('year', 'like', '%' . $this->search . '%');
+            });
         }
-        $fees = $query->paginate($this->per_page);
-        return view('livewire.backend.fee.all-fee',compact('academic_years','fees'))->extends('layouts.admin')->section('admin');
+        $fees = $feesQuery->paginate($this->per_page);
+        return view('livewire.backend.fee.all-fee',compact('academic_years','fees'))->extends('layouts.admin.admin')->section('admin');
     }
 }

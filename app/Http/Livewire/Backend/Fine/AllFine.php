@@ -6,6 +6,7 @@ use App\Models\Fine;
 use Livewire\Component;
 use App\Models\AcademicYear;
 use Livewire\WithPagination;
+use Illuminate\Validation\Rule;
 
 class AllFine extends Component
 {   
@@ -19,6 +20,24 @@ class AllFine extends Component
     public $academic_year_id;
     public $status;
     public $c_id;
+    public $current_id;
+
+    protected function rules()
+    {
+        return [
+            'academic_year_id' => ['required','integer'],
+            'amount' => ['required', 'numeric'],
+            'name' => ['required','string',Rule::unique('fines')->where(function ($query) {
+                return $query->where('academic_year_id', $this->academic_year_id);
+            })->ignore($this->current_id)],
+        ];
+    }
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
+
 
     public function resetinput()
     {
@@ -30,19 +49,9 @@ class AllFine extends Component
         $this->academic_year_id=null;
         $this->status=null;
         $this->c_id=null;
+        $this->current_id=null;
     }
  
-    protected $rules = [
-        'amount' => ['required','integer'],
-        'name' => ['required','string'],
-        'academic_year_id' => ['required','integer'],
-    ];
- 
-    public function updated($propertyName)
-    {
-        $this->validateOnly($propertyName);
-    }
-
     public function setmode($mode)
     {
         $this->mode=$mode;
@@ -52,11 +61,18 @@ class AllFine extends Component
     {
         $validatedData = $this->validate();    
         $fine= new Fine;
-        $fine->academic_year_id = $validatedData['academic_year_id'];
-        $fine->name = $validatedData['name'];
-        $fine->amount = $validatedData['amount'];
-        $fine->status = $this->status==1?1:0;
-        $fine->save();
+        if($fine){
+            $fine->academic_year_id = $validatedData['academic_year_id'];
+            $fine->name = $validatedData['name'];
+            $fine->amount = $validatedData['amount'];
+            $fine->status = $this->status==1?1:0;
+            $fine->save();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -67,12 +83,20 @@ class AllFine extends Component
 
     public function edit($id)
     {   
+        $this->current_id=$id;
         $fine = Fine::find($id);
-        $this->C_id=$fine->id;
-        $this->academic_year_id=$fine->academic_year_id;
-        $this->name = $fine->name;
-        $this->amount = $fine->amount;
-        $this->status = $fine->status;
+        if($fine){
+            $this->C_id=$fine->id;
+            $this->academic_year_id=$fine->academic_year_id;
+            $this->name = $fine->name;
+            $this->amount = $fine->amount;
+            $this->status = $fine->status;
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->setmode('edit');
     }
 
@@ -80,11 +104,18 @@ class AllFine extends Component
     {   
         $validatedData = $this->validate();
         $fine = Fine::find($id);
-        $fine->academic_year_id = $validatedData['academic_year_id'];
-        $fine->name = $validatedData['name'];
-        $fine->amount = $validatedData['amount'];
-        $fine->status = $this->status==1?'1':'0';
-        $fine->update();
+        if($fine){
+            $fine->academic_year_id = $validatedData['academic_year_id'];
+            $fine->name = $validatedData['name'];
+            $fine->amount = $validatedData['amount'];
+            $fine->status = $this->status==1?'1':'0';
+            $fine->update();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -96,7 +127,14 @@ class AllFine extends Component
     public function delete($id)
     { 
         $fine = Fine::find($id);
-        $fine->delete();
+        if($fine){
+            $fine->delete();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
@@ -107,13 +145,14 @@ class AllFine extends Component
     public function render()
     {   
         $academic_years=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
-        $query = Fine::orderBy('academic_year_id', 'DESC');
+        $query = Fine::query();
         if ($this->year) {
-            $roomIds = AcademicYear::where('year', 'like', '%' . $this->year . '%')->pluck('id');
-            $query->whereIn('academic_year_id', $roomIds);
+            $query->whereHas('academicYear', function ($subQuery) {
+                $subQuery->where('year', 'like', '%' . $this->year . '%');
+            });
         }
-        $fines = $query->where('name', 'like', '%' . $this->fine_name . '%')->paginate($this->per_page);
-        return view('livewire.backend.fine.all-fine',compact('academic_years','fines'))->extends('layouts.admin')->section('admin');
+        $fines = $query->where('name', 'like', '%' . $this->fine_name . '%')->orderBy('academic_year_id', 'ASC')->paginate($this->per_page);
+        return view('livewire.backend.fine.all-fine',compact('academic_years','fines'))->extends('layouts.admin.admin')->section('admin');
     }
 
 }

@@ -1,8 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.guest.guest')
+@section('guest')
 @section('title')
 Unauthorized Access
 @endsection
-@section('content')
 @if (session('error'))
 <div class="alert alert-danger">
     {{ session('error') }}
@@ -20,5 +20,4 @@ Unauthorized Access
       </div>
     </div>
   </div>
-
 @endsection

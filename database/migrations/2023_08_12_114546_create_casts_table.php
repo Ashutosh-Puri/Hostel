@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('casts', function (Blueprint $table) {
-            $table->id();
+            $table->id()->index();
             $table->string('name');
             $table->tinyInteger('status')->nullable()->default('0')->comment('0-Active ,1-In Active');
             $table->timestamps();

@@ -9,8 +9,6 @@
     @include('layouts.navbar')
         <div class="content-page">
            @yield('guest')
-
-
         </div>
     </div>
 </body>

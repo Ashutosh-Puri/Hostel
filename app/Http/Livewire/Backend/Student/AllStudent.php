@@ -22,11 +22,14 @@ class AllStudent extends Component
     public $username;
     public $email;
     public $password;
+    public $current_id;
+    public $password_confirmation;
 
     public function resetinput()
     {
         $this->search=null;
         $this->password=null;
+        $this->password_confirmation=null;
         $this->email=null;
         $this->username=null;
         $this->status=null;
@@ -34,11 +37,12 @@ class AllStudent extends Component
     }
     
     protected function rules()
-    {
+    {   
+        $passwordRules = $this->mode == 'add' ? ['required', 'same:password_confirmation', 'string', 'min:8', 'max:255'] : [];
         return [
+            'password' => $passwordRules,
             'username' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255','unique:students,email,'.($this->mode=='edit'? Auth::user()->id :'')], 
-            'password' => [($this->password=null? 'nullable' : 'required'),'required','string', 'min:8', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255','unique:students,email,'.($this->mode=='edit'? $this->current_id  :'')], 
         ];
     }
 
@@ -56,11 +60,18 @@ class AllStudent extends Component
     {  
         $validatedData = $this->validate();    
         $student= new Student;
-        $student->username = $validatedData['username'];
-        $student->email= $validatedData['email'];
-        $student->password= Hash::make($validatedData['password']);
-        $student->status = $this->status==1?'1':'0';
-        $student->save();
+        if($student){
+            $student->username = $validatedData['username'];
+            $student->email= $validatedData['email'];
+            $student->password= Hash::make($validatedData['password']);
+            $student->status = $this->status==1?'1':'0';
+            $student->save();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -70,12 +81,19 @@ class AllStudent extends Component
     }
 
     public function edit($id)
-    {   
+    {   $this->current_id=$id;
         $student = Student::find($id);
-        $this->C_id=$student->id;
-        $this->username=$student->username;
-        $this->email=$student->email;
-        $this->status =$student->status;
+        if($student){
+            $this->C_id=$student->id;
+            $this->username=$student->username;
+            $this->email=$student->email;
+            $this->status =$student->status;
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->setmode('edit');
     }
 
@@ -83,10 +101,17 @@ class AllStudent extends Component
     {   
         $validatedData = $this->validate();
         $student = Student::find($id);
-        $student->username = $validatedData['username'];
-        $student->email= $validatedData['email'];
-        $student->status = $this->status==1?'1':'0';
-        $student->update();
+        if($student){
+            $student->username = $validatedData['username'];
+            $student->email= $validatedData['email'];
+            $student->status = $this->status==1?'1':'0';
+            $student->update();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -98,7 +123,14 @@ class AllStudent extends Component
     public function delete($id)
     { 
         $student = Student::find($id);
-        $student->delete();
+        if($student){
+            $student->delete();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
@@ -109,7 +141,7 @@ class AllStudent extends Component
     public function render()
     {   
         $students=Student::where('username', 'like', '%'.$this->search.'%')->orderBy('username', 'ASC')->paginate($this->per_page);
-        return view('livewire.backend.student.all-student',compact('students'))->extends('layouts.admin')->section('admin');
+        return view('livewire.backend.student.all-student',compact('students'))->extends('layouts.admin.admin')->section('admin');
     }
 
 }

@@ -16,6 +16,19 @@ class AllCollege extends Component
     public $name;
     public $status;
     public $c_id;
+    public $current_id;
+
+    protected function rules()
+    {
+        return [
+            'name' => ['required', 'string', 'max:255','unique:colleges,name,'.($this->mode=='edit'? $this->current_id :'')],
+        ];
+    }
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
  
     public function resetinput()
     {
@@ -23,6 +36,7 @@ class AllCollege extends Component
         $this->status=null;
         $this->c_id=null;
         $this->earch =null;
+        $this->current_id=null;
     }
 
     public function setmode($mode)
@@ -32,13 +46,18 @@ class AllCollege extends Component
  
     public function save()
     {
-        $validatedData = $validatedData = $this->validate([
-            'name' => ['required','string', Rule::unique('Colleges', 'name')],
-        ]);
-        $College= new College;
-        $College->name = $validatedData['name'];
-        $College->status = $this->status==1?1:0;
-        $College->save();
+        $validatedData = $validatedData = $this->validate();
+        $college= new College;
+        if($college){
+            $college->name = $validatedData['name'];
+            $college->status = $this->status==1?1:0;
+            $college->save();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -48,23 +67,36 @@ class AllCollege extends Component
     }
 
     public function edit($id)
-    { 
-        $College = College::find($id);
-        $this->C_id=$College->id;
-        $this->status = $College->status;
-        $this->name = $College->name;
+    {   
+        $this->current_id=$id;
+        $college = College::find($id);
+        if($college){
+            $this->C_id=$college->id;
+            $this->status = $college->status;
+            $this->name = $college->name;
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->setmode('edit');
     }
 
     public function update($id)
     {   
-        $validatedData = $this->validate([
-            'name' => ['required','string', Rule::unique('Colleges', 'name')->ignore($this->name, 'name')],
-        ]);
-        $College = College::find($id);
-        $College->name = $validatedData['name'];
-        $College->status = $this->status==1?1:0;
-        $College->update();
+        $validatedData = $this->validate();
+        $college = College::find($id);
+        if($college){
+            $college->name = $validatedData['name'];
+            $college->status = $this->status==1?1:0;
+            $college->update();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -75,8 +107,15 @@ class AllCollege extends Component
 
     public function delete($id)
     { 
-        $College = College::find($id);
-        $College->delete();
+        $college = College::find($id);
+        if($college){
+            $college->delete();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
@@ -87,6 +126,6 @@ class AllCollege extends Component
     public function render()
     {   
         $colleges=College::where('name', 'like', '%'.$this->search.'%')->orderBy('name', 'ASC')->paginate($this->per_page);
-        return view('livewire.backend.College.all-College',compact('colleges'))->extends('layouts.admin')->section('admin');
+        return view('livewire.backend.College.all-College',compact('colleges'))->extends('layouts.admin.admin')->section('admin');
     }
 }

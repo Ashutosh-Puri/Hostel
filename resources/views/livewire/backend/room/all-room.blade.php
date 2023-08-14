@@ -39,8 +39,14 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 form-group">
-                                    <label for="floor" class="form-label">Floor Number</label>
-                                    <input type="number"  min="0" class="form-control @error('floor') is-invalid @enderror" wire:model="floor" value="{{ old('floor') }}" id="floor" placeholder="Enter Floor No. Ex.( 0-Ground ,1-First )">
+                                    <label for="floor" class="form-label">Select Floor Number</label>
+                                    <input type="number" list="floorlist" class="form-control @error('floor') is-invalid @enderror" wire:model="floor" value="{{ old('floor') }}" id="floor" placeholder="Select Floor Number">
+                                    <datalist  name="floorlist" id="floorlist">
+                                        <option value="0">Ground Floor</option>
+                                        <option value="1">First Floor</option>
+                                        <option value="2">Second Floor</option>
+                                        <option value="3">Third Floor</option>
+                                    </datalist>
                                     @error('floor')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -57,8 +63,14 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 form-group">
-                                    <label for="type" class="form-label">Room Seated Type</label>
-                                    <input type="number" min="1" class="form-control @error('type') is-invalid @enderror" wire:model="type" value="{{ old('type') }}" id="type" placeholder="Enter Seated Type Ex.( 2-Seated ,3-Seated , 4-Seated )">
+                                    <label for="type" class="form-label">Select Room Seated</label>
+                                    <input type="number"  list="typelist" class="form-control @error('type') is-invalid @enderror" wire:model="type" value="{{ old('type') }}" id="type" placeholder="Select Room Seated">
+                                    <datalist  name="typelist" id="typelist">
+                                        <option value="1">Seated</option>
+                                        <option value="2">Seated</option>
+                                        <option value="3">Seated</option>
+                                        <option value="4">Seated</option>
+                                    </datalist>
                                     @error('type')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -119,8 +131,14 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 form-group">
-                                    <label for="floor" class="form-label">Floor Number</label>
-                                    <input type="number"  min="0" class="form-control @error('floor') is-invalid @enderror" wire:model="floor" value="{{ old('floor') }}" id="floor" placeholder="Enter Floor No. Ex.( 0-Ground ,1-first )">
+                                    <label for="floor" class="form-label">Select Floor Number</label>
+                                    <input type="number" list="floorlist" class="form-control @error('floor') is-invalid @enderror" wire:model="floor" value="{{ old('floor') }}" id="floor" placeholder="Select Floor Number">
+                                    <datalist  name="floorlist" id="floorlist">
+                                        <option value="0">Ground Floor</option>
+                                        <option value="1">First Floor</option>
+                                        <option value="2">Second Floor</option>
+                                        <option value="3">Third Floor</option>
+                                    </datalist>
                                     @error('floor')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -137,8 +155,14 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 form-group">
-                                    <label for="type" class="form-label">Room Seated Type</label>
-                                    <input type="number" min="1" class="form-control @error('type') is-invalid @enderror" wire:model="type" value="{{ old('type') }}" id="type" placeholder="Enter Seated Type Ex.( 2-Seated ,3-Seated , 4-Seated )">
+                                    <label for="type" class="form-label">Select Room Seated</label>
+                                    <input type="number"  list="typelist" class="form-control @error('type') is-invalid @enderror" wire:model="type" value="{{ old('type') }}" id="type" placeholder="Select Room Seated">
+                                    <datalist  name="typelist" id="typelist">
+                                        <option value="1">Seated</option>
+                                        <option value="2">Seated</option>
+                                        <option value="3">Seated</option>
+                                        <option value="4">Seated</option>
+                                    </datalist>
                                     @error('type')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -216,9 +240,10 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Building Name</th>
+                                            <th>Hostel</th>
+                                            <th>Building</th>
                                             <th>Floor</th>
-                                            <th>Label</th>
+                                            <th>Room</th>
                                             <th>Type</th>
                                             <th>Capacity</th>
                                             <th>Action</th>
@@ -228,6 +253,7 @@
                                         @foreach ($rooms as $key => $item)
                                             <tr>
                                                 <td>{{ $key+1 }}</td>                                     
+                                                <td>{{ $item->Building->Hostel->name }}</td>
                                                 <td>{{ $item->Building->name }}</td>
                                                 <td>
                                                     @switch($item->floor)
@@ -269,7 +295,7 @@
                                                     @endswitch
                                                      Floor
                                                 </td>
-                                                <td>{{ $item->label }}</td>
+                                                <td>{{ $item->id }} - {{ $item->label }} </td>
                                                 <td>{{ $item->type }} Seated</td>  
                                                 <td>{{ $item->capacity }}</td>   
                                                 <td>

@@ -17,11 +17,12 @@ class AllRole extends Component
     public $role;
     public $status;
     public $c_id;
+    public $current_id;
 
     protected function rules()
     {
         return [
-            'role' => ['required','string','unique:roles,role,'.($this->mode=='edit'? Auth::user()->id :''),],
+            'role' => ['required','string','unique:roles,role,'.($this->mode=='edit'? $this->current_id :''),],
         ];
     }
 
@@ -48,9 +49,16 @@ class AllRole extends Component
     {
         $validatedData = $this->validate();
         $role= new Role;
-        $role->role = $validatedData['role'];
-        $role->status = $this->status==1?1:0;
-        $role->save();
+        if($role){
+            $role->role = $validatedData['role'];
+            $role->status = $this->status==1?1:0;
+            $role->save();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -60,11 +68,19 @@ class AllRole extends Component
     }
 
     public function edit($id)
-    { 
+    {   
+        $this->current_id=$id;
         $role = Role::find($id);
-        $this->C_id=$role->id;
-        $this->role = $role->role;
-        $this->status = $role->status;
+        if($role){
+            $this->C_id=$role->id;
+            $this->role = $role->role;
+            $this->status = $role->status;
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->setmode('edit');
     }
 
@@ -72,9 +88,16 @@ class AllRole extends Component
     {   
         $validatedData = $this->validate();
         $role = Role::find($id);
-        $role->role = $validatedData['role'];
-        $role->status = $this->status==1?'1':'0';
-        $role->update();
+        if($role){
+            $role->role = $validatedData['role'];
+            $role->status = $this->status==1?'1':'0';
+            $role->update();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -86,7 +109,14 @@ class AllRole extends Component
     public function delete($id)
     { 
         $role = Role::find($id);
-        $role->delete();
+        if($role){
+            $role->delete();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
@@ -97,6 +127,6 @@ class AllRole extends Component
     public function render()
     {   
         $roles=Role::where('role', 'like', '%'.$this->search.'%')->orderBy('role', 'ASC')->paginate($this->per_page);
-        return view('livewire.backend.role.all-role',compact('roles'))->extends('layouts.admin')->section('admin');
+        return view('livewire.backend.role.all-role',compact('roles'))->extends('layouts.admin.admin')->section('admin');
     }
 }

@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('colleges', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+            $table->id()->index();
+            $table->string('name')->unique()->index();
             $table->tinyInteger('status')->default('0')->comment('0-active ,1-inactive');
             $table->timestamps();
         });

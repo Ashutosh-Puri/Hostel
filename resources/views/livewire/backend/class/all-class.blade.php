@@ -42,8 +42,6 @@
                                     <label for="type" class="form-label">Select Type</label>
                                     <select class="form-select @error('type') is-invalid @enderror" id="type" wire:model="type" >
                                         <option hidden value="" >Select Type</option>
-                                        <option  value="Postgraduate" >Postgraduate</option>
-                                        <option  value="Undergraduate" >Undergraduate</option>
                                         <option  value="Senior" >Senior</option>
                                         <option  value="Junior" >Junior</option>
                                     </select>
@@ -104,8 +102,13 @@
                             <form  wire:submit.prevent="update({{ isset($C_id)?$C_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="mb-3 form-group">
-                                    <label for="stream" class="form-label">Stream</label>
-                                    <input type="text" class="form-control @error('stream') is-invalid @enderror" wire:model="stream" value="{{ old('stream') }}" id="stream" placeholder="Enter Stream Ex.( Science , Commerce , Arts)">
+                                    <label for="stream" class="form-label">Select Stream</label>
+                                    <select class="form-select @error('stream') is-invalid @enderror" id="stream" wire:model="stream" >
+                                        <option hidden value="" >Select Stream</option>
+                                        <option  value="Arts" >Arts</option>
+                                        <option  value="Commerce" >Commerce</option>
+                                        <option  value="Science" >Science</option>
+                                    </select>
                                     @error('stream')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -113,8 +116,12 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 form-group">
-                                    <label for="type" class="form-label">Type</label>
-                                    <input type="text" class="form-control @error('type') is-invalid @enderror" wire:model="type" value="{{ old('type') }}" id="type" placeholder="Enter Type Ex.( JR. , SR. ,UG.,PG. )">
+                                    <label for="type" class="form-label">Select Type</label>
+                                    <select class="form-select @error('type') is-invalid @enderror" id="type" wire:model="type" >
+                                        <option hidden value="" >Select Type</option>
+                                        <option  value="Senior" >Senior</option>
+                                        <option  value="Junior" >Junior</option>
+                                    </select>
                                     @error('type')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -123,15 +130,17 @@
                                 </div>
                                 <div class="mb-3 form-group">
                                     <label for="name" class="form-label">Class Name</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ $name }}" id="name" placeholder="Enter Name">
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Name Ex.( FY.BCS , SY.BCS)">
                                     @error('name')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
-                                </div>
+                                </div>                       
                                 <div class="mb-3 form-group ">
-                                    <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ $status==1?'checked':''; }} id="class_status"  wire:model="status" >
+
+                                    <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
+    
                                     <label class="form-check-label m-1" for="class_status">In-Active Class</label>
                                     @error('status')
                                         <div class="invalid-feedback">

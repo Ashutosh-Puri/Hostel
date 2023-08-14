@@ -164,6 +164,7 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
+                                            <th>Hostel</th>
                                             <th>Building</th>
                                             <th>Floor</th>
                                             <th>Room</th>
@@ -176,6 +177,7 @@
                                         @foreach ($beds as $key => $item)
                                             <tr>
                                                 <td>{{ $key+1 }}</td>   
+                                                <td>{{ $item->Room->Building->Hostel->name }}</td> 
                                                 <td>{{ $item->Room->Building->name }}</td> 
                                                 <td>
                                                     @switch( $item->Room->floor)

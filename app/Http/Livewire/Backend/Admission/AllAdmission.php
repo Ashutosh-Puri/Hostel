@@ -11,6 +11,7 @@ use App\Models\Allocation;
 use App\Models\AcademicYear;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
+use App\Models\StudentPayment;
 use Illuminate\Validation\Rule;
 use App\Models\StudentEducation;
 use Illuminate\Support\Facades\Auth;
@@ -60,6 +61,7 @@ class AllAdmission extends Component
     public $viewid=null;
     public $allocateid=null;
     public $reallocateid=null;
+    public $current_id;
 
     public function resetinput()
     {
@@ -102,6 +104,7 @@ class AllAdmission extends Component
         $this->viewid=null;
         $this->allocateid=null;
         $this->reallocateid=null;
+        $this->current_id=null;
     }
     
     protected function rules()
@@ -125,16 +128,16 @@ class AllAdmission extends Component
             'sgpa'=>['nullable','numeric','min:0.00','max:10.00'],
             'parent_name'=>['required','string','max:255'],
             'mother_name'=>['required','string','max:255'],
-            'parent_mobile'=>['required','numeric','digits:10','unique:students,parent_mobile,'.($this->mode=='edit'? Auth::user()->id :''),],
+            'parent_mobile'=>['required','numeric','digits:10','unique:students,parent_mobile,'.($this->mode=='edit'? $this->student_id :''),],
             'parent_address'=>['required','string','max:255'],
             'local_parent_name'=>['nullable','string','max:255'],
-            'local_parent_mobile'=>['nullable','numeric','digits:10','unique:students,local_parent_mobile,'.($this->mode=='edit'? Auth::user()->id :''),],
+            'local_parent_mobile'=>['nullable','numeric','digits:10','unique:students,local_parent_mobile,'.($this->mode=='edit'? $this->student_id :''),],
             'local_parent_address'=>['nullable','string','max:255'],
             'address_type'=>['required','integer','max:255'],
             'is_allergy'=>['nullable','string','max:255'],
             'is_ragging'=>['nullable'],
-            'mobile'=>['required','numeric','digits:10','unique:students,mobile,'.($this->mode=='edit'? Auth::user()->id :''),],
-            'member_id'=>['required','numeric','unique:students,member_id,'.($this->mode=='edit'? Auth::user()->id :''),],
+            'mobile'=>['required','numeric','digits:10','unique:students,mobile,'.($this->mode=='edit'? $this->student_id :''),],
+            'member_id'=>['required','numeric','unique:students,member_id,'.($this->mode=='edit'? $this->student_id :''),],
             'photo'=>[($this->mode=='edit'? 'nullable' : 'required'),'image','mimes:jpeg,jpg,png','max:1024'], 
         ];
     }
@@ -154,9 +157,8 @@ class AllAdmission extends Component
     {    
       
         $validatedData = $this->validate();  
-
         $student = Student::find($this->student_id);
-        if ($student) {
+        if ($student){
             $student->name = $this->name;
             $student->mobile = $this->mobile;
             $student->mother_name = $validatedData['mother_name'];
@@ -174,7 +176,6 @@ class AllAdmission extends Component
             $student->is_ragging = $this->is_ragging == 1 ? '1' : '0';
             $student->address_type = $this->address_type == 1 ? '1' : '0';
             $student->member_id = $this->member_id;
-
             if ($this->photo) {
                 $path = 'uploads/profile/photo/';
                 $fileName = 'user-' . time(). '.' . $this->photo->getClientOriginalExtension();
@@ -182,31 +183,51 @@ class AllAdmission extends Component
                 $student->photo = 'storage/' . $path . $fileName;
                 $this->reset('photo');
             }
-
             $student->update();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
         }
-
-        
         $admission = new Admission;
-        $admission->academic_year_id = $this->academic_year_id;
-        $admission->student_id = $this->student_id;
-        $admission->class_id = $validatedData['class_id'];
-        $admission->status = '0';
-        $admission->save();
-        
+        if($admission){
+            $admission->academic_year_id = $this->academic_year_id;
+            $admission->student_id = $this->student_id;
+            $admission->class_id = $validatedData['class_id'];
+            $admission->status = '0';
+            $admission->save();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $allocation =new Allocation;
-        $allocation->admission_id= $admission->id;
-        $allocation->save();
-
+        if($allocation){
+            $allocation->admission_id= $admission->id;
+            $allocation->save();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $education = new StudentEducation;
-        $education->admission_id = $admission->id;
-        $education->academic_year_id = $this->academic_year_id;
-        $education->student_id = $this->student_id;
-        $education->last_class_id = $validatedData['last_class_id'];
-        $education->sgpa = $validatedData['sgpa'];
-        $education->percentage = $validatedData['percentage'];
-        $education->save();
-
+        if($education){
+            $education->admission_id = $admission->id;
+            $education->academic_year_id = $this->academic_year_id;
+            $education->student_id = $this->student_id;
+            $education->last_class_id = $validatedData['last_class_id'];
+            $education->sgpa = $validatedData['sgpa'];
+            $education->percentage = $validatedData['percentage'];
+            $education->save();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -217,6 +238,7 @@ class AllAdmission extends Component
 
     public function edit($id)
     {   
+        $this->current_id=$id;
         $admission = Admission::find($id);
         if ($admission) 
         {
@@ -231,7 +253,17 @@ class AllAdmission extends Component
             {
                 $this->stream = $class->stream;
                 $this->stream_type = $class->type;
+            }else{
+                $this->dispatchBrowserEvent('alert',[
+                    'type'=>'error',
+                    'message'=>"Something Went Wrong!!"
+                ]);
             }
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
         }
 
         $student = Student::find($this->student_id);
@@ -258,6 +290,11 @@ class AllAdmission extends Component
             $this->address_type = $student->address_type;
             $this->member_id = $student->member_id;
             $this->photoold = $student->photo;
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
         }
 
         $education = StudentEducation::where('academic_year_id', $this->academic_year_id)->where('student_id', $this->student_id)->latest()->first();
@@ -266,6 +303,11 @@ class AllAdmission extends Component
             $this->last_class_id = $education->last_class_id;
             $this->sgpa = $education->sgpa;
             $this->percentage = $education->percentage;
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
         }
 
         $this->setmode('edit');
@@ -275,32 +317,35 @@ class AllAdmission extends Component
     {   
 
         $validatedData = $this->validate();   
-
-        // Admission
         $admission = Admission::find($id);
-        $oldyearid=$admission->academic_year_id;
-        $oldstudentid=$admission->student_id;
-        if($admission)
-        {
+        if($admission){
+            $oldyearid=$admission->academic_year_id;
+            $oldstudentid=$admission->student_id;
             $admission->academic_year_id=$this->academic_year_id;
             $admission->student_id= $this->student_id;
             $admission->class_id = $validatedData['class_id'];
             $admission->status ='0';
             $admission->update();
-        }
-
-        $education =StudentEducation::where('admission_id', $id)->where('academic_year_id', $oldyearid)->where('student_id', $oldstudentid)->latest()->first();
-        if ($education) 
-        {
-            $education->update([
-                'academic_year_id' => $validatedData['academic_year_id'],
-                'last_class_id' => $validatedData['last_class_id'],
-                'sgpa' => $validatedData['sgpa'],
-                'percentage' => $validatedData['percentage'],
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
             ]);
         }
-
-        // Student
+        $education =StudentEducation::where('admission_id', $id)->where('academic_year_id', $oldyearid)->where('student_id', $oldstudentid)->latest()->first();
+        if ($education) 
+        {   
+            $education->academic_year_id=$validatedData['academic_year_id'];
+            $education->last_class_id = $validatedData['last_class_id'];
+            $education->sgpa = $validatedData['sgpa'];
+            $education->percentage = $validatedData['percentage'];
+            $education->update();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $student= Student::find($this->student_id);
         if($student)
         {
@@ -329,8 +374,12 @@ class AllAdmission extends Component
                 $this->reset('photo');
             }
             $student->update();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
         }
-
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -348,8 +397,15 @@ class AllAdmission extends Component
     public function confirm($id)
     { 
         $admission=Admission::find($id);
-        $admission->status=1;
-        $admission->update();
+        if($admission){
+            $admission->status=1;
+            $admission->update();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
@@ -358,8 +414,46 @@ class AllAdmission extends Component
     }
 
     public function cancel($id)
-    { 
+    {   
+        
         $admission=Admission::find($id);
+        if($admission){
+            if($admission->bed_id!=null)
+            {
+                $temp=$admission->bed_id;
+                $bed=Bed::find($temp);
+                $bed->status=0;
+                $bed->update();
+            }
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
+   
+        $allocation= Allocation::where('admission_id',$id)->first();
+        if($allocation){
+            $allocation->fee_id = null;
+            $allocation->update();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
+        $studentpayment=StudentPayment::where('admission_id',$id)->first();
+        if($studentpayment)
+        {
+            $studentpayment->delete();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
+
+        $admission->bed_id=null;
         $admission->status=2;
         $admission->update();
         $this->setmode('all');
@@ -370,14 +464,21 @@ class AllAdmission extends Component
     }
 
     public function delete($id)
-    { 
+    {   
+        $this->cancel($id);
         $admission = Admission::find($id);
-
         if ($admission) 
         {
             // Delete StudentEducation
-            StudentEducation::where('student_id', $admission->student_id)->where('academic_year_id', $admission->academic_year_id)->delete();
-
+            $stdedu= StudentEducation::where('student_id', $admission->student_id)->where('academic_year_id', $admission->academic_year_id)->first();
+            if($stdedu){
+                $stdedu->delete();
+            }else{
+                $this->dispatchBrowserEvent('alert',[
+                    'type'=>'error',
+                    'message'=>"Something Went Wrong!!"
+                ]);
+            }
             // Update Student record
             $student = Student::find($admission->student_id);
             if ($student) 
@@ -405,11 +506,20 @@ class AllAdmission extends Component
                 }
                 $student->photo = null;
                 $student->update();
+            }else{
+                $this->dispatchBrowserEvent('alert',[
+                    'type'=>'error',
+                    'message'=>"Something Went Wrong!!"
+                ]);
             }
 
             $admission->delete();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
         }
-
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -462,6 +572,6 @@ class AllAdmission extends Component
             $viewadmission=null;
         }
    
-        return view('livewire.backend.Admission.all-Admission',compact('viewadmission','students','admissions','classes','streams','types','lastclasses','academicyears'))->extends('layouts.admin')->section('admin');
+        return view('livewire.backend.Admission.all-Admission',compact('viewadmission','students','admissions','classes','streams','types','lastclasses','academicyears'))->extends('layouts.admin.admin')->section('admin');
     }
 }

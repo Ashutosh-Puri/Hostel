@@ -62,6 +62,19 @@
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
+                                            <label for="password_confirmation" class="form-label">Confirm Password</label>
+                                            <input type="password"   class="form-control @error('password_confirmation') is-invalid @enderror" wire:model.debounce.1000ms="password_confirmation" value="{{ old('password_confirmation') }}" id="password_confirmation" placeholder="Enter Confirm Password">
+                                            @error('password_confirmation')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
                                             <label for="status" class="form-label">Status</label>
                                             <div class="form-group ">
                                                 <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ $status==1?'checked':''; }} id="class_status"  wire:model.debounce.1000ms="status" >

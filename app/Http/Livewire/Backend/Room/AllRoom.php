@@ -6,6 +6,7 @@ use App\Models\Room;
 use Livewire\Component;
 use App\Models\Building;
 use Livewire\WithPagination;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 
 class AllRoom extends Component
@@ -20,6 +21,23 @@ class AllRoom extends Component
     public $floor;
     public $type;
     public $c_id;
+    public $current_id;
+
+    protected function rules()
+    {
+        return [
+            'label' => ['required', 'string', 'max:255','unique:rooms,label,'.($this->mode=='edit'? $this->current_id :'')],
+            'building_id' => ['required','integer'],
+            'capacity' => ['required','integer','min:1'],
+            'floor' => ['required','integer','min:0'],
+            'type' => ['required','integer','min:1',]
+        ];
+    }
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
 
 
     public function resetinput()
@@ -33,19 +51,7 @@ class AllRoom extends Component
         $this->floor=null;
         $this->type=null;
         $this->c_id=null;
-    }
- 
-    protected $rules = [
-        'label' => ['required','string'],
-        'building_id' => ['required','integer'],
-        'capacity' => ['required','integer','min:1'],
-        'type' => ['required','integer','min:1'],
-        'floor' => ['required','integer','min:0'],
-    ];
- 
-    public function updated($propertyName)
-    {
-        $this->validateOnly($propertyName);
+        $this->current_id=null;
     }
 
     public function setmode($mode)
@@ -57,12 +63,19 @@ class AllRoom extends Component
     {  
         $validatedData = $this->validate();    
         $room= new Room;
-        $room->building_id = $validatedData['building_id'];
-        $room->label = $validatedData['label'];
-        $room->capacity = $validatedData['capacity'];
-        $room->floor = $validatedData['floor'];
-        $room->type = $validatedData['type'];
-        $room->save();
+        if($room){
+            $room->building_id = $validatedData['building_id'];
+            $room->label = $validatedData['label'];
+            $room->capacity = $validatedData['capacity'];
+            $room->floor = $validatedData['floor'];
+            $room->type = $validatedData['type'];
+            $room->save();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -73,13 +86,21 @@ class AllRoom extends Component
 
     public function edit($id)
     {   
+        $this->current_id=$id;
         $room = Room::find($id);
-        $this->C_id=$room->id;
-        $this->building_id = $room->building_id;
-        $this->label = $room->label;
-        $this->capacity =  $room->capacity;
-        $this->floor = $room->floor;
-        $this->type = $room->type;
+        if($room){
+            $this->C_id=$room->id;
+            $this->building_id = $room->building_id;
+            $this->label = $room->label;
+            $this->capacity =  $room->capacity;
+            $this->floor = $room->floor;
+            $this->type = $room->type;
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->setmode('edit');
     }
 
@@ -87,12 +108,19 @@ class AllRoom extends Component
     {   
         $validatedData = $this->validate();
         $room = Room::find($id);
-        $room->building_id = $validatedData['building_id'];
-        $room->label = $validatedData['label'];
-        $room->capacity = $validatedData['capacity'];
-        $room->floor = $validatedData['floor'];
-        $room->type = $validatedData['type'];
-        $room->update();
+        if($room){
+            $room->building_id = $validatedData['building_id'];
+            $room->label = $validatedData['label'];
+            $room->capacity = $validatedData['capacity'];
+            $room->floor = $validatedData['floor'];
+            $room->type = $validatedData['type'];
+            $room->update();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -104,7 +132,14 @@ class AllRoom extends Component
     public function delete($id)
     { 
         $room = Room::find($id);
-        $room->delete();
+        if($room){
+            $room->delete();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
@@ -115,12 +150,12 @@ class AllRoom extends Component
     public function render()
     {   
         $buildings=Building::where('status',0)->orderBy('name', 'ASC')->get();
-        $query =Room::orderBy('label', 'ASC');      
-        if ($this->b) {
-            $buldingIds = Building::where('status', 0)->where('name', 'like', '%' . $this->b. '%')->pluck('id');
-            $query->whereIn('building_id', $buldingIds);
-        }
-        $rooms = $query->where('floor', 'like',$this->f.'%')->where('label', 'like', '%'.$this->r.'%')->paginate($this->per_page);
-        return view('livewire.backend.room.all-room',compact('rooms','buildings'))->extends('layouts.admin')->section('admin');
+        $query = Room::orderBy('label', 'ASC')->when($this->b, function ($query) {
+                $query->whereIn('building_id', function ($subQuery) {
+                    $subQuery->select('id')->from('buildings')->where('status', 0)->where('name', 'like', '%' . $this->b . '%');
+                });
+        })->where('floor', 'like', $this->f . '%')->where('label', 'like', '%' . $this->r . '%');
+        $rooms = $query->paginate($this->per_page);
+        return view('livewire.backend.room.all-room',compact('rooms','buildings'))->extends('layouts.admin.admin')->section('admin');
     }
 }

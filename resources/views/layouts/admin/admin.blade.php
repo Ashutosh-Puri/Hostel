@@ -3,6 +3,12 @@
 <div>   
     @section('styles')
       <style>
+
+        .sidebar-bg::-webkit-scrollbar {
+          width: 0px; 
+          scrollbar-width: thin;
+        }
+
         .card
         {
           background-color: #36404a;
@@ -32,11 +38,12 @@
           color: black; 
         }
 
-        option 
-        {
+        select  option {
+          padding: 5px 0 !important;
           color: white;
           background-color: #3b4651;
         }
+
 
         .form-select 
         {
@@ -65,9 +72,7 @@
             <div class="container-fluid page-body-wrapper">
               <!-- Sidebar Start -->
                   @include('layouts.admin.sidebar')    
-                   {{-- @livewire('backend.admin.sidebar')   --}}
               <!-- Sidebar End -->
-      
               <!-- Main Start -->
               <div class="main-panel">
                 <!-- Content Wrapper Start  -->
@@ -77,7 +82,6 @@
                     <!-- Content End-->
                 </div>
                 <!-- Content Wrapper End  -->
-      
                   <!-- Footer Start -->
                       @include('layouts.admin.footer')
                   <!-- Footer End -->
@@ -88,5 +92,4 @@
           </div>
            <!-- Container Enter -->
 </div>
-
 @endsection

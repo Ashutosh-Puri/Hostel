@@ -17,10 +17,10 @@
     <!-- admin template -->
     <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --><!-- admin template --> 
     <!-- admin template -->     <link rel="stylesheet" href="{{ asset('assets/admin_template/vendors/mdi/css/materialdesignicons.min.css') }}">                                                <!-- admin template -->
-    <!-- admin template -->    {{-- <link rel="stylesheet" href="{{ asset('assets/admin_template/vendors/flag-icon-css/css/flag-icon.min.css') }}"> --}}                                     <!-- admin template -->
-    <!-- admin template -->    {{-- <link rel="stylesheet" href="{{ asset('assets/admin_template/vendors/css/vendor.bundle.base.css') }}"> --}}                                              <!-- admin template -->
-    <!-- admin template -->    {{-- <link rel="stylesheet" href="{{ asset('assets/admin_template/vendors/font-awesome/css/font-awesome.min.css') }}"> --}}                                   <!-- admin template -->
-    <!-- admin template -->    {{-- <link rel="stylesheet" href="{{ asset('assets/admin_template/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css') }}"> --}}                        <!-- admin template -->
+    <!-- admin template 1-->     <link rel="stylesheet" href="{{ asset('assets/admin_template/vendors/flag-icon-css/css/flag-icon.min.css') }}">                                   <!-- admin template -->
+    <!-- admin template 1-->     <link rel="stylesheet" href="{{ asset('assets/admin_template/vendors/css/vendor.bundle.base.css') }}">                                             <!-- admin template -->
+    <!-- admin template 1-->     <link rel="stylesheet" href="{{ asset('assets/admin_template/vendors/font-awesome/css/font-awesome.min.css') }}">                                   <!-- admin template -->
+    <!-- admin template 1-->     <link rel="stylesheet" href="{{ asset('assets/admin_template/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">                        <!-- admin template -->
     <!-- admin template -->     <link rel="stylesheet" href="{{ asset('assets/admin_template/css/style.css') }}">                                                                             <!-- admin template -->                                                                                                                                                                        <!-- admin template -->
     <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --><!-- admin template -->
     
@@ -47,14 +47,14 @@
 
     <!-- admin template -->
     <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --><!-- admin template -->
-    <!-- admin template -->     <script src="{{ asset('assets/admin_template/vendors/js/vendor.bundle.base.js') }}" type="text/javascript"></script>                                        <!-- admin template -->
-    <!-- admin template -->    {{-- <script src="{{ asset('assets/admin_template/vendors/chart.js/Chart.min.js') }}" type="text/javascript"></script> --}}                                  <!-- admin template -->
-    <!-- admin template -->    {{-- <script src="{{ asset('assets/admin_template/vendors/jquery-circle-progress/js/circle-progress.min.js') }}" type="text/javascript"></script> --}}       <!-- admin template -->
-    <!-- admin template -->    {{-- <script src="{{ asset('assets/admin_template/js/jquery.cookie.js') }}" type="text/javascript"></script> --}}                                            <!-- admin template -->
-    <!-- admin template -->     <script src="{{ asset('assets/admin_template/js/off-canvas.js') }}" type="text/javascript"></script>                                                        <!-- admin template -->
-    <!-- admin template -->    {{-- <script src="{{ asset('assets/admin_template/js/hoverable-collapse.js') }}" type="text/javascript"></script> --}}                                       <!-- admin template -->
-    <!-- admin template -->     <script src="{{ asset('assets/admin_template/js/misc.js') }}" type="text/javascript"></script>                                                              <!-- admin template -->
-    <!-- admin template -->    {{-- <script src="{{ asset('assets/admin_template/js/dashboard.js') }}" type="text/javascript"></script> --}}                                                <!-- admin template -->
+    <!-- admin template -->     <script src="{{ asset('assets/admin_template/vendors/js/vendor.bundle.base.js') }}"></script>                                        <!-- admin template -->
+    <!-- admin template 1-->    <script src="{{ asset('assets/admin_template/vendors/chart.js/Chart.min.js') }}"></script>                                  <!-- admin template -->
+    <!-- admin template 1-->    <script src="{{ asset('assets/admin_template/vendors/jquery-circle-progress/js/circle-progress.min.js') }}" ></script>        <!-- admin template -->
+    <!-- admin template 1-->    <script src="{{ asset('assets/admin_template/js/jquery.cookie.js') }}" type="text/javascript"></script>                                            <!-- admin template -->
+    <!-- admin template -->     <script src="{{ asset('assets/admin_template/js/off-canvas.js') }}" ></script>                                                        <!-- admin template -->
+    <!-- admin template 1-->    <script src="{{ asset('assets/admin_template/js/hoverable-collapse.js') }}" ></script>                                      <!-- admin template -->
+    <!-- admin template -->     <script src="{{ asset('assets/admin_template/js/misc.js') }}" ></script>                                                              <!-- admin template -->
+    <!-- admin template 1-->     <script src="{{ asset('assets/admin_template/js/dashboard.js') }}" ></script>                                                 <!-- admin template -->
     <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --><!-- admin template -->
     
     <!-- data Table-->

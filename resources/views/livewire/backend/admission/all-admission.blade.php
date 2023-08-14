@@ -36,7 +36,7 @@
                                             <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model="student_id">
                                                 <option  hidden value="">Select Students</option>
                                                 @foreach($students as $item2)
-                                                    <option class="py-4" value="{{ $item2->id  }}">{{ $item2->username }}</option>
+                                                    <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name!=null?$item2->name: $item2->username; }}</option>
                                                 @endforeach
                                             </select>
                                             @error('student_id')
@@ -495,7 +495,7 @@
                                             <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model="student_id">
                                                 <option  hidden value="">Select Students</option>
                                                 @foreach($students as $item2)
-                                                    <option class="py-4" value="{{ $item2->id  }}">{{ $item2->username }}</option>
+                                                    <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name!=null?$item2->name: $item2->username; }}</option>
                                                 @endforeach
                                             </select>
                                             @error('student_id')
@@ -1212,9 +1212,9 @@
                                         @foreach ($admissions as $key => $item)
                                             <tr>
                                                 <td>{{ $key+1 }}</td>   
-                                                <td>{{  $item->id }}</td>   
+                                                <td>{{ $item->id }}</td>   
                                                 <td>{{ $item->AcademicYear->year}}</td> 
-                                                <td>{{ $item->Student->name}}</td> 
+                                                <td>{{ $item->Student->name!=null?$item->Student->name: $item->Student->username; }}</td> 
                                                 <td>{{ $item->Class->name}}</td> 
                                                 <td>{{ $item->seat_type==null?'NA':$item->seat_type." Seated";}}</td> 
                                                 <td>

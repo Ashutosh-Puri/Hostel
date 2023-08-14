@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('academic_years', function (Blueprint $table) {
-            $table->id();
-            $table->integer('year');
+            $table->id()->index();;
+            $table->integer('year')->unique()->index();;
             $table->tinyInteger('status')->nullable()->default('0')->comment('0-active ,1-inactive');
             $table->timestamps();
         });

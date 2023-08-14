@@ -30,7 +30,7 @@
                                         <option value="" hidden>Select Room</option>
                                         @foreach ($rooms as $item2)
                                             @php
-                                                $temp = "B - " . $item2->Building->name . "---> F - " . $item2->floor . " ---> R - " . $item2->label;
+                                                $temp =" H - ".$item2->Building->Hostel->name . " --->B - " . $item2->Building->name . " ---> F - " . $item2->floor . " ---> R - " . $item2->label;
                                             @endphp
                                         <option value="{{ $item2->id }}">{{ $temp }}</option>
                                         @endforeach
@@ -95,7 +95,7 @@
                                         <option value="" hidden>Select Room</option>
                                         @foreach ($rooms as $item2)
                                             @php
-                                                $temp = "B - " . $item2->Building->name . "---> F - " . $item2->floor . " ---> R - " . $item2->label;
+                                                 $temp =" H - ".$item2->Building->Hostel->name . " --->B - " . $item2->Building->name . " ---> F - " . $item2->floor . " ---> R - " . $item2->label;
                                             @endphp
                                             <option value="{{ $item2->id }}">{{ $temp }}</option>
                                         @endforeach
@@ -182,9 +182,10 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
+                                            <th>Hostel</th>
                                             <th>Building</th>
                                             <th>Floor</th>
-                                            <th>Room Label</th>
+                                            <th>Room</th>
                                             <th>Name</th>
                                             <th>Status</th>
                                             <th>Action</th>
@@ -194,6 +195,7 @@
                                         @foreach ($facility as $key => $item)
                                             <tr>
                                                 <td>{{ $key+1 }}</td>  
+                                                <td>{{ $item->Room->Building->Hostel->name}}</td>  
                                                 <td>{{ $item->Room->Building->name}}</td>  
                                                 <td>
                                                     @switch($item->floor)

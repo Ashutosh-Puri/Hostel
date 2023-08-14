@@ -6,6 +6,7 @@ use App\Models\Classes;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class AllClass extends Component
 {    
@@ -18,6 +19,22 @@ class AllClass extends Component
     public $type;
     public $status;
     public $c_id;
+    public $current_id;
+
+
+    protected function rules()
+    {
+        return [
+            'name' => ['required', 'string', 'max:255','unique:classes,name,'.($this->mode=='edit'? $this->current_id :'')],
+            'stream' => ['required','string'],
+            'type' => ['required','string'],
+        ];
+    }
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
 
     public function resetinput()
     {
@@ -27,6 +44,7 @@ class AllClass extends Component
         $this->status=null;
         $this->c_id=null;
         $this->search=null;
+        $this->current_id=null;
     }
 
     public function setmode($mode)
@@ -36,17 +54,20 @@ class AllClass extends Component
  
     public function save()
     {
-        $validatedData = $this->validate([
-            'name' => ['required','string',Rule::unique('classes', 'name')],
-            'stream' => ['required','string'],
-            'type' => ['required','string'],
-        ]);
+        $validatedData = $this->validate();
         $class= new Classes;
-        $class->name = $validatedData['name'];
-        $class->stream = $validatedData['stream'];
-        $class->type = $validatedData['type'];
-        $class->status = $this->status==1?1:0;
-        $class->save();
+        if($class){
+            $class->name = $validatedData['name'];
+            $class->stream = $validatedData['stream'];
+            $class->type = $validatedData['type'];
+            $class->status = $this->status==1?1:0;
+            $class->save();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -56,29 +77,40 @@ class AllClass extends Component
     }
 
     public function edit($id)
-    { 
+    {   
+        $this->current_id=$id;
         $class = Classes::find($id);
-        $this->C_id=$class->id;
-        $this->name = $class->name;
-        $this->stream =$class->stream;
-        $this->type = $class->type ;
-        $this->status = $class->status;
+        if($class){
+            $this->C_id=$class->id;
+            $this->name = $class->name;
+            $this->stream =$class->stream;
+            $this->type = $class->type ;
+            $this->status = $class->status;
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->setmode('edit');
     }
 
     public function update($id)
     {   
-        $validatedData = $this->validate([
-            'name' => ['required','string', Rule::unique('classes', 'name')->ignore($this->name, 'name')],
-            'stream' => ['required','string'],
-            'type' => ['required','string'],
-        ]);
+        $validatedData = $this->validate();
         $class = Classes::find($id);
-        $class->name = $validatedData['name'];
-        $class->stream = $validatedData['stream'];
-        $class->type = $validatedData['type'];
-        $class->status = $this->status==1?'1':'0';
-        $class->update();
+        if($class){
+            $class->name = $validatedData['name'];
+            $class->stream = $validatedData['stream'];
+            $class->type = $validatedData['type'];
+            $class->status = $this->status==1?'1':'0';
+            $class->update();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -90,7 +122,14 @@ class AllClass extends Component
     public function delete($id)
     { 
         $class = Classes::find($id);
-        $class->delete();
+        if($class){
+            $class->delete();
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong!!"
+            ]);
+        }
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
@@ -101,6 +140,6 @@ class AllClass extends Component
     public function render()
     {   
         $class=Classes::where('name', 'like', '%'.$this->search.'%')->orderBy('name', 'ASC')->paginate($this->per_page);
-        return view('livewire.backend.class.all-class',compact('class'))->extends('layouts.admin')->section('admin');
+        return view('livewire.backend.class.all-class',compact('class'))->extends('layouts.admin.admin')->section('admin');
     }
 }

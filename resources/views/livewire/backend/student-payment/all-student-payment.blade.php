@@ -43,7 +43,7 @@
                                     <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model="student_id" >
                                         <option value="" hidden>Select Student</option>
                                         @foreach ($students as $item1)
-                                            <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
+                                            <option  value="{{ $item1->id }}"> {{ $item1->name!=null? $item1->name: $item1->username; }} </option>
                                         @endforeach
                                     </select>
                                     @error('student_id')
@@ -124,7 +124,7 @@
                                     <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model="student_id" >
                                         <option value="" hidden>Select Student</option>
                                         @foreach ($students as $item1)
-                                            <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
+                                            <option  value="{{ $item1->id }}"> {{ $item1->name!=null? $item1->name: $item1->username; }} </option>
                                         @endforeach
                                     </select>
                                     @error('student_id')
@@ -171,7 +171,7 @@
                     <div class="col-12">
                         <div class="bg-success">
                             <div class="float-start pt-2 px-2">
-                                <h2>Data Payments</h2>
+                                <h3>Data Student Payments</h3>
                             </div>
                             <div class="float-end">
                                 <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
@@ -201,13 +201,13 @@
                                                     <label class="w-100 p-1  text-sm-center">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
+                                                <input class="w-100" wire:model="admission_name" type="search" placeholder="Admission ID">
+                                            </div>
+                                            <div class="col-12 col-md-3">
                                                 <input class="w-100" wire:model="year" type="search" placeholder="Academic Year">
                                             </div>
                                             <div class="col-12 col-md-3">
                                                 <input class="w-100" wire:model="student_name" type="search" placeholder="Student Name">
-                                            </div>
-                                            <div class="col-12 col-md-3">
-                                                <input class="w-100" wire:model="admission_name" type="search" placeholder="Admission Name">
                                             </div>
                                         </span>
                                     </span>
@@ -218,10 +218,11 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
+                                            <th>Admission ID</th>
                                             <th>Academic Year</th>
                                             <th>Student Name</th>
-                                            <th>Admission Name</th>
                                             <th>Total Amount</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -229,10 +230,19 @@
                                         @foreach ($student_payments as $key => $item)
                                             <tr>
                                                 <td>{{ $key+1 }}</td>                                     
-                                                <td>{{ $item->AcademicYear->year}}</td>
-                                                <td>{{ $item->Student->name }}</td>  
                                                 <td>{{ $item->Admission->id }}</td>  
-                                                <td>{{ $item->total_amount }}</td>       
+                                                <td>{{ $item->AcademicYear->year}}</td>
+                                                <td>{{ $item->Student->name!=null? $item->Student->name: $item->Student->username; }}</td>  
+                                                <td>{{ $item->total_amount }}</td>
+                                                <td>
+                                                    @if ( $item->status == '0')
+                                                        <span class="badge bg-warning text-white">Not Paid</span>
+                                                    @elseif ( $item->status == '1')
+                                                        <span class="badge bg-success text-white">Paid</span>
+                                                    @elseif ( $item->status == '2')
+                                                        <span class="badge bg-danger text-white">Cancelled</span>
+                                                    @endif
+                                                </td>        
                                                 <td>
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
                                                     <a wire:loading.attr="disabled" wire:click="delete({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>

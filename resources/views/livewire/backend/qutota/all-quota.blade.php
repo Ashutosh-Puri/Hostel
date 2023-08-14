@@ -209,7 +209,7 @@
                                             <th>No</th>
                                             <th>Academic Year</th>
                                             <th>Class Name</th>
-                                            <th>max Capacity</th>
+                                            <th>Max Capacity</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>

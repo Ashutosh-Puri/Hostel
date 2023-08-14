@@ -43,7 +43,7 @@
                                     <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model="student_id" >
                                         <option value="" hidden>Select Student</option>
                                         @foreach ($students as $item1)
-                                            <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
+                                            <option  value="{{ $item1->id }}"> {{ $item1->name!=null? $item1->name: $item1->username; }} </option>
                                         @endforeach
                                     </select>
                                     @error('student_id')
@@ -133,7 +133,7 @@
                                     <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model="student_id" >
                                         <option value="" hidden>Select Student</option>
                                         @foreach ($students as $item1)
-                                            <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
+                                            <option  value="{{ $item1->id }}"> {{ $item1->name!=null? $item1->name: $item1->username; }} </option>
                                         @endforeach
                                     </select>
                                     @error('student_id')
@@ -214,22 +214,20 @@
                                     </select>
                                     <label class=" col-4 col-md-1  py-1 ">Records</label>
                                     <span class="col-12 col-md-9 p-0">
-                                            <div class="row ">
-                                                <div class="col-12 col-md-3 ">
-                                                </div>
-                                                <div class="col-12 col-md-3 ">
-                                                    <label class="w-100 p-1  text-sm-center">Search</label>
-                                                </div>
-                                                <div class="col-12 col-md-3">
-                                                    <input  class="w-100" wire:model="year" type="search" placeholder="Academic Year">
-                                                </div>
-                                                <div class="col-12 col-md-3">
-                                                    <input class="w-100"  wire:model="student_name" type="search" placeholder="Student Name">
-                                                </div>
-                                                <div class="col-12 col-md-3">
-                                                    <input class="w-100"  wire:model="fine_name" type="search" placeholder="Fine Name">
-                                                </div>
+                                        <div class="row ">
+                                            <div class="col-12 col-md-3 ">
+                                                <label class="w-100 p-1  text-sm-center">Search</label>
                                             </div>
+                                            <div class="col-12 col-md-3">
+                                                <input  class="w-100" wire:model="year" type="search" placeholder="Academic Year">
+                                            </div>
+                                            <div class="col-12 col-md-3">
+                                                <input class="w-100"  wire:model="student_name" type="search" placeholder="Student Name">
+                                            </div>
+                                            <div class="col-12 col-md-3">
+                                                <input class="w-100"  wire:model="fine_name" type="search" placeholder="Fine Name">
+                                            </div>
+                                        </div>
                                     </span>
                                 </div>
                             </div>
@@ -251,14 +249,16 @@
                                             <tr>
                                                 <td>{{ $key+1 }}</td>                                     
                                                 <td>{{ $item->AcademicYear->year}}</td>
-                                                <td>{{ $item->Student->name }}</td>  
+                                                <td>{{ $item->Student->name!=null? $item->Student->name: $item->Student->username; }}</td>  
                                                 <td>{{ $item->Fine->name }}</td>  
                                                 <td>{{ $item->amount }}</td>       
                                                 <td>
                                                     @if ( $item->status == '0')
-                                                        <span class="badge bg-success text-white">Active</span>
-                                                    @else
-                                                        <span class="badge bg-danger text-white">In-Active</span>
+                                                        <span class="badge bg-warning text-white">Not Paid</span>
+                                                    @elseif ( $item->status == '1')
+                                                        <span class="badge bg-success text-white">Paid</span>
+                                                    @elseif ( $item->status == '2')
+                                                        <span class="badge bg-danger text-white">Cancelled</span>
                                                     @endif
                                                 </td> 
                                                 <td>
