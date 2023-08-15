@@ -118,24 +118,12 @@ class AllAdmission extends Component
             'student_id'=>['required','integer'],
             'academic_year_id'=>['required','integer'],
             'first_name'=>['required','string','max:255'],
-            'first_name'=>['required','string','max:255'],
             'middle_name'=>['required','string','max:255'],
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
             'last_name'=>['required','string','max:255'],
-            'dob'=>['required','date'],
-            'cast'=>['required','string','max:255'],
-            'category'=>['required','string','max:255'],
-            'blood_group'=>['required','string','max:255'],
-=======
->>>>>>> Stashed changes
-            'last_name'=>['required','string','max:255'], 
             'dob'=>['required','date','before_or_equal:15 years ago'],
             'cast_id'=>['required','integer'],
             'category_id'=>['required','integer'],
             'blood_group'=>['required','string','max:255'],    
->>>>>>> baa5acd6b7282b2394c63888fa0967550fee3926
             'stream'=>['required','string','max:255'],
             'stream_type'=>['required','string','max:255'],
             'class_id'=>['required','integer'],
@@ -179,6 +167,11 @@ class AllAdmission extends Component
                 $this->mobile = $student->mobile;
                 $this->mother_name = $student->mother_name;
                 $this->dob = $student->dob;
+                $tempccat=Cast::find($student->cast_id)->category()->pluck('id');
+                if( $tempccat[0])
+                {
+                    $this->category_id = $tempccat[0];
+                }
                 $this->cast_id = $student->cast_id;
                 $this->parent_name = $student->parent_name;
                 $this->parent_mobile = $student->parent_mobile;
@@ -323,6 +316,11 @@ class AllAdmission extends Component
             $this->mother_name = $student->mother_name;
             $this->dob = $student->dob;
             $this->cast_id = $student->cast_id;
+            $tempccat=Cast::find($student->cast_id)->category()->pluck('id');
+            if( $tempccat[0])
+            {
+                $this->category_id = $tempccat[0];
+            }
             $this->parent_name = $student->parent_name;
             $this->parent_mobile = $student->parent_mobile;
             $this->parent_address = $student->parent_address;
@@ -553,16 +551,9 @@ class AllAdmission extends Component
     }
 
     public function render()
-<<<<<<< HEAD
-    {
-=======
     {   
         $today = Carbon::today();
         $this->mindate=$minus15Years = $today->copy()->subYears(15)->format('Y-m-d');
-<<<<<<< Updated upstream
-=======
->>>>>>> baa5acd6b7282b2394c63888fa0967550fee3926
->>>>>>> Stashed changes
         $this->name = $this->last_name." ".$this->first_name." ".$this->middle_name;
 
         if (is_numeric($this->sgpa) && $this->sgpa > 0) {
@@ -575,14 +566,7 @@ class AllAdmission extends Component
         $lastclasses=Classes::select('id','name')->where('status',0)->where('stream',$this->stream)->whereNot('id',$this->class_id)->orderBy('name',"ASC")->get();
         $students=Student::where('status',0)->orderBy('username',"ASC")->get();
         $casts=Cast::where('status',0)->orderBy('name',"ASC")->get();
-
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-
         $query =Admission::orderBy('academic_year_id', 'DESC');
-=======
->>>>>>> Stashed changes
         if ($this->cast_id) {
             $categories =Cast::find($this->cast_id)->category()->orderBy('name', 'ASC')->get();
         } else { 
@@ -590,7 +574,6 @@ class AllAdmission extends Component
         }
             
         $query =Admission::orderBy('academic_year_id', 'DESC');    
->>>>>>> baa5acd6b7282b2394c63888fa0967550fee3926
         if ($this->ad) {
             $admissionIds = Admission::where('id', 'like',$this->ad. '%')->pluck('id');
             $query->whereIn('id', $admissionIds);
@@ -620,17 +603,6 @@ class AllAdmission extends Component
             $viewadmission=null;
             $lastclass=null;
         }
-<<<<<<< Updated upstream
-   
         return view('livewire.backend.Admission.all-Admission',compact('categories','casts','lastclass','viewadmission','students','admissions','classes','streams','types','lastclasses','academicyears'))->extends('layouts.admin.admin')->section('admin');
-=======
-<<<<<<< HEAD
-
-        return view('livewire.backend.Admission.all-Admission',compact('lastclass','viewadmission','students','admissions','classes','streams','types','lastclasses','academicyears'))->extends('layouts.admin.admin')->section('admin');
-=======
-   
-        return view('livewire.backend.Admission.all-Admission',compact('categories','casts','lastclass','viewadmission','students','admissions','classes','streams','types','lastclasses','academicyears'))->extends('layouts.admin.admin')->section('admin');
->>>>>>> baa5acd6b7282b2394c63888fa0967550fee3926
->>>>>>> Stashed changes
     }
 }

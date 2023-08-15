@@ -35,24 +35,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
-<<<<<<< HEAD
-        // $this->call(RoleSeeder::class);
-        // $this->call(AdminSeeder::class);            //  Role ,
-        // $this->call(CategorySeeder::class);
-        // $this->call(CastSeeder::class);
-=======
         $this->call(RoleSeeder::class);
         $this->call(AdminSeeder::class);            //  Role ,
-<<<<<<< Updated upstream
-=======
->>>>>>> baa5acd6b7282b2394c63888fa0967550fee3926
->>>>>>> Stashed changes
-        // $this->call(AcademicYearSeeder::class);
-        // $this->call(ClassesSeeder::class);
-        // $this->call(CategorySeeder::class);
-        // $this->call(CastSeeder::class);          //  Category ,
-        // $this->call(StudentSeeder::class);          //  Cast ,
+        $this->call(AcademicYearSeeder::class);
+        $this->call(ClassesSeeder::class);
+        $this->call(CategorySeeder::class);
+        $this->call(CastSeeder::class);          //  Category ,
+        $this->call(StudentSeeder::class);          //  Cast ,
         // $this->call(CollegeSeeder::class);
         // $this->call(HostelSeeder::class);           //  College ,
         // $this->call(BuildingSeeder::class);         //  Hostel ,
@@ -66,14 +55,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(AdmissionSeeder::class);        //   Acadmic Year , Student , class ,Bed,
         // $this->call(StudentEducationSeeder::class); //   Acadmic Year , Student , class ,Admission ,
         // $this->call(StudentPaymentSeeder::class);   //   Acadmic Year , Student , Admission ,
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-        $this->call(RuleSeeder::class);
-=======
->>>>>>> Stashed changes
         // $this->call(AllocationSeeder::class);       // Fee , Admission
-
->>>>>>> baa5acd6b7282b2394c63888fa0967550fee3926
+        // $this->call(RuleSeeder::class);
     }
 }
