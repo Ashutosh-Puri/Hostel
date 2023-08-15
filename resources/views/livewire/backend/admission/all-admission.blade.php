@@ -176,10 +176,10 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="d-flex justify-content-center align-items-center">
-                                                    @if ($photoold)
-                                                        <img src="{{ isset($photoold)?$photoold:asset('assets/images/no_image.jpg'); }}" alt="Image" class="img-fluid mb-3" style="height: 155px; width:150px;" >
-                                                    @else
+                                                    @if ($photo)
                                                         <img src="{{ isset($photo)?$photo->temporaryUrl():asset('assets/images/no_image.jpg'); }}" alt="Image" class="img-fluid mb-3" style="height: 155px; width:150px;" >
+                                                    @else
+                                                        <img src="{{ isset($photoold)?asset($photoold):asset('assets/images/no_image.jpg'); }}" alt="Image" class="img-fluid mb-3" style="height: 155px; width:150px;" >
                                                     @endif
                                                 </div>
                                             </div>
@@ -635,7 +635,12 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="d-flex justify-content-center align-items-center">
-                                                    <img src="{{ isset($photo)?$photo->temporaryUrl():$photoold; }}" alt="Image" class="img-fluid mb-3" style="height: 155px; width:150px;" >
+                                                    @if ($photo)
+                                                    <img src="{{ isset($photo)?$photo->temporaryUrl():asset('assets/images/no_image.jpg'); }}" alt="Image" class="img-fluid mb-3" style="height: 155px; width:150px;" >
+                                                    @else
+                                                        <img src="{{ isset($photoold)?asset($photoold):asset('assets/images/no_image.jpg'); }}" alt="Image" class="img-fluid mb-3" style="height: 155px; width:150px;" >
+                                                    @endif
+                                                    {{-- <img src="{{ isset($photo)?$photo->temporaryUrl():$photoold; }}" alt="Image" class="img-fluid mb-3" style="height: 155px; width:150px;" > --}}
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -1055,27 +1060,27 @@
                                     <hr>
                                 </div>
                                 <div class="row">
-                                    @if (0)
+                                    @if ($lastclass->sgpa>0)
                                         <div class="col-12 col-md-4 mb-4">
                                             <label for="">Previous Class :</label>
-                                            <label for=""></label>
+                                            <label for="">{{ $lastclass->Class->name }}</label>
                                         </div>
                                         <div class="col-12 col-md-4 mb-3">
                                             <label for="">SGPA :</label>
-                                            <label for=""></label>
+                                            <label for="">{{ $lastclass->sgpa}}</label>
                                         </div>
                                         <div class="col-12 col-md-4 mb-3">
                                             <label for="">Percentage :</label>
-                                            <label for="">&nbsp; %</label>
+                                            <label for="">&nbsp;{{ $lastclass->percentage }} %</label>
                                         </div>
                                     @else
                                         <div class="col-12 col-md-6 mb-4">
                                             <label for="">Previous Class :</label>
-                                            <label for=""></label>
+                                            <label for="">{{ $lastclass->Class->name }}</label>
                                         </div>
                                         <div class="col-12 col-md-6 mb-3">
                                             <label for="">Percentage :</label>
-                                            <label for="">&nbsp; %</label>
+                                            <label for="">&nbsp;{{ $lastclass->percentage }} %</label>
                                         </div>
                                     @endif
                                 </div>
@@ -1175,7 +1180,7 @@
                                             <div class="row ">
                                                
                                                 <div class="col-12 col-md-2 ">
-                                                    <label class="w-100 p-1  text-sm-center">Search</label>
+                                                    <label class="w-100 p-1  text-md-end">Search</label>
                                                 </div>
                                                 <div class="col-12 col-md-2 ">
                                                     <input  class="w-100" wire:model="ad" type="search" placeholder="Admission ID ">
@@ -1238,7 +1243,7 @@
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
                                                     <a wire:loading.attr="disabled"  wire:click="confirm({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-thumb-up"></i></a>
                                                     <a wire:loading.attr="disabled"  wire:click="cancel({{ $item->id }})" class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-thumb-down"></i></a>
-                                                    <a wire:loading.attr="disabled" wire:click="delete({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                    <a  wire:loading.attr="disabled" wire:click="delete({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach

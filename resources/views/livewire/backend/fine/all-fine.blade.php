@@ -180,7 +180,7 @@
                                                 <div class="col-12 col-md-3 ">
                                                 </div>
                                                 <div class="col-12 col-md-3 ">
-                                                    <label class="w-100 p-1  text-sm-center">Search</label>
+                                                    <label class="w-100 p-1  text-md-end">Search</label>
                                                 </div>
                                                 <div class="col-12 col-md-3">
                                                     <input class="w-100" wire:model="year" type="search" placeholder="Academic Year">

@@ -133,8 +133,8 @@
                                             <div class="row ">
                                                 <div class="col-12 col-md-6 ">
                                                 </div>
-                                                <div class="col-12 col-md-3 ">
-                                                    <label class="w-100 p-1  text-sm-center">Search</label>
+                                                <div class="col-12 col-md-3">
+                                                    <label class="w-100 p-1 text-md-end">Search</label>
                                                 </div>
                                                 <div class="col-12 col-md-3">
                                                     <input class="w-100" wire:model="search" type="search" placeholder="Academic Year">
@@ -167,7 +167,7 @@
                                                 </td> 
                                                 <td>
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
-                                                    <a wire:loading.attr="disabled" wire:click="delete({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach

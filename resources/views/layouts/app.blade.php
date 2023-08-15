@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
    
     <!-- App favicon -->
-    <link rel="shortcut icon" href="  ">
+    <link rel="shortcut icon" href="{{ asset('assets/logo/favicon.ico') }}">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -17,10 +17,10 @@
     <!-- admin template -->
     <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --><!-- admin template --> 
     <!-- admin template -->     <link rel="stylesheet" href="{{ asset('assets/admin_template/vendors/mdi/css/materialdesignicons.min.css') }}">                                                <!-- admin template -->
-    <!-- admin template 1-->     <link rel="stylesheet" href="{{ asset('assets/admin_template/vendors/flag-icon-css/css/flag-icon.min.css') }}">                                   <!-- admin template -->
-    <!-- admin template 1-->     <link rel="stylesheet" href="{{ asset('assets/admin_template/vendors/css/vendor.bundle.base.css') }}">                                             <!-- admin template -->
-    <!-- admin template 1-->     <link rel="stylesheet" href="{{ asset('assets/admin_template/vendors/font-awesome/css/font-awesome.min.css') }}">                                   <!-- admin template -->
-    <!-- admin template 1-->     <link rel="stylesheet" href="{{ asset('assets/admin_template/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">                        <!-- admin template -->
+    {{-- <!-- admin template 1-->     <link rel="stylesheet" href="{{ asset('assets/admin_template/vendors/flag-icon-css/css/flag-icon.min.css') }}">                                   <!-- admin template --> --}}
+    {{-- <!-- admin template 1-->     <link rel="stylesheet" href="{{ asset('assets/admin_template/vendors/css/vendor.bundle.base.css') }}">                                             <!-- admin template --> --}}
+    {{-- <!-- admin template 1-->     <link rel="stylesheet" href="{{ asset('assets/admin_template/vendors/font-awesome/css/font-awesome.min.css') }}">                                   <!-- admin template --> --}}
+    {{-- <!-- admin template 1-->     <link rel="stylesheet" href="{{ asset('assets/admin_template/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">                        <!-- admin template --> --}}
     <!-- admin template -->     <link rel="stylesheet" href="{{ asset('assets/admin_template/css/style.css') }}">                                                                             <!-- admin template -->                                                                                                                                                                        <!-- admin template -->
     <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --><!-- admin template -->
     
@@ -48,13 +48,13 @@
     <!-- admin template -->
     <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --><!-- admin template -->
     <!-- admin template -->     <script src="{{ asset('assets/admin_template/vendors/js/vendor.bundle.base.js') }}"></script>                                        <!-- admin template -->
-    <!-- admin template 1-->    <script src="{{ asset('assets/admin_template/vendors/chart.js/Chart.min.js') }}"></script>                                  <!-- admin template -->
-    <!-- admin template 1-->    <script src="{{ asset('assets/admin_template/vendors/jquery-circle-progress/js/circle-progress.min.js') }}" ></script>        <!-- admin template -->
-    <!-- admin template 1-->    <script src="{{ asset('assets/admin_template/js/jquery.cookie.js') }}" type="text/javascript"></script>                                            <!-- admin template -->
+    {{-- <!-- admin template 1-->    <script src="{{ asset('assets/admin_template/vendors/chart.js/Chart.min.js') }}"></script>                                  <!-- admin template --> --}}
+    {{-- <!-- admin template 1-->    <script src="{{ asset('assets/admin_template/vendors/jquery-circle-progress/js/circle-progress.min.js') }}" ></script>        <!-- admin template --> --}}
+    {{-- <!-- admin template 1-->    <script src="{{ asset('assets/admin_template/js/jquery.cookie.js') }}" type="text/javascript"></script>                                            <!-- admin template --> --}}
     <!-- admin template -->     <script src="{{ asset('assets/admin_template/js/off-canvas.js') }}" ></script>                                                        <!-- admin template -->
-    <!-- admin template 1-->    <script src="{{ asset('assets/admin_template/js/hoverable-collapse.js') }}" ></script>                                      <!-- admin template -->
+    {{-- <!-- admin template 1-->    <script src="{{ asset('assets/admin_template/js/hoverable-collapse.js') }}" ></script>                                      <!-- admin template --> --}}
     <!-- admin template -->     <script src="{{ asset('assets/admin_template/js/misc.js') }}" ></script>                                                              <!-- admin template -->
-    <!-- admin template 1-->     <script src="{{ asset('assets/admin_template/js/dashboard.js') }}" ></script>                                                 <!-- admin template -->
+    {{-- <!-- admin template 1-->     <script src="{{ asset('assets/admin_template/js/dashboard.js') }}" ></script>                                                 <!-- admin template --> --}}
     <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --><!-- admin template -->
     
     <!-- data Table-->
@@ -63,6 +63,7 @@
     <!-- Sweet Alert JS -->
     <script src="{{ asset('assets/sweetalert/sweetalert.js') }}"></script>
     <script>
+        // Toster Config
         const Toast = Swal.mixin({
             toast: true,
             position: 'top',
@@ -75,14 +76,32 @@
                 toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
         });
-    
+        
+        // Notification Fire
         window.addEventListener('alert',({detail:{type,message}})=>{
             Toast.fire({
                 icon:type,
                 title:message
             })
 
-        })
+        });
+        
+        // Delete Fire
+        window.addEventListener('delete-confirmation',event=>{
+        Swal.fire({
+            title: 'Are You Sure?',
+            text: "You Won't Be Able To Revert This!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#dc3545',
+            cancelButtonColor: '#198754',
+            confirmButtonText: 'Yes, Delete It !'
+        }).then((result) => {
+            if (result.isConfirmed) {
+               Livewire.emit('delete-confirmed')
+            }
+        });
+    });
     </script>
     @yield('scripts')
 </body>

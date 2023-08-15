@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 class AllAcademicYear extends Component
 {   
     use WithPagination;
+    protected $listeners = ['delete-confirmed'=>'delete'];
+    public $delete_id=null;
     public $search = '';
     public $per_page = 10;
     public $mode='all';
@@ -113,12 +115,19 @@ class AllAcademicYear extends Component
         ]);
     }
 
-    public function delete($id)
+    public function deleteconfirmation($id)
+    {
+        $this->delete_id=$id;
+        $this->dispatchBrowserEvent('delete-confirmation');
+    }
+
+    public function delete()
     { 
-        $academicyear = AcademicYear::find($id);
+        $academicyear = AcademicYear::find($this->delete_id);
         if($academicyear)
         {
             $academicyear->delete();
+            $this->delete_id=null;
             
         }else{
 

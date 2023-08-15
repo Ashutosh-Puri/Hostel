@@ -1,8 +1,8 @@
 <!-- Navbar -->
 <nav class="navbar default-layout-navbar navbar-bg col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-      <a class="navbar-brand brand-logo" href="{{ route('home') }}"><img src="" alt="logo" /></a>
-      <a class="navbar-brand brand-logo-mini" href="{{ route('home') }}"><img src="" alt="logo" /></a>
+    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center navbar-bg">
+      <a class="fs-1 navbar-brand brand-logo fw-bold text-white" href="{{ route('home') }}">{{ preg_replace('/(?<!\ )[A-Z]/', ' $0', config('app.name', 'Laravel'))  }} </a>
+      <a class=" navbar-brand brand-logo-mini" href="{{ route('home') }}"><img src="{{ asset('assets/logo/scolerstay_sm.png') }}" alt="logo" style="height:50px;width:50px;" /></a>
     </div>
     <div class="navbar-menu-wrapper d-flex align-items-stretch">
       <button class="navbar-toggler navbar-toggler fw-bold  text-white align-self-center" type="button" data-toggle="minimize">

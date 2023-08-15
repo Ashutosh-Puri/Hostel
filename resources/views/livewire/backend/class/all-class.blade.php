@@ -39,11 +39,13 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 form-group">
-                                    <label for="type" class="form-label">Select Type</label>
+                                    <label for="type" class="form-label">Select Student Level</label>
                                     <select class="form-select @error('type') is-invalid @enderror" id="type" wire:model="type" >
-                                        <option hidden value="" >Select Type</option>
-                                        <option  value="Senior" >Senior</option>
+                                        <option hidden value="" >Select Student Level</option>
                                         <option  value="Junior" >Junior</option>
+                                        <option  value="Senior" >Senior</option>
+                                        <option value="Undergraduate">Undergraduate</option>
+                                        <option value="Postgraduate">Postgraduate</option>
                                     </select>
                                     @error('type')
                                         <div class="invalid-feedback">
@@ -53,7 +55,7 @@
                                 </div>
                                 <div class="mb-3 form-group">
                                     <label for="name" class="form-label">Class Name</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Name Ex.( FY.BCS , SY.BCS)">
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Class Name">
                                     @error('name')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -116,11 +118,13 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 form-group">
-                                    <label for="type" class="form-label">Select Type</label>
+                                    <label for="type" class="form-label">Select Student Level</label>
                                     <select class="form-select @error('type') is-invalid @enderror" id="type" wire:model="type" >
-                                        <option hidden value="" >Select Type</option>
-                                        <option  value="Senior" >Senior</option>
-                                        <option  value="Junior" >Junior</option>
+                                        <option hidden value="" >Select Student Level</option>
+                                        <option value="Junior" >Junior</option>
+                                        <option value="Senior" >Senior</option>
+                                        <option value="Undergraduate">Undergraduate</option>
+                                        <option value="Postgraduate">Postgraduate</option>
                                     </select>
                                     @error('type')
                                         <div class="invalid-feedback">
@@ -130,7 +134,7 @@
                                 </div>
                                 <div class="mb-3 form-group">
                                     <label for="name" class="form-label">Class Name</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Name Ex.( FY.BCS , SY.BCS)">
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Class Name">
                                     @error('name')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -192,7 +196,7 @@
                                             <div class="col-12 col-md-6 ">
                                             </div>
                                             <div class="col-12 col-md-3 ">
-                                                    <label class="w-100 p-1  text-sm-center">Search</label>
+                                                    <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
                                                 <input  class="w-100" wire:model="search" type="search" placeholder="Class Name">
