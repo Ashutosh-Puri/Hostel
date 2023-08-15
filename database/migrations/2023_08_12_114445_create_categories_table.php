@@ -14,9 +14,7 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id()->index();
             $table->string('name');
-            $table->unsignedBigInteger('cast_id');
             $table->timestamps();
-            $table->foreign('cast_id')->references('id')->on('casts')->onDelete('cascade');
         });
     }
 

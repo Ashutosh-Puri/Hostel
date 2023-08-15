@@ -7,6 +7,7 @@ use App\Models\Building;
 use Database\Seeders\BedSeeder;
 use Database\Seeders\FeeSeeder;
 use Illuminate\Database\Seeder;
+use Database\Seeders\CastSeeder;
 use Database\Seeders\FineSeeder;
 use Database\Seeders\RoleSeeder;
 use Database\Seeders\RoomSeeder;
@@ -17,6 +18,7 @@ use Database\Seeders\ClassesSeeder;
 use Database\Seeders\CollegeSeeder;
 use Database\Seeders\StudentSeeder;
 use Database\Seeders\BuildingSeeder;
+use Database\Seeders\CategorySeeder;
 use Database\Seeders\FacilitySeeder;
 use Database\Seeders\AdmissionSeeder;
 use Database\Seeders\StudentFineSeeder;
@@ -31,10 +33,12 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      */
     public function run(): void
-    {   
-        
+    {
+
         $this->call(RoleSeeder::class);
         $this->call(AdminSeeder::class);            //  Role ,
+        $this->call(CategorySeeder::class);
+        $this->call(CastSeeder::class);
         // $this->call(AcademicYearSeeder::class);
         // $this->call(ClassesSeeder::class);
         // $this->call(StudentSeeder::class);
@@ -51,6 +55,6 @@ class DatabaseSeeder extends Seeder
         // $this->call(AdmissionSeeder::class);
         // $this->call(StudentEducationSeeder::class);        //   Acadmic Year , Student , class ,Bed ,
         // $this->call(StudentPaymentSeeder::class);   //   Acadmic Year , Student , Admission ,
-          
+
     }
 }
