@@ -104,7 +104,7 @@
                                             <div class="col-12 col-md-6">
                                                 <div class="mb-3 form-group">
                                                     <label for="dob" class="form-label">Date Of Birth</label>
-                                                    <input type="date"  class="form-control @error('dob') is-invalid @enderror" wire:model.debounce.1000ms="dob" value="{{ old('dob') }}" id="dob" placeholder=" Select Date Of Birth">
+                                                    <input type="date" max="{{ $mindate }}" class="form-control @error('dob') is-invalid @enderror" wire:model.debounce.1000ms="dob" value="{{ old('dob') }}" id="dob" placeholder=" Select Date Of Birth">
                                                     @error('dob')
                                                         <div class="invalid-feedback">
                                                             {{ $message }}
@@ -116,26 +116,36 @@
                                         <div class="row">
                                             <div class="col-12 col-md-6">
                                                 <div class="mb-3 form-group">
-                                                    <label for="cast" class="form-label">Cast</label>
-                                                    <input type="text"  class="form-control @error('cast') is-invalid @enderror" wire:model.debounce.1000ms="cast" value="{{ old('cast') }}" id="cast" placeholder="Enter Cast">
-                                                    @error('cast')
+                                                    <label for="cast_id" class="form-label">Select Cast</label>
+                                                    <select class="form-select @error('cast_id') is-invalid @enderror" id="cast_id" wire:model="cast_id">
+                                                        <option  hidden value="">Select Cast</option>
+                                                        @foreach($casts as $item2)
+                                                            <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('cast_id')
                                                         <div class="invalid-feedback">
                                                             {{ $message }}
                                                         </div>
                                                     @enderror
                                                 </div>
-                                            </div>
+                                            </div> 
                                             <div class="col-12 col-md-6">
                                                 <div class="mb-3 form-group">
-                                                    <label for="category" class="form-label">Category</label>
-                                                    <input type="text"   class="form-control @error('category') is-invalid @enderror" wire:model.debounce.1000ms="category" value="{{ old('category') }}" id="category" placeholder="Enter Category">
-                                                    @error('category')
+                                                    <label for="category_id" class="form-label">Select Category</label>
+                                                    <select class="form-select @error('category_id') is-invalid @enderror" id="category_id" wire:model="category_id">
+                                                        <option  hidden value="">Select Category</option>
+                                                        @foreach($categories as $item2)
+                                                            <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('category_id')
                                                         <div class="invalid-feedback">
                                                             {{ $message }}
                                                         </div>
                                                     @enderror
                                                 </div>
-                                            </div>
+                                            </div> 
                                         </div>
                                         <div class="row">
                                             <div class="col-12 col-md-6">
@@ -433,7 +443,7 @@
                                     <div class="col-12 col-md-5">
                                         <div class="mb-3 form-group">
                                             <label for="parent_address" class="form-label">Parent Address</label>
-                                            <textarea class="form-control @error('parent_address') is-invalid @enderror" wire:model.debounce.1000ms="parent_address" id="parent_address" placeholder="Enter Parent Address"   cols="30" rows="1">{{ $parent_address }}</textarea>
+                                            <textarea class="form-control @error('parent_address') is-invalid @enderror" wire:model.debounce.1000ms="parent_address" id="parent_address" placeholder="Enter Parent Address"   cols="30" rows="1"> {{ old('parent_address') }}{{ $parent_address }}</textarea>
                                             @error('parent_address')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -444,7 +454,7 @@
                                     <div class="col-12 col-md-5">
                                         <div class="mb-3 form-group">
                                             <label for="local_parent_address" class="form-label">Parent Address In Sangamner</label>
-                                            <textarea class="form-control @error('local_parent_address') is-invalid @enderror" wire:model.debounce.1000ms="local_parent_address" id="local_parent_address" placeholder="Enter Parent Address In Sangamner"   cols="30" rows="3"> {{ $local_parent_address }}</textarea>
+                                            <textarea class="form-control @error('local_parent_address') is-invalid @enderror" wire:model.debounce.1000ms="local_parent_address" id="local_parent_address" placeholder="Enter Parent Address In Sangamner"   cols="30" rows="3">{{ old('local_parent_address') }} {{ $local_parent_address }}</textarea>
                                             @error('local_parent_address')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -563,7 +573,7 @@
                                             <div class="col-12 col-md-6">
                                                 <div class="mb-3 form-group">
                                                     <label for="dob" class="form-label">Date Of Birth</label>
-                                                    <input type="date"  class="form-control @error('dob') is-invalid @enderror" wire:model.debounce.1000ms="dob" value="{{ old('dob') }}" id="dob" placeholder=" Select Date Of Birth">
+                                                    <input type="date" max="{{ $mindate }}" class="form-control @error('dob') is-invalid @enderror" wire:model.debounce.1000ms="dob" value="{{ old('dob') }}" id="dob" placeholder=" Select Date Of Birth">
                                                     @error('dob')
                                                         <div class="invalid-feedback">
                                                             {{ $message }}
@@ -575,26 +585,36 @@
                                         <div class="row">
                                             <div class="col-12 col-md-6">
                                                 <div class="mb-3 form-group">
-                                                    <label for="cast" class="form-label">Cast</label>
-                                                    <input type="text"  class="form-control @error('cast') is-invalid @enderror" wire:model.debounce.1000ms="cast" value="{{ old('cast') }}" id="cast" placeholder="Enter Cast">
-                                                    @error('cast')
+                                                    <label for="cast_id" class="form-label">Select Cast</label>
+                                                    <select class="form-select @error('cast_id') is-invalid @enderror" id="cast_id" wire:model="cast_id">
+                                                        <option  hidden value="">Select Cast</option>
+                                                        @foreach($casts as $item2)
+                                                            <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('cast_id')
                                                         <div class="invalid-feedback">
                                                             {{ $message }}
                                                         </div>
                                                     @enderror
                                                 </div>
-                                            </div>
+                                            </div> 
                                             <div class="col-12 col-md-6">
                                                 <div class="mb-3 form-group">
-                                                    <label for="category" class="form-label">Category</label>
-                                                    <input type="text"   class="form-control @error('category') is-invalid @enderror" wire:model.debounce.1000ms="category" value="{{ old('category') }}" id="category" placeholder="Enter Category">
-                                                    @error('category')
+                                                    <label for="category_id" class="form-label">Select Category</label>
+                                                    <select class="form-select @error('category_id') is-invalid @enderror" id="category_id" wire:model="category_id">
+                                                        <option  hidden value="">Select Category</option>
+                                                        @foreach($categories as $item2)
+                                                            <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('category_id')
                                                         <div class="invalid-feedback">
                                                             {{ $message }}
                                                         </div>
                                                     @enderror
                                                 </div>
-                                            </div>
+                                            </div> 
                                         </div>
                                         <div class="row">
                                             <div class="col-12 col-md-6">
@@ -640,7 +660,6 @@
                                                     @else
                                                         <img src="{{ isset($photoold)?asset($photoold):asset('assets/images/no_image.jpg'); }}" alt="Image" class="img-fluid mb-3" style="height: 155px; width:150px;" >
                                                     @endif
-                                                    {{-- <img src="{{ isset($photo)?$photo->temporaryUrl():$photoold; }}" alt="Image" class="img-fluid mb-3" style="height: 155px; width:150px;" > --}}
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -1010,11 +1029,11 @@
                                             </div>
                                             <div class="col-12 col-md-6 mb-4">
                                                 <label for="">Cast :</label>
-                                                <label for="">{{ $viewadmission[0]->Student->cast }}</label>
+                                                <label for="">{{ $viewadmission[0]->Student->Category()->name }}</label>
                                             </div>
                                             <div class="col-12 col-md-6 mb-4">
                                                 <label for="">Category :</label>
-                                                <label for="">{{ $viewadmission[0]->Student->category }}</label>
+                                                <label for="">{{ $viewadmission[0]->Student->Category()->name}}</label>
                                             </div>
                                             <div class="col-12 col-md-6 mb-4">
                                                 <label for="">Blood Group :</label>
@@ -1060,7 +1079,7 @@
                                     <hr>
                                 </div>
                                 <div class="row">
-                                    @if ($lastclass->sgpa>0)
+                                    @if (isset($lastclass->sgpa))
                                         <div class="col-12 col-md-4 mb-4">
                                             <label for="">Previous Class :</label>
                                             <label for="">{{ $lastclass->Class->name }}</label>

@@ -52,7 +52,7 @@
                       <h2 class="mb-4 text-info font-weight-bold">{{ $total_room }}</h2>
                       <div
                         class="dashboard-progress dashboard-progress-1 d-flex align-items-center justify-content-center item-parent">
-                        <i class="mdi mdi-home-circle icon-md absolute-center text-success"></i>
+                        <i class="mdi mdi-domain icon-md absolute-center text-success"></i>
                       </div>
                       <p class="mt-4 mb-0">Completed</p>
                       <br>

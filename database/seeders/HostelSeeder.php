@@ -18,9 +18,9 @@ class HostelSeeder extends Seeder
         $faker = Faker::create();
 
         // Insert 1000 fake records into the Classes table
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             Hostel::create([
-                'name' => $faker->randomElement(['Fan', 'Table', 'Bed']),
+                'name' => $faker->unique()->name,
                 'status' => $faker->numberBetween(0, 1),
                 'college_id' => College::inRandomOrder()->first()->id,
             ]);

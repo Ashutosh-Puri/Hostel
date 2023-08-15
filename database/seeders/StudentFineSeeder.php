@@ -19,7 +19,7 @@ class StudentFineSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             StudentFine::create([
                 'status' => $faker->numberBetween(0, 1),
                 'amount' => $faker->numberBetween(100,1000),

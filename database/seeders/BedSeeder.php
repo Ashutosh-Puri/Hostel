@@ -18,7 +18,7 @@ class BedSeeder extends Seeder
         $faker = Faker::create();
 
         // Insert 1000 fake records into the Classes table
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             Bed::create([
                 'status' => $faker->numberBetween(0, 1),
                 'room_id' => Room::inRandomOrder()->first()->id,

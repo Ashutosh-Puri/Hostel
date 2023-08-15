@@ -20,7 +20,7 @@ class StudentEducationSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             StudentEducation::create([
                 'admission_id' => Admission::inRandomOrder()->first()->id,
                 'academic_year_id' => AcademicYear::inRandomOrder()->first()->id,

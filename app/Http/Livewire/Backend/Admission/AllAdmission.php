@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Backend\Admission;
 
 use App\Models\Bed;
+use App\Models\Cast;
 use App\Models\Classes;
 use App\Models\Student;
 use Livewire\Component;
@@ -12,6 +13,7 @@ use App\Models\AcademicYear;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use App\Models\StudentPayment;
+use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
 use App\Models\StudentEducation;
 use Illuminate\Support\Facades\Auth;
@@ -42,8 +44,8 @@ class AllAdmission extends Component
     public $last_name;
     public $mobile;
     public $photo;
-    public $cast;
-    public $category;
+    public $cast_id;
+    public $category_id;
     public $dob;
     public $blood_group;
     public $is_allergy;
@@ -62,6 +64,7 @@ class AllAdmission extends Component
     public $allocateid=null;
     public $reallocateid=null;
     public $current_id;
+    public $mindate;
 
     public function resetinput()
     {
@@ -83,8 +86,8 @@ class AllAdmission extends Component
         $this->mobile =null;
         $this->mother_name =null;
         $this->dob =null;
-        $this->cast =null;
-        $this->category =null;
+        $this->cast_id =null;
+        $this->category_id =null;
         $this->parent_name =null;
         $this->parent_mobile =null;
         $this->parent_address =null;
@@ -108,7 +111,7 @@ class AllAdmission extends Component
     }
     
     protected function rules()
-    {
+    {   
         return [
             'student_id'=>['required','integer'],
             'academic_year_id'=>['required','integer'],
@@ -116,9 +119,9 @@ class AllAdmission extends Component
             'first_name'=>['required','string','max:255'],
             'middle_name'=>['required','string','max:255'],
             'last_name'=>['required','string','max:255'], 
-            'dob'=>['required','date'],
-            'cast'=>['required','string','max:255'],
-            'category'=>['required','string','max:255'],
+            'dob'=>['required','date','before_or_equal:15 years ago'],
+            'cast_id'=>['required','integer'],
+            'category_id'=>['required','integer'],
             'blood_group'=>['required','string','max:255'],    
             'stream'=>['required','string','max:255'],
             'stream_type'=>['required','string','max:255'],  
@@ -163,8 +166,7 @@ class AllAdmission extends Component
                 $this->mobile = $student->mobile;
                 $this->mother_name = $student->mother_name;
                 $this->dob = $student->dob;
-                $this->cast = $student->cast;
-                $this->category = $student->category;
+                $this->cast_id = $student->cast_id;
                 $this->parent_name = $student->parent_name;
                 $this->parent_mobile = $student->parent_mobile;
                 $this->parent_address = $student->parent_address;
@@ -191,8 +193,7 @@ class AllAdmission extends Component
             $student->mobile = $this->mobile;
             $student->mother_name = $validatedData['mother_name'];
             $student->dob = $validatedData['dob'];
-            $student->cast = $validatedData['cast'];
-            $student->category = $validatedData['category'];
+            $student->cast_id = $validatedData['cast_id'];
             $student->parent_name = $validatedData['parent_name'];
             $student->parent_mobile = $validatedData['parent_mobile'];
             $student->parent_address = $validatedData['parent_address'];
@@ -308,8 +309,7 @@ class AllAdmission extends Component
             $this->mobile = $student->mobile;
             $this->mother_name = $student->mother_name;
             $this->dob = $student->dob;
-            $this->cast = $student->cast;
-            $this->category = $student->category;
+            $this->cast_id = $student->cast_id;
             $this->parent_name = $student->parent_name;
             $this->parent_mobile = $student->parent_mobile;
             $this->parent_address = $student->parent_address;
@@ -385,8 +385,7 @@ class AllAdmission extends Component
             $student->mobile = $this->mobile;
             $student->mother_name = $validatedData['mother_name'];
             $student->dob = $validatedData['dob'];
-            $student->cast = $validatedData['cast'];
-            $student->category = $validatedData['category'];
+            $student->cast_id = $validatedData['cast_id'];
             $student->parent_name = $validatedData['parent_name'];
             $student->parent_mobile = $validatedData['parent_mobile'];
             $student->parent_address = $validatedData['parent_address'];
@@ -534,6 +533,8 @@ class AllAdmission extends Component
 
     public function render()
     {   
+        $today = Carbon::today();
+        $this->mindate=$minus15Years = $today->copy()->subYears(15)->format('Y-m-d');
         $this->name = $this->last_name." ".$this->first_name." ".$this->middle_name;
 
         if (is_numeric($this->sgpa) && $this->sgpa > 0) {
@@ -545,8 +546,14 @@ class AllAdmission extends Component
         $classes=Classes::select('id','name')->where('status',0)->where('type',$this->stream_type)->orderBy('name',"ASC")->get();
         $lastclasses=Classes::select('id','name')->where('status',0)->where('stream',$this->stream)->whereNot('id',$this->class_id)->orderBy('name',"ASC")->get();
         $students=Student::where('status',0)->orderBy('username',"ASC")->get();
+        $casts=Cast::where('status',0)->orderBy('name',"ASC")->get();
 
-
+        if ($this->cast_id) {
+            $categories =Cast::find($this->cast_id)->category()->orderBy('name', 'ASC')->get();
+        } else { 
+            $categories = [];
+        }
+            
         $query =Admission::orderBy('academic_year_id', 'DESC');    
         if ($this->ad) {
             $admissionIds = Admission::where('id', 'like',$this->ad. '%')->pluck('id');
@@ -578,6 +585,6 @@ class AllAdmission extends Component
             $lastclass=null;
         }
    
-        return view('livewire.backend.Admission.all-Admission',compact('lastclass','viewadmission','students','admissions','classes','streams','types','lastclasses','academicyears'))->extends('layouts.admin.admin')->section('admin');
+        return view('livewire.backend.Admission.all-Admission',compact('categories','casts','lastclass','viewadmission','students','admissions','classes','streams','types','lastclasses','academicyears'))->extends('layouts.admin.admin')->section('admin');
     }
 }

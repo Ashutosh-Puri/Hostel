@@ -17,7 +17,7 @@ class BuildingSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             Building::create([
                 'name' => $faker->unique()->name,
                 'status' => $faker->numberBetween(0, 1),

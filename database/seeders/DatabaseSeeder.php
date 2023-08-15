@@ -21,6 +21,7 @@ use Database\Seeders\BuildingSeeder;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\FacilitySeeder;
 use Database\Seeders\AdmissionSeeder;
+use Database\Seeders\AllocationSeeder;
 use Database\Seeders\StudentFineSeeder;
 use Database\Seeders\AcademicYearSeeder;
 use Database\Seeders\StudentPaymentSeeder;
@@ -37,14 +38,14 @@ class DatabaseSeeder extends Seeder
 
         $this->call(RoleSeeder::class);
         $this->call(AdminSeeder::class);            //  Role ,
-        $this->call(CategorySeeder::class);
-        $this->call(CastSeeder::class);
         // $this->call(AcademicYearSeeder::class);
         // $this->call(ClassesSeeder::class);
-        // $this->call(StudentSeeder::class);
+        // $this->call(CategorySeeder::class);
+        // $this->call(CastSeeder::class);          //  Category ,
+        // $this->call(StudentSeeder::class);          //  Cast ,
         // $this->call(CollegeSeeder::class);
-        // $this->call(HostelSeeder::class);
-        // $this->call(BuildingSeeder::class);
+        // $this->call(HostelSeeder::class);           //  College ,
+        // $this->call(BuildingSeeder::class);         //  Hostel ,
         // $this->call(FineSeeder::class);             //  Acadmic Year ,
         // $this->call(FeeSeeder::class);              //  Acadmic Year ,
         // $this->call(QuotaSeeder::class);            //  Acadmic Year , Class ,
@@ -52,9 +53,10 @@ class DatabaseSeeder extends Seeder
         // $this->call(BedSeeder::class);              //  Room ,
         // $this->call(FacilitySeeder::class);         //  Room ,
         // $this->call(StudentFineSeeder::class);      //  Acadmic Year , Student , Fine ,
-        // $this->call(AdmissionSeeder::class);
-        // $this->call(StudentEducationSeeder::class);        //   Acadmic Year , Student , class ,Bed ,
+        // $this->call(AdmissionSeeder::class);        //   Acadmic Year , Student , class ,Bed,
+        // $this->call(StudentEducationSeeder::class); //   Acadmic Year , Student , class ,Admission ,
         // $this->call(StudentPaymentSeeder::class);   //   Acadmic Year , Student , Admission ,
+        // $this->call(AllocationSeeder::class);       // Fee , Admission
 
     }
 }

@@ -19,7 +19,7 @@ class QuotaSeeder extends Seeder
        
         $faker = Faker::create();
 
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             Quota::create([
                 'status' => $faker->numberBetween(0, 1),
                 'max_capacity' => $faker->numberBetween(10,25),

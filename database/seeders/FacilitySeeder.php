@@ -18,7 +18,7 @@ class FacilitySeeder extends Seeder
         $faker = Faker::create();
 
         // Insert 1000 fake records into the Classes table
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             Facility::create([
                 'name' => $faker->randomElement(['Fan', 'Table', 'Bed']),
                 'status' => $faker->numberBetween(0, 1),

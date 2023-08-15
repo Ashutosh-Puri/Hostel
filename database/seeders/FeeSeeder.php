@@ -18,7 +18,7 @@ class FeeSeeder extends Seeder
         $faker = Faker::create();
 
         // Insert 1000 fake records into the Classes table
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             Fee::create([
                 'status' => $faker->numberBetween(0, 1),
                 'type' => $faker->numberBetween(1, 4),

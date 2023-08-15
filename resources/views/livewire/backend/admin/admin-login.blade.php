@@ -15,15 +15,15 @@
                 <form wire:submit.prevent="login"  class="pt-3">
                   @csrf
                   <div class="form-group">
-                    <input wire:model="email" type="email" id="email" class="form-control form-control-lg @error('email') is-invalid @enderror" required placeholder="Email">
+                    <input wire:model.debounce.1000ms="email" type="email" id="email" class="form-control form-control-lg @error('email') is-invalid @enderror" required placeholder="Email">
                     @error('email') <span class="invalid-feedback">{{ $message }}</span> @enderror
                   </div>
                   <div class="form-group">
-                    <input wire:model="password" id="password" type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" required placeholder="Password">
+                    <input wire:model.debounce.1000ms="password" id="password" type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" required placeholder="Password">
                     @error('password') <span class="invalid-feedback">{{ $message }}</span> @enderror
                   </div>
                   <div class="form-group">
-                      <input wire:model="rememberMe" id="rememberMe" type="checkbox" class="form-check-input">
+                      <input wire:model.debounce.1000ms="rememberMe" id="rememberMe" type="checkbox" class="form-check-input">
                       <label class="form-check-label mx-2 my-1">Keep Me Login</label>
                   </div>
                   <div class="mt-3">

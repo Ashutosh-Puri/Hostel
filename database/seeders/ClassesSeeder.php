@@ -12,7 +12,7 @@ class ClassesSeeder extends Seeder
     public function run(): void
     {
         $faker = Faker::create();
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             Classes::create([
                 'name' => $faker->name,
                 'stream' => $faker->randomElement(['Science', 'Arts', 'Commerce']),

@@ -94,6 +94,7 @@ class AllAllocation extends Component
                 if($fee)
                 {
                     $studentpayment->total_amount=$fee->amount;
+                    $admission->seat_type=$fee->type;
                 }
                 $studentpayment->save();
  
