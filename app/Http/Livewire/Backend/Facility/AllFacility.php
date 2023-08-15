@@ -8,8 +8,10 @@ use App\Models\Facility;
 use Livewire\WithPagination;
 
 class AllFacility extends Component
-{   
+{
     use WithPagination;
+    protected $listeners = ['delete-confirmed'=>'delete'];
+    public $delete_id=null;
     public $search = '';
     public $per_page = 10;
     public $mode='all';
@@ -46,10 +48,10 @@ class AllFacility extends Component
     {
         $this->mode=$mode;
     }
- 
+
     public function save()
     {
-        $validatedData = $this->validate();    
+        $validatedData = $this->validate();
         $facility= new Facility;
         if($facility){
             $facility->room_id = $validatedData['room_id'];
@@ -71,7 +73,7 @@ class AllFacility extends Component
     }
 
     public function edit($id)
-    {   
+    {
         $this->current_id=$id;
         $facility = Facility::find($id);
         if($facility){
@@ -89,7 +91,7 @@ class AllFacility extends Component
     }
 
     public function update($id)
-    {   
+    {
         $validatedData = $this->validate();
         $facility = Facility::find($id);
         if($facility){
@@ -111,11 +113,19 @@ class AllFacility extends Component
         ]);
     }
 
-    public function delete($id)
-    { 
-        $facility = Facility::find($id);
+    public function deleteconfirmation($id)
+    {
+        $this->delete_id=$id;
+        $this->dispatchBrowserEvent('delete-confirmation');
+
+    }
+
+    public function delete()
+    {
+        $facility = Facility::find($this->delete_id);
         if($facility){
             $facility->delete();
+            $this->delete_id=null;
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
@@ -130,7 +140,7 @@ class AllFacility extends Component
     }
 
     public function render()
-    {   
+    {
         $rooms=Room::orderBy('floor', 'ASC')->get();
         $facilityQuery = Facility::orderBy('room_id', 'ASC');
         if ($this->search) {

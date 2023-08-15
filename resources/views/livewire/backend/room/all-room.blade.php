@@ -252,7 +252,7 @@
                                     <tbody>
                                         @foreach ($rooms as $key => $item)
                                             <tr>
-                                                <td>{{ $key+1 }}</td>                                     
+                                                <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->Building->Hostel->name }}</td>
                                                 <td>{{ $item->Building->name }}</td>
                                                 <td>
@@ -291,16 +291,16 @@
                                                         Tenth
                                                     @break
                                                     @default
-                                                        {{ $item->floor }} 
+                                                        {{ $item->floor }}
                                                     @endswitch
                                                      Floor
                                                 </td>
                                                 <td>{{ $item->id }} - {{ $item->label }} </td>
-                                                <td>{{ $item->type }} Seated</td>  
-                                                <td>{{ $item->capacity }}</td>   
+                                                <td>{{ $item->type }} Seated</td>
+                                                <td>{{ $item->capacity }}</td>
                                                 <td>
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
-                                                    <a wire:loading.attr="disabled" wire:click="delete({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach

@@ -10,9 +10,11 @@ use App\Models\AcademicYear;
 use Livewire\WithPagination;
 
 class AllStudentFine extends Component
-{   
+{
 
     use WithPagination;
+    protected $listeners = ['delete-confirmed'=>'delete'];
+    public $delete_id=null;
     public $year = '';
     public $fine_name = '';
     public $student_name = '';
@@ -56,15 +58,15 @@ class AllStudentFine extends Component
         $this->c_id=null;
         $this->current_id=null;
     }
- 
+
     public function setmode($mode)
     {
         $this->mode=$mode;
     }
- 
+
     public function save()
     {
-        $validatedData = $this->validate();    
+        $validatedData = $this->validate();
         $studentfine= new StudentFine;
         if($studentfine){
             $studentfine->academic_year_id = $validatedData['academic_year_id'];
@@ -88,7 +90,7 @@ class AllStudentFine extends Component
     }
 
     public function edit($id)
-    {   
+    {
         $this->current_id=$id;
         $studentfine = StudentFine::find($id);
         if($studentfine){
@@ -104,12 +106,12 @@ class AllStudentFine extends Component
                 'message'=>"Something Went Wrong!!"
             ]);
         }
-        
+
         $this->setmode('edit');
     }
 
     public function update($id)
-    {   
+    {
         $validatedData = $this->validate();
         $studentfine = StudentFine::find($id);
         if($studentfine){
@@ -133,11 +135,20 @@ class AllStudentFine extends Component
         ]);
     }
 
-    public function delete($id)
-    { 
-        $studentfine = StudentFine::find($id);
+
+    public function deleteconfirmation($id)
+    {
+        $this->delete_id=$id;
+        $this->dispatchBrowserEvent('delete-confirmation');
+
+    }
+
+    public function delete()
+    {
+        $studentfine = StudentFine::find($this->delete_id);
         if($studentfine){
             $studentfine->delete();
+            $this->delete_id=null;
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
@@ -150,9 +161,9 @@ class AllStudentFine extends Component
             'message'=>"Student Fine Deleted Successfully!!"
         ]);
     }
- 
+
     public function render()
-    {   
+    {
         $academic_years=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
         $students=Student::where('status',0)->get();
         $fines=Fine::where('status',0)->get();

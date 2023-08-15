@@ -9,9 +9,11 @@ use Livewire\WithPagination;
 use Illuminate\Validation\Rule;
 
 class AllFee extends Component
-{   
+{
 
     use WithPagination;
+    protected $listeners = ['delete-confirmed'=>'delete'];
+    public $delete_id=null;
     public $search = '';
     public $per_page = 10;
     public $mode='all';
@@ -49,16 +51,16 @@ class AllFee extends Component
         $this->c_id=null;
         $this->current_id=null;
     }
- 
+
 
     public function setmode($mode)
     {
         $this->mode=$mode;
     }
- 
+
     public function save()
     {
-        $validatedData = $this->validate();    
+        $validatedData = $this->validate();
         $fee= new Fee;
         if($fee){
             $fee->academic_year_id = $validatedData['academic_year_id'];
@@ -77,11 +79,11 @@ class AllFee extends Component
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Fee Created Successfully!!"
-        ]); 
+        ]);
     }
 
     public function edit($id)
-    {   
+    {
         $this->current_id=$id;
         $fee = Fee::find($id);
         if($fee){
@@ -100,7 +102,7 @@ class AllFee extends Component
     }
 
     public function update($id)
-    {   
+    {
         $validatedData = $this->validate();
         $fee = Fee::find($id);
         if($fee){
@@ -123,11 +125,19 @@ class AllFee extends Component
         ]);
     }
 
-    public function delete($id)
-    { 
-        $fee = Fee::find($id);
+    public function deleteconfirmation($id)
+    {
+        $this->delete_id=$id;
+        $this->dispatchBrowserEvent('delete-confirmation');
+
+    }
+
+    public function delete()
+    {
+        $fee = Fee::find($this->delete_id);
         if($fee){
             $fee->delete();
+            $this->delete_id=null;
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
@@ -144,7 +154,7 @@ class AllFee extends Component
 
 
     public function render()
-    {   
+    {
         $academic_years=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
         $feesQuery = Fee::orderBy('academic_year_id', 'ASC');
         if ($this->search) {

@@ -68,7 +68,7 @@
                                 </div>
                                 <div class="mb-3 form-group">
                                     <label for="totalamount" class="form-label">Total Amount</label>
-                                    <input type="number" min="0" class="form-control @error('totalamount') is-invalid @enderror" wire:model="totalamount" value="{{ old('totalamount') }}" id="totalamount" placeholder="Enter Amount">
+                                    <input type="text" min="0" class="form-control @error('totalamount') is-invalid @enderror" wire:model="totalamount" value="{{ old('totalamount') }}" id="totalamount" placeholder="Enter Amount">
                                     @error('totalamount')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -149,7 +149,7 @@
                                 </div>
                                 <div class="mb-3 form-group">
                                     <label for="totalamount" class="form-label">Total Amount</label>
-                                    <input type="number" min="0" class="form-control @error('totalamount') is-invalid @enderror" wire:model="totalamount" value="{{ old('totalamount') }}" id="totalamount" placeholder="Enter Amount">
+                                    <input type="text" min="0" class="form-control @error('totalamount') is-invalid @enderror" wire:model="totalamount" value="{{ old('totalamount') }}" id="totalamount" placeholder="Enter Amount">
                                     @error('totalamount')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -229,10 +229,10 @@
                                     <tbody>
                                         @foreach ($student_payments as $key => $item)
                                             <tr>
-                                                <td>{{ $key+1 }}</td>                                     
-                                                <td>{{ $item->Admission->id }}</td>  
+                                                <td>{{ $key+1 }}</td>
+                                                <td>{{ $item->Admission->id }}</td>
                                                 <td>{{ $item->AcademicYear->year}}</td>
-                                                <td>{{ $item->Student->name!=null? $item->Student->name: $item->Student->username; }}</td>  
+                                                <td>{{ $item->Student->name!=null? $item->Student->name: $item->Student->username; }}</td>
                                                 <td>{{ $item->total_amount }}</td>
                                                 <td>
                                                     @if ( $item->status == '0')
@@ -242,10 +242,10 @@
                                                     @elseif ( $item->status == '2')
                                                         <span class="badge bg-danger text-white">Cancelled</span>
                                                     @endif
-                                                </td>        
+                                                </td>
                                                 <td>
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
-                                                    <a wire:loading.attr="disabled" wire:click="delete({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach

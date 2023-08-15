@@ -10,8 +10,10 @@ use Livewire\WithPagination;
 use App\Models\StudentPayment;
 
 class AllStudentPayment extends Component
-{   
+{
     use WithPagination;
+    protected $listeners = ['delete-confirmed'=>'delete'];
+    public $delete_id=null;
     public $year = '';
     public $student_name = '';
     public $admission_name = '';
@@ -43,7 +45,7 @@ class AllStudentPayment extends Component
             'student_id' => ['required','integer'],
         ];
     }
- 
+
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
@@ -53,10 +55,10 @@ class AllStudentPayment extends Component
     {
         $this->mode=$mode;
     }
- 
+
     public function save()
     {
-        $validatedData = $this->validate();    
+        $validatedData = $this->validate();
         $studentpayment= new StudentPayment;
         if($studentpayment){
             $studentpayment->academic_year_id = $validatedData['academic_year_id'];
@@ -79,7 +81,7 @@ class AllStudentPayment extends Component
     }
 
     public function edit($id)
-    {   
+    {
         $studentpayment = StudentPayment::find($id);
         if($studentpayment){
             $this->C_id=$studentpayment->id;
@@ -97,7 +99,7 @@ class AllStudentPayment extends Component
     }
 
     public function update($id)
-    {   
+    {
         $validatedData = $this->validate();
         $studentpayment = StudentPayment::find($id);
         if($studentpayment){
@@ -120,11 +122,19 @@ class AllStudentPayment extends Component
         ]);
     }
 
-    public function delete($id)
-    { 
-        $studentpayment = StudentPayment::find($id);
+    public function deleteconfirmation($id)
+    {
+        $this->delete_id=$id;
+        $this->dispatchBrowserEvent('delete-confirmation');
+
+    }
+
+    public function delete()
+    {
+        $studentpayment = StudentPayment::find($this->delete_id);
         if($studentpayment){
             $studentpayment->delete();
+            $this->delete_id=null;
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
@@ -139,7 +149,7 @@ class AllStudentPayment extends Component
     }
 
     public function render()
-    {   
+    {
         $academic_years=AcademicYear::where('status',0)->get();
         $students=Student::where('status',0)->get();
         $admissions=Admission::all();

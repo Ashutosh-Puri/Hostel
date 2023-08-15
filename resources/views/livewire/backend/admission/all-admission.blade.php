@@ -45,7 +45,7 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12 mb-3 h3">
@@ -255,7 +255,7 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                    </div> 
+                                    </div>
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="stream" class="form-label">Select Stream</label>
@@ -273,7 +273,7 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                    </div>  
+                                    </div>
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="stream_type" class="form-label">Select Stream Type</label>
@@ -299,7 +299,7 @@
                                                 <option  hidden value="">Select Class</option>
                                                 @foreach ($classes as $item2)
                                                     <option class="py-4" value="{{ $item2->id }}">{{ $item2->name }}</option>
-                                            
+
                                                 @endforeach
                                             </select>
                                             @error('class_id')
@@ -353,7 +353,7 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                    </div>  
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12 mb-3 h3">
@@ -406,7 +406,7 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                    </div> 
+                                    </div>
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
                                             <label for="local_parent_mobile" class="form-label">Parent Mobile Number In Sangamner</label>
@@ -514,7 +514,7 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12 mb-3 h3">
@@ -724,7 +724,7 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                    </div> 
+                                    </div>
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="stream" class="form-label">Select Stream</label>
@@ -740,7 +740,7 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                    </div>  
+                                    </div>
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="stream_type" class="form-label">Select Stream Type</label>
@@ -766,7 +766,7 @@
                                                 <option  hidden value="">Select Class</option>
                                                 @foreach ($classes as $item2)
                                                     <option class="py-4" value="{{ $item2->id }}">{{ $item2->name }}</option>
-                                            
+
                                                 @endforeach
                                             </select>
                                             @error('class_id')
@@ -820,7 +820,7 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                    </div>  
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12 mb-3 h3">
@@ -873,7 +873,7 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                    </div> 
+                                    </div>
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
                                             <label for="local_parent_mobile" class="form-label">Parent Mobile Number In Sangamner</label>
@@ -929,7 +929,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                                 <button type="submit"  class="btn btn-primary waves-effect waves-light">Update Data</button>
                             </form>
@@ -1022,7 +1022,7 @@
                                             <div class="col-12 col-md-6 mb-4">
                                                 <label for="">Mobile :</label>
                                                 <label for="">{{ $viewadmission[0]->Student->mobile }}</label>
-                                            </div> 
+                                            </div>
                                             <div class="col-12 col-md-6 mb-4">
                                                 <label for="">Date Of Birth :</label>
                                                 <label for="">{{ $viewadmission[0]->Student->dob }}</label>
@@ -1155,7 +1155,7 @@
                                                 <label for="">{{ $viewadmission[0]->Student->local_parent_address }}</label>
                                             </div>
                                         @endif
-                                    </div>  
+                                    </div>
                                 @endif
                             </div>
                         </div>
@@ -1197,7 +1197,7 @@
                                     <label class=" col-4 col-md-1  py-1 ">Records</label>
                                     <span class="col-12 col-md-9 p-0">
                                             <div class="row ">
-                                               
+
                                                 <div class="col-12 col-md-2 ">
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                                 </div>
@@ -1235,19 +1235,19 @@
                                     <tbody>
                                         @foreach ($admissions as $key => $item)
                                             <tr>
-                                                <td>{{ $key+1 }}</td>   
-                                                <td>{{ $item->id }}</td>   
-                                                <td>{{ $item->AcademicYear->year}}</td> 
-                                                <td>{{ $item->Student->name!=null?$item->Student->name: $item->Student->username; }}</td> 
-                                                <td>{{ $item->Class->name}}</td> 
-                                                <td>{{ $item->seat_type==null?'NA':$item->seat_type." Seated";}}</td> 
+                                                <td>{{ $key+1 }}</td>
+                                                <td>{{ $item->id }}</td>
+                                                <td>{{ $item->AcademicYear->year}}</td>
+                                                <td>{{ $item->Student->name!=null?$item->Student->name: $item->Student->username; }}</td>
+                                                <td>{{ $item->Class->name}}</td>
+                                                <td>{{ $item->seat_type==null?'NA':$item->seat_type." Seated";}}</td>
                                                 <td>
                                                     @if ( $item->bed_id==null)
                                                         <span class="badge bg-danger text-white">Not Allocated</span>
                                                     @else
                                                         <span class="badge bg-success text-white">Allocated</span><span class="badge bg-success mx-1 text-white">{{ $item->bed_id }}</span>
                                                     @endif
-                                                </td> 
+                                                </td>
                                                 <td>
                                                     @if ( $item->status == '0')
                                                         <span class="badge bg-warning text-white">Wating</span>
@@ -1256,13 +1256,13 @@
                                                     @else
                                                         <span class="badge bg-danger text-white">Canceled</span>
                                                     @endif
-                                                </td> 
+                                                </td>
                                                 <td>
                                                     <a wire:loading.attr="disabled"  wire:click="view({{ $item->id }})" class="btn btn-info waves-effect waves-light"><i class="mdi mdi-eye"></i></a>
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
                                                     <a wire:loading.attr="disabled"  wire:click="confirm({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-thumb-up"></i></a>
                                                     <a wire:loading.attr="disabled"  wire:click="cancel({{ $item->id }})" class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-thumb-down"></i></a>
-                                                    <a  wire:loading.attr="disabled" wire:click="delete({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                    <a  wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach

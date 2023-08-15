@@ -9,9 +9,11 @@ use App\Models\AcademicYear;
 use Livewire\WithPagination;
 
 class AllQuota extends Component
-{   
+{
 
     use WithPagination;
+    protected $listeners = ['delete-confirmed'=>'delete'];
+    public $delete_id=null;
     public $year = '';
     public $class_name = '';
     public $per_page = 10;
@@ -32,13 +34,13 @@ class AllQuota extends Component
         $this->status=null;
         $this->c_id=null;
     }
- 
+
     protected $rules = [
         'max_capacity' => ['required','integer','min:1'],
         'academic_year_id' => ['required','integer'],
         'class_id' => ['required','integer'],
     ];
- 
+
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
@@ -48,10 +50,10 @@ class AllQuota extends Component
     {
         $this->mode=$mode;
     }
- 
+
     public function save()
     {
-        $validatedData = $this->validate();    
+        $validatedData = $this->validate();
         $quota= new Quota;
         if($quota){
             $quota->academic_year_id = $validatedData['academic_year_id'];
@@ -74,7 +76,7 @@ class AllQuota extends Component
     }
 
     public function edit($id)
-    {   
+    {
         $quota = Quota::find($id);
         if($quota){
             $this->C_id=$quota->id;
@@ -92,7 +94,7 @@ class AllQuota extends Component
     }
 
     public function update($id)
-    {   
+    {
         $validatedData = $this->validate();
         $quota = Quota::find($id);
         if($quota){
@@ -115,11 +117,19 @@ class AllQuota extends Component
         ]);
     }
 
-    public function delete($id)
-    { 
-        $quota = Quota::find($id);
+    public function deleteconfirmation($id)
+    {
+        $this->delete_id=$id;
+        $this->dispatchBrowserEvent('delete-confirmation');
+
+    }
+
+    public function delete()
+    {
+        $quota = Quota::find($this->delete_id);
         if($quota){
             $quota->delete();
+            $this->delete_id=null;
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
@@ -134,9 +144,9 @@ class AllQuota extends Component
     }
 
     public function render()
-    {  
+    {
         $academic_years=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
-        $classes=Classes::where('status',0)->get();   
+        $classes=Classes::where('status',0)->get();
         $query = Quota::with('AcademicYear', 'Class')->orderBy('academic_year_id', 'DESC');
         if ($this->year) {
             $query->whereHas('AcademicYear', function ($query) {

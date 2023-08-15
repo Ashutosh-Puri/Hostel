@@ -10,8 +10,10 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 
 class AllRoom extends Component
-{   
+{
     use WithPagination;
+    protected $listeners = ['delete-confirmed'=>'delete'];
+    public $delete_id=null;
     public $r = '',$b = '',$f = '';
     public $per_page = 10;
     public $mode='all';
@@ -58,10 +60,10 @@ class AllRoom extends Component
     {
         $this->mode=$mode;
     }
- 
+
     public function save()
-    {  
-        $validatedData = $this->validate();    
+    {
+        $validatedData = $this->validate();
         $room= new Room;
         if($room){
             $room->building_id = $validatedData['building_id'];
@@ -85,7 +87,7 @@ class AllRoom extends Component
     }
 
     public function edit($id)
-    {   
+    {
         $this->current_id=$id;
         $room = Room::find($id);
         if($room){
@@ -105,7 +107,7 @@ class AllRoom extends Component
     }
 
     public function update($id)
-    {   
+    {
         $validatedData = $this->validate();
         $room = Room::find($id);
         if($room){
@@ -129,11 +131,19 @@ class AllRoom extends Component
         ]);
     }
 
-    public function delete($id)
-    { 
-        $room = Room::find($id);
+    public function deleteconfirmation($id)
+    {
+        $this->delete_id=$id;
+        $this->dispatchBrowserEvent('delete-confirmation');
+
+    }
+
+    public function delete()
+    {
+        $room = Room::find($this->delete_id);
         if($room){
             $room->delete();
+            $this->delete_id=null;
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
@@ -148,7 +158,7 @@ class AllRoom extends Component
     }
 
     public function render()
-    {   
+    {
         $buildings=Building::where('status',0)->orderBy('name', 'ASC')->get();
         $query = Room::orderBy('label', 'ASC')->when($this->b, function ($query) {
                 $query->whereIn('building_id', function ($subQuery) {

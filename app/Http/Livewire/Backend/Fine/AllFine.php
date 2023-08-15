@@ -9,8 +9,10 @@ use Livewire\WithPagination;
 use Illuminate\Validation\Rule;
 
 class AllFine extends Component
-{   
+{
     use WithPagination;
+    protected $listeners = ['delete-confirmed'=>'delete'];
+    public $delete_id=null;
     public $year = '';
     public $fine_name = '';
     public $per_page = 10;
@@ -51,15 +53,15 @@ class AllFine extends Component
         $this->c_id=null;
         $this->current_id=null;
     }
- 
+
     public function setmode($mode)
     {
         $this->mode=$mode;
     }
- 
+
     public function save()
     {
-        $validatedData = $this->validate();    
+        $validatedData = $this->validate();
         $fine= new Fine;
         if($fine){
             $fine->academic_year_id = $validatedData['academic_year_id'];
@@ -82,7 +84,7 @@ class AllFine extends Component
     }
 
     public function edit($id)
-    {   
+    {
         $this->current_id=$id;
         $fine = Fine::find($id);
         if($fine){
@@ -101,7 +103,7 @@ class AllFine extends Component
     }
 
     public function update($id)
-    {   
+    {
         $validatedData = $this->validate();
         $fine = Fine::find($id);
         if($fine){
@@ -124,11 +126,19 @@ class AllFine extends Component
         ]);
     }
 
-    public function delete($id)
-    { 
-        $fine = Fine::find($id);
+    public function deleteconfirmation($id)
+    {
+        $this->delete_id=$id;
+        $this->dispatchBrowserEvent('delete-confirmation');
+
+    }
+
+    public function delete()
+    {
+        $fine = Fine::find($this->delete_id);
         if($fine){
             $fine->delete();
+            $this->delete_id=null;
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
@@ -143,7 +153,7 @@ class AllFine extends Component
     }
 
     public function render()
-    {   
+    {
         $academic_years=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
         $query = Fine::query();
         if ($this->year) {

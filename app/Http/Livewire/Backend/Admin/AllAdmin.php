@@ -14,9 +14,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class AllAdmin extends Component
-{   
+{
     use WithFileUploads;
     use WithPagination;
+    protected $listeners = ['delete-confirmed'=>'delete'];
+    public $delete_id=null;
     public $search = '';
     public $per_page = 10;
     public $mode='all';
@@ -31,20 +33,20 @@ class AllAdmin extends Component
     public $photo;
     public $photoold;
     public $current_id;
-    
+
     protected function rules()
-    {   
+    {
         $passwordRules = $this->mode == 'add' ? ['required', 'same:password_confirmation', 'string', 'min:8', 'max:255'] : [];
 
         return [
 
             'password' => $passwordRules,
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255','unique:admins,email,'.($this->mode=='edit'? $this->current_id :'')], 
-            'mobile' => ['nullable', 'numeric', 'digits:10','unique:admins,mobile,'.($this->mode=='edit'? $this->current_id :'')], 
+            'email' => ['required', 'string', 'email', 'max:255','unique:admins,email,'.($this->mode=='edit'? $this->current_id :'')],
+            'mobile' => ['nullable', 'numeric', 'digits:10','unique:admins,mobile,'.($this->mode=='edit'? $this->current_id :'')],
             'photo' => ['nullable', 'image', 'mimes:jpg,png,jpeg', 'max:1024'],
             'role_id' => ['required', 'integer',],
-        ];  
+        ];
     }
 
     public function updated($propertyName)
@@ -72,10 +74,10 @@ class AllAdmin extends Component
     {
         $this->mode=$mode;
     }
- 
+
     public function save()
-    {  
-        $validatedData =    $this->validate();  
+    {
+        $validatedData =    $this->validate();
         $admin= new Admin;
         if($admin)
         {
@@ -93,7 +95,7 @@ class AllAdmin extends Component
                 $this->reset('photo');
             }
             $admin->save();
-            
+
         }else{
 
             $this->dispatchBrowserEvent('alert',[
@@ -110,7 +112,7 @@ class AllAdmin extends Component
     }
 
     public function edit($id)
-    {   
+    {
         $this->current_id=$id;
         $admin = Admin::find($id);
         if($admin)
@@ -133,8 +135,8 @@ class AllAdmin extends Component
     }
 
     public function update($id)
-    {   
-        $validatedData =  $this->validate();  
+    {
+        $validatedData =  $this->validate();
         $admin = Admin::find($id);
         if($admin)
         {
@@ -167,9 +169,16 @@ class AllAdmin extends Component
         $this->setmode('all');
     }
 
-    public function delete($id)
-    { 
-        $admin = Admin::find($id);
+    public function deleteconfirmation($id)
+    {
+        $this->delete_id=$id;
+        $this->dispatchBrowserEvent('delete-confirmation');
+
+    }
+
+    public function delete()
+    {
+        $admin = Admin::find($this->delete_id);
         if($admin)
         {
             if($admin->photo)
@@ -177,6 +186,7 @@ class AllAdmin extends Component
                 File::delete($admin->photo);
             }
             $admin->delete();
+            $this->delete_id=null;
 
         }else{
 
@@ -191,9 +201,9 @@ class AllAdmin extends Component
             'message'=>"Admin Deleted Successfully!!"
         ]);
     }
-    
+
     public function render()
-    {   
+    {
         $roles=Role::where('status',0)->orderBy('role', 'ASC')->get();
         $admins=Admin::where('name', 'like', '%'.$this->search.'%')->orderBy('name', 'ASC')->paginate($this->per_page);
         return view('livewire.backend.admin.all-admin',compact('admins','roles'))->extends('layouts.admin.admin')->section('admin');

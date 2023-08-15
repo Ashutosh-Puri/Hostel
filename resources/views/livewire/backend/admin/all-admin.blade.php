@@ -229,7 +229,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    @if ($photo) 
+                                    @if ($photo)
                                         <div class="col-12 col-md-2">
                                             <div class="mb-3 form-group">
                                                 <label for="photo" class="form-label"></label>
@@ -329,10 +329,10 @@
                                     <tbody>
                                         @foreach ($admins as $key => $item)
                                             <tr>
-                                                <td>{{ $key+1 }}</td>  
+                                                <td>{{ $key+1 }}</td>
                                                 <td>
                                                     <img id="showImage" src="{{ (!empty($item->photo)) ? asset($item->photo) : asset('assets/images/no_image.jpg') }}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image" style="height: 45px; width:45px;">
-                                                </td>                                   
+                                                </td>
                                                 <td>{{ $item->name }}</td>
                                                 <td>{{ $item->email }}</td>
                                                 <td>{{ $item->mobile }}</td>
@@ -343,10 +343,10 @@
                                                     @else
                                                         <span class="badge bg-danger text-white">In-Active</span>
                                                     @endif
-                                                </td>   
+                                                </td>
                                                 <td>
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
-                                                    <a wire:loading.attr="disabled" wire:click="delete({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach

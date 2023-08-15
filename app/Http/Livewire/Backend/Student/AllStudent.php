@@ -11,9 +11,11 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 
 class AllStudent extends Component
-{   
+{
     use WithFileUploads;
     use WithPagination;
+    protected $listeners = ['delete-confirmed'=>'delete'];
+    public $delete_id=null;
     public $search = '';
     public $per_page = 10;
     public $mode='all';
@@ -35,14 +37,14 @@ class AllStudent extends Component
         $this->status=null;
         $this->c_id=null;
     }
-    
+
     protected function rules()
-    {   
+    {
         $passwordRules = $this->mode == 'add' ? ['required', 'same:password_confirmation', 'string', 'min:8', 'max:255'] : [];
         return [
             'password' => $passwordRules,
             'username' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255','unique:students,email,'.($this->mode=='edit'? $this->current_id  :'')], 
+            'email' => ['required', 'string', 'email', 'max:255','unique:students,email,'.($this->mode=='edit'? $this->current_id  :'')],
         ];
     }
 
@@ -55,10 +57,10 @@ class AllStudent extends Component
     {
         $this->mode=$mode;
     }
- 
+
     public function save()
-    {  
-        $validatedData = $this->validate();    
+    {
+        $validatedData = $this->validate();
         $student= new Student;
         if($student){
             $student->username = $validatedData['username'];
@@ -98,7 +100,7 @@ class AllStudent extends Component
     }
 
     public function update($id)
-    {   
+    {
         $validatedData = $this->validate();
         $student = Student::find($id);
         if($student){
@@ -120,11 +122,19 @@ class AllStudent extends Component
         ]);
     }
 
-    public function delete($id)
-    { 
-        $student = Student::find($id);
+    public function deleteconfirmation($id)
+    {
+        $this->delete_id=$id;
+        $this->dispatchBrowserEvent('delete-confirmation');
+
+    }
+
+    public function delete()
+    {
+        $student = Student::find($this->delete_id);
         if($student){
             $student->delete();
+            $this->delete_id=null;
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
@@ -139,7 +149,7 @@ class AllStudent extends Component
     }
 
     public function render()
-    {   
+    {
         $students=Student::where('username', 'like', '%'.$this->search.'%')->orderBy('username', 'ASC')->paginate($this->per_page);
         return view('livewire.backend.student.all-student',compact('students'))->extends('layouts.admin.admin')->section('admin');
     }

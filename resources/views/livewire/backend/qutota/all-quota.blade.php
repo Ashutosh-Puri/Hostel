@@ -169,7 +169,7 @@
                                 </a>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
@@ -217,10 +217,10 @@
                                     <tbody>
                                         @foreach ($quotas as $key => $item)
                                             <tr>
-                                                <td>{{ $key+1 }}</td>                                     
+                                                <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->AcademicYear->year }}</td>
                                                 <td>{{ $item->Class->name }}</td>
-                                                <td>{{ $item->max_capacity }}</td>       
+                                                <td>{{ $item->max_capacity }}</td>
                                                 <td>
                                                     @if ( $item->status == '0')
                                                         <span class="badge bg-success text-white">Active</span>
@@ -230,7 +230,7 @@
                                                 </td>
                                                 <td>
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
-                                                    <a wire:loading.attr="disabled" wire:click="delete({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach

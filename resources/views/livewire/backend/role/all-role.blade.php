@@ -32,7 +32,7 @@
                                             {{ $message }}
                                         </div>
                                     @enderror
-                                </div>                       
+                                </div>
                                 <div class="mb-3 form-group">
                                     <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
                                     <label class="form-check-label m-1 " for="class_status">In-Active Role</label>
@@ -80,7 +80,7 @@
                                             {{ $message }}
                                         </div>
                                     @enderror
-                                </div>                       
+                                </div>
                                 <div class="mb-3 form-group ">
                                     <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
                                     <label class="form-check-label m-1 " for="class_status">In-Active Role</label>
@@ -142,7 +142,7 @@
                                             </div>
                                     </span>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="card-body table-responsive">
                                 <table id="data-table" class=" table  dt-responsive nowrap w-100">
                                     <thead>
@@ -157,7 +157,7 @@
                                         @foreach ($roles as $key => $item)
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
-                                                <td>{{ $item->role }}</td>       
+                                                <td>{{ $item->role }}</td>
                                                 <td>
                                                     @if ( $item->status == '0')
                                                         <span class="badge bg-success text-white">Active</span>
@@ -167,7 +167,7 @@
                                                 </td>
                                                 <td>
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
-                                                    <a wire:loading.attr="disabled" wire:click="delete({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach

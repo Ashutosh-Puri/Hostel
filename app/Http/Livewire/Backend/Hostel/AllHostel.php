@@ -9,8 +9,10 @@ use Livewire\WithPagination;
 use Illuminate\Validation\Rule;
 
 class AllHostel extends Component
-{   
+{
     use WithPagination;
+    protected $listeners = ['delete-confirmed'=>'delete'];
+    public $delete_id=null;
     public $college_name = '';
     public $hostel_name = '';
     public $per_page = 10;
@@ -33,7 +35,7 @@ class AllHostel extends Component
     {
         $this->validateOnly($propertyName);
     }
- 
+
     public function resetinput()
     {
         $this->college_id=null;
@@ -49,7 +51,7 @@ class AllHostel extends Component
     {
         $this->mode=$mode;
     }
- 
+
     public function save()
     {
         $validatedData = $validatedData = $this->validate();
@@ -74,7 +76,7 @@ class AllHostel extends Component
     }
 
     public function edit($id)
-    {   
+    {
         $this->current_id=$id;
         $hostel = Hostel::find($id);
         if($hostel){
@@ -92,7 +94,7 @@ class AllHostel extends Component
     }
 
     public function update($id)
-    {   
+    {
         $validatedData = $this->validate();
         $hostel = Hostel::find($id);
         if($hostel){
@@ -111,14 +113,22 @@ class AllHostel extends Component
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Hostel Updated Successfully!!"
-        ]); 
+        ]);
     }
 
-    public function delete($id)
-    { 
-        $hostel = Hostel::find($id);
+    public function deleteconfirmation($id)
+    {
+        $this->delete_id=$id;
+        $this->dispatchBrowserEvent('delete-confirmation');
+
+    }
+
+    public function delete()
+    {
+        $hostel = Hostel::find($this->delete_id);
         if($hostel){
             $hostel->delete();
+            $this->delete_id=null;
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
@@ -133,7 +143,7 @@ class AllHostel extends Component
     }
 
     public function render()
-    {   
+    {
         $colleges=College::where('status',0)->orderBy('name',"ASC")->get();
         $query = Hostel::orderBy('name', 'ASC');
         if ($this->college_name || $this->hostel_name) {

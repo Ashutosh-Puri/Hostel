@@ -14,10 +14,10 @@ use Livewire\WithPagination;
 use App\Models\StudentPayment;
 
 class AllAllocation extends Component
-{   
+{
 
-    protected $listeners = ['deallocate'=>'deallocate'];
     use WithPagination;
+    protected $listeners = ['deallocate'=>'deallocate','delete-confirmed'=>'delete'];
     public $a = '',$s = '',$c = '';
     public $per_page = 10;
     public $mode='all';
@@ -38,12 +38,12 @@ class AllAllocation extends Component
         $this->fee_id=null;
         $this->admissionid=null;
     }
- 
+
     protected $rules = [
         'fee_id' => ['required','integer'],
         'bed_id' => ['required','integer'],
     ];
- 
+
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
@@ -55,7 +55,7 @@ class AllAllocation extends Component
     }
 
     public function allocate($id)
-    {   
+    {
         $this->admissionid=$id;
         $admission= Admission::find($id);
         $this->bed_id=$admission->bed_id;
@@ -63,10 +63,10 @@ class AllAllocation extends Component
         $this->fee_id=$allocation->fee_id;
         $this->setmode('allocate');
     }
- 
+
     public function save($admissionid)
-    {  
-        $validatedData = $this->validate();    
+    {
+        $validatedData = $this->validate();
         $admission= Admission::find($admissionid);
         if($admission)
         {
@@ -97,7 +97,7 @@ class AllAllocation extends Component
                     $admission->seat_type=$fee->type;
                 }
                 $studentpayment->save();
- 
+
             }
         }
 
@@ -115,7 +115,7 @@ class AllAllocation extends Component
         $bed->update();
         $allocation= Allocation::where('admission_id',$admissionid)->first();
         if($allocation)
-        {   
+        {
             $allocation->fee_id=$validatedData['fee_id'];
             $allocation->update();
 
@@ -132,9 +132,9 @@ class AllAllocation extends Component
             //         $studentpayment->total_amount=$fee->amount;
             //     }
             //     $studentpayment->save();
-            // } 
+            // }
         }
-        
+
         $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
@@ -144,8 +144,8 @@ class AllAllocation extends Component
     }
 
     public function deallocate($id)
-    {   
-      
+    {
+
         $admission= Admission::find($id);
         if($admission->bed_id!=null)
         {
@@ -176,7 +176,7 @@ class AllAllocation extends Component
     }
 
     public function exchange($id)
-    {    
+    {
         $this->admissionid=$id;
         $allocation= Allocation::where('admission_id',$id)->first();
         $this->fee_id=$allocation->fee_id;
@@ -186,7 +186,7 @@ class AllAllocation extends Component
 
 
     // public function update($id)
-    // {   
+    // {
     //     $validatedData = $this->validate();
     //     $allocation = Allocation::find($id);
     //     $allocation->academic_year_id = $validatedData['academic_year_id'];
@@ -203,10 +203,19 @@ class AllAllocation extends Component
     //     ]);
     // }
 
-    public function delete($id)
-    { 
-        $allocation = Allocation::find($id);
+    //method add tejas
+    public function deleteconfirmation($id)
+    {
+        $this->delete_id=$id;
+        $this->dispatchBrowserEvent('delete-confirmation');
+
+    }
+
+    public function delete()
+    {
+        $allocation = Allocation::find($this->delete_id);
         $allocation->delete();
+        $this->delete_id=null;
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
@@ -215,14 +224,14 @@ class AllAllocation extends Component
     }
 
     public function render()
-    {   
+    {
         $academicyears=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
         $classes=Classes::where('status',0)->orderBy('name', 'ASC')->get();
         $beds=Bed::where('status',0)->get();
         $fees=Fee::where('status',0)->get();
         $students=Student::where('status',0)->orderBy('name', 'ASC')->get();
-        $query =Allocation::orderBy('student_id', 'ASC');    
-       
+        $query =Allocation::orderBy('student_id', 'ASC');
+
         $allocations =Allocation::paginate($this->per_page);
 
 

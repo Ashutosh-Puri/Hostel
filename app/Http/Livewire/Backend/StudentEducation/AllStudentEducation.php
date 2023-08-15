@@ -11,8 +11,10 @@ use Livewire\WithPagination;
 use App\Models\StudentEducation;
 
 class AllStudentEducation extends Component
-{   
+{
     use WithPagination;
+    protected $listeners = ['delete-confirmed'=>'delete'];
+    public $delete_id=null;
     public $a = '',$s = '',$c = '',$ad = '';
     public $per_page = 10;
     public $mode='all';
@@ -39,16 +41,16 @@ class AllStudentEducation extends Component
         $this->c_id=null;
         $this->admission_id=null;
     }
-    
+
     protected function rules()
-    {   
+    {
         return [
             'student_id' => ['required','integer'],
             'academic_year_id' => ['required','integer'],
             'last_class_id' => ['required','integer'],
             'admission_id' => ['required','integer'],
             'sgpa' => ['required','numeric','min:0.00','max:10.00'],
-            'percentage' => ['required','numeric','min:0','max:100'], 
+            'percentage' => ['required','numeric','min:0','max:100'],
         ];
     }
 
@@ -61,10 +63,10 @@ class AllStudentEducation extends Component
     {
         $this->mode=$mode;
     }
- 
+
     public function save()
-    {  
-        $validatedData = $this->validate();    
+    {
+        $validatedData = $this->validate();
         $student_education= new StudentEducation;
         if($student_education){
             $student_education->admission_id = $validatedData['admission_id'];
@@ -89,7 +91,7 @@ class AllStudentEducation extends Component
     }
 
     public function edit($id)
-    {   
+    {
         $student_education = StudentEducation::find($id);
         if($student_education){
             $this->C_id=$student_education->id;
@@ -105,12 +107,12 @@ class AllStudentEducation extends Component
                 'message'=>"Something Went Wrong!!"
             ]);
         }
-        
+
         $this->setmode('edit');
     }
 
     public function update($id)
-    {   
+    {
         $validatedData = $this->validate();
         $student_education = StudentEducation::find($id);
         if($student_education){
@@ -134,12 +136,20 @@ class AllStudentEducation extends Component
             'message'=>"Student Education Updated Successfully!!"
         ]);
     }
+    
+    public function deleteconfirmation($id)
+    {
+        $this->delete_id=$id;
+        $this->dispatchBrowserEvent('delete-confirmation');
 
-    public function delete($id)
-    { 
-        $student_education = StudentEducation::find($id);
+    }
+
+    public function delete()
+    {
+        $student_education = StudentEducation::find($this->delete_id);
         if($student_education){
             $student_education->delete();
+            $this->delete_id=null;
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
@@ -154,7 +164,7 @@ class AllStudentEducation extends Component
     }
 
     public function render()
-    {   
+    {
         if (is_numeric($this->sgpa) && $this->sgpa > 0) {
             $this->percentage = (($this->sgpa * 10) - 7.5);
         }

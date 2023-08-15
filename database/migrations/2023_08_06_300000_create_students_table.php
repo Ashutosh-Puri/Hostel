@@ -21,8 +21,7 @@ return new class extends Migration
             $table->string('photo')->nullable();
             $table->string('mother_name')->nullable();
             $table->string('dob')->nullable();
-            $table->string('cast')->nullable();
-            $table->string('category')->nullable();
+            $table->unsignedBigInteger('cast_id')->nullable();
             $table->string('parent_name')->nullable()->unique();
             $table->string('parent_mobile')->nullable();
             $table->string('parent_address')->nullable();
@@ -43,6 +42,7 @@ return new class extends Migration
             $table->tinyInteger('status')->nullable()->default('0')->comment('0-Active ,1-In-Active');
             $table->rememberToken();
             $table->timestamps();
+            $table->foreign('cast_id')->references('id')->on('casts')->onDelete('cascade');
         });
     }
 

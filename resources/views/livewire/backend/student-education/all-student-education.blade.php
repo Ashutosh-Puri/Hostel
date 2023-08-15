@@ -243,7 +243,7 @@
                                     <label class=" col-4 col-md-1  py-1 ">Records</label>
                                     <span class="col-12 col-md-9 p-0">
                                             <div class="row ">
-                                               
+
                                                 <div class="col-12 col-md-2 ">
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                                 </div>
@@ -280,16 +280,16 @@
                                     <tbody>
                                         @foreach ($student_educations as $key => $item)
                                             <tr>
-                                                <td>{{ $key+1 }}</td>                                     
+                                                <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->admission_id}}</td>
                                                 <td>{{ $item->AcademicYear->year}}</td>
-                                                <td>{{ $item->Student->name!=null?$item->Student->name:$item->Student->username; }}</td>  
-                                                <td>{{ $item->Class->name }}</td>  
-                                                <td>{{ $item->sgpa }}</td>        
-                                                <td>{{ $item->percentage }}</td>        
+                                                <td>{{ $item->Student->name!=null?$item->Student->name:$item->Student->username; }}</td>
+                                                <td>{{ $item->Class->name }}</td>
+                                                <td>{{ $item->sgpa }}</td>
+                                                <td>{{ $item->percentage }}</td>
                                                 <td>
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
-                                                    <a wire:loading.attr="disabled" wire:click="delete({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach

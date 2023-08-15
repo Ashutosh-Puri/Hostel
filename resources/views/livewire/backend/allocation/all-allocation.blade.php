@@ -80,7 +80,7 @@
                                                 @foreach ($beds as $item1)
                                                     <option  value="{{ $item1->id }}">{{ "H-".$item1->Room->Building->Hostel->name." ---> B-".$item1->Room->Building->name." ---> R-".$item1->Room->id."-(".$item1->Room->label.") ---> B-".$item1->id }} </option>
                                                 @endforeach
-                                            </select> 
+                                            </select>
                                             @error('bed_id')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -135,8 +135,8 @@
                         <div class="card-body">
                             <form  wire:submit.prevent="update({{ isset($C_id)?$C_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
-                                
-                              
+
+
 
                                 <button type="submit"  class="btn btn-primary waves-effect waves-light">Update Data</button>
                             </form>
@@ -213,11 +213,11 @@
                                         @foreach ($allocations as $key => $item)
                                             @if ( $item->Admission->status==1)
                                             <tr>
-                                                <td>{{ $key+1 }}</td>                                     
-                                                <td>{{ $item->Admission->id }}</td>                                     
+                                                <td>{{ $key+1 }}</td>
+                                                <td>{{ $item->Admission->id }}</td>
                                                 <td>{{ $item->Admission->AcademicYear->year }}</td>
-                                                <td>{{ $item->Admission->Student->name ?$item->Admission->Student->name:$item->Admission->Student->username; }}</td>  
-                                                <td>{{ $item->Admission->Class->name }}</td>  
+                                                <td>{{ $item->Admission->Student->name ?$item->Admission->Student->name:$item->Admission->Student->username; }}</td>
+                                                <td>{{ $item->Admission->Class->name }}</td>
                                                 <td>
                                                     @if ($item->Admission->bed_id==null)
                                                         <span class="badge bg-danger text-white">Not Allocated</span>
@@ -231,11 +231,11 @@
                                                     @else
                                                         <span class="badge bg-success mx-1 text-white">{{ $item->Fee->amount}} Rs.</span>
                                                     @endif
-                                                </td>             
+                                                </td>
                                                 <td>
                                                     <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success waves-effect waves-light">Allocate</a>
                                                     <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-info waves-effect waves-light">Exchange</a>
-                                                    <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger waves-effect waves-light">De Allocate</a>
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light">De Allocate</a>
                                                 </td>
                                             </tr>
                                             @endif

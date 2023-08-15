@@ -13,7 +13,7 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        $usersData = [
+        $categoryData = [
             [
                 'id' => '1',
                 'name' => 'ST',
@@ -52,6 +52,6 @@ class CategorySeeder extends Seeder
             ],
             // Add more user data as needed
         ];
-        Category::insert($usersData);
+        Category::insert($categoryData);
     }
 }

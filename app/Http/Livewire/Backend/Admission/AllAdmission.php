@@ -20,9 +20,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
 class AllAdmission extends Component
-{   
+{
     use WithPagination;
     use WithFileUploads;
+    protected $listeners = ['delete-confirmed'=>'delete'];
+    public $delete_id=null;
     public $ad = '';
     public $s = '';
     public $a = '';
@@ -109,7 +111,7 @@ class AllAdmission extends Component
         $this->reallocateid=null;
         $this->current_id=null;
     }
-    
+
     protected function rules()
     {   
         return [
@@ -118,13 +120,24 @@ class AllAdmission extends Component
             'first_name'=>['required','string','max:255'],
             'first_name'=>['required','string','max:255'],
             'middle_name'=>['required','string','max:255'],
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+            'last_name'=>['required','string','max:255'],
+            'dob'=>['required','date'],
+            'cast'=>['required','string','max:255'],
+            'category'=>['required','string','max:255'],
+            'blood_group'=>['required','string','max:255'],
+=======
+>>>>>>> Stashed changes
             'last_name'=>['required','string','max:255'], 
             'dob'=>['required','date','before_or_equal:15 years ago'],
             'cast_id'=>['required','integer'],
             'category_id'=>['required','integer'],
             'blood_group'=>['required','string','max:255'],    
+>>>>>>> baa5acd6b7282b2394c63888fa0967550fee3926
             'stream'=>['required','string','max:255'],
-            'stream_type'=>['required','string','max:255'],  
+            'stream_type'=>['required','string','max:255'],
             'class_id'=>['required','integer'],
             'last_class_id'=>['required','integer'],
             'percentage'=>['required','numeric','min:0','max:100'],
@@ -141,7 +154,7 @@ class AllAdmission extends Component
             'is_ragging'=>['nullable'],
             'mobile'=>['required','numeric','digits:10','unique:students,mobile,'.($this->mode=='edit'? $this->student_id :($this->mode=='add'? Auth::user()->id :'')),],
             'member_id'=>['required','numeric','unique:students,member_id,'.($this->mode=='edit'? $this->student_id :($this->mode=='add'? Auth::user()->id :'')),],
-            'photo'=>[($this->mode=='edit'? 'nullable' : ($this->photoold!=null? 'nullable' : 'required')),'image','mimes:jpeg,jpg,png','max:1024'], 
+            'photo'=>[($this->mode=='edit'? 'nullable' : ($this->photoold!=null? 'nullable' : 'required')),'image','mimes:jpeg,jpg,png','max:1024'],
         ];
     }
 
@@ -157,7 +170,7 @@ class AllAdmission extends Component
         if($mode=="add")
         {
             $student = Student::find(Auth::user()->id);
-            if ($student) 
+            if ($student)
             {
                 $nameParts = explode(' ', $student->name);
                 $this->last_name = isset($nameParts[0]) ? $nameParts[0] : '';
@@ -182,11 +195,11 @@ class AllAdmission extends Component
             }
         }
     }
- 
+
     public function save()
-    {    
-      
-        $validatedData = $this->validate();  
+    {
+
+        $validatedData = $this->validate();
         $student = Student::find($this->student_id);
         if ($student){
             $student->name = $this->name;
@@ -270,10 +283,10 @@ class AllAdmission extends Component
     }
 
     public function edit($id)
-    {   
+    {
         $this->current_id=$id;
         $admission = Admission::find($id);
-        if ($admission) 
+        if ($admission)
         {
             $this->C_id = $admission->id;
             $this->academic_year_id = $admission->academic_year_id;
@@ -282,7 +295,7 @@ class AllAdmission extends Component
             $this->status = '0';
 
             $class = Classes::where('id', $admission->class_id)->latest()->first();
-            if ($class) 
+            if ($class)
             {
                 $this->stream = $class->stream;
                 $this->stream_type = $class->type;
@@ -300,7 +313,7 @@ class AllAdmission extends Component
         }
 
         $student = Student::find($this->student_id);
-        if ($student) 
+        if ($student)
         {
             $nameParts = explode(' ', $student->name);
             $this->last_name = isset($nameParts[0]) ? $nameParts[0] : '';
@@ -330,7 +343,7 @@ class AllAdmission extends Component
         }
 
         $education = StudentEducation::where('academic_year_id', $this->academic_year_id)->where('student_id', $this->student_id)->latest()->first();
-        if ($education) 
+        if ($education)
         {
             $this->last_class_id = $education->last_class_id;
             $this->sgpa = $education->sgpa;
@@ -346,9 +359,9 @@ class AllAdmission extends Component
     }
 
     public function update($id)
-    {   
+    {
 
-        $validatedData = $this->validate();   
+        $validatedData = $this->validate();
         $admission = Admission::find($id);
         if($admission){
             $oldyearid=$admission->academic_year_id;
@@ -365,8 +378,8 @@ class AllAdmission extends Component
             ]);
         }
         $education =StudentEducation::where('admission_id', $id)->where('academic_year_id', $oldyearid)->where('student_id', $oldstudentid)->latest()->first();
-        if ($education) 
-        {   
+        if ($education)
+        {
             $education->academic_year_id=$validatedData['academic_year_id'];
             $education->last_class_id = $validatedData['last_class_id'];
             $education->sgpa = $validatedData['sgpa'];
@@ -398,7 +411,7 @@ class AllAdmission extends Component
             $student->address_type = $this->address_type==1?'1':'0';
             $student->member_id = $this->member_id;
             if($this->photo)
-            {   
+            {
                 if($student->photo)
                 {
                     File::delete($student->photo);
@@ -423,15 +436,15 @@ class AllAdmission extends Component
             'message'=>"Admission Updated Successfully!!"
         ]);
     }
-    
+
     public function view($id)
-    { 
+    {
         $this->viewid=$id;
         $this->setmode('view');
     }
 
     public function confirm($id)
-    { 
+    {
         $admission=Admission::find($id);
         if($admission){
             $admission->status=1;
@@ -450,8 +463,8 @@ class AllAdmission extends Component
     }
 
     public function cancel($id)
-    {   
-        
+    {
+
         $admission=Admission::find($id);
         if($admission){
             if($admission->bed_id!=null)
@@ -467,7 +480,7 @@ class AllAdmission extends Component
                 'message'=>"Something Went Wrong!!"
             ]);
         }
-   
+
         $allocation= Allocation::where('admission_id',$id)->first();
         if($allocation){
             $allocation->fee_id = null;
@@ -499,11 +512,18 @@ class AllAdmission extends Component
         ]);
     }
 
-    public function delete($id)
-    {   
-        $this->cancel($id);
-        $admission = Admission::find($id);
-        if ($admission) 
+    public function deleteconfirmation($id)
+    {
+        $this->delete_id=$id;
+        $this->dispatchBrowserEvent('delete-confirmation');
+
+    }
+
+    public function delete()
+    {
+        $this->cancel($this->id);
+        $admission = Admission::find($this->delete_id);
+        if ($admission)
         {
             // Delete StudentEducation
             $stdedu= StudentEducation::where('student_id', $admission->student_id)->where('academic_year_id', $admission->academic_year_id)->first();
@@ -515,8 +535,9 @@ class AllAdmission extends Component
                     'message'=>"Something Went Wrong!!"
                 ]);
             }
-            
+
             $admission->delete();
+            $this->delete_id=null;
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
@@ -532,9 +553,16 @@ class AllAdmission extends Component
     }
 
     public function render()
+<<<<<<< HEAD
+    {
+=======
     {   
         $today = Carbon::today();
         $this->mindate=$minus15Years = $today->copy()->subYears(15)->format('Y-m-d');
+<<<<<<< Updated upstream
+=======
+>>>>>>> baa5acd6b7282b2394c63888fa0967550fee3926
+>>>>>>> Stashed changes
         $this->name = $this->last_name." ".$this->first_name." ".$this->middle_name;
 
         if (is_numeric($this->sgpa) && $this->sgpa > 0) {
@@ -548,6 +576,13 @@ class AllAdmission extends Component
         $students=Student::where('status',0)->orderBy('username',"ASC")->get();
         $casts=Cast::where('status',0)->orderBy('name',"ASC")->get();
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+
+        $query =Admission::orderBy('academic_year_id', 'DESC');
+=======
+>>>>>>> Stashed changes
         if ($this->cast_id) {
             $categories =Cast::find($this->cast_id)->category()->orderBy('name', 'ASC')->get();
         } else { 
@@ -555,6 +590,7 @@ class AllAdmission extends Component
         }
             
         $query =Admission::orderBy('academic_year_id', 'DESC');    
+>>>>>>> baa5acd6b7282b2394c63888fa0967550fee3926
         if ($this->ad) {
             $admissionIds = Admission::where('id', 'like',$this->ad. '%')->pluck('id');
             $query->whereIn('id', $admissionIds);
@@ -562,7 +598,7 @@ class AllAdmission extends Component
         if ($this->a) {
             $academicyearIds = AcademicYear::where('status', 0)->where('year', 'like', '%' . $this->a. '%')->pluck('id');
             $query->whereIn('academic_year_id', $academicyearIds);
-        }  
+        }
         if ($this->s) {
             $studentIds = Student::where('name', 'like', $this->s. '%')->pluck('id');
             $query->whereIn('student_id', $studentIds);
@@ -584,7 +620,17 @@ class AllAdmission extends Component
             $viewadmission=null;
             $lastclass=null;
         }
+<<<<<<< Updated upstream
    
         return view('livewire.backend.Admission.all-Admission',compact('categories','casts','lastclass','viewadmission','students','admissions','classes','streams','types','lastclasses','academicyears'))->extends('layouts.admin.admin')->section('admin');
+=======
+<<<<<<< HEAD
+
+        return view('livewire.backend.Admission.all-Admission',compact('lastclass','viewadmission','students','admissions','classes','streams','types','lastclasses','academicyears'))->extends('layouts.admin.admin')->section('admin');
+=======
+   
+        return view('livewire.backend.Admission.all-Admission',compact('categories','casts','lastclass','viewadmission','students','admissions','classes','streams','types','lastclasses','academicyears'))->extends('layouts.admin.admin')->section('admin');
+>>>>>>> baa5acd6b7282b2394c63888fa0967550fee3926
+>>>>>>> Stashed changes
     }
 }

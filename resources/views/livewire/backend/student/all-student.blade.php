@@ -226,7 +226,7 @@
                                     <tbody>
                                         @foreach ($students as $key => $item)
                                             <tr>
-                                                <td>{{ $key+1 }}</td>  
+                                                <td>{{ $key+1 }}</td>
                                                 {{-- <td>
                                                     <img id="showImage" src="{{ (!empty($item->photo)) ? asset($item->photo) : asset('assets/images/no_image.jpg') }}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image" style="height: 45px; width:45px;">
                                                 </td>                                    --}}
@@ -239,10 +239,10 @@
                                                     @else
                                                         <span class="badge bg-danger text-white">In-Active</span>
                                                     @endif
-                                                </td>   
+                                                </td>
                                                 <td>
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
-                                                    <a wire:loading.attr="disabled" wire:click="delete({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach

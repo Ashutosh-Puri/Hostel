@@ -8,8 +8,10 @@ use Livewire\WithPagination;
 use Illuminate\Validation\Rule;
 
 class AllCollege extends Component
-{   
+{
     use WithPagination;
+    protected $listeners = ['delete-confirmed'=>'delete'];
+    public $delete_id=null;
     public $search = '';
     public $per_page = 10;
     public $mode='all';
@@ -29,7 +31,7 @@ class AllCollege extends Component
     {
         $this->validateOnly($propertyName);
     }
- 
+
     public function resetinput()
     {
         $this->name=null;
@@ -43,7 +45,7 @@ class AllCollege extends Component
     {
         $this->mode=$mode;
     }
- 
+
     public function save()
     {
         $validatedData = $validatedData = $this->validate();
@@ -67,7 +69,7 @@ class AllCollege extends Component
     }
 
     public function edit($id)
-    {   
+    {
         $this->current_id=$id;
         $college = College::find($id);
         if($college){
@@ -84,7 +86,7 @@ class AllCollege extends Component
     }
 
     public function update($id)
-    {   
+    {
         $validatedData = $this->validate();
         $college = College::find($id);
         if($college){
@@ -102,14 +104,23 @@ class AllCollege extends Component
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"College Updated Successfully!!"
-        ]); 
+        ]);
     }
 
-    public function delete($id)
-    { 
-        $college = College::find($id);
+    public function deleteconfirmation($id)
+    {
+        $this->delete_id=$id;
+        $this->dispatchBrowserEvent('delete-confirmation');
+
+    }
+
+    public function delete()
+    {
+        $college = College::find($this->delete_id);
         if($college){
             $college->delete();
+            $this->delete_id=null;
+
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
@@ -124,7 +135,7 @@ class AllCollege extends Component
     }
 
     public function render()
-    {   
+    {
         $colleges=College::where('name', 'like', '%'.$this->search.'%')->orderBy('name', 'ASC')->paginate($this->per_page);
         return view('livewire.backend.College.all-College',compact('colleges'))->extends('layouts.admin.admin')->section('admin');
     }

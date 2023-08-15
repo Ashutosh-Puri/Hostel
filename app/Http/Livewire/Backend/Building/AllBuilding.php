@@ -9,9 +9,11 @@ use Livewire\WithPagination;
 use Illuminate\Validation\Rule;
 
 class AllBuilding extends Component
-{   
+{
 
     use WithPagination;
+    protected $listeners = ['delete-confirmed'=>'delete'];
+    public $delete_id=null;
     public $building_name = '';
     public $hostel_name = '';
     public $per_page = 10;
@@ -51,7 +53,7 @@ class AllBuilding extends Component
     {
         $this->mode=$mode;
     }
- 
+
     public function save()
     {
         $validatedData =  $this->validate();
@@ -76,7 +78,7 @@ class AllBuilding extends Component
     }
 
     public function edit($id)
-    {   
+    {
         $this->current_id=$id;
         $building = Building::find($id);
         if($building){
@@ -94,7 +96,7 @@ class AllBuilding extends Component
     }
 
     public function update($id)
-    {   
+    {
         $validatedData =  $this->validate();
         $building = Building::find($id);
         if($building){
@@ -113,14 +115,23 @@ class AllBuilding extends Component
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
             'message'=>"Building Updated Successfully!!"
-        ]); 
+        ]);
     }
 
-    public function delete($id)
-    { 
-        $building = Building::find($id);
+
+    public function deleteconfirmation($id)
+    {
+        $this->delete_id=$id;
+        $this->dispatchBrowserEvent('delete-confirmation');
+
+    }
+
+    public function delete()
+    {
+        $building = Building::find($this->delete_id);
         if($building){
             $building->delete();
+            $this->delete_id=null;
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
@@ -135,7 +146,7 @@ class AllBuilding extends Component
     }
 
     public function render()
-    {   
+    {
         $hostels=Hostel::where('status',0)->orderBy('name',"ASC")->get();
 
         $query = Building::orderBy('name', 'ASC');

@@ -8,8 +8,10 @@ use Livewire\Component;
 use Livewire\WithPagination;
 
 class AllBed extends Component
-{   
+{
     use WithPagination;
+    protected $listeners = ['delete-confirmed'=>'delete'];
+    public $delete_id=null;
     public $search = '';
     public $per_page = 10;
     public $mode='all';
@@ -32,7 +34,7 @@ class AllBed extends Component
             'room_id' => ['required','integer'],
         ];
     }
- 
+
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
@@ -42,10 +44,10 @@ class AllBed extends Component
     {
         $this->mode=$mode;
     }
- 
+
     public function save()
     {
-        $validatedData = $this->validate();    
+        $validatedData = $this->validate();
         $bed= new Bed;
         if($bed){
             $bed->room_id = $validatedData['room_id'];
@@ -66,7 +68,7 @@ class AllBed extends Component
     }
 
     public function edit($id)
-    {   
+    {
         $bed = Bed::find($id);
         if($bed){
             $this->C_id=$bed->id;
@@ -78,12 +80,12 @@ class AllBed extends Component
                 'message'=>"Something Went Wrong!!"
             ]);
         }
-        
+
         $this->setmode('edit');
     }
 
     public function update($id)
-    {   
+    {
         $validatedData = $this->validate();
         $bed = Bed::find($id);
         if($bed){
@@ -104,11 +106,19 @@ class AllBed extends Component
         ]);
     }
 
-    public function delete($id)
-    { 
-        $bed = Bed::find($id);
+    public function deleteconfirmation($id)
+    {
+        $this->delete_id=$id;
+        $this->dispatchBrowserEvent('delete-confirmation');
+
+    }
+
+    public function delete()
+    {
+        $bed = Bed::find($this->delete_id);
         if($bed){
             $bed->delete();
+            $this->delete_id=null;
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
@@ -123,7 +133,7 @@ class AllBed extends Component
     }
 
     public function render()
-    {   
+    {
         $rooms=Room::orderBy('floor', 'ASC')->get();
         $beds= Bed::with('room:id,label')->orderBy('room_id', 'ASC')->when($this->search, function ($query) {
             $query->whereHas('room', function ($query) {

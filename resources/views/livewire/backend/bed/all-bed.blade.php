@@ -176,9 +176,9 @@
                                     <tbody>
                                         @foreach ($beds as $key => $item)
                                             <tr>
-                                                <td>{{ $key+1 }}</td>   
-                                                <td>{{ $item->Room->Building->Hostel->name }}</td> 
-                                                <td>{{ $item->Room->Building->name }}</td> 
+                                                <td>{{ $key+1 }}</td>
+                                                <td>{{ $item->Room->Building->Hostel->name }}</td>
+                                                <td>{{ $item->Room->Building->name }}</td>
                                                 <td>
                                                     @switch( $item->Room->floor)
                                                     @case(0)
@@ -215,12 +215,12 @@
                                                         Tenth
                                                     @break
                                                     @default
-                                                        {{ $item->floor }} 
+                                                        {{ $item->floor }}
                                                     @endswitch
                                                      Floor
-                                                </td>                                 
-                                                <td>{{ $item->Room->id  }} - {{ $item->Room->label }}</td>    
-                                                <td>{{ $item->id }}</td>   
+                                                </td>
+                                                <td>{{ $item->Room->id  }} - {{ $item->Room->label }}</td>
+                                                <td>{{ $item->id }}</td>
                                                 <td>
                                                     @if ( $item->status == '0')
                                                         <span class="badge bg-success text-white">Availabel</span>
@@ -230,7 +230,7 @@
                                                 </td>
                                                 <td>
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
-                                                    <a wire:loading.attr="disabled" wire:click="delete({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach
