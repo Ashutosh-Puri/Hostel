@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('mother_name')->nullable();
             $table->string('dob')->nullable();
             $table->unsignedBigInteger('cast_id')->nullable();
-            $table->string('parent_name')->nullable()->unique();
+            $table->string('parent_name')->nullable();
             $table->string('parent_mobile')->nullable();
             $table->string('parent_address')->nullable();
             $table->string('local_parent_name')->nullable();

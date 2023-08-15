@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Cast;
 use App\Models\Admission;
 use App\Models\Allocation;
 use App\Models\StudentFine;
@@ -79,4 +80,8 @@ class Student extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Admission::class, 'student_id', 'id');
     }
 
+    public function Cast()
+    {
+        return $this->belongsTo(Cast::class);
+    }
 }

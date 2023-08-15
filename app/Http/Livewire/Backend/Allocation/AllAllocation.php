@@ -26,6 +26,7 @@ class AllAllocation extends Component
     public $fee_id;
     public $c_id;
     public $admissionid;
+    public $admissionid2;
 
 
     public function resetinput()
@@ -37,6 +38,7 @@ class AllAllocation extends Component
         $this->bed_id=null;
         $this->fee_id=null;
         $this->admissionid=null;
+        $this->admissionid2=null;
     }
 
     protected $rules = [
@@ -118,21 +120,6 @@ class AllAllocation extends Component
         {
             $allocation->fee_id=$validatedData['fee_id'];
             $allocation->update();
-
-            // $admission= Admission::find($admissionid);
-            // if(!$admission)
-            // {
-            //     $studentpayment= new StudentPayment;
-            //     $studentpayment->admission_id=$admission->id;
-            //     $studentpayment->student_id=$admission->student_id;
-            //     $studentpayment->academic_year_id=$admission->academic_year_id;
-            //     $fee=Fee::find($validatedData['fee_id']);
-            //     if($fee)
-            //     {
-            //         $studentpayment->total_amount=$fee->amount;
-            //     }
-            //     $studentpayment->save();
-            // }
         }
 
         $this->resetinput();
@@ -178,50 +165,62 @@ class AllAllocation extends Component
     public function exchange($id)
     {
         $this->admissionid=$id;
-        $allocation= Allocation::where('admission_id',$id)->first();
-        $this->fee_id=$allocation->fee_id;
+        // $allocation= Allocation::where('admission_id',$id)->first();
+        // $this->fee_id=$allocation->fee_id;
         $this->setmode('exchange');
     }
 
 
 
-    // public function update($id)
-    // {
-    //     $validatedData = $this->validate();
-    //     $allocation = Allocation::find($id);
-    //     $allocation->academic_year_id = $validatedData['academic_year_id'];
-    //     $allocation->bed_id = $validatedData['bed_id'];
-    //     $allocation->student_id = $validatedData['student_id'];
-    //     $allocation->class_id = $validatedData['class_id'];
-    //     $allocation->fee_id = $validatedData['fee_id'];
-    //     $allocation->update();
-    //     $this->resetinput();
-    //     $this->setmode('all');
-    //     $this->dispatchBrowserEvent('alert',[
-    //         'type'=>'success',
-    //         'message'=>"Allocation Updated Successfully!!"
-    //     ]);
-    // }
-
-    //method add tejas
-    public function deleteconfirmation($id)
-    {
-        $this->delete_id=$id;
-        $this->dispatchBrowserEvent('delete-confirmation');
-
-    }
-
-    public function delete()
-    {
-        $allocation = Allocation::find($this->delete_id);
-        $allocation->delete();
-        $this->delete_id=null;
+    public function update($id)
+    {   
+        
+        $this->validate([
+            'admissionid2' => ['required'],
+        ]);
+        $all1= Allocation::where('admission_id',$id)->first();
+        $all2= Allocation::where('admission_id',$this->admissionid2)->first();
+        $temp1= $all1->fee_id;
+        $temp2= $all2->fee_id;
+        $all1->fee_id= $temp2;
+        $all2->fee_id= $temp1;
+        $all1->update();
+        $all2->update();
+        $add1= Admission::find($id);
+        $add2= Admission::find($this->admissionid2);
+        $temp3= $add1->bed_id;
+        $temp4= $add2->bed_id;
+        $add1->bed_id= $temp4;
+        $add2->bed_id= $temp3;
+        $add1->update();
+        $add2->update();
+        $this->resetinput();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
-            'message'=>"Allocation Deleted Successfully!!"
+            'message'=>"Bed Exchanged Successfully!!"
         ]);
-    }
+     }
+
+    //method add tejas
+    // public function deleteconfirmation($id)
+    // {
+    //     $this->delete_id=$id;
+    //     $this->dispatchBrowserEvent('delete-confirmation');
+
+    // }
+
+    // public function delete()
+    // {
+    //     $allocation = Allocation::find($this->delete_id);
+    //     $allocation->delete();
+    //     $this->delete_id=null;
+    //     $this->setmode('all');
+    //     $this->dispatchBrowserEvent('alert',[
+    //         'type'=>'success',
+    //         'message'=>"Allocation Deleted Successfully!!"
+    //     ]);
+    // }
 
     public function render()
     {
@@ -234,16 +233,26 @@ class AllAllocation extends Component
 
         $allocations =Allocation::paginate($this->per_page);
 
-
+        if($this->admissionid2!=null)
+        {
+            $admission2=Admission::find($this->admissionid2);  
+        }
+        else
+        {
+            $admission2=null;
+        }
         if($this->admissionid!=null)
         {
-            $admission=Admission::find($this->admissionid);
+            $admission=Admission::find($this->admissionid);  
+            $alloc=Allocation::whereIn('admission_id',[$this->admissionid,$this->admissionid2])->get();
         }
         else
         {
             $admission=null;
+           
+            $alloc=null;
         }
-        return view('livewire.backend.allocation.all-allocation',compact('admission','fees','beds','allocations'))->extends('layouts.admin.admin')->section('admin');
+        return view('livewire.backend.allocation.all-allocation',compact('alloc','admission','admission2','fees','beds','allocations'))->extends('layouts.admin.admin')->section('admin');
     }
 
 }

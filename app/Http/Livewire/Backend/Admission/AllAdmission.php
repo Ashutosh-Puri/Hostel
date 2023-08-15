@@ -37,7 +37,7 @@ class AllAdmission extends Component
     public $academic_year_id;
     public $student_id;
     public $class_id;
-    public $last_class_id;
+    public $old_class_id;
     public $sgpa;
     public $percentage;
     public $name;
@@ -103,7 +103,7 @@ class AllAdmission extends Component
         $this->member_id =null;
         $this->photoold =null;
         $this->photo =null;
-        $this->last_class_id=null;
+        $this->old_class_id=null;
         $this->sgpa=null;
         $this->percentage=null;
         $this->viewid=null;
@@ -127,7 +127,7 @@ class AllAdmission extends Component
             'stream'=>['required','string','max:255'],
             'stream_type'=>['required','string','max:255'],
             'class_id'=>['required','integer'],
-            'last_class_id'=>['required','integer'],
+            'old_class_id'=>['required','integer'],
             'percentage'=>['required','numeric','min:0','max:100'],
             'sgpa'=>['nullable','numeric','min:0.00','max:10.00'],
             'parent_name'=>['required','string','max:255'],
@@ -257,7 +257,7 @@ class AllAdmission extends Component
             $education->admission_id = $admission->id;
             $education->academic_year_id = $this->academic_year_id;
             $education->student_id = $this->student_id;
-            $education->last_class_id = $validatedData['last_class_id'];
+            $education->last_class_id = $validatedData['old_class_id'];
             $education->sgpa = $validatedData['sgpa'];
             $education->percentage = $validatedData['percentage'];
             $education->save();
@@ -343,7 +343,7 @@ class AllAdmission extends Component
         $education = StudentEducation::where('academic_year_id', $this->academic_year_id)->where('student_id', $this->student_id)->latest()->first();
         if ($education)
         {
-            $this->last_class_id = $education->last_class_id;
+            $this->old_class_id = $education->last_class_id;
             $this->sgpa = $education->sgpa;
             $this->percentage = $education->percentage;
         }else{
@@ -379,7 +379,7 @@ class AllAdmission extends Component
         if ($education)
         {
             $education->academic_year_id=$validatedData['academic_year_id'];
-            $education->last_class_id = $validatedData['last_class_id'];
+            $education->last_class_id = $validatedData['old_class_id'];
             $education->sgpa = $validatedData['sgpa'];
             $education->percentage = $validatedData['percentage'];
             $education->update();
@@ -519,7 +519,7 @@ class AllAdmission extends Component
 
     public function delete()
     {
-        $this->cancel($this->id);
+        $this->cancel($this->delete_id);
         $admission = Admission::find($this->delete_id);
         if ($admission)
         {
@@ -563,7 +563,6 @@ class AllAdmission extends Component
         $streams=Classes::select('stream')->where('status',0)->distinct('stream')->get();
         $types=Classes::select('type')->where('status',0)->where('stream',$this->stream)->distinct('type')->get();
         $classes=Classes::select('id','name')->where('status',0)->where('type',$this->stream_type)->orderBy('name',"ASC")->get();
-        $lastclasses=Classes::select('id','name')->where('status',0)->where('stream',$this->stream)->whereNot('id',$this->class_id)->orderBy('name',"ASC")->get();
         $students=Student::where('status',0)->orderBy('username',"ASC")->get();
         $casts=Cast::where('status',0)->orderBy('name',"ASC")->get();
         $query =Admission::orderBy('academic_year_id', 'DESC');
@@ -603,6 +602,6 @@ class AllAdmission extends Component
             $viewadmission=null;
             $lastclass=null;
         }
-        return view('livewire.backend.Admission.all-Admission',compact('categories','casts','lastclass','viewadmission','students','admissions','classes','streams','types','lastclasses','academicyears'))->extends('layouts.admin.admin')->section('admin');
+        return view('livewire.backend.Admission.all-Admission',compact('categories','casts','lastclass','viewadmission','students','admissions','classes','streams','types','academicyears'))->extends('layouts.admin.admin')->section('admin');
     }
 }

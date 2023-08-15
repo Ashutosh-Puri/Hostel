@@ -318,14 +318,14 @@
                                 <div class="row">
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
-                                            <label for="last_class_id" class="form-label">Select Last Class</label>
-                                            <select class="form-select @error('last_class_id') is-invalid @enderror" id="last_class_id" wire:model="last_class_id">
+                                            <label for="old_class_id" class="form-label">Select Last Class</label>
+                                            <select class="form-select @error('old_class_id') is-invalid @enderror" id="old_class_id" wire:model="old_class_id">
                                                 <option  hidden value="">Select Last Class</option>
-                                                @foreach ($lastclasses as $item2)
-                                                    <option class="py-4" value="{{ $item2->id }}">{{ $item2->name }}</option>
+                                                @foreach ($classes as $item3)
+                                                    <option class="py-4" value="{{ $item3->id }}"  >{{ $item3->name }}</option>
                                                 @endforeach
                                             </select>
-                                            @error('last_class_id')
+                                            @error('old_class_id')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -785,14 +785,14 @@
                                 <div class="row">
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
-                                            <label for="last_class_id" class="form-label">Select Last Class</label>
-                                            <select class="form-select @error('last_class_id') is-invalid @enderror" id="last_class_id" wire:model="last_class_id">
+                                            <label for="old_class_id" class="form-label">Select Last Class</label>
+                                            <select class="form-select @error('old_class_id') is-invalid @enderror" id="old_class_id" wire:model="old_class_id">
                                                 <option  hidden value="">Select Last Class</option>
-                                                @foreach ($lastclasses as $item2)
-                                                    <option class="py-4" value="{{ $item2->id }}">{{ $item2->name }}</option>
+                                                @foreach ($classes as $item4)
+                                                    <option class="py-4" value="{{ $item4->id }} ">{{ $item4->name }}</option>
                                                 @endforeach
                                             </select>
-                                            @error('last_class_id')
+                                            @error('old_class_id')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -1029,11 +1029,11 @@
                                             </div>
                                             <div class="col-12 col-md-6 mb-4">
                                                 <label for="">Cast :</label>
-                                                <label for="">{{ $viewadmission[0]->Student->Category()->name }}</label>
+                                                <label for="">{{ $viewadmission[0]->Student->Cast->name }}</label>
                                             </div>
                                             <div class="col-12 col-md-6 mb-4">
                                                 <label for="">Category :</label>
-                                                <label for="">{{ $viewadmission[0]->Student->Category()->name}}</label>
+                                                <label for="">{{ $viewadmission[0]->Student->Cast->Category->name}}</label>
                                             </div>
                                             <div class="col-12 col-md-6 mb-4">
                                                 <label for="">Blood Group :</label>
