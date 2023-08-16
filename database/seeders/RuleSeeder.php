@@ -16,14 +16,6 @@ class RuleSeeder extends Seeder
         // Define your sample rules
         $rules = [
             [
-<<<<<<< Updated upstream
-                'name' => 'Quiet Hours',
-                'description' => 'Quiet hours are from 10:00 PM to 7:00 AM. Please keep noise levels down during these times.',
-            ],
-            [
-                'name' => 'Guest Policy',
-                'description' => 'Guests are allowed to visit between 9:00 AM and 9:00 PM. They must sign in at the reception.',
-=======
                 'name' => 'Rule1',
                 'description' => 'वसतिगृहामध्ये प्रवेश घेतल्यानंतर रॅगिंगचा प्रयत्न केल्यास शासकीय रॅगिंग कायद्यानुसार कारवाई केली जाईल. ',
                 'status'=>'0'
@@ -132,7 +124,6 @@ class RuleSeeder extends Seeder
                 'name' => 'Rule22',
                 'description' => 'वरील सर्व नियम आम्ही स्वतः वाचले असून समजावून घेतले आहेत. या सर्व नियमांचे पालन करणे आमच्यावर बंधनकारक आहे. सदरच्या नियमांचे उल्लंघन केल्यास दंडात्मक कारवाई केली जाईल. तसेच प्रसंगी विद्यार्थी वसतिगृह प्रवेश रद्द करण्यात येईल. वरील सर्व नियम व अटी आम्हांला मान्य आहे म्हणून आम्ही खाली सही करीत आहोत.',
                 'status'=>'0'
->>>>>>> Stashed changes
             ],
 
         ];
