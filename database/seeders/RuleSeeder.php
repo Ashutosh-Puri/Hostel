@@ -127,7 +127,6 @@ class RuleSeeder extends Seeder
             ],
 
         ];
-
         Rule::insert($rules);
     }
     }
