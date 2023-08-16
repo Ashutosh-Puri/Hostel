@@ -6,6 +6,7 @@ use App\Models\Allocation;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Backend\Bed\AllBed;
 use App\Http\Livewire\Backend\Fee\AllFee;
+use App\Http\Livewire\Backend\Cast\AllCast;
 use App\Http\Livewire\Backend\Fine\AllFine;
 use App\Http\Livewire\Backend\Role\AllRole;
 use App\Http\Livewire\Backend\Room\AllRoom;
@@ -18,6 +19,7 @@ use App\Http\Livewire\Backend\College\AllCollege;
 use App\Http\Livewire\Backend\Student\AllStudent;
 use App\Http\Livewire\Backend\Admin\AdminDashboard;
 use App\Http\Livewire\Backend\Building\AllBuilding;
+use App\Http\Livewire\Backend\Category\AllCategory;
 use App\Http\Livewire\Backend\Facility\AllFacility;
 use App\Http\Livewire\Backend\Admission\AllAdmission;
 use App\Http\Livewire\Backend\Allocation\AllAllocation;
@@ -128,6 +130,12 @@ Route::middleware(['auth:admin','check.role:superadmin',])->group(function () {
 
     // All Allocation
     Route::get('all/allocations',AllAllocation::class)->name('all_allocation');
+
+    // All Cast
+    Route::get('all/casts',AllCast::class)->name('all_cast');
+
+    // All Category
+    Route::get('all/category',AllCategory::class)->name('all_category');
 
     
 
