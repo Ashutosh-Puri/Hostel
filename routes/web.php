@@ -130,12 +130,11 @@ Route::middleware(['auth:admin','check.role:superadmin',])->group(function () {
     // All Allocation
     Route::get('all/allocations',AllAllocation::class)->name('all_allocation');
 
-     // All Cast
-     Route::get('all/casts',AllCast::class)->name('all_cast');
+    // All Cast
+    Route::get('all/casts',AllCast::class)->name('all_cast');
 
-     // All Category
-     Route::get('all/categories',AllCategory::class)->name('all_category');
-
+    // All Category
+    Route::get('all/categories',AllCategory::class)->name('all_category');
 
 });
 

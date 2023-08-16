@@ -48,23 +48,39 @@ class AllBed extends Component
     public function save()
     {
         $validatedData = $this->validate();
-        $bed= new Bed;
-        if($bed){
-            $bed->room_id = $validatedData['room_id'];
-            $bed->status = $this->status==1?1:0;
-            $bed->save();
-        }else{
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong!!"
-            ]);
+
+        $beds=Bed::where('room_id',$validatedData['room_id'])->count();
+        $room=Room::find($validatedData['room_id']);
+        if($room)
+        {
+            $capacity=$room->capacity;
+
+            if($capacity>$beds)
+            {
+                $bed= new Bed;
+                if($bed){
+                    $bed->room_id = $validatedData['room_id'];
+                    $bed->status = $this->status==1?1:0;
+                    $bed->save();
+                    $this->dispatchBrowserEvent('alert',[
+                        'type'=>'success',
+                        'message'=>"Bed Created Successfully!!"
+                    ]);
+                }else{
+                    $this->dispatchBrowserEvent('alert',[
+                        'type'=>'error',
+                        'message'=>"Something Went Wrong!!"
+                    ]);
+                }
+            }else{
+                $this->dispatchBrowserEvent('alert',[
+                    'type'=>'warning',
+                    'message'=>"Beds Capacity For This Room Is Exceeded !!"
+                ]);
+            }
         }
         $this->resetinput();
         $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Bed Created Successfully!!"
-        ]);
     }
 
     public function edit($id)

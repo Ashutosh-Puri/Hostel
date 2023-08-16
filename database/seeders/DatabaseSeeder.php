@@ -38,20 +38,20 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(RoleSeeder::class);
         $this->call(AdminSeeder::class);            //  Role ,
-        // $this->call(AcademicYearSeeder::class);
-        // $this->call(ClassesSeeder::class);
+        $this->call(AcademicYearSeeder::class);
+        $this->call(ClassesSeeder::class);
         $this->call(CategorySeeder::class);
         $this->call(CastSeeder::class);          //  Category ,
         $this->call(StudentSeeder::class);          //  Cast ,
-        // $this->call(CollegeSeeder::class);
-        // $this->call(HostelSeeder::class);           //  College ,
-        // $this->call(BuildingSeeder::class);         //  Hostel ,
+        $this->call(CollegeSeeder::class);
+        $this->call(HostelSeeder::class);           //  College ,
+        $this->call(BuildingSeeder::class);         //  Hostel ,
         // $this->call(FineSeeder::class);             //  Acadmic Year ,
         // $this->call(FeeSeeder::class);              //  Acadmic Year ,
-        // $this->call(QuotaSeeder::class);            //  Acadmic Year , Class ,
-        // $this->call(RoomSeeder::class);             //  Building ,
-        // $this->call(BedSeeder::class);              //  Room ,
-        // $this->call(FacilitySeeder::class);         //  Room ,
+        $this->call(QuotaSeeder::class);            //  Acadmic Year , Class ,
+        $this->call(RoomSeeder::class);             //  Building ,
+        $this->call(BedSeeder::class);              //  Room ,
+        $this->call(FacilitySeeder::class);         //  Room ,
         // $this->call(StudentFineSeeder::class);      //  Acadmic Year , Student , Fine ,
         // $this->call(AdmissionSeeder::class);        //   Acadmic Year , Student , class ,Bed,
         // $this->call(StudentEducationSeeder::class); //   Acadmic Year , Student , class ,Admission ,
