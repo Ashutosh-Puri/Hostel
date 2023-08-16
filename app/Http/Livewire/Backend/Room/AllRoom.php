@@ -39,8 +39,17 @@ class AllRoom extends Component
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
+
     }
 
+    public function updatedType($propertyName)
+    {
+        $this->validateOnly($propertyName);
+        if($this->mode=="add")
+        {
+            $this->capacity=$this->type;
+        }
+    }
 
     public function resetinput()
     {
@@ -59,6 +68,7 @@ class AllRoom extends Component
     public function setmode($mode)
     {
         $this->mode=$mode;
+       
     }
 
     public function save()
@@ -158,7 +168,8 @@ class AllRoom extends Component
     }
 
     public function render()
-    {
+    {   
+       
         $buildings=Building::where('status',0)->orderBy('name', 'ASC')->get();
         $query = Room::orderBy('label', 'ASC')->when($this->b, function ($query) {
                 $query->whereIn('building_id', function ($subQuery) {

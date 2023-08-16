@@ -219,7 +219,7 @@
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->AcademicYear->year }}</td>
                                                 <td>{{ $item->type }} Seated</td>
-                                                <td>{{ $item->amount }}</td>
+                                                <td>{{ $item->amount }} Rs.</td>
                                                 <td>
                                                     @if ( $item->status == '0')
                                                         <span class="badge bg-success text-white">Active</span>
