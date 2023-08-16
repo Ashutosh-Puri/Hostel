@@ -125,15 +125,15 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="" >
-          <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
-          <span class="menu-title">Category's</span>
+        <a class="nav-link" href="{{ route('all_cast') }}" >
+          <span class="icon-bg"><i class="mdi mdi-format-list-bulleted-type menu-icon"></i></span>
+          <span class="menu-title">Cast's</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="" >
-          <span class="icon-bg"><i class="mdi mdi-format-list-bulleted-type menu-icon"></i></span>
-          <span class="menu-title">Cast's</span>
+        <a class="nav-link" href="{{ route('all_category') }}" >
+          <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
+          <span class="menu-title">Category's</span>
         </a>
       </li>
       {{-- <li class="nav-item">

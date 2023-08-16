@@ -11,6 +11,7 @@ use Database\Seeders\CastSeeder;
 use Database\Seeders\FineSeeder;
 use Database\Seeders\RoleSeeder;
 use Database\Seeders\RoomSeeder;
+use Database\Seeders\RuleSeeder;
 use Database\Seeders\AdminSeeder;
 use Database\Seeders\QuotaSeeder;
 use Database\Seeders\HostelSeeder;
@@ -56,6 +57,6 @@ class DatabaseSeeder extends Seeder
         // $this->call(StudentEducationSeeder::class); //   Acadmic Year , Student , class ,Admission ,
         // $this->call(StudentPaymentSeeder::class);   //   Acadmic Year , Student , Admission ,
         // $this->call(AllocationSeeder::class);       // Fee , Admission
-        // $this->call(RuleSeeder::class);
+        $this->call(RuleSeeder::class);
     }
 }
