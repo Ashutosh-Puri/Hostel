@@ -1,5 +1,5 @@
 <!-- Sidebar Start -->
-<div class="sidebar-bg   "> 
+<div class="sidebar-bg">
   <nav class=" sidebar-bg text-white sidebar vh-100 sidebar-offcanvas overflow-scroll " id="sidebar">
     <ul class="nav">
       <li class="nav-item nav-category">Navigation</li>
@@ -208,4 +208,3 @@
   </nav>
 </div>
 <!-- Sidebar End -->
- 
