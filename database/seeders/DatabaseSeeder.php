@@ -37,8 +37,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(RoleSeeder::class);
         $this->call(AdminSeeder::class);            //  Role ,
-        $this->call(AcademicYearSeeder::class);
-        $this->call(ClassesSeeder::class);
+        // $this->call(AcademicYearSeeder::class);
+        // $this->call(ClassesSeeder::class);
         $this->call(CategorySeeder::class);
         $this->call(CastSeeder::class);          //  Category ,
         $this->call(StudentSeeder::class);          //  Cast ,

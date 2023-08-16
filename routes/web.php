@@ -14,6 +14,7 @@ use App\Http\Livewire\Backend\Class\AllClass;
 use App\Http\Livewire\Backend\Qutota\AllQuota;
 use App\Http\Livewire\Backend\Admin\AdminLogin;
 use App\Http\Livewire\Backend\Hostel\AllHostel;
+use App\Http\Livewire\Frontend\StudentDashboard;
 use App\Http\Livewire\Backend\College\AllCollege;
 use App\Http\Livewire\Backend\Student\AllStudent;
 use App\Http\Livewire\Backend\Admin\AdminDashboard;
@@ -54,11 +55,9 @@ Route::middleware(['guest'])->group(function () {
 
 // Student Routes With Web Guard
 Route::middleware(['auth:web','verified'])->group(function () {
-   
-    Route::get('dashboard', function () {
-        return view('student.dashboard');
-    })->name('dashboard');
 
+   // Student Dashboard
+   Route::get('student/dashboard', StudentDashboard::class)->name('student.dashboard');
 });
 
 
@@ -122,14 +121,14 @@ Route::middleware(['auth:admin','check.role:superadmin',])->group(function () {
 
     // All Admission
     Route::get('all/admissions',AllAdmission::class)->name('all_admission');
-    
+
     // All Student Education
     Route::get('all/ducations',AllStudentEducation::class)->name('all_student_education');
 
     // All Allocation
     Route::get('all/allocations',AllAllocation::class)->name('all_allocation');
 
-    
+
 
 });
 
