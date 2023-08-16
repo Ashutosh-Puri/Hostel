@@ -198,7 +198,7 @@
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="academic_year_id" class="form-label">Admission ID</label>
-                                            <input type="text"class="form-control  @error('admissionid2') is-invalid @enderror" wire:model="admissionid2">
+                                            <input type="number"class="form-control  @error('admissionid2') is-invalid @enderror" wire:model="admissionid2">
                                             @error('admissionid2')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -207,32 +207,39 @@
                                         </div>
                                     </div>
                                     @if($admissionid2>0)
-                                        
-                                        <div class="col-12 col-md-3">
-                                            <div class="mb-3 form-group">
-                                                <label for="academic_year_id" class="form-label">Academic Year</label>
-                                                <label  class="form-control"for=""> {{ $admission2->AcademicYear->year }}</label>
+                                        @if (isset($admission2->AcademicYear->year))
+                                            <div class="col-12 col-md-3">
+                                                <div class="mb-3 form-group">
+                                                    <label for="academic_year_id" class="form-label">Academic Year</label>
+                                                    <label  class="form-control"for=""> {{ $admission2->AcademicYear->year }}</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-12 col-md-3">
-                                            <div class="mb-3 form-group">
-                                                <label for="student_id" class="form-label">Student Name</label>
-                                                <label class="form-control" for=""> {{ $admission2->Student->name }}</label>
+                                        @endif
+                                        @if (isset($admission2->Student->name))
+                                            <div class="col-12 col-md-3">
+                                                <div class="mb-3 form-group">
+                                                    <label for="student_id" class="form-label">Student Name</label>
+                                                    <label class="form-control" for=""> {{ $admission2->Student->name }}</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-12 col-md-3">
-                                            <div class="mb-3 form-group">
-                                                <label for="class_id" class="form-label">Class Name</label>
-                                                <label class="form-control" for=""> {{ $admission2->Class->name }}</label>
+                                        @endif
+                                        @if (isset($admission2->Class->name ))
+                                            <div class="col-12 col-md-3">
+                                                <div class="mb-3 form-group">
+                                                    <label for="class_id" class="form-label">Class Name</label>
+                                                    <label class="form-control" for=""> {{ $admission2->Class->name }}</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-12 col-md-3">
-                                            <div class="mb-3 form-group">
-                                                <label for="class_id" class="form-label">Class Type</label>
-                                                <label class="form-control" for="">{{ $admission2->Class->type}}</label>
+                                        @endif
+                                        @if (isset($admission2->Class->type))
+                                            <div class="col-12 col-md-3">
+                                                <div class="mb-3 form-group">
+                                                    <label for="class_id" class="form-label">Class Type</label>
+                                                    <label class="form-control" for="">{{ $admission2->Class->type}}</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        @if ($admission2->bed_id)
+                                        @endif
+                                        @if (isset($admission2->bed_id))
                                             <div class="col-12 col-md-6">
                                                 <div class="mb-3 form-group">
                                                     <label for="class_id" class="form-label">Bed ID</label>
@@ -240,7 +247,7 @@
                                                 </div>
                                             </div>
                                         @endif
-                                        @if ($alloc[0]->fee_id)
+                                        @if (isset($alloc[1]->fee_id))
                                             <div class="col-12 col-md-3">
                                                 <div class="mb-3 form-group">
                                                     <label for="class_id" class="form-label">Fee</label>
@@ -297,10 +304,13 @@
                                     <label class=" col-4 col-md-1  py-1 ">Records</label>
                                     <span class="col-12 col-md-9 p-0">
                                             <div class="row ">
-                                                <div class="col-12 col-md-3 ">
+                                                <div class="col-12 col-md-2 ">
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                                 </div>
-                                                <div class="col-12 col-md-3">
+                                                <div class="col-12 col-md-2 ">
+                                                    <input  class="w-100" wire:model="ad" type="search" placeholder="Admission ID ">
+                                                </div>
+                                                <div class="col-12 col-md-2">
                                                     <input  class="w-100" wire:model="a" type="search" placeholder="Academic Year">
                                                 </div>
                                                 <div class="col-12 col-md-3">
@@ -351,9 +361,10 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success waves-effect waves-light">Allocate</a>
-                                                    <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-info waves-effect waves-light">Exchange</a>
-                                                    <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->id }})"  class="btn btn-danger waves-effect waves-light">De Allocate</a>
+                                                    <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-checkbox-marked mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                    <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                    <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                    {{-- <a wire:loading.attr="disabled" wire:click="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-trash-can"></i></a> --}}
                                                 </td>
                                             </tr>
                                             @endif

@@ -1197,7 +1197,6 @@
                                     <label class=" col-4 col-md-1  py-1 ">Records</label>
                                     <span class="col-12 col-md-9 p-0">
                                             <div class="row ">
-
                                                 <div class="col-12 col-md-2 ">
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                                 </div>
