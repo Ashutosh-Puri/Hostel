@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id()->index();
             $table->unsignedBigInteger('academic_year_id');
             $table->text('name');
-            $table->double('amount');
+            $table->decimal('amount', 10, 2);
             $table->tinyInteger('status')->nullable()->default('0')->comment('0-Active ,1-In Active');
             $table->timestamps();
             $table->foreign('academic_year_id')->references('id')->on('academic_years')->onDelete('cascade');

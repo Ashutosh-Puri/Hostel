@@ -39,7 +39,7 @@ class AllStudentPayment extends Component
     protected function rules()
     {
         return [
-            'totalamount' => ['required','integer'],
+            'totalamount' => ['required','numeric'],
             'academic_year_id' => ['required','integer'],
             'admission_id' => ['required','integer'],
             'student_id' => ['required','integer'],

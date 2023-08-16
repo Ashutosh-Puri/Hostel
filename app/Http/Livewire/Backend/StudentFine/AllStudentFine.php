@@ -31,7 +31,7 @@ class AllStudentFine extends Component
     protected function rules()
     {
         return [
-            'amount' => ['required','integer'],
+            'amount' => ['required','numeric'],
             'academic_year_id' => ['required','integer'],
             'fine_id' => ['required','integer'],
             'student_id' => ['required','integer'],
