@@ -251,7 +251,7 @@
                                                 <td>{{ $item->AcademicYear->year}}</td>
                                                 <td>{{ $item->Student->name!=null? $item->Student->name: $item->Student->username; }}</td>
                                                 <td>{{ $item->Fine->name }}</td>
-                                                <td>{{ $item->amount }}</td>
+                                                <td>{{ $item->amount }} Rs.</td>
                                                 <td>
                                                     @if ( $item->status == '0')
                                                         <span class="badge bg-warning text-white">Not Paid</span>

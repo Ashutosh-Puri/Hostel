@@ -233,7 +233,7 @@
                                                 <td>{{ $item->Admission->id }}</td>
                                                 <td>{{ $item->AcademicYear->year}}</td>
                                                 <td>{{ $item->Student->name!=null? $item->Student->name: $item->Student->username; }}</td>
-                                                <td>{{ $item->total_amount }}</td>
+                                                <td>{{ $item->total_amount }} Rs.</td>
                                                 <td>
                                                     @if ( $item->status == '0')
                                                         <span class="badge bg-warning text-white">Not Paid</span>

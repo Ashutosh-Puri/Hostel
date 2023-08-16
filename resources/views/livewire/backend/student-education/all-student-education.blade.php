@@ -286,7 +286,7 @@
                                                 <td>{{ $item->Student->name!=null?$item->Student->name:$item->Student->username; }}</td>
                                                 <td>{{ $item->Class->name }}</td>
                                                 <td>{{ $item->sgpa }}</td>
-                                                <td>{{ $item->percentage }}</td>
+                                                <td>{{ $item->percentage }} %</td>
                                                 <td>
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
                                                     <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
