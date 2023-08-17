@@ -276,9 +276,9 @@
                                     </div>
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
-                                            <label for="stream_type" class="form-label">Select Stream Type</label>
+                                            <label for="stream_type" class="form-label">Select Student Level</label>
                                             <select class="form-select @error('stream_type') is-invalid @enderror" id="stream_type" wire:model="stream_type">
-                                                <option  hidden value="">Select Stream</option>
+                                                <option  hidden value="">Select Student Level</option>
                                                 @forelse ($types as $item2)
                                                     <option class="py-4" value="{{ $item2->type  }}">{{ $item2->type }}</option>
                                                 @empty
@@ -297,10 +297,11 @@
                                             <label for="class_id" class="form-label">Select Class</label>
                                             <select class="form-select @error('class_id') is-invalid @enderror" id="class_id" wire:model="class_id">
                                                 <option  hidden value="">Select Class</option>
-                                                @foreach ($classes as $item2)
+                                                @forelse ($classes as $item2)
                                                     <option class="py-4" value="{{ $item2->id }}">{{ $item2->name }}</option>
-
-                                                @endforeach
+                                                @empty
+                                                    <option  hidden value=""> Select Student Level First</option>
+                                                @endforelse
                                             </select>
                                             @error('class_id')
                                                 <div class="invalid-feedback">
@@ -316,23 +317,39 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12 col-md-4">
+                                    <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
-                                            <label for="old_class_id" class="form-label">Select Last Class</label>
-                                            <select class="form-select @error('old_class_id') is-invalid @enderror" id="old_class_id" wire:model="old_class_id">
-                                                <option  hidden value="">Select Last Class</option>
-                                                @foreach ($classes as $item3)
-                                                    <option class="py-4" value="{{ $item3->id }}"  >{{ $item3->name }}</option>
+                                            <label for="last_academic_year_id" class="form-label">Select Last Academic Year</label>
+                                            <select class="form-select @error('last_academic_year_id') is-invalid @enderror" id="last_academic_year_id" wire:model="last_academic_year_id">
+                                                <option  hidden value="">Select Last Academic Year</option>
+                                                @foreach($lastacademicyears as $item2)
+                                                    <option class="py-4" value="{{ $item2->id  }}">{{ $item2->year }}</option>
                                                 @endforeach
                                             </select>
-                                            @error('old_class_id')
+                                            @error('last_academic_year_id')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-4">
+                                    <div class="col-12 col-md-3">
+                                        <div class="mb-3 form-group">
+                                            <label for="last_class_id" class="form-label">Select Last Class</label>
+                                            <select class="form-select @error('last_class_id') is-invalid @enderror" id="last_class_id" wire:model="last_class_id">
+                                                <option  hidden value="">Select Last Class</option>
+                                                @foreach ($classes as $item2)
+                                                    <option class="py-4" value="{{ $item2->id }}">{{ $item2->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('last_class_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="sgpa" class="form-label">SGPA</label>
                                             <input type="text"  class="form-control @error('sgpa') is-invalid @enderror" wire:model="sgpa" value="{{ old('sgpa') }}" id="sgpa" placeholder="Enter SGPA">
@@ -343,7 +360,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-4">
+                                    <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="percentage" class="form-label">Percentage</label>
                                             <input type="text"  class="form-control @error('percentage') is-invalid @enderror" wire:model.debounce.500ms="percentage" value="{{ old('percentage') }}" id="percentage" placeholder="Enter Percentage">
@@ -743,9 +760,9 @@
                                     </div>
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
-                                            <label for="stream_type" class="form-label">Select Stream Type</label>
+                                            <label for="stream_type" class="form-label">Select Student Level</label>
                                             <select class="form-select @error('stream_type') is-invalid @enderror" id="stream_type" wire:model="stream_type">
-                                                <option  hidden value="">Select Stream</option>
+                                                <option  hidden value="">Select Student Level</option>
                                                 @forelse ($types as $item2)
                                                     <option class="py-4" value="{{ $item2->type  }}">{{ $item2->type }}</option>
                                                 @empty
@@ -764,10 +781,11 @@
                                             <label for="class_id" class="form-label">Select Class</label>
                                             <select class="form-select @error('class_id') is-invalid @enderror" id="class_id" wire:model="class_id">
                                                 <option  hidden value="">Select Class</option>
-                                                @foreach ($classes as $item2)
+                                                @forelse ($classes as $item2)
                                                     <option class="py-4" value="{{ $item2->id }}">{{ $item2->name }}</option>
-
-                                                @endforeach
+                                                @empty
+                                                    <option  hidden value=""> Select Student Level First</option>
+                                                @endforelse
                                             </select>
                                             @error('class_id')
                                                 <div class="invalid-feedback">
@@ -783,26 +801,42 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12 col-md-4">
+                                    <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
-                                            <label for="old_class_id" class="form-label">Select Last Class</label>
-                                            <select class="form-select @error('old_class_id') is-invalid @enderror" id="old_class_id" wire:model="old_class_id">
-                                                <option  hidden value="">Select Last Class</option>
-                                                @foreach ($classes as $item4)
-                                                    <option class="py-4" value="{{ $item4->id }} ">{{ $item4->name }}</option>
+                                            <label for="last_academic_year_id" class="form-label">Select Last Academic Year</label>
+                                            <select class="form-select @error('last_academic_year_id') is-invalid @enderror" id="last_academic_year_id" wire:model="last_academic_year_id">
+                                                <option  hidden value="">Select Last Academic Year</option>
+                                                @foreach($lastacademicyears as $item2)
+                                                    <option class="py-4" value="{{ $item2->id  }}">{{ $item2->year }}</option>
                                                 @endforeach
                                             </select>
-                                            @error('old_class_id')
+                                            @error('last_academic_year_id')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-4">
+                                    <div class="col-12 col-md-3">
+                                        <div class="mb-3 form-group">
+                                            <label for="last_class_id" class="form-label">Select Last Class</label>
+                                            <select class="form-select @error('last_class_id') is-invalid @enderror" id="last_class_id" wire:model="last_class_id">
+                                                <option  hidden value="">Select Last Class</option>
+                                                @foreach ($classes as $item2)
+                                                    <option class="py-4" value="{{ $item2->id }}">{{ $item2->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('last_class_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="sgpa" class="form-label">SGPA</label>
-                                            <input type="text"  class="form-control @error('sgpa') is-invalid @enderror" wire:model.debounce.500ms="sgpa" value="{{ old('sgpa') }}" id="sgpa" placeholder="Enter SGPA">
+                                            <input type="text"  class="form-control @error('sgpa') is-invalid @enderror" wire:model="sgpa" value="{{ old('sgpa') }}" id="sgpa" placeholder="Enter SGPA">
                                             @error('sgpa')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -810,7 +844,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-4">
+                                    <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="percentage" class="form-label">Percentage</label>
                                             <input type="text"  class="form-control @error('percentage') is-invalid @enderror" wire:model.debounce.500ms="percentage" value="{{ old('percentage') }}" id="percentage" placeholder="Enter Percentage">
@@ -929,7 +963,6 @@
                                             @enderror
                                         </div>
                                     </div>
-
                                 </div>
                                 <button type="submit"  class="btn btn-primary waves-effect waves-light">Update Data</button>
                             </form>
@@ -961,15 +994,11 @@
                         <div class="card">
                             <div class="card-body ">
                                 <div class="row">
-                                    <div class="col-6 col-md-2 mb-3">
-                                        <a wire:loading.attr="disabled"  wire:click="confirm({{ $viewadmission[0]->id }})" class=" d-inline btn btn-success waves-effect waves-light"><i class="mdi mdi-thumb-up"></i></a>
-                                        <a wire:loading.attr="disabled"  wire:click="cancel({{ $viewadmission[0]->id }})" class="d-inline btn btn-danger waves-effect waves-light"><i class="mdi mdi-thumb-down"></i></a>
-                                    </div>
-                                    <div class="col-6 col-md-2 mb-3">
+                                    <div class="col-6 col-md-3 mb-3">
                                         <label for="">Admission ID :</label>
                                         <label for="">{{ $viewadmission[0]->id }}</label>
                                     </div>
-                                    <div class="col-6 col-md-2 mb-3">
+                                    <div class="col-6 col-md-3 mb-3">
                                         <label for="">Status :</label>
                                         <label>
                                             @if ( $viewadmission[0]->status == '0')
@@ -991,9 +1020,13 @@
                                             @endif
                                         </label>
                                     </div>
-                                    <div class="col-12 col-md-3 mb-3">
-                                        <label for="">Seat Type :</label>
-                                        <label for="">{{ $viewadmission[0]->Class->type }}</label>
+                                    <div class="col-6 col-md-3 mb-3">
+                                        @if ($viewadmission[0]->status==1) 
+                                            <a wire:loading.attr="disabled"  wire:click="status({{ $viewadmission[0]->id }})" class="btn btn-warning waves-effect waves-light"> <i class="mdi mdi-clock"></i> </a>
+                                        @elseif ($viewadmission[0]->status==0)
+                                            <a wire:loading.attr="disabled"  wire:click="status({{ $viewadmission[0]->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
+                                        @endif
+                                        <a wire:loading.attr="disabled"  wire:click="cancel({{ $viewadmission[0]->id }})" class="d-inline btn btn-danger waves-effect waves-light"><i class="mdi mdi-thumb-down"></i></a>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 text-center mb-3">
@@ -1065,7 +1098,7 @@
                                         <label for="">{{ $viewadmission[0]->Class->stream }}</label>
                                     </div>
                                     <div class="col-12 col-md-3 mb-4">
-                                        <label for="">Stream Type :</label>
+                                        <label for="">Student Level :</label>
                                         <label for="">{{ $viewadmission[0]->Class->type }}</label>
                                     </div>
                                     <div class="col-12 col-md-3 mb-4">
@@ -1080,24 +1113,32 @@
                                 </div>
                                 <div class="row">
                                     @if (isset($lastclass->sgpa))
-                                        <div class="col-12 col-md-4 mb-4">
-                                            <label for="">Previous Class :</label>
+                                        <div class="col-12 col-md-3 mb-4">
+                                            <label for="">Academic Year :</label>
+                                            <label for="">{{ $lastclass->AcademicYear->year}} - {{ $lastclass->AcademicYear->year+1}}</label>
+                                        </div>
+                                        <div class="col-12 col-md-3 mb-4">
+                                            <label for="">Class :</label>
                                             <label for="">{{ $lastclass->Class->name }}</label>
                                         </div>
-                                        <div class="col-12 col-md-4 mb-3">
+                                        <div class="col-12 col-md-3 mb-3">
                                             <label for="">SGPA :</label>
                                             <label for="">{{ $lastclass->sgpa}}</label>
                                         </div>
-                                        <div class="col-12 col-md-4 mb-3">
+                                        <div class="col-12 col-md-3 mb-3">
                                             <label for="">Percentage :</label>
                                             <label for="">&nbsp;{{ $lastclass->percentage }} %</label>
                                         </div>
                                     @else
-                                        <div class="col-12 col-md-6 mb-4">
-                                            <label for="">Previous Class :</label>
+                                        <div class="col-12 col-md-4 mb-4">
+                                            <label for="">Academic Year :</label>
+                                            <label for="">{{ $lastclass->AcademicYear->year}} - {{ $lastclass->AcademicYear->year+1}}</label>
+                                        </div>
+                                        <div class="col-12 col-md-4 mb-4">
+                                            <label for="">Class :</label>
                                             <label for="">{{ $lastclass->Class->name }}</label>
                                         </div>
-                                        <div class="col-12 col-md-6 mb-3">
+                                        <div class="col-12 col-md-4 mb-3">
                                             <label for="">Percentage :</label>
                                             <label for="">&nbsp;{{ $lastclass->percentage }} %</label>
                                         </div>
@@ -1259,7 +1300,11 @@
                                                 <td>
                                                     <a wire:loading.attr="disabled"  wire:click="view({{ $item->id }})" class="btn btn-info waves-effect waves-light"><i class="mdi mdi-eye"></i></a>
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
-                                                    <a wire:loading.attr="disabled"  wire:click="confirm({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-thumb-up"></i></a>
+                                                    @if ($item->status==1) 
+                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-warning waves-effect waves-light"> <i class="mdi mdi-clock"></i> </a>
+                                                    @elseif ($item->status==0)
+                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
+                                                    @endif
                                                     <a wire:loading.attr="disabled"  wire:click="cancel({{ $item->id }})" class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-thumb-down"></i></a>
                                                     <a  wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
                                                 </td>

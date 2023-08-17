@@ -263,6 +263,13 @@
                                                 </td>
                                                 <td>
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                    @if ($item->status==1) 
+                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-thumb-down"></i> </a>
+                                                    @elseif ($item->status==2)
+                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-warning waves-effect waves-light"> <i class="mdi mdi-clock"></i> </a>
+                                                    @elseif ($item->status==0)
+                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
+                                                    @endif
                                                     <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
                                                 </td>
                                             </tr>

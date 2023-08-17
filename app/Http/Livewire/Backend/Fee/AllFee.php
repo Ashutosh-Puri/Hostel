@@ -40,7 +40,6 @@ class AllFee extends Component
         $this->validateOnly($propertyName);
     }
 
-
     public function resetinput()
     {
         $this->search=null;
@@ -51,7 +50,6 @@ class AllFee extends Component
         $this->c_id=null;
         $this->current_id=null;
     }
-
 
     public function setmode($mode)
     {
@@ -68,18 +66,18 @@ class AllFee extends Component
             $fee->amount = $validatedData['amount'];
             $fee->status = $this->status==1?1:0;
             $fee->save();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Fee Created Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Fee Created Successfully!!"
-        ]);
     }
 
     public function edit($id)
@@ -92,13 +90,13 @@ class AllFee extends Component
             $this->type = $fee->type;
             $this->status = $fee->status;
             $this->amount = $fee->amount;
+            $this->setmode('edit');
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->setmode('edit');
     }
 
     public function update($id)
@@ -111,25 +109,24 @@ class AllFee extends Component
             $fee->amount = $validatedData['amount'];
             $fee->status = $this->status==1?'1':'0';
             $fee->update();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Fee Updated Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Fee Updated Successfully!!"
-        ]);
     }
 
     public function deleteconfirmation($id)
     {
         $this->delete_id=$id;
         $this->dispatchBrowserEvent('delete-confirmation');
-
     }
 
     public function delete()
@@ -138,20 +135,32 @@ class AllFee extends Component
         if($fee){
             $fee->delete();
             $this->delete_id=null;
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Fee Deleted Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Fee Deleted Successfully!!"
-        ]);
     }
 
+    public function status($id)
+    {
+        $status = Fee::find($id);
+        if($status->status==1)
+        {   
+            $status->status=0;
+        }else
+        {
+            $status->status=1;
+        }
+        $status->update();
+    }
 
     public function render()
     {

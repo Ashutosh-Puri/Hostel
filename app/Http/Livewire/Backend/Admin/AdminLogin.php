@@ -26,15 +26,8 @@ class AdminLogin extends Component
         ]);
 
         if (Auth::guard('admin')->attempt(['email' => $this->email, 'password' => $this->password], $this->rememberMe)) {
-
             return redirect()->route('admin.dashboard');
             $this->resetinput();
-
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'info',
-                'message'=>"Welcome To Admin Dashboard !!"
-            ]);
-              
         } 
         else 
         {
@@ -49,10 +42,11 @@ class AdminLogin extends Component
     {
         $this->dispatchBrowserEvent('alert',[
             'type'=>'info',
-            'message'=>"Admin Logout Successfully!!"
+            'message'=>"Admin Logout Successfully !!"
         ]);
         Auth::guard('admin')->logout();   
         return redirect()->route('admin.login');
+ 
     }
     
     public function render()

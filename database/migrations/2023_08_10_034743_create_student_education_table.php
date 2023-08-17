@@ -17,8 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('admission_id');
             $table->unsignedBigInteger('last_class_id');
-            $table->decimal('sgpa', 2, 2)->nullable()->default(0.00);
-            $table->decimal('percentage',3,2);
+            $table->decimal('sgpa', 4, 2)->nullable()->default(0.00);
+            $table->decimal('percentage',5,2);
             $table->foreign('academic_year_id')->references('id')->on('academic_years')->onDelete('cascade');
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->foreign('last_class_id')->references('id')->on('classes')->onDelete('cascade');

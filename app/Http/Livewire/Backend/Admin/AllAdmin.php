@@ -37,9 +37,7 @@ class AllAdmin extends Component
     protected function rules()
     {
         $passwordRules = $this->mode == 'add' ? ['required', 'same:password_confirmation', 'string', 'min:8', 'max:255'] : [];
-
         return [
-
             'password' => $passwordRules,
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255','unique:admins,email,'.($this->mode=='edit'? $this->current_id :'')],
@@ -95,20 +93,18 @@ class AllAdmin extends Component
                 $this->reset('photo');
             }
             $admin->save();
-
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Admin Created Successfully !!"
+            ]);
         }else{
-
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Admin Created Successfully!!"
-        ]);
     }
 
     public function edit($id)
@@ -124,14 +120,13 @@ class AllAdmin extends Component
             $this->mobile=$admin->mobile;
             $this->photoold=$admin->photo;
             $this->status =$admin->status;
+            $this->setmode('edit');
         }else{
-
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->setmode('edit');
     }
 
     public function update($id)
@@ -153,27 +148,24 @@ class AllAdmin extends Component
                 $this->reset('photo');
             }
             $admin->update();
-
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Admin Updated Successfully !!"
+            ]);
         }else{
-
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Admin Updated Successfully!!"
-        ]);
-        $this->setmode('all');
     }
 
     public function deleteconfirmation($id)
     {
         $this->delete_id=$id;
         $this->dispatchBrowserEvent('delete-confirmation');
-
     }
 
     public function delete()
@@ -186,27 +178,37 @@ class AllAdmin extends Component
                 File::delete($admin->photo);
             }
             $admin->delete();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Admin Deleted Successfully !!"
+            ]);
             $this->delete_id=null;
-
         }else{
-
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Admin Deleted Successfully!!"
-        ]);
+    }
+
+    public function status($id)
+    {
+        $status = Admin::find($id);
+        if($status->status==1)
+        {   
+            $status->status=0;
+        }else
+        {
+            $status->status=1;
+        }
+        $status->update();
     }
 
     public function render()
     {
         $roles=Role::where('status',0)->orderBy('role', 'ASC')->get();
-        $admins=Admin::where('name', 'like', '%'.$this->search.'%')->orderBy('name', 'ASC')->paginate($this->per_page);
+        $admins=Admin::where('name', 'like', '%'.$this->search.'%')->orderBy('role_id', 'ASC')->paginate($this->per_page);
         return view('livewire.backend.admin.all-admin',compact('admins','roles'))->extends('layouts.admin.admin')->section('admin');
     }
-
 }

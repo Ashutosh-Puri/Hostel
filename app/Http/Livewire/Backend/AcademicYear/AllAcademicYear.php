@@ -55,20 +55,19 @@ class AllAcademicYear extends Component
             $academicyear->year = $validatedData['year'];
             $academicyear->status = $this->status==1?1:0;
             $academicyear->save();
-        }
-        else{
-
+            $this->resetinput();
+            $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'type'=>'success',
+                'message'=>"Academic Year Created Successfully !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Academic Year Created Successfully!!"
-        ]);
+        else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
     }
 
     public function edit($id)
@@ -80,14 +79,14 @@ class AllAcademicYear extends Component
             $this->C_id=$academicyear->id;
             $this->year = $academicyear->year;
             $this->status = $academicyear->status;
+            $this->setmode('edit');
         }else{
-
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->setmode('edit');
+
     }
 
     public function update($id)
@@ -99,20 +98,19 @@ class AllAcademicYear extends Component
             $academicyear->year = $validatedData['year'];
             $academicyear->status = $this->status==1?'1':'0';
             $academicyear->update();
-
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Academic Year Updated Successfully !!"
+            ]);
         }else{
 
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Academic Year Updated Successfully!!"
-        ]);
     }
 
     public function deleteconfirmation($id)
@@ -128,19 +126,31 @@ class AllAcademicYear extends Component
         {
             $academicyear->delete();
             $this->delete_id=null;
-            
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Academic Year Deleted Successfully !!"
+            ]);  
         }else{
 
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Academic Year Deleted Successfully!!"
-        ]);
+    }
+
+    public function status($id)
+    {
+        $status = AcademicYear::find($id);
+        if($status->status==1)
+        {   
+            $status->status=0;
+        }else
+        {
+            $status->status=1;
+        }
+        $status->update();
     }
 
     public function render()

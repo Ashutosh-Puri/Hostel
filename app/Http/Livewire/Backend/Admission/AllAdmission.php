@@ -35,9 +35,10 @@ class AllAdmission extends Component
     public $mode='all';
     public $c_id;
     public $academic_year_id;
+    public $last_academic_year_id;
     public $student_id;
     public $class_id;
-    public $old_class_id;
+    public $last_class_id;
     public $sgpa;
     public $percentage;
     public $name;
@@ -77,6 +78,7 @@ class AllAdmission extends Component
         $this->s =null;
         $this->c =null;
         $this->academic_year_id=null;
+        $this->last_academic_year_id=null;
         $this->student_id=null;
         $this->class_id = null;
         $this->stream=null;
@@ -103,7 +105,7 @@ class AllAdmission extends Component
         $this->member_id =null;
         $this->photoold =null;
         $this->photo =null;
-        $this->old_class_id=null;
+        $this->last_class_id=null;
         $this->sgpa=null;
         $this->percentage=null;
         $this->viewid=null;
@@ -117,6 +119,7 @@ class AllAdmission extends Component
         return [
             'student_id'=>['required','integer'],
             'academic_year_id'=>['required','integer'],
+            'last_academic_year_id'=>['required','integer'],
             'first_name'=>['required','string','max:255'],
             'middle_name'=>['required','string','max:255'],
             'last_name'=>['required','string','max:255'],
@@ -127,7 +130,7 @@ class AllAdmission extends Component
             'stream'=>['required','string','max:255'],
             'stream_type'=>['required','string','max:255'],
             'class_id'=>['required','integer'],
-            'old_class_id'=>['required','integer'],
+            'last_class_id'=>['required','integer'],
             'percentage'=>['required','numeric','min:0','max:100'],
             'sgpa'=>['nullable','numeric','min:0.00','max:10.00'],
             'parent_name'=>['required','string','max:255'],
@@ -167,10 +170,13 @@ class AllAdmission extends Component
                 $this->mobile = $student->mobile;
                 $this->mother_name = $student->mother_name;
                 $this->dob = $student->dob;
-                $tempccat=Cast::find($student->cast_id)->category()->pluck('id');
-                if( $tempccat[0])
+                if(isset($student->cast_id))
                 {
-                    $this->category_id = $tempccat[0];
+                    $tempccat=Cast::find($student->cast_id)->category()->pluck('id');
+                    if( $tempccat[0])
+                    {
+                        $this->category_id = $tempccat[0];
+                    }
                 }
                 $this->cast_id = $student->cast_id;
                 $this->parent_name = $student->parent_name;
@@ -191,12 +197,11 @@ class AllAdmission extends Component
 
     public function save()
     {
-
         $validatedData = $this->validate();
         $student = Student::find($this->student_id);
         if ($student){
             $student->name = $this->name;
-            $student->mobile = $this->mobile;
+            $student->mobile = $validatedData['mobile'];
             $student->mother_name = $validatedData['mother_name'];
             $student->dob = $validatedData['dob'];
             $student->cast_id = $validatedData['cast_id'];
@@ -226,20 +231,20 @@ class AllAdmission extends Component
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Student Not Found !!"
             ]);
         }
         $admission = new Admission;
         if($admission){
-            $admission->academic_year_id = $this->academic_year_id;
-            $admission->student_id = $this->student_id;
+            $admission->academic_year_id =$validatedData['academic_year_id'];
+            $admission->student_id =$validatedData['student_id'];
             $admission->class_id = $validatedData['class_id'];
             $admission->status = '0';
             $admission->save();
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Admission Not Stored !!"
             ]);
         }
         $allocation =new Allocation;
@@ -249,30 +254,30 @@ class AllAdmission extends Component
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Allocation Not Stored !!"
             ]);
         }
         $education = new StudentEducation;
         if($education){
             $education->admission_id = $admission->id;
-            $education->academic_year_id = $this->academic_year_id;
-            $education->student_id = $this->student_id;
-            $education->last_class_id = $validatedData['old_class_id'];
+            $education->academic_year_id =$validatedData['last_academic_year_id'];
+            $education->student_id =$validatedData['student_id'];
+            $education->last_class_id = $validatedData['last_class_id'];
             $education->sgpa = $validatedData['sgpa'];
             $education->percentage = $validatedData['percentage'];
             $education->save();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Admission Created Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Student Eduction Not Stored !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Admission Created Successfully!!"
-        ]);
     }
 
     public function edit($id)
@@ -295,70 +300,77 @@ class AllAdmission extends Component
             }else{
                 $this->dispatchBrowserEvent('alert',[
                     'type'=>'error',
-                    'message'=>"Something Went Wrong!!"
+                    'message'=>"Stream And Stream Type Not Found !!"
+                ]);
+            }
+            
+            $student = Student::find($this->student_id);
+            if ($student)
+            {
+                $nameParts = explode(' ', $student->name);
+                $this->last_name = isset($nameParts[0]) ? $nameParts[0] : '';
+                $this->first_name = isset($nameParts[1]) ? $nameParts[1] : '';
+                $this->middle_name = isset($nameParts[2]) ? $nameParts[2] : '';
+                $this->mobile = $student->mobile;
+                $this->mother_name = $student->mother_name;
+                $this->dob = $student->dob;
+                $this->cast_id = $student->cast_id;
+                if(isset($student->cast_id))
+                {
+                    $tempccat=Cast::find($student->cast_id)->category()->pluck('id');
+                    if( $tempccat[0])
+                    {
+                        $this->category_id = $tempccat[0];
+                    }
+                }else{
+                    $this->dispatchBrowserEvent('alert',[
+                        'type'=>'error',
+                        'message'=>"Cast And Category Not Found !!"
+                    ]);
+                }
+                $this->parent_name = $student->parent_name;
+                $this->parent_mobile = $student->parent_mobile;
+                $this->parent_address = $student->parent_address;
+                $this->local_parent_name = $student->local_parent_name;
+                $this->local_parent_mobile = $student->local_parent_mobile;
+                $this->local_parent_address = $student->local_parent_address;
+                $this->blood_group = $student->blood_group;
+                $this->is_allergy = $student->is_allergy;
+                $this->is_ragging = $student->is_ragging;
+                $this->address_type = $student->address_type;
+                $this->member_id = $student->member_id;
+                $this->photoold = $student->photo;
+            }else{
+                $this->dispatchBrowserEvent('alert',[
+                    'type'=>'error',
+                    'message'=>"Student Not Found !!"
+                ]);
+            }
+
+            $education = StudentEducation::where('admission_id',$admission->id)->latest()->first();
+            if ($education)
+            {   
+                $this->last_academic_year_id = $education->academic_year_id;
+                $this->last_class_id = $education->last_class_id;
+                $this->sgpa = $education->sgpa;
+                $this->percentage = $education->percentage;
+            }else{
+                $this->dispatchBrowserEvent('alert',[
+                    'type'=>'error',
+                    'message'=>"Last Education Not Found !!"
                 ]);
             }
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Admision Not Found !!"
             ]);
         }
-
-        $student = Student::find($this->student_id);
-        if ($student)
-        {
-            $nameParts = explode(' ', $student->name);
-            $this->last_name = isset($nameParts[0]) ? $nameParts[0] : '';
-            $this->first_name = isset($nameParts[1]) ? $nameParts[1] : '';
-            $this->middle_name = isset($nameParts[2]) ? $nameParts[2] : '';
-            $this->mobile = $student->mobile;
-            $this->mother_name = $student->mother_name;
-            $this->dob = $student->dob;
-            $this->cast_id = $student->cast_id;
-            $tempccat=Cast::find($student->cast_id)->category()->pluck('id');
-            if( $tempccat[0])
-            {
-                $this->category_id = $tempccat[0];
-            }
-            $this->parent_name = $student->parent_name;
-            $this->parent_mobile = $student->parent_mobile;
-            $this->parent_address = $student->parent_address;
-            $this->local_parent_name = $student->local_parent_name;
-            $this->local_parent_mobile = $student->local_parent_mobile;
-            $this->local_parent_address = $student->local_parent_address;
-            $this->blood_group = $student->blood_group;
-            $this->is_allergy = $student->is_allergy;
-            $this->is_ragging = $student->is_ragging;
-            $this->address_type = $student->address_type;
-            $this->member_id = $student->member_id;
-            $this->photoold = $student->photo;
-        }else{
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong!!"
-            ]);
-        }
-
-        $education = StudentEducation::where('academic_year_id', $this->academic_year_id)->where('student_id', $this->student_id)->latest()->first();
-        if ($education)
-        {
-            $this->old_class_id = $education->last_class_id;
-            $this->sgpa = $education->sgpa;
-            $this->percentage = $education->percentage;
-        }else{
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong!!"
-            ]);
-        }
-
         $this->setmode('edit');
     }
 
     public function update($id)
     {
-
         $validatedData = $this->validate();
         $admission = Admission::find($id);
         if($admission){
@@ -372,21 +384,21 @@ class AllAdmission extends Component
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Admission Not Found !!"
             ]);
         }
-        $education =StudentEducation::where('admission_id', $id)->where('academic_year_id', $oldyearid)->where('student_id', $oldstudentid)->latest()->first();
+        $education =StudentEducation::where('admission_id', $id)->latest()->first();
         if ($education)
         {
-            $education->academic_year_id=$validatedData['academic_year_id'];
-            $education->last_class_id = $validatedData['old_class_id'];
+            $education->academic_year_id=$validatedData['last_academic_year_id'];
+            $education->last_class_id = $validatedData['last_class_id'];
             $education->sgpa = $validatedData['sgpa'];
             $education->percentage = $validatedData['percentage'];
             $education->update();
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Student Education Not Found !!"
             ]);
         }
         $student= Student::find($this->student_id);
@@ -421,18 +433,18 @@ class AllAdmission extends Component
                 $this->reset('photo');
             }
             $student->update();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Admission Updated Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Student Not Found !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Admission Updated Successfully!!"
-        ]);
     }
 
     public function view($id)
@@ -441,28 +453,30 @@ class AllAdmission extends Component
         $this->setmode('view');
     }
 
-    public function confirm($id)
+
+    public function status($id)
     {
-        $admission=Admission::find($id);
-        if($admission){
-            $admission->status=1;
-            $admission->update();
-        }else{
+        $status = Admission::find($id);
+        if($status->status==1)
+        {   
+            $status->status=0;
             $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'type'=>'success',
+                'message'=>"Admission In Wating List !!"
+            ]);
+        }elseif($status->status==0)
+        {
+            $status->status=1;
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Admission Confirm Successfully !!"
             ]);
         }
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Admission Confirm Successfully!!"
-        ]);
+        $status->update();
     }
 
     public function cancel($id)
     {
-
         $admission=Admission::find($id);
         if($admission){
             if($admission->bed_id!=null)
@@ -475,7 +489,7 @@ class AllAdmission extends Component
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Admisstion Not Found !!"
             ]);
         }
 
@@ -486,7 +500,7 @@ class AllAdmission extends Component
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Allocation Not Found !!"
             ]);
         }
         $studentpayment=StudentPayment::where('admission_id',$id)->first();
@@ -496,17 +510,16 @@ class AllAdmission extends Component
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Student Payment Not Found !!"
             ]);
         }
-
         $admission->bed_id=null;
         $admission->status=2;
         $admission->update();
         $this->setmode('all');
         $this->dispatchBrowserEvent('alert',[
             'type'=>'success',
-            'message'=>"Admission Cancelled Successfully!!"
+            'message'=>"Admission Cancelled Successfully !!"
         ]);
     }
 
@@ -514,7 +527,6 @@ class AllAdmission extends Component
     {
         $this->delete_id=$id;
         $this->dispatchBrowserEvent('delete-confirmation');
-
     }
 
     public function delete()
@@ -523,43 +535,44 @@ class AllAdmission extends Component
         $admission = Admission::find($this->delete_id);
         if ($admission)
         {
-            // Delete StudentEducation
             $stdedu= StudentEducation::where('student_id', $admission->student_id)->where('academic_year_id', $admission->academic_year_id)->first();
             if($stdedu){
                 $stdedu->delete();
             }else{
                 $this->dispatchBrowserEvent('alert',[
                     'type'=>'error',
-                    'message'=>"Something Went Wrong!!"
+                    'message'=>"Something Went Wrong !!"
                 ]);
             }
-
             $admission->delete();
             $this->delete_id=null;
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Admission Deleted Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Admission Deleted Successfully!!"
-        ]);
     }
+
 
     public function render()
     {   
         $today = Carbon::today();
         $this->mindate=$minus15Years = $today->copy()->subYears(15)->format('Y-m-d');
         $this->name = $this->last_name." ".$this->first_name." ".$this->middle_name;
-
-        if (is_numeric($this->sgpa) && $this->sgpa > 0) {
+        if (is_numeric($this->sgpa) && $this->sgpa >=1) {
             $this->percentage = (($this->sgpa * 10) - 7.5);
         }
         $academicyears = AcademicYear::where('status', 0)->orderBy('year', 'DESC')->get();
+        $lastacademicyears = AcademicYear::where('year', '<', function ($query) { 
+            $query->selectRaw('MAX(year)')->from('academic_years');
+        })->orderBy('year', 'DESC')->get();
         $streams=Classes::select('stream')->where('status',0)->distinct('stream')->get();
         $types=Classes::select('type')->where('status',0)->where('stream',$this->stream)->distinct('type')->get();
         $classes=Classes::select('id','name')->where('status',0)->where('type',$this->stream_type)->orderBy('name',"ASC")->get();
@@ -571,7 +584,6 @@ class AllAdmission extends Component
         } else { 
             $categories = [];
         }
-            
         $query =Admission::orderBy('academic_year_id', 'DESC');    
         if ($this->ad) {
             $admissionIds = Admission::where('id', 'like',$this->ad. '%')->pluck('id');
@@ -602,6 +614,6 @@ class AllAdmission extends Component
             $viewadmission=null;
             $lastclass=null;
         }
-        return view('livewire.backend.Admission.all-Admission',compact('categories','casts','lastclass','viewadmission','students','admissions','classes','streams','types','academicyears'))->extends('layouts.admin.admin')->section('admin');
+        return view('livewire.backend.Admission.all-Admission',compact('lastacademicyears','categories','casts','lastclass','viewadmission','students','admissions','classes','streams','types','academicyears'))->extends('layouts.admin.admin')->section('admin');
     }
 }

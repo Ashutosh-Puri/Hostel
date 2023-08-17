@@ -61,18 +61,18 @@ class AllHostel extends Component
             $hostel->college_id = $validatedData['college_id'];
             $hostel->status = $this->status==1?1:0;
             $hostel->save();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Hostel Created Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Hostel Created Successfully!!"
-        ]);
     }
 
     public function edit($id)
@@ -84,13 +84,13 @@ class AllHostel extends Component
             $this->college_id=$hostel->college_id;
             $this->status = $hostel->status;
             $this->name = $hostel->name;
+            $this->setmode('edit');
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->setmode('edit');
     }
 
     public function update($id)
@@ -102,25 +102,24 @@ class AllHostel extends Component
             $hostel->college_id = $validatedData['college_id'];
             $hostel->status = $this->status==1?1:0;
             $hostel->update();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Hostel Updated Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Hostel Updated Successfully!!"
-        ]);
     }
 
     public function deleteconfirmation($id)
     {
         $this->delete_id=$id;
         $this->dispatchBrowserEvent('delete-confirmation');
-
     }
 
     public function delete()
@@ -129,17 +128,30 @@ class AllHostel extends Component
         if($hostel){
             $hostel->delete();
             $this->delete_id=null;
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Hostel Deleted Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Hostel Deleted Successfully!!"
-        ]);
+    }
+
+    public function status($id)
+    {
+        $status = Hostel::find($id);
+        if($status->status==1)
+        {   
+            $status->status=0;
+        }else
+        {
+            $status->status=1;
+        }
+        $status->update();
     }
 
     public function render()
@@ -149,13 +161,9 @@ class AllHostel extends Component
         if ($this->college_name || $this->hostel_name) {
             $query->when($this->college_name, function ($query) {
                 $query->whereIn('college_id', function ($subQuery) {
-                    $subQuery->select('id')
-                        ->from('colleges')
-                        ->where('status', 0)
-                        ->where('name', 'like', '%' . $this->college_name . '%');
+                    $subQuery->select('id')->from('colleges')->where('status', 0)->where('name', 'like', '%' . $this->college_name . '%');
                 });
-            })
-            ->when($this->hostel_name, function ($query) {
+            })->when($this->hostel_name, function ($query) {
                 $query->where('name', 'like', '%' . $this->hostel_name . '%');
             });
         }

@@ -136,6 +136,18 @@
           <span class="menu-title">Category's</span>
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_rule') }}" >
+          <span class="icon-bg"><i class="mdi mdi-information-outline menu-icon"></i></span>
+          <span class="menu-title">Rule's</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_photogallery') }}" >
+          <span class="icon-bg"><i class="mdi mdi-google-photos menu-icon"></i></span>
+          <span class="menu-title">Photo Gallery's</span>
+        </a>
+      </li>
       {{-- <li class="nav-item">
         <a class="nav-link" href="">
           <span class="icon-bg"><i class="mdi mdi-format-list-bulleted menu-icon"></i></span>
