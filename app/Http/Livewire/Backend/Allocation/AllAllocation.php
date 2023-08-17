@@ -15,7 +15,6 @@ use App\Models\StudentPayment;
 
 class AllAllocation extends Component
 {
-
     use WithPagination;
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $a = '',$s = '',$c = '',$ad="";
@@ -27,7 +26,6 @@ class AllAllocation extends Component
     public $c_id;
     public $admissionid;
     public $admissionid2;
-
 
     public function resetinput()
     {
@@ -67,7 +65,7 @@ class AllAllocation extends Component
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
         $allocation= Allocation::where('admission_id',$id)->first();
@@ -77,7 +75,7 @@ class AllAllocation extends Component
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
         $this->setmode('allocate');
@@ -104,7 +102,6 @@ class AllAllocation extends Component
             }
             else
             {
-
                 $studentpayment= new StudentPayment;
                 $studentpayment->admission_id=$admission->id;
                 $studentpayment->student_id=$admission->student_id;
@@ -116,9 +113,7 @@ class AllAllocation extends Component
                     $admission->seat_type=$fee->type;
                 }
                 $studentpayment->save();
-
             }
-
             if($admission->bed_id!=null)
             {
                 $bed=Bed::find($admission->bed_id);
@@ -143,14 +138,13 @@ class AllAllocation extends Component
         {
             $allocation->fee_id=$validatedData['fee_id'];
             $allocation->update();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Bed Allocated Successfully !!"
+            ]);
         }
-
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Bed Allocated Successfully!!"
-        ]);
     }
 
     public function deallocate($id)
@@ -167,13 +161,13 @@ class AllAllocation extends Component
             }else{
                 $this->dispatchBrowserEvent('alert',[
                     'type'=>'error',
-                    'message'=>"Something Went Wrong!!"
+                    'message'=>"Something Went Wrong !!"
                 ]);
             }
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
         $admission->bed_id=null;
@@ -185,26 +179,25 @@ class AllAllocation extends Component
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
         $studentpayment=StudentPayment::where('admission_id',$id)->first();
         if($studentpayment)
         {
             $studentpayment->delete();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Bed De Allocated Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Bed De Allocated Successfully!!"
-        ]);
     }
 
     public function exchange($id)
@@ -216,14 +209,11 @@ class AllAllocation extends Component
 
     public function update($id)
     {   
-        
         $this->validate([
             'admissionid2' => ['required', 'different:' . $id],
         ]);
-
         $all1 = Allocation::where('admission_id', $id)->first();
         $all2 = Allocation::where('admission_id', $this->admissionid2)->first();
-
         if ($all1 && $all2) {
             $temp1 = $all1->fee_id;
             $all1->fee_id = $all2->fee_id;
@@ -233,7 +223,7 @@ class AllAllocation extends Component
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
 
@@ -249,25 +239,24 @@ class AllAllocation extends Component
             $add2->seat_type = $temp5;
             $add1->update();
             $add2->update();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Bed Exchanged Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Bed Exchanged Successfully!!"
-        ]);
      }
 
     public function deleteconfirmation($id)
     {
         $this->delete_id=$id;
         $this->dispatchBrowserEvent('delete-confirmation');
-
     }
 
     public function delete()
@@ -278,17 +267,17 @@ class AllAllocation extends Component
             $this->deallocate($this->delete_id);
             $allocation->delete();
             $this->delete_id=null;
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Allocation Deleted Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Allocation Deleted Successfully!!"
-        ]);
     }
 
     public function render()
@@ -314,7 +303,6 @@ class AllAllocation extends Component
         else
         {
             $admission=null;
-           
             $alloc=null;
         }
 
@@ -346,5 +334,4 @@ class AllAllocation extends Component
         $allocations = $query->paginate($this->per_page);
         return view('livewire.backend.allocation.all-allocation',compact('alloc','admission','admission2','fees','beds','allocations'))->extends('layouts.admin.admin')->section('admin');
     }
-
 }

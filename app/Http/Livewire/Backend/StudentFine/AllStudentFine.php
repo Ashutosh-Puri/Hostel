@@ -11,7 +11,6 @@ use Livewire\WithPagination;
 
 class AllStudentFine extends Component
 {
-
     use WithPagination;
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
@@ -75,18 +74,18 @@ class AllStudentFine extends Component
             $studentfine->amount = $validatedData['amount'];
             $studentfine->status = $this->status==1?1:0;
             $studentfine->save();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Student Fine Created Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Student Fine Created Successfully!!"
-        ]);
     }
 
     public function edit($id)
@@ -100,14 +99,13 @@ class AllStudentFine extends Component
             $this->fine_id = $studentfine->fine_id;
             $this->amount = $studentfine->amount;
             $this->status = $studentfine->status;
+            $this->setmode('edit');
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-
-        $this->setmode('edit');
     }
 
     public function update($id)
@@ -121,18 +119,18 @@ class AllStudentFine extends Component
             $studentfine->amount = $validatedData['amount'];
             $studentfine->status = $this->status==1?'1':'0';
             $studentfine->update();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Student Fine Updated Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Student Fine Updated Successfully!!"
-        ]);
     }
 
 
@@ -140,7 +138,6 @@ class AllStudentFine extends Component
     {
         $this->delete_id=$id;
         $this->dispatchBrowserEvent('delete-confirmation');
-
     }
 
     public function delete()
@@ -149,17 +146,33 @@ class AllStudentFine extends Component
         if($studentfine){
             $studentfine->delete();
             $this->delete_id=null;
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Student Fine Deleted Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Student Fine Deleted Successfully!!"
-        ]);
+    }
+
+    public function status($id)
+    {
+        $status = StudentFine::find($id);
+        if($status->status==1)
+        {   
+            $status->status=2;
+        }elseif($status->status==2)
+        {
+            $status->status=0;
+        }else
+        {
+            $status->status=1;
+        }
+        $status->update();
     }
 
     public function render()

@@ -10,7 +10,6 @@ use Livewire\WithPagination;
 
 class AllQuota extends Component
 {
-
     use WithPagination;
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
@@ -61,18 +60,18 @@ class AllQuota extends Component
             $quota->max_capacity = $validatedData['max_capacity'];
             $quota->status = $this->status==1?1:0;
             $quota->save();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Quota Created Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Quota Created Successfully!!"
-        ]);
     }
 
     public function edit($id)
@@ -84,13 +83,13 @@ class AllQuota extends Component
             $this->class_id=$quota->class_id;
             $this->max_capacity = $quota->max_capacity;
             $this->status = $quota->status;
+            $this->setmode('edit');
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->setmode('edit');
     }
 
     public function update($id)
@@ -103,25 +102,24 @@ class AllQuota extends Component
             $quota->max_capacity = $validatedData['max_capacity'];
             $quota->status = $this->status==1?'1':'0';
             $quota->update();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Quota Updated Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Quota Updated Successfully!!"
-        ]);
     }
 
     public function deleteconfirmation($id)
     {
         $this->delete_id=$id;
         $this->dispatchBrowserEvent('delete-confirmation');
-
     }
 
     public function delete()
@@ -130,17 +128,30 @@ class AllQuota extends Component
         if($quota){
             $quota->delete();
             $this->delete_id=null;
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Quota Deleted Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Quota Deleted Successfully!!"
-        ]);
+    }
+
+    public function status($id)
+    {
+        $status = Quota::find($id);
+        if($status->status==1)
+        {   
+            $status->status=0;
+        }else
+        {
+            $status->status=1;
+        }
+        $status->update();
     }
 
     public function render()

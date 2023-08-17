@@ -40,7 +40,6 @@ class AllFine extends Component
         $this->validateOnly($propertyName);
     }
 
-
     public function resetinput()
     {
         $this->year=null;
@@ -69,18 +68,18 @@ class AllFine extends Component
             $fine->amount = $validatedData['amount'];
             $fine->status = $this->status==1?1:0;
             $fine->save();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Fine Created Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Fine Created Successfully!!"
-        ]);
     }
 
     public function edit($id)
@@ -93,13 +92,13 @@ class AllFine extends Component
             $this->name = $fine->name;
             $this->amount = $fine->amount;
             $this->status = $fine->status;
+            $this->setmode('edit');
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->setmode('edit');
     }
 
     public function update($id)
@@ -112,25 +111,24 @@ class AllFine extends Component
             $fine->amount = $validatedData['amount'];
             $fine->status = $this->status==1?'1':'0';
             $fine->update();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Fine Updated Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Fine Updated Successfully!!"
-        ]);
     }
 
     public function deleteconfirmation($id)
     {
         $this->delete_id=$id;
         $this->dispatchBrowserEvent('delete-confirmation');
-
     }
 
     public function delete()
@@ -139,17 +137,30 @@ class AllFine extends Component
         if($fine){
             $fine->delete();
             $this->delete_id=null;
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Fine Deleted Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Fine Deleted Successfully!!"
-        ]);
+    }
+
+    public function status($id)
+    {
+        $status = Fine::find($id);
+        if($status->status==1)
+        {   
+            $status->status=0;
+        }else
+        {
+            $status->status=1;
+        }
+        $status->update();
     }
 
     public function render()

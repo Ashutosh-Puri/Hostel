@@ -20,19 +20,10 @@ class CheckRole
     {   
         $user = Auth::guard('admin')->user();
         $roleId = Role::where('role', $role)->value('id');
-
-
-        Log::info('User:', $user->toArray()); // Convert the user to an array for logging
-        Log::info('Desired Role:', [$role]); // Log the desired role in an array
         if (!$user || !$user->hasRole($roleId, 0)) {
             session()->flash('error', 'You are not authorized to access this page.');
-            // $this->dispatchBrowserEvent('alert',[
-            //     'type'=>'error',
-            //     'message'=>"You are not authorized to access this page. Or Check Your Role Status"
-            // ]);
-            return redirect()->route('not.admin');
+            abort(403);
         }
-
         return $next($request);
     }
 }

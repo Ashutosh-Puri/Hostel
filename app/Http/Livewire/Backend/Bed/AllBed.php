@@ -27,7 +27,6 @@ class AllBed extends Component
         $this->search =null;
     }
 
-
     protected function rules()
     {
         return [
@@ -48,13 +47,11 @@ class AllBed extends Component
     public function save()
     {
         $validatedData = $this->validate();
-
         $beds=Bed::where('room_id',$validatedData['room_id'])->count();
         $room=Room::find($validatedData['room_id']);
         if($room)
         {
             $capacity=$room->capacity;
-
             if($capacity>$beds)
             {
                 $bed= new Bed;
@@ -62,14 +59,20 @@ class AllBed extends Component
                     $bed->room_id = $validatedData['room_id'];
                     $bed->status = $this->status==1?1:0;
                     $bed->save();
+                    if ($beds == $capacity - 1) {
+                        $room->status = 1;
+                        $room->update();
+                    }
+                    $this->resetinput();
+                    $this->setmode('all');
                     $this->dispatchBrowserEvent('alert',[
                         'type'=>'success',
-                        'message'=>"Bed Created Successfully!!"
+                        'message'=>"Bed Created Successfully !!"
                     ]);
                 }else{
                     $this->dispatchBrowserEvent('alert',[
                         'type'=>'error',
-                        'message'=>"Something Went Wrong!!"
+                        'message'=>"Something Went Wrong !!"
                     ]);
                 }
             }else{
@@ -79,8 +82,6 @@ class AllBed extends Component
                 ]);
             }
         }
-        $this->resetinput();
-        $this->setmode('all');
     }
 
     public function edit($id)
@@ -90,14 +91,13 @@ class AllBed extends Component
             $this->C_id=$bed->id;
             $this->room_id=$bed->room_id;
             $this->status = $bed->status;
+            $this->setmode('edit');
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-
-        $this->setmode('edit');
     }
 
     public function update($id)
@@ -108,25 +108,24 @@ class AllBed extends Component
             $bed->room_id = $validatedData['room_id'];
             $bed->status = $this->status==1?'1':'0';
             $bed->update();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Bed Updated Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Bed Updated Successfully!!"
-        ]);
     }
 
     public function deleteconfirmation($id)
     {
         $this->delete_id=$id;
         $this->dispatchBrowserEvent('delete-confirmation');
-
     }
 
     public function delete()
@@ -135,22 +134,35 @@ class AllBed extends Component
         if($bed){
             $bed->delete();
             $this->delete_id=null;
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Bed Deleted Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Bed Deleted Successfully!!"
-        ]);
+    }
+
+    public function status($id)
+    {
+        $status = Bed::find($id);
+        if($status->status==1)
+        {   
+            $status->status=0;
+        }else
+        {
+            $status->status=1;
+        }
+        $status->update();
     }
 
     public function render()
     {
-        $rooms=Room::orderBy('floor', 'ASC')->get();
+        $rooms=Room::where('status',0)->orderBy('floor', 'ASC')->get();
         $beds= Bed::with('room:id,label')->orderBy('room_id', 'ASC')->when($this->search, function ($query) {
             $query->whereHas('room', function ($query) {
                 $query->where('label', 'like', '%' . $this->search . '%');

@@ -21,8 +21,7 @@ class AdminDashboard extends Component
     public $d_room;
     public $total_hostel;
     public $total_building;
-
-
+    
     public function render()
     {   
         $this->total_bed=Bed::count();

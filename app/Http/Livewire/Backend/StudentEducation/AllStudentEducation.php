@@ -26,7 +26,6 @@ class AllStudentEducation extends Component
     public $percentage;
     public $c_id;
 
-
     public function resetinput()
     {
         $this->a=null;
@@ -76,18 +75,18 @@ class AllStudentEducation extends Component
             $student_education->percentage = $validatedData['percentage'];
             $student_education->sgpa = $validatedData['sgpa'];
             $student_education->save();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Student Education Created Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Student Education Created Successfully!!"
-        ]);
     }
 
     public function edit($id)
@@ -101,14 +100,13 @@ class AllStudentEducation extends Component
             $this->last_class_id =  $student_education->last_class_id;
             $this->percentage = $student_education->percentage;
             $this->sgpa = $student_education->sgpa;
+            $this->setmode('edit');
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-
-        $this->setmode('edit');
     }
 
     public function update($id)
@@ -123,25 +121,24 @@ class AllStudentEducation extends Component
             $student_education->percentage = $validatedData['percentage'];
             $student_education->sgpa = $validatedData['sgpa'];
             $student_education->update();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Student Education Updated Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Student Education Updated Successfully!!"
-        ]);
     }
     
     public function deleteconfirmation($id)
     {
         $this->delete_id=$id;
         $this->dispatchBrowserEvent('delete-confirmation');
-
     }
 
     public function delete()
@@ -150,17 +147,17 @@ class AllStudentEducation extends Component
         if($student_education){
             $student_education->delete();
             $this->delete_id=null;
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Student Education Deleted Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Student Education Deleted Successfully!!"
-        ]);
     }
 
     public function render()
@@ -172,7 +169,6 @@ class AllStudentEducation extends Component
         $classes=Classes::where('status',0)->orderBy('name', 'ASC')->get();
         $admissions=Admission::orderBy('academic_year_id', 'DESC')->get();
         $students=Student::where('status',0)->orderBy('name', 'ASC')->get();
-
         $query = StudentEducation::orderBy('student_id', 'ASC')->when($this->ad, function ($query) {
             $query->whereIn('admission_id', function ($subQuery) {
                 $subQuery->select('id')->from('admissions')->where('id', 'like', '%' . $this->ad . '%');

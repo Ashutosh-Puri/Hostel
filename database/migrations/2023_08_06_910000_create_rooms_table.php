@@ -17,7 +17,8 @@ return new class extends Migration
             $table->tinyInteger('floor')->comment('0-Ground Floor ,1-First Floor ,2..');
             $table->string('label');
             $table->integer('capacity');
-            $table->tinyInteger('type')->comment('2-Seated ,3-Seated ,4-Seated');
+            $table->tinyInteger('type')->comment('0-Not Full ,1-Full');
+            $table->tinyInteger('status')->nullable()->default('0')->comment('0-available ,1-unavailable');
             $table->timestamps();
             $table->foreign('building_id')->references('id')->on('buildings')->onDelete('cascade');
         });

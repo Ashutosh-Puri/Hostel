@@ -2,14 +2,14 @@
     @section('title')
     Admin Login
     @endsection
-    <div class="container-fulid page-body-wrapper full-page-wrapper">
-        <div class="content-wrapper d-flex align-items-center auth">
-          <div class="row flex-grow">
+    <div class="container-fulid page-body-wrapper">
+        <div class="content-wrapper d-flex align-items-center auth py-0 bg-primary"  >
+          <div class="row flex-grow ">
             <div class="col-lg-4 mx-auto">
               <div class="auth-form-light text-left p-5">
-                {{-- <div class="brand-logo">
-                  <img src="" alt="logo">
-                </div> --}}
+                <div class="brand-logo text-center">
+                  <img src="{{ asset('assets/logo/scolerstay_sm.png') }}" alt="logo" style="height: 100px;width:150px;">
+                </div>
                 <div> <h1 class="text-center"> Admin Login</h1></div>
                 {{-- <h6 class="font-weight-light">Login to continue.</h6> --}}
                 <form wire:submit.prevent="login"  class="pt-3">
@@ -24,7 +24,7 @@
                   </div>
                   <div class="form-group">
                       <input wire:model.debounce.1000ms="rememberMe" id="rememberMe" type="checkbox" class="form-check-input">
-                      <label class="form-check-label mx-2 my-1">Keep Me Login</label>
+                      <label for="rememberMe" class="form-check-label mx-2 mt-2">Keep Me Login</label>
                   </div>
                   <div class="mt-3">
                       <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">Login</button>

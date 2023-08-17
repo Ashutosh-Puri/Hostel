@@ -21,6 +21,7 @@ class AllRoom extends Component
     public $building_id;
     public $capacity;
     public $floor;
+    public $status;
     public $type;
     public $c_id;
     public $current_id;
@@ -60,6 +61,7 @@ class AllRoom extends Component
         $this->building_id=null;
         $this->capacity=null;
         $this->floor=null;
+        $this->status=null;
         $this->type=null;
         $this->c_id=null;
         $this->current_id=null;
@@ -68,7 +70,6 @@ class AllRoom extends Component
     public function setmode($mode)
     {
         $this->mode=$mode;
-       
     }
 
     public function save()
@@ -81,19 +82,20 @@ class AllRoom extends Component
             $room->capacity = $validatedData['capacity'];
             $room->floor = $validatedData['floor'];
             $room->type = $validatedData['type'];
+            $room->status = $this->status==1?'1':'0';
             $room->save();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Room Created Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Room Created Successfully!!"
-        ]);
     }
 
     public function edit($id)
@@ -106,14 +108,15 @@ class AllRoom extends Component
             $this->label = $room->label;
             $this->capacity =  $room->capacity;
             $this->floor = $room->floor;
+            $this->status = $room->status;
             $this->type = $room->type;
+            $this->setmode('edit');
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->setmode('edit');
     }
 
     public function update($id)
@@ -126,26 +129,26 @@ class AllRoom extends Component
             $room->capacity = $validatedData['capacity'];
             $room->floor = $validatedData['floor'];
             $room->type = $validatedData['type'];
+            $room->status = $this->status==1?'1':'0';
             $room->update();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Room Updated Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Room Updated Successfully!!"
-        ]);
     }
 
     public function deleteconfirmation($id)
     {
         $this->delete_id=$id;
         $this->dispatchBrowserEvent('delete-confirmation');
-
     }
 
     public function delete()
@@ -154,22 +157,34 @@ class AllRoom extends Component
         if($room){
             $room->delete();
             $this->delete_id=null;
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Room Deleted Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Room Deleted Successfully!!"
-        ]);
+    }
+
+    public function status($id)
+    {
+        $status = Room::find($id);
+        if($status->status==1)
+        {   
+            $status->status=0;
+        }else
+        {
+            $status->status=1;
+        }
+        $status->update();
     }
 
     public function render()
     {   
-       
         $buildings=Building::where('status',0)->orderBy('name', 'ASC')->get();
         $query = Room::orderBy('label', 'ASC')->when($this->b, function ($query) {
                 $query->whereIn('building_id', function ($subQuery) {

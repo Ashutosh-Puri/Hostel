@@ -66,18 +66,18 @@ class AllStudentPayment extends Component
             $studentpayment->admission_id = $validatedData['admission_id'];
             $studentpayment->total_amount = $validatedData['totalamount'];
             $studentpayment->save();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Student Payment Created Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Student Payment Created Successfully!!"
-        ]);
     }
 
     public function edit($id)
@@ -89,13 +89,13 @@ class AllStudentPayment extends Component
             $this->student_id = $studentpayment->student_id;
             $this->admission_id = $studentpayment->admission_id;
             $this->totalamount = $studentpayment->total_amount;
+            $this->setmode('edit');
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->setmode('edit');
     }
 
     public function update($id)
@@ -108,25 +108,24 @@ class AllStudentPayment extends Component
             $studentpayment->admission_id = $validatedData['admission_id'];
             $studentpayment->total_amount = $validatedData['totalamount'];
             $studentpayment->update();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Student Payment Updated Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Student Payment Updated Successfully!!"
-        ]);
     }
 
     public function deleteconfirmation($id)
     {
         $this->delete_id=$id;
         $this->dispatchBrowserEvent('delete-confirmation');
-
     }
 
     public function delete()
@@ -135,17 +134,33 @@ class AllStudentPayment extends Component
         if($studentpayment){
             $studentpayment->delete();
             $this->delete_id=null;
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Student Payment Deleted Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Student Payment Deleted Successfully!!"
-        ]);
+    }
+
+    public function status($id)
+    {
+        $status = StudentPayment::find($id);
+        if($status->status==1)
+        {   
+            $status->status=2;
+        }elseif($status->status==2)
+        {
+            $status->status=0;
+        }else
+        {
+            $status->status=1;
+        }
+        $status->update();
     }
 
     public function render()

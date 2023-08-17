@@ -10,7 +10,6 @@ use Illuminate\Validation\Rule;
 
 class AllBuilding extends Component
 {
-
     use WithPagination;
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
@@ -37,7 +36,6 @@ class AllBuilding extends Component
         $this->validateOnly($propertyName);
     }
 
-
     public function resetinput()
     {
         $this->hostel_id=null;
@@ -63,18 +61,18 @@ class AllBuilding extends Component
             $building->hostel_id = $validatedData['hostel_id'];
             $building->status = $this->status==1?1:0;
             $building->save();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Building Created Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Building Created Successfully!!"
-        ]);
     }
 
     public function edit($id)
@@ -86,13 +84,13 @@ class AllBuilding extends Component
             $this->status = $building->status;
             $this->name = $building->name;
             $this->hostel_id = $building->hostel_id;
+            $this->setmode('edit');
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->setmode('edit');
     }
 
     public function update($id)
@@ -104,18 +102,18 @@ class AllBuilding extends Component
             $building->hostel_id = $validatedData['hostel_id'];
             $building->status = $this->status==1?1:0;
             $building->update();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Building Updated Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Building Updated Successfully!!"
-        ]);
     }
 
 
@@ -123,7 +121,6 @@ class AllBuilding extends Component
     {
         $this->delete_id=$id;
         $this->dispatchBrowserEvent('delete-confirmation');
-
     }
 
     public function delete()
@@ -132,23 +129,35 @@ class AllBuilding extends Component
         if($building){
             $building->delete();
             $this->delete_id=null;
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Building Deleted Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Building Deleted Successfully!!"
-        ]);
+    }
+
+    public function status($id)
+    {
+        $status = Building::find($id);
+        if($status->status==1)
+        {   
+            $status->status=0;
+        }else
+        {
+            $status->status=1;
+        }
+        $status->update();
     }
 
     public function render()
     {
         $hostels=Hostel::where('status',0)->orderBy('name',"ASC")->get();
-
         $query = Building::orderBy('name', 'ASC');
         if ($this->hostel_name) {
             $query->whereHas('hostel', function ($query) {

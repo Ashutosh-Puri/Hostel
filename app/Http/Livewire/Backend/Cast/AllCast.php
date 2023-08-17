@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Livewire\Backend\Cast;
-
 use App\Models\Cast;
 use Livewire\Component;
 use App\Models\Category;
@@ -20,7 +19,6 @@ class AllCast extends Component
     public $status;
     public $c_id;
     public $current_id;
-
 
     protected function rules()
     {
@@ -59,18 +57,18 @@ class AllCast extends Component
             $cast->category_id = $validatedData['category_id'];
             $cast->status = $this->status==1?1:0;
             $cast->save();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Cast Created Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Cast Created Successfully!!"
-        ]);
     }
 
     public function edit($id)
@@ -82,13 +80,13 @@ class AllCast extends Component
             $this->name = $cast->name;
             $this->category_id =$cast->category_id;
             $this->status = $cast->status;
+            $this->setmode('edit');
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->setmode('edit');
     }
 
     public function update($id)
@@ -100,25 +98,24 @@ class AllCast extends Component
             $cast->category_id = $validatedData['category_id'];
             $cast->status = $this->status==1?'1':'0';
             $cast->update();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Cast Updated Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Cast Updated Successfully!!"
-        ]);
     }
 
     public function deleteconfirmation($id)
     {
         $this->delete_id=$id;
         $this->dispatchBrowserEvent('delete-confirmation');
-
     }
 
     public function delete()
@@ -127,17 +124,30 @@ class AllCast extends Component
         if($cast){
             $cast->delete();
             $this->delete_id=null;
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Cast Deleted Successfully !!"
+            ]);           
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Cast Deleted Successfully!!"
-        ]);
+    }
+
+    public function status($id)
+    {
+        $status = Cast::find($id);
+        if($status->status==1)
+        {   
+            $status->status=0;
+        }else
+        {
+            $status->status=1;
+        }
+        $status->update();
     }
 
     public function render()

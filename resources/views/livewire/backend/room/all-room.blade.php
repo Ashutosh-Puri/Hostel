@@ -86,6 +86,15 @@
                                         </div>
                                     @enderror
                                 </div>
+                                <div class="mb-3 form-group ">
+                                    <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
+                                    <label class="form-check-label m-1 " for="class_status">Full Room</label>
+                                    @error('status')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
                                 <button type="submit"  class="btn btn-primary waves-effect waves-light">Save Data</button>
                             </form>
                         </div>
@@ -178,6 +187,15 @@
                                         </div>
                                     @enderror
                                 </div>
+                                <div class="mb-3 form-group ">
+                                    <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
+                                    <label class="form-check-label m-1 " for="class_status">Full Room</label>
+                                    @error('status')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
                                 <button type="submit"  class="btn btn-primary waves-effect waves-light">Update Data</button>
                             </form>
                         </div>
@@ -246,6 +264,7 @@
                                             <th>Room</th>
                                             <th>Type</th>
                                             <th>Capacity</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -299,7 +318,19 @@
                                                 <td>{{ $item->type }} Seated</td>
                                                 <td>{{ $item->capacity }}</td>
                                                 <td>
+                                                    @if ( $item->status == '0')
+                                                        <span class="badge bg-success text-white">Not Full</span>
+                                                    @else
+                                                        <span class="badge bg-danger text-white">Full</span>
+                                                    @endif
+                                                </td>
+                                                <td>
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                    @if ($item->status==1) 
+                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
+                                                    @else
+                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-thumb-down"></i> </a>
+                                                    @endif
                                                     <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
                                                 </td>
                                             </tr>

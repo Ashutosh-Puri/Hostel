@@ -23,7 +23,6 @@ class AllClass extends Component
     public $c_id;
     public $current_id;
 
-
     protected function rules()
     {
         return [
@@ -64,18 +63,18 @@ class AllClass extends Component
             $class->type = $validatedData['type'];
             $class->status = $this->status==1?1:0;
             $class->save();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Class Created Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Class Created Successfully!!"
-        ]);
     }
 
     public function edit($id)
@@ -88,13 +87,13 @@ class AllClass extends Component
             $this->stream =$class->stream;
             $this->type = $class->type ;
             $this->status = $class->status;
+            $this->setmode('edit');
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
                 'message'=>"Something Went Wrong!!"
             ]);
         }
-        $this->setmode('edit');
     }
 
     public function update($id)
@@ -107,25 +106,24 @@ class AllClass extends Component
             $class->type = $validatedData['type'];
             $class->status = $this->status==1?'1':'0';
             $class->update();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Class Updated Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->resetinput();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Class Updated Successfully!!"
-        ]);
     }
 
     public function deleteconfirmation($id)
     {
         $this->delete_id=$id;
         $this->dispatchBrowserEvent('delete-confirmation');
-
     }
 
     public function delete()
@@ -134,17 +132,30 @@ class AllClass extends Component
         if($class){
             $class->delete();
             $this->delete_id=null;
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Class Deleted Successfully !!"
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something Went Wrong!!"
+                'message'=>"Something Went Wrong !!"
             ]);
         }
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Class Deleted Successfully!!"
-        ]);
+    }
+
+    public function status($id)
+    {
+        $status = Classes::find($id);
+        if($status->status==1)
+        {   
+            $status->status=0;
+        }else
+        {
+            $status->status=1;
+        }
+        $status->update();
     }
 
     public function render()
