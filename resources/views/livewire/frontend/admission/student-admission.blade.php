@@ -1165,9 +1165,12 @@
                                 <h2>Admission's</h2>
                             </div>
                             <div class="float-end">
+                                @if ($hasAdmission)
                                 <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
                                     New Admission<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
                                 </a>
+                                    
+                                @endif
                             </div>
                         </div>
                     </div>

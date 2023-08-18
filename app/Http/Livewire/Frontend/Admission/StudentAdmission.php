@@ -64,10 +64,6 @@ class StudentAdmission extends Component
     {
         $this->name=null;
         $this->c_id=null;
-        $this->ad =null;
-        $this->a =null;
-        $this->s =null;
-        $this->c =null;
         $this->academic_year_id=null;
         $this->last_academic_year_id=null;
         $this->student_id=null;
@@ -553,13 +549,23 @@ class StudentAdmission extends Component
     public function render()
     {   
         $this->student_id=Auth::guard('web')->user()->id;
+
+        $academicyears = AcademicYear::where('status', 0)->orderBy('year', 'DESC')->get();
+        $hasAdmission = true;
+        foreach ($academicyears as $academicYear) {
+            $admission = Admission::where('academic_year_id', $academicYear->id)->where('student_id',$this->student_id)->first();
+            if (!is_null($admission)) {
+                $hasAdmission = false;
+                break;
+            }
+        }
+
         $today = Carbon::today();
         $this->mindate=$minus15Years = $today->copy()->subYears(15)->format('Y-m-d');
         $this->name = $this->last_name." ".$this->first_name." ".$this->middle_name;
         if (is_numeric($this->sgpa) && $this->sgpa >=1) {
             $this->percentage = (($this->sgpa * 10) - 7.5);
         }
-        $academicyears = AcademicYear::where('status', 0)->orderBy('year', 'DESC')->get();
         $lastacademicyears = AcademicYear::where('year', '<', function ($query) { 
             $query->selectRaw('MAX(year)')->from('academic_years');
         })->orderBy('year', 'DESC')->get();
@@ -586,6 +592,6 @@ class StudentAdmission extends Component
             $lastclass=null;
         }
         $admissions = Admission::where('student_id',$this->student_id)->paginate($this->per_page);
-        return view('livewire.frontend.admission.student-admission',compact('lastacademicyears','categories','casts','lastclass','viewadmission','admissions','classes','streams','types','academicyears'))->extends('layouts.student.student')->section('student');
+        return view('livewire.frontend.admission.student-admission',compact('hasAdmission','lastacademicyears','categories','casts','lastclass','viewadmission','admissions','classes','streams','types','academicyears'))->extends('layouts.student.student')->section('student');
     }
 }
