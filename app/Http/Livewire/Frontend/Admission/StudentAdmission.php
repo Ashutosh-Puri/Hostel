@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Livewire\Backend\Admission;
+namespace App\Http\Livewire\Frontend\Admission;
 
-use App\Models\Bed;
 use App\Models\Cast;
 use App\Models\Classes;
 use App\Models\Student;
@@ -12,23 +11,15 @@ use App\Models\Allocation;
 use App\Models\AcademicYear;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
-use App\Models\StudentPayment;
 use Illuminate\Support\Carbon;
-use Illuminate\Validation\Rule;
 use App\Models\StudentEducation;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
 
-class AllAdmission extends Component
-{
+class StudentAdmission extends Component
+{   
     use WithPagination;
     use WithFileUploads;
     protected $listeners = ['delete-confirmed'=>'delete'];
-    public $delete_id=null;
-    public $ad = '';
-    public $s = '';
-    public $a = '';
-    public $c = '';
     public $stream = '';
     public $stream_type = '';
     public $per_page = 10;
@@ -117,7 +108,6 @@ class AllAdmission extends Component
     protected function rules()
     {   
         return [
-            'student_id'=>['required','integer', ],
             'academic_year_id'=>['required','integer'],
             'last_academic_year_id'=>['required','integer'],
             'first_name'=>['required','string','max:255'],
@@ -149,6 +139,7 @@ class AllAdmission extends Component
         ];
     }
 
+
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
@@ -158,8 +149,8 @@ class AllAdmission extends Component
     {
         $this->mode=$mode;
         if($mode=="add")
-        {
-            $student = Student::find(Auth::user()->id);
+        {   
+            $student = Student::find($this->student_id);
             if ($student)
             {
                 $nameParts = explode(' ', $student->name);
@@ -236,7 +227,7 @@ class AllAdmission extends Component
         $admission = new Admission;
         if($admission){
             $admission->academic_year_id =$validatedData['academic_year_id'];
-            $admission->student_id =$validatedData['student_id'];
+            $admission->student_id =$this->student_id;
             $admission->class_id = $validatedData['class_id'];
             $admission->status = '0';
             $admission->save();
@@ -260,7 +251,7 @@ class AllAdmission extends Component
         if($education){
             $education->admission_id = $admission->id;
             $education->academic_year_id =$validatedData['last_academic_year_id'];
-            $education->student_id =$validatedData['student_id'];
+            $education->student_id =$this->student_id;
             $education->last_class_id = $validatedData['last_class_id'];
             $education->sgpa = $validatedData['sgpa'];
             $education->percentage = $validatedData['percentage'];
@@ -304,7 +295,7 @@ class AllAdmission extends Component
             }
             
             $student = Student::find($this->student_id);
-            if ($student)
+            if ($student->status==0)
             {
                 $nameParts = explode(' ', $student->name);
                 $this->last_name = isset($nameParts[0]) ? $nameParts[0] : '';
@@ -360,6 +351,11 @@ class AllAdmission extends Component
                 ]);
             }
             $this->setmode('edit');
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Your Admission Is Confirmed Please Contact The Administrator To Request Cancellation Of The Admission Form.!!"
+            ]);
         }
        
     }
@@ -369,8 +365,6 @@ class AllAdmission extends Component
         $validatedData = $this->validate();
         $admission = Admission::find($id);
         if($admission){
-            $oldyearid=$admission->academic_year_id;
-            $oldstudentid=$admission->student_id;
             $admission->academic_year_id=$this->academic_year_id;
             $admission->student_id= $this->student_id;
             $admission->class_id = $validatedData['class_id'];
@@ -400,7 +394,7 @@ class AllAdmission extends Component
         if($student)
         {
             $student->name = $this->name;
-            $student->mobile = $this->mobile;
+            $student->mobile = $validatedData['mobile'];
             $student->mother_name = $validatedData['mother_name'];
             $student->dob = $validatedData['dob'];
             $student->cast_id = $validatedData['cast_id'];
@@ -449,115 +443,116 @@ class AllAdmission extends Component
     }
 
 
-    public function status($id)
-    {
-        $status = Admission::find($id);
-        if($status->status==1)
-        {   
-            $status->status=0;
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'success',
-                'message'=>"Admission In Wating List !!"
-            ]);
-        }elseif($status->status==0)
-        {
-            $status->status=1;
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'success',
-                'message'=>"Admission Confirm Successfully !!"
-            ]);
-        }
-        $status->update();
-    }
+    // public function status($id)
+    // {
+    //     $status = Admission::find($id);
+    //     if($status->status==1)
+    //     {   
+    //         $status->status=0;
+    //         $this->dispatchBrowserEvent('alert',[
+    //             'type'=>'success',
+    //             'message'=>"Admission In Wating List !!"
+    //         ]);
+    //     }elseif($status->status==0)
+    //     {
+    //         $status->status=1;
+    //         $this->dispatchBrowserEvent('alert',[
+    //             'type'=>'success',
+    //             'message'=>"Admission Confirm Successfully !!"
+    //         ]);
+    //     }
+    //     $status->update();
+    // }
 
-    public function cancel($id)
-    {
-        $admission=Admission::find($id);
-        if($admission){
-            if($admission->bed_id!=null)
-            {
-                $temp=$admission->bed_id;
-                $bed=Bed::find($temp);
-                $bed->status=0;
-                $bed->update();
-            }
-        }else{
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"Admisstion Not Found !!"
-            ]);
-        }
+    // public function cancel($id)
+    // {
+    //     $admission=Admission::find($id);
+    //     if($admission){
+    //         if($admission->bed_id!=null)
+    //         {
+    //             $temp=$admission->bed_id;
+    //             $bed=Bed::find($temp);
+    //             $bed->status=0;
+    //             $bed->update();
+    //         }
+    //     }else{
+    //         $this->dispatchBrowserEvent('alert',[
+    //             'type'=>'error',
+    //             'message'=>"Admisstion Not Found !!"
+    //         ]);
+    //     }
 
-        $allocation= Allocation::where('admission_id',$id)->first();
-        if($allocation){
-            $allocation->fee_id = null;
-            $allocation->update();
-        }else{
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"Allocation Not Found !!"
-            ]);
-        }
-        $studentpayment=StudentPayment::where('admission_id',$id)->first();
-        if($studentpayment)
-        {
-            $studentpayment->delete();
-        }else{
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"Student Payment Not Found !!"
-            ]);
-        }
-        $admission->bed_id=null;
-        $admission->status=2;
-        $admission->update();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Admission Cancelled Successfully !!"
-        ]);
-    }
+    //     $allocation= Allocation::where('admission_id',$id)->first();
+    //     if($allocation){
+    //         $allocation->fee_id = null;
+    //         $allocation->update();
+    //     }else{
+    //         $this->dispatchBrowserEvent('alert',[
+    //             'type'=>'error',
+    //             'message'=>"Allocation Not Found !!"
+    //         ]);
+    //     }
+    //     $studentpayment=StudentPayment::where('admission_id',$id)->first();
+    //     if($studentpayment)
+    //     {
+    //         $studentpayment->delete();
+    //     }else{
+    //         $this->dispatchBrowserEvent('alert',[
+    //             'type'=>'error',
+    //             'message'=>"Student Payment Not Found !!"
+    //         ]);
+    //     }
+    //     $admission->bed_id=null;
+    //     $admission->status=2;
+    //     $admission->update();
+    //     $this->setmode('all');
+    //     $this->dispatchBrowserEvent('alert',[
+    //         'type'=>'success',
+    //         'message'=>"Admission Cancelled Successfully !!"
+    //     ]);
+    // }
 
-    public function deleteconfirmation($id)
-    {
-        $this->delete_id=$id;
-        $this->dispatchBrowserEvent('delete-confirmation');
-    }
+    // public function deleteconfirmation($id)
+    // {
+    //     $this->delete_id=$id;
+    //     $this->dispatchBrowserEvent('delete-confirmation');
+    // }
 
-    public function delete()
-    {
-        $this->cancel($this->delete_id);
-        $admission = Admission::find($this->delete_id);
-        if ($admission)
-        {
-            $stdedu= StudentEducation::where('student_id', $admission->student_id)->where('academic_year_id', $admission->academic_year_id)->first();
-            if($stdedu){
-                $stdedu->delete();
-            }else{
-                $this->dispatchBrowserEvent('alert',[
-                    'type'=>'error',
-                    'message'=>"Something Went Wrong !!"
-                ]);
-            }
-            $admission->delete();
-            $this->delete_id=null;
-            $this->resetinput();
-            $this->setmode('all');
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'success',
-                'message'=>"Admission Deleted Successfully !!"
-            ]);
-        }else{
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
-        }
-    }
+    // public function delete()
+    // {
+    //     $this->cancel($this->delete_id);
+    //     $admission = Admission::find($this->delete_id);
+    //     if ($admission)
+    //     {
+    //         $stdedu= StudentEducation::where('student_id', $admission->student_id)->where('academic_year_id', $admission->academic_year_id)->first();
+    //         if($stdedu){
+    //             $stdedu->delete();
+    //         }else{
+    //             $this->dispatchBrowserEvent('alert',[
+    //                 'type'=>'error',
+    //                 'message'=>"Something Went Wrong !!"
+    //             ]);
+    //         }
+    //         $admission->delete();
+    //         $this->delete_id=null;
+    //         $this->resetinput();
+    //         $this->setmode('all');
+    //         $this->dispatchBrowserEvent('alert',[
+    //             'type'=>'success',
+    //             'message'=>"Admission Deleted Successfully !!"
+    //         ]);
+    //     }else{
+    //         $this->dispatchBrowserEvent('alert',[
+    //             'type'=>'error',
+    //             'message'=>"Something Went Wrong !!"
+    //         ]);
+    //     }
+    // }
 
 
     public function render()
     {   
+        $this->student_id=Auth::guard('web')->user()->id;
         $today = Carbon::today();
         $this->mindate=$minus15Years = $today->copy()->subYears(15)->format('Y-m-d');
         $this->name = $this->last_name." ".$this->first_name." ".$this->middle_name;
@@ -571,7 +566,7 @@ class AllAdmission extends Component
         $streams=Classes::select('stream')->where('status',0)->distinct('stream')->get();
         $types=Classes::select('type')->where('status',0)->where('stream',$this->stream)->distinct('type')->get();
         $classes=Classes::select('id','name')->where('status',0)->where('type',$this->stream_type)->orderBy('name',"ASC")->get();
-        $students=Student::where('status',0)->orderBy('username',"ASC")->get();
+
         $casts=Cast::where('status',0)->orderBy('name',"ASC")->get();
         $query =Admission::orderBy('academic_year_id', 'DESC');
         if ($this->cast_id) {
@@ -579,25 +574,6 @@ class AllAdmission extends Component
         } else { 
             $categories = [];
         }
-        $query =Admission::orderBy('academic_year_id', 'DESC');    
-        if ($this->ad) {
-            $admissionIds = Admission::where('id', 'like',$this->ad. '%')->pluck('id');
-            $query->whereIn('id', $admissionIds);
-        }
-        if ($this->a) {
-            $academicyearIds = AcademicYear::where('status', 0)->where('year', 'like', '%' . $this->a. '%')->pluck('id');
-            $query->whereIn('academic_year_id', $academicyearIds);
-        }
-        if ($this->s) {
-            $studentIds = Student::where('name', 'like', $this->s. '%')->pluck('id');
-            $query->whereIn('student_id', $studentIds);
-        }
-        if ($this->c) {
-            $classIds = Classes::where('status', 0)->where('name', 'like', '%' . $this->c. '%')->pluck('id');
-            $query->whereIn('class_id', $classIds);
-        }
-
-        $admissions = $query->paginate($this->per_page);
 
         if($this->viewid!=null)
         {
@@ -609,6 +585,7 @@ class AllAdmission extends Component
             $viewadmission=null;
             $lastclass=null;
         }
-        return view('livewire.backend.Admission.all-Admission',compact('lastacademicyears','categories','casts','lastclass','viewadmission','students','admissions','classes','streams','types','academicyears'))->extends('layouts.admin.admin')->section('admin');
+        $admissions = Admission::where('student_id',$this->student_id)->paginate($this->per_page);
+        return view('livewire.frontend.admission.student-admission',compact('lastacademicyears','categories','casts','lastclass','viewadmission','admissions','classes','streams','types','academicyears'))->extends('layouts.student.student')->section('student');
     }
 }

@@ -16,6 +16,7 @@ use App\Http\Livewire\Backend\Class\AllClass;
 use App\Http\Livewire\Backend\Qutota\AllQuota;
 use App\Http\Livewire\Backend\Admin\AdminLogin;
 use App\Http\Livewire\Backend\Hostel\AllHostel;
+use App\Http\Livewire\Backend\Notice\AllNotice;
 use App\Http\Livewire\Frontend\StudentDashboard;
 use App\Http\Livewire\Backend\College\AllCollege;
 use App\Http\Livewire\Backend\Student\AllStudent;
@@ -26,6 +27,7 @@ use App\Http\Livewire\Backend\Facility\AllFacility;
 use App\Http\Livewire\Backend\Admission\AllAdmission;
 use App\Http\Livewire\Backend\Allocation\AllAllocation;
 use App\Http\Livewire\Backend\StudentFine\AllStudentFine;
+use App\Http\Livewire\Frontend\Admission\StudentAdmission;
 use App\Http\Livewire\Backend\AcademicYear\AllAcademicYear;
 use App\Http\Livewire\Backend\PhotoGallery\AllPhotoGallery;
 use App\Http\Livewire\Backend\StudentPayment\AllStudentPayment;
@@ -62,20 +64,20 @@ Route::middleware(['auth:web','verified'])->group(function () {
 
    // Student Dashboard
    Route::get('student/dashboard', StudentDashboard::class)->name('student.dashboard');
+
+   // Student Admission
+   Route::get('student/admission', StudentAdmission::class)->name('student.admission');
 });
 
-Route::middleware(['auth:admin'])->group(function () {
+
+// Superadmin Routes With Admin Guard
+Route::middleware(['auth:admin','check.role:superadmin'])->group(function () {
 
     // Admin Dashboard
     Route::get('admin/dashboard', AdminDashboard::class)->name('admin.dashboard');
 
     // Admin Logout
     Route::post('admin/logout', [AdminLogin::class, 'logout'])->name('admin.logout');
-});
-
-
-// Superadmin Routes With Admin Guard
-Route::middleware(['auth:admin','check.role:superadmin'])->group(function () {
 
     // All Role
     Route::get('all/roles',AllRole::class)->name('all_role');
@@ -145,7 +147,9 @@ Route::middleware(['auth:admin','check.role:superadmin'])->group(function () {
     
     // All Photo Gallery
     Route::get('all/photogallery',AllPhotoGallery::class)->name('all_photogallery');
-
+    
+    // All Notice
+    Route::get('all/notices',AllNotice::class)->name('all_notice');
 });
 
 
