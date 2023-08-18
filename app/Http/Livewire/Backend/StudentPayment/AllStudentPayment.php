@@ -165,9 +165,12 @@ class AllStudentPayment extends Component
 
     public function render()
     {
-        $academic_years=AcademicYear::where('status',0)->get();
-        $students=Student::where('status',0)->get();
-        $admissions=Admission::all();
+        $academic_years=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
+
+        $admissions = Admission::where('academic_year_id', $this->academic_year_id)->get();
+
+        $students=Student::where('status',0)->whereIn('id',  $admissions->pluck('student_id'))->get();
+
         $query = StudentPayment::orderBy('academic_year_id', 'DESC')->when($this->year, function ($query) {
             $query->whereIn('academic_year_id', function ($subQuery) {
                 $subQuery->select('id')->from('academic_years')->where('year', 'like', '%' . $this->year . '%');

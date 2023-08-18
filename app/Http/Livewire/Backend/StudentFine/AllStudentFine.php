@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Backend\StudentFine;
 use App\Models\Fine;
 use App\Models\Student;
 use Livewire\Component;
+use App\Models\Admission;
 use App\Models\StudentFine;
 use App\Models\AcademicYear;
 use Livewire\WithPagination;
@@ -178,8 +179,9 @@ class AllStudentFine extends Component
     public function render()
     {
         $academic_years=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
-        $students=Student::where('status',0)->get();
-        $fines=Fine::where('status',0)->get();
+        $admissions = Admission::where('academic_year_id', $this->academic_year_id)->get();
+        $students=Student::where('status',0)->whereIn('id',  $admissions->pluck('student_id'))->get();
+        $fines=Fine::where('status',0)->where('academic_year_id', $this->academic_year_id)->get();
         $query = StudentFine::orderBy('academic_year_id', 'DESC')->when($this->year, function ($query) {
             $query->whereIn('academic_year_id', function ($subQuery) {
                 $subQuery->select('id')->from('academic_years')->where('year', 'like', '%' . $this->year . '%');

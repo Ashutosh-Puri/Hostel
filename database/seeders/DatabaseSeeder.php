@@ -35,13 +35,18 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      */
     public function run(): void
-    {
-        $this->call(RoleSeeder::class);
-        $this->call(AdminSeeder::class);            //  Role ,
+    {   
+        //  Allways Run
+        // $this->call(RoleSeeder::class);
+        // $this->call(AdminSeeder::class);               //  Role ,
+        $this->call(CategorySeeder::class);
+        $this->call(CastSeeder::class);                //  Category ,
+        $this->call(RuleSeeder::class);      
+        
+        //  Sometime Run
+
         // $this->call(AcademicYearSeeder::class);
         // $this->call(ClassesSeeder::class);
-        // $this->call(CategorySeeder::class);
-        // $this->call(CastSeeder::class);          //  Category ,
         // $this->call(StudentSeeder::class);          //  Cast ,
         // $this->call(CollegeSeeder::class);
         // $this->call(HostelSeeder::class);           //  College ,
@@ -57,6 +62,6 @@ class DatabaseSeeder extends Seeder
         // $this->call(StudentEducationSeeder::class); //   Acadmic Year , Student , class ,Admission ,
         // $this->call(StudentPaymentSeeder::class);   //   Acadmic Year , Student , Admission ,
         // $this->call(AllocationSeeder::class);       // Fee , Admission
-        // $this->call(RuleSeeder::class);
+        
     }
 }

@@ -11,9 +11,9 @@
       </li>
       <li class="nav-item nav-category">Main</li>
       <li class="nav-item">
-        <a class="nav-link" href="" >
+        <a class="nav-link" href="{{ route('student.admission') }}" >
           <span class="icon-bg"><i class="mdi mdi-account-key menu-icon"></i></span>
-          <span class="menu-title">Admission</span>
+          <span class="menu-title">Admission's</span>
         </a>
       </li>
       {{-- <li class="nav-item">

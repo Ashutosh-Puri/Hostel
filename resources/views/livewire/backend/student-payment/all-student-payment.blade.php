@@ -39,6 +39,20 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 form-group">
+                                    <label for="admission_id" class="form-label">Select Admission</label>
+                                    <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model="admission_id" >
+                                        <option value="" hidden>Select Admission</option>
+                                        @foreach ($admissions as $item1)
+                                            <option  value="{{ $item1->id }}">Admisstion ID : {{ $item1->id }} --> Year : {{  $item1->AcademicYear->year }} --> Student Name : {{ $item1->Student->name==null?$item1->Student->username:$item1->Student->name; }} </option>
+                                        @endforeach
+                                    </select>
+                                    @error('admission_id')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 form-group">
                                     <label for="student_id" class="form-label">Select Student</label>
                                     <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model="student_id" >
                                         <option value="" hidden>Select Student</option>
@@ -47,20 +61,6 @@
                                         @endforeach
                                     </select>
                                     @error('student_id')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="admission_id" class="form-label">Select Admission</label>
-                                    <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model="admission_id" >
-                                        <option value="" hidden>Select Admission</option>
-                                        @foreach ($admissions as $item1)
-                                            <option  value="{{ $item1->id }}"> {{ $item1->id }} </option>
-                                        @endforeach
-                                    </select>
-                                    @error('admission_id')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -120,6 +120,20 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 form-group">
+                                    <label for="admission_id" class="form-label">Select Admission</label>
+                                    <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model="admission_id" >
+                                        <option value="" hidden>Select Admission</option>
+                                        @foreach ($admissions as $item1)
+                                            <option  value="{{ $item1->id }}"> Admisstion ID : {{ $item1->id }} --> Year : {{  $item1->AcademicYear->year }} --> Student Name : {{ $item1->Student->name==null?$item1->Student->username:$item1->Student->name; }} </option>
+                                        @endforeach
+                                    </select>
+                                    @error('admission_id')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 form-group">
                                     <label for="student_id" class="form-label">Select Student</label>
                                     <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model="student_id" >
                                         <option value="" hidden>Select Student</option>
@@ -128,20 +142,6 @@
                                         @endforeach
                                     </select>
                                     @error('student_id')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="admission_id" class="form-label">Select Admission</label>
-                                    <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model="admission_id" >
-                                        <option value="" hidden>Select Admission</option>
-                                        @foreach ($admissions as $item1)
-                                            <option  value="{{ $item1->id }}"> {{ $item1->id }} </option>
-                                        @endforeach
-                                    </select>
-                                    @error('admission_id')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>

@@ -2,13 +2,13 @@
     <div class="container-fluid">
         @if ($mode=='add')
             @section('title')
-                Add Student Fine
+                Add Student Education
             @endsection
             <div class="row">
                 <div class="col-12">
                     <div class="bg-success">
                         <div class="float-start pt-2 px-2">
-                            <h2>Add Student Fine</h2>
+                            <h2>Add Student Education</h2>
                         </div>
                         <div class="float-end">
                             <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
