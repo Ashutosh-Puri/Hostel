@@ -34,18 +34,8 @@
             <span class="menu-title">Allocation's</span>
         </a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_bed') }}" >
-            <span class="icon-bg"><i class="mdi mdi-hotel menu-icon"></i></span>
-            <span class="menu-title">Bed's</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_building') }}" >
-            <span class="icon-bg"><i class="mdi mdi-office-building menu-icon"></i></span>
-            <span class="menu-title">Building's</span>
-        </a>
-    </li>
+  
+    
     <li class="nav-item">
         <a class="nav-link" href="{{ route('all_cast') }}" >
             <span class="icon-bg"><i class="mdi mdi-format-list-bulleted-type menu-icon"></i></span>
@@ -71,6 +61,42 @@
         </a>
     </li>
     <li class="nav-item">
+      <a class="nav-link" href="{{ route('all_hostel') }}" >
+          <span class="icon-bg"><i class="mdi mdi-hospital-building menu-icon"></i></span>
+          <span class="menu-title">Hostel's</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('all_building') }}" >
+          <span class="icon-bg"><i class="mdi mdi-office-building menu-icon"></i></span>
+          <span class="menu-title">Building's</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('all_floor') }}" >
+          <span class="icon-bg"><i class="mdi mdi-office-building menu-icon"></i></span>
+          <span class="menu-title">Floor's</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('all_seated') }}" >
+          <span class="icon-bg"><i class="mdi mdi-office-building menu-icon"></i></span>
+          <span class="menu-title">Seated's</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('all_room') }}" >
+          <span class="icon-bg"><i class="mdi  mdi mdi-domain menu-icon"></i></span>
+          <span class="menu-title">Room's</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('all_bed') }}" >
+          <span class="icon-bg"><i class="mdi mdi-hotel menu-icon"></i></span>
+          <span class="menu-title">Bed's</span>
+      </a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('all_facility') }}" >
             <span class="icon-bg"><i class="mdi mdi-webhook menu-icon"></i></span>
             <span class="menu-title">Facility's</span>
@@ -88,12 +114,7 @@
             <span class="menu-title">Fine's</span>
         </a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_hostel') }}" >
-            <span class="icon-bg"><i class="mdi mdi-hospital-building menu-icon"></i></span>
-            <span class="menu-title">Hostel's</span>
-        </a>
-    </li>
+
     <li class="nav-item">
         <a class="nav-link" href="{{ route('all_notice') }}" >
             <span class="icon-bg"><i class="mdi mdi-information-outline menu-icon"></i></span>
@@ -118,12 +139,7 @@
             <span class="menu-title">Role's</span>
         </a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_room') }}" >
-            <span class="icon-bg"><i class="mdi  mdi mdi-domain menu-icon"></i></span>
-            <span class="menu-title">Room's</span>
-        </a>
-    </li>
+
     <li class="nav-item">
         <a class="nav-link" href="{{ route('all_rule') }}" >
             <span class="icon-bg"><i class="mdi mdi-information-outline menu-icon"></i></span>

@@ -37,8 +37,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {   
         //  Allways Run
-        // $this->call(RoleSeeder::class);
-        // $this->call(AdminSeeder::class);               //  Role ,
+        $this->call(RoleSeeder::class);
+        $this->call(AdminSeeder::class);               //  Role ,
         $this->call(CategorySeeder::class);
         $this->call(CastSeeder::class);                //  Category ,
         $this->call(RuleSeeder::class);      

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Backend\Allocation;
 
 use App\Models\Bed;
 use App\Models\Fee;
+use App\Models\Quota;
 use App\Models\Classes;
 use App\Models\Student;
 use Livewire\Component;
@@ -88,7 +89,7 @@ class AllAllocation extends Component
         $validatedData = $this->validate();
         $admission= Admission::find($admissionid);
         if($admission)
-        {
+        {   
             $studentpayment=StudentPayment::where('admission_id',$admissionid)->first();
             if($studentpayment)
             {

@@ -28,11 +28,11 @@ class AdminDashboard extends Component
         $this->f_bed=Bed::where('status',0)->count();
         $this->a_bed=Bed::where('status',1)->count();
         
-        $this->total_room=Room::count();
-        $this->a_room=Room::where('type',1)->count();
-        $this->b_room=Room::where('type',2)->count();
-        $this->c_room=Room::where('type',3)->count();
-        $this->d_room=Room::where('type',4)->count();
+        // $this->total_room=Room::count();
+        // $this->a_room=Room::where('type',1)->count();
+        // $this->b_room=Room::where('type',2)->count();
+        // $this->c_room=Room::where('type',3)->count();
+        // $this->d_room=Room::where('type',4)->count();
 
 
         $this->total_hostel=Hostel::count();

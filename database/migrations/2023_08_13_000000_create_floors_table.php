@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rooms', function (Blueprint $table) {
+        Schema::create('floors', function (Blueprint $table) {
             $table->id()->index();
             $table->unsignedBigInteger('building_id');
-            $table->tinyInteger('floor')->comment('0-Ground Floor ,1-First Floor ,2..');
-            $table->string('label');
-            $table->integer('capacity');
-            $table->tinyInteger('type')->comment('0-Not Full ,1-Full');
-            $table->tinyInteger('status')->nullable()->default('0')->comment('0-available ,1-unavailable');
+            $table->integer('floor')->index();
+            $table->tinyInteger('status')->nullable()->default('0')->comment('0-active ,1-inactive');
             $table->timestamps();
             $table->foreign('building_id')->references('id')->on('buildings')->onDelete('cascade');
         });
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rooms');
+        Schema::dropIfExists('floors');
     }
 };

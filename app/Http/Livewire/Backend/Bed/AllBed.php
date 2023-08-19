@@ -4,7 +4,10 @@ namespace App\Http\Livewire\Backend\Bed;
 
 use App\Models\Bed;
 use App\Models\Room;
+use App\Models\Floor;
+use App\Models\Hostel;
 use Livewire\Component;
+use App\Models\Building;
 use Livewire\WithPagination;
 
 class AllBed extends Component
@@ -15,6 +18,9 @@ class AllBed extends Component
     public $search = '';
     public $per_page = 10;
     public $mode='all';
+    public $hostel_id;
+    public $building_id;
+    public $floor_id;
     public $room_id;
     public $status;
     public $c_id;
@@ -23,6 +29,9 @@ class AllBed extends Component
     {
         $this->c_id=null;
         $this->status=null;
+        $this->hostel_id=null;
+        $this->building_id=null;
+        $this->floor_id=null;
         $this->room_id=null;
         $this->search =null;
     }
@@ -31,6 +40,9 @@ class AllBed extends Component
     {
         return [
             'room_id' => ['required','integer'],
+            'floor_id' => ['required','integer'],
+            'building_id' => ['required','integer'],
+            'hostel_id' => ['required','integer'],
         ];
     }
 
@@ -89,7 +101,10 @@ class AllBed extends Component
         $bed = Bed::find($id);
         if($bed){
             $this->C_id=$bed->id;
-            $this->room_id=$bed->room_id;
+            $this->hostel_id=$bed->Room->Floor->Building->Hostel->id;
+            $this->building_id=$bed->Room->Floor->Building->id;
+            $this->floor_id=$bed->Room->Floor->id;
+            $this->room_id=$bed->Room->id;
             $this->status = $bed->status;
             $this->setmode('edit');
         }else{
@@ -161,13 +176,16 @@ class AllBed extends Component
     }
 
     public function render()
-    {
-        $rooms=Room::where('status',0)->orderBy('floor', 'ASC')->get();
+    {   
+        $hostels = Hostel::where('status', 0)->get();
+        $buildings = Building::where('hostel_id', $this->hostel_id)->get();
+        $floors = Floor::where('building_id', $this->building_id)->get();
+        $rooms=Room::where('floor_id', $this->floor_id)->get();
         $beds= Bed::with('room:id,label')->orderBy('room_id', 'ASC')->when($this->search, function ($query) {
             $query->whereHas('room', function ($query) {
                 $query->where('label', 'like', '%' . $this->search . '%');
             });
         })->paginate($this->per_page);
-        return view('livewire.backend.bed.all-bed',compact('beds','rooms'))->extends('layouts.admin.admin')->section('admin');
+        return view('livewire.backend.bed.all-bed',compact('beds','rooms','floors','buildings','hostels'))->extends('layouts.admin.admin')->section('admin');
     }
 }

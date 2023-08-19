@@ -363,7 +363,7 @@
                                                 <td>
                                                     <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-checkbox-marked mx-1"></i><i class="mdi mdi-hotel"></i></a>
                                                     <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
-                                                    <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                    <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
                                                     {{-- <a wire:loading.attr="disabled" wire:click="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-trash-can"></i></a> --}}
                                                 </td>
                                             </tr>

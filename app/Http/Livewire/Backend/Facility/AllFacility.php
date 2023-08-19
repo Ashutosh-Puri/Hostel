@@ -3,7 +3,10 @@
 namespace App\Http\Livewire\Backend\Facility;
 
 use App\Models\Room;
+use App\Models\Floor;
+use App\Models\Hostel;
 use Livewire\Component;
+use App\Models\Building;
 use App\Models\Facility;
 use Livewire\WithPagination;
 
@@ -16,6 +19,9 @@ class AllFacility extends Component
     public $per_page = 10;
     public $mode='all';
     public $name;
+    public $hostel_id;
+    public $building_id;
+    public $floor_id;
     public $room_id;
     public $status;
     public $c_id;
@@ -38,6 +44,9 @@ class AllFacility extends Component
     {
         $this->search=null;
         $this->name=null;
+        $this->hostel_id=null;
+        $this->building_id=null;
+        $this->floor_id=null;
         $this->room_id=null;
         $this->status=null;
         $this->c_id=null;
@@ -78,7 +87,10 @@ class AllFacility extends Component
         $facility = Facility::find($id);
         if($facility){
             $this->C_id=$facility->id;
-            $this->room_id=$facility->room_id;
+            $this->hostel_id=$facility->Room->Floor->Building->Hostel->id;
+            $this->building_id=$facility->Room->Floor->Building->id;
+            $this->floor_id=$facility->Room->Floor->id;
+            $this->room_id=$facility->Room->id;
             $this->name = $facility->name;
             $this->status = $facility->status;
             $this->setmode('edit');
@@ -153,7 +165,10 @@ class AllFacility extends Component
 
     public function render()
     {
-        $rooms=Room::orderBy('floor', 'ASC')->get();
+        $hostels = Hostel::where('status', 0)->get();
+        $buildings = Building::where('hostel_id', $this->hostel_id)->get();
+        $floors = Floor::where('building_id', $this->building_id)->get();
+        $rooms=Room::where('floor_id', $this->floor_id)->get();
         $facilityQuery = Facility::orderBy('room_id', 'ASC');
         if ($this->search) {
             $facilityQuery->whereHas('room', function ($query) {
@@ -161,6 +176,6 @@ class AllFacility extends Component
             });
         }
         $facility = $facilityQuery->paginate($this->per_page);
-        return view('livewire.backend.facility.all-facility',compact('facility','rooms'))->extends('layouts.admin.admin')->section('admin');
+        return view('livewire.backend.facility.all-facility',compact('facility','rooms','floors','buildings','hostels'))->extends('layouts.admin.admin')->section('admin');
     }
 }

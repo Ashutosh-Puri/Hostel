@@ -24,76 +24,107 @@
                         <div class="card-body">
                             <form  wire:submit.prevent="save" method="post" action="" id="myForm">
                                 @csrf
-                                <div class="mb-3 form-group">
-                                    <label for="building_id" class="form-label">Select Building</label>
-                                    <select class="form-select @error('building_id') is-invalid @enderror" id="building_id" wire:model="building_id" >
-                                        <option hidden >Select Building</option>
-                                        @foreach ($buildings as $item1)
-                                            <option  value="{{ $item1->id }}">{{ $item1->Hostel->name }}   ->   {{ $item1->name }} </option>
-                                        @endforeach
-                                    </select>
-                                    @error('building_id')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="hostel_id" class="form-label">Select Hostel</label>
+                                            <select class="form-select @error('hostel_id') is-invalid @enderror" id="hostel_id" wire:model="hostel_id" >
+                                                <option hidden >Select Hostel</option>
+                                                @foreach ($hostels as $item1)
+                                                    <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
+                                                @endforeach
+                                            </select>
+                                            @error('hostel_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="floor" class="form-label">Select Floor Number</label>
-                                    <input type="number" list="floorlist" class="form-control @error('floor') is-invalid @enderror" wire:model="floor" value="{{ old('floor') }}" id="floor" placeholder="Select Floor Number">
-                                    <datalist  name="floorlist" id="floorlist">
-                                        <option value="0">Ground Floor</option>
-                                        <option value="1">First Floor</option>
-                                        <option value="2">Second Floor</option>
-                                        <option value="3">Third Floor</option>
-                                    </datalist>
-                                    @error('floor')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="building_id" class="form-label">Select Building</label>
+                                            <select class="form-select @error('building_id') is-invalid @enderror" id="building_id" wire:model="building_id" >
+                                                <option hidden >Select Building</option>
+                                                @foreach ($buildings as $item1)
+                                                    <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
+                                                @endforeach
+                                            </select>
+                                            @error('building_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="label" class="form-label">Room Label</label>
-                                    <input type="text" class="form-control @error('label') is-invalid @enderror" wire:model="label" value="{{ old('label') }}" id="label" placeholder="Enter Room Label">
-                                    @error('label')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="floor_id" class="form-label">Select Floor</label>
+                                            <select class="form-select @error('floor_id') is-invalid @enderror" id="floor_id" wire:model="floor_id" >
+                                                <option hidden >Select Floor</option>
+                                                @foreach ($floors as $item1)
+                                                    <option  value="{{ $item1->id }}"> 
+                                                        @switch($item1->floor)  @case(0) Ground @break @case(1) First @break @case(2) Second  @break @case(3) Third @break @case(4) Fourth @break  @case(5) Fifth @break @case(6) Sixth @break  @case(7) Seventh @break @case(8) Eighth @break @case(9) Nineth @break @case(10) Tenth @break @default {{ $item->floor }} @endswitch Floor 
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('floor_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="type" class="form-label">Select Room Seated</label>
-                                    <input type="number"  list="typelist" class="form-control @error('type') is-invalid @enderror" wire:model="type" value="{{ old('type') }}" id="type" placeholder="Select Room Seated">
-                                    <datalist  name="typelist" id="typelist">
-                                        <option value="1">Seated</option>
-                                        <option value="2">Seated</option>
-                                        <option value="3">Seated</option>
-                                        <option value="4">Seated</option>
-                                    </datalist>
-                                    @error('type')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="seated_id" class="form-label">Select Seated</label>
+                                            <select class="form-select @error('seated_id') is-invalid @enderror" id="seated_id" wire:model="seated_id" >
+                                                <option hidden >Select Seated</option>
+                                                @foreach ($seateds as $item1)
+                                                    <option  value="{{ $item1->id }}"> {{ $item1->seated}} Seated </option>
+                                                @endforeach
+                                            </select>
+                                            @error('seated_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="capacity" class="form-label">Room Capacity</label>
-                                    <input type="number" min="1" class="form-control @error('capacity') is-invalid @enderror" wire:model="capacity" value="{{ old('capacity') }}" id="capacity" placeholder="Enter Capacity">
-                                    @error('capacity')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="label" class="form-label">Room Label</label>
+                                            <input type="text" class="form-control @error('label') is-invalid @enderror" wire:model="label" value="{{ old('label') }}" id="label" placeholder="Enter Room Label">
+                                            @error('label')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group ">
-                                    <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
-                                    <label class="form-check-label m-1 " for="class_status">Full Room</label>
-                                    @error('status')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="capacity" class="form-label">Room Capacity</label>
+                                            <input type="number" min="1" class="form-control @error('capacity') is-invalid @enderror" wire:model="capacity" value="{{ old('capacity') }}" id="capacity" placeholder="Enter Capacity">
+                                            @error('capacity')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group ">
+                                            <label for="status" class="form-label mb-3">Status</label><br>
+                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
+                                            <label class="form-check-label m-1 " for="class_status">Full Room</label>
+                                            @error('status')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
                                 </div>
                                 <button type="submit"  class="btn btn-primary waves-effect waves-light">Save Data</button>
                             </form>
@@ -125,76 +156,107 @@
                         <div class="card-body">
                             <form  wire:submit.prevent="update({{ isset($C_id)?$C_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
-                                <div class="mb-3 form-group">
-                                    <label for="building_id" class="form-label">Select Building</label>
-                                    <select class="form-select @error('building_id') is-invalid @enderror" id="building_id" wire:model="building_id" >
-                                        <option hidden value="" >Select Building</option>
-                                        @foreach ($buildings as $item1)
-                                            <option  value="{{ $item1->id }}">{{ $item1->Hostel->name }}   ->   {{ $item1->name }} </option>
-                                        @endforeach
-                                    </select>
-                                    @error('building_id')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="hostel_id" class="form-label">Select Hostel</label>
+                                            <select class="form-select @error('hostel_id') is-invalid @enderror" id="hostel_id" wire:model="hostel_id" >
+                                                <option hidden >Select Hostel</option>
+                                                @foreach ($hostels as $item1)
+                                                    <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
+                                                @endforeach
+                                            </select>
+                                            @error('hostel_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="floor" class="form-label">Select Floor Number</label>
-                                    <input type="number" list="floorlist" class="form-control @error('floor') is-invalid @enderror" wire:model="floor" value="{{ old('floor') }}" id="floor" placeholder="Select Floor Number">
-                                    <datalist  name="floorlist" id="floorlist">
-                                        <option value="0">Ground Floor</option>
-                                        <option value="1">First Floor</option>
-                                        <option value="2">Second Floor</option>
-                                        <option value="3">Third Floor</option>
-                                    </datalist>
-                                    @error('floor')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="building_id" class="form-label">Select Building</label>
+                                            <select class="form-select @error('building_id') is-invalid @enderror" id="building_id" wire:model="building_id" >
+                                                <option hidden >Select Building</option>
+                                                @foreach ($buildings as $item1)
+                                                    <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
+                                                @endforeach
+                                            </select>
+                                            @error('building_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="label" class="form-label">Room Label</label>
-                                    <input type="text"  class="form-control @error('label') is-invalid @enderror" wire:model="label" value="{{ old('label') }}" id="label" placeholder="Enter Room Label">
-                                    @error('label')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="floor_id" class="form-label">Select Floor</label>
+                                            <select class="form-select @error('floor_id') is-invalid @enderror" id="floor_id" wire:model="floor_id" >
+                                                <option hidden >Select Floor</option>
+                                                @foreach ($floors as $item1)
+                                                    <option  value="{{ $item1->id }}"> 
+                                                        @switch($item1->floor)  @case(0) Ground @break @case(1) First @break @case(2) Second  @break @case(3) Third @break @case(4) Fourth @break  @case(5) Fifth @break @case(6) Sixth @break  @case(7) Seventh @break @case(8) Eighth @break @case(9) Nineth @break @case(10) Tenth @break @default {{ $item->floor }} @endswitch Floor 
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('floor_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="type" class="form-label">Select Room Seated</label>
-                                    <input type="number"  list="typelist" class="form-control @error('type') is-invalid @enderror" wire:model="type" value="{{ old('type') }}" id="type" placeholder="Select Room Seated">
-                                    <datalist  name="typelist" id="typelist">
-                                        <option value="1">Seated</option>
-                                        <option value="2">Seated</option>
-                                        <option value="3">Seated</option>
-                                        <option value="4">Seated</option>
-                                    </datalist>
-                                    @error('type')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="seated_id" class="form-label">Select Seated</label>
+                                            <select class="form-select @error('seated_id') is-invalid @enderror" id="seated_id" wire:model="seated_id" >
+                                                <option hidden >Select Seated</option>
+                                                @foreach ($seateds as $item1)
+                                                    <option  value="{{ $item1->id }}"> {{ $item1->seated}} Seated </option>
+                                                @endforeach
+                                            </select>
+                                            @error('seated_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="capacity" class="form-label">Room Capacity</label>
-                                    <input type="number" min="1" class="form-control @error('capacity') is-invalid @enderror" wire:model="capacity" value="{{ old('capacity') }}" id="capacity" placeholder="Enter Capacity">
-                                    @error('capacity')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="label" class="form-label">Room Label</label>
+                                            <input type="text" class="form-control @error('label') is-invalid @enderror" wire:model="label" value="{{ old('label') }}" id="label" placeholder="Enter Room Label">
+                                            @error('label')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group ">
-                                    <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
-                                    <label class="form-check-label m-1 " for="class_status">Full Room</label>
-                                    @error('status')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="capacity" class="form-label">Room Capacity</label>
+                                            <input type="number" min="1" class="form-control @error('capacity') is-invalid @enderror" wire:model="capacity" value="{{ old('capacity') }}" id="capacity" placeholder="Enter Capacity">
+                                            @error('capacity')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group ">
+                                            <label for="status" class="form-label mb-3">Status</label><br>
+                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
+                                            <label class="form-check-label m-1 " for="class_status">Full Room</label>
+                                            @error('status')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
                                 </div>
                                 <button type="submit"  class="btn btn-primary waves-effect waves-light">Update Data</button>
                             </form>
@@ -262,7 +324,7 @@
                                             <th>Building</th>
                                             <th>Floor</th>
                                             <th>Room</th>
-                                            <th>Type</th>
+                                            <th>Seated</th>
                                             <th>Capacity</th>
                                             <th>Status</th>
                                             <th>Action</th>
@@ -272,10 +334,10 @@
                                         @foreach ($rooms as $key => $item)
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
-                                                <td>{{ $item->Building->Hostel->name }}</td>
-                                                <td>{{ $item->Building->name }}</td>
+                                                <td>{{ $item->Floor->Building->Hostel->name }}</td>
+                                                <td>{{ $item->Floor->Building->name }}</td>
                                                 <td>
-                                                    @switch($item->floor)
+                                                    @switch($item->Floor->floor)
                                                     @case(0)
                                                         Ground
                                                     @break
@@ -315,7 +377,7 @@
                                                      Floor
                                                 </td>
                                                 <td>{{ $item->id }} - {{ $item->label }} </td>
-                                                <td>{{ $item->type }} Seated</td>
+                                                <td>{{ $item->Seated->seated }} Seated</td> 
                                                 <td>{{ $item->capacity }}</td>
                                                 <td>
                                                     @if ( $item->status == '0')
