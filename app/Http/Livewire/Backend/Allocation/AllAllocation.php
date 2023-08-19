@@ -24,6 +24,7 @@ class AllAllocation extends Component
     public $bed_id;
     public $fee_id;
     public $c_id;
+    public $academicyear;
     public $admissionid;
     public $admissionid2;
 
@@ -62,6 +63,7 @@ class AllAllocation extends Component
         if($admission)
         {
             $this->bed_id=$admission->bed_id;
+            $this->academicyear=$admission->academic_year_id;
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
@@ -285,7 +287,7 @@ class AllAllocation extends Component
         $academicyears=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
         $classes=Classes::where('status',0)->orderBy('name', 'ASC')->get();
         $beds=Bed::where('status',0)->get();
-        $fees=Fee::where('status',0)->get();
+        $fees=Fee::where('status',0)->where('academic_year_id',$this->academicyear)->get();
         $students=Student::where('status',0)->orderBy('name', 'ASC')->get();
         if($this->admissionid2!=$this->admissionid)
         {
