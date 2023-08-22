@@ -24,46 +24,57 @@
                         <div class="card-body">
                             <form  wire:submit.prevent="save" method="post" action="" id="myForm">
                                 @csrf
-                                <div class="mb-3 form-group">
-                                    <label for="academic_year_id" class="form-label">Select Academic Year</label>
-                                    <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
-                                        <option value="" hidden>Select Academic Year</option>
-                                        @foreach ($academic_years as $item1)
-                                            <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
-                                        @endforeach
-                                    </select>
-                                    @error('academic_year_id')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="academic_year_id" class="form-label">Select Academic Year</label>
+                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
+                                                <option value="" hidden>Select Academic Year</option>
+                                                @foreach ($academic_years as $item1)
+                                                    <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
+                                                @endforeach
+                                            </select>
+                                            @error('academic_year_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="name" class="form-label">Fine Name</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
-                                    @error('name')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="name" class="form-label">Fine Name</label>
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
+                                            @error('name')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="amount" class="form-label">Fine Amount</label>
-                                    <input type="text" min="0" class="form-control @error('amount') is-invalid @enderror" wire:model="amount" value="{{ old('amount') }}" id="amount" placeholder="Enter Amount">
-                                    @error('amount')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="amount" class="form-label">Fine Amount</label>
+                                            <input type="text" min="0" class="form-control @error('amount') is-invalid @enderror" wire:model="amount" value="{{ old('amount') }}" id="amount" placeholder="Enter Amount">
+                                            @error('amount')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group ">
-                                    <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
-                                    <label class="form-check-label m-1" for="class_status">In-Active Fine</label>
-                                    @error('status')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group ">
+                                            <label for="status" class="form-label mb-3">Status</label><br>
+                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
+                                            <label class="form-check-label m-1" for="class_status">In-Active Fine</label>
+                                            @error('status')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
+                                    </div>
                                 </div>
                                 <button type="submit"  class="btn btn-primary waves-effect waves-light">Save Data</button>
                             </form>
@@ -95,46 +106,57 @@
                         <div class="card-body">
                             <form  wire:submit.prevent="update({{ isset($C_id)?$C_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
-                                <div class="mb-3 form-group">
-                                    <label for="academic_year_id" class="form-label">Select Academic Year</label>
-                                    <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
-                                        <option value="" hidden>Select Academic Year</option>
-                                        @foreach ($academic_years as $item1)
-                                            <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
-                                        @endforeach
-                                    </select>
-                                    @error('academic_year_id')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="academic_year_id" class="form-label">Select Academic Year</label>
+                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
+                                                <option value="" hidden>Select Academic Year</option>
+                                                @foreach ($academic_years as $item1)
+                                                    <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
+                                                @endforeach
+                                            </select>
+                                            @error('academic_year_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="name" class="form-label">Fine Name</label>
-                                    <input type="text"  class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ $name }}" id="name" placeholder="Enter Fine Type Ex.( 2-Seated , 3-Seated )">
-                                    @error('name')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="name" class="form-label">Fine Name</label>
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
+                                            @error('name')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="amount" class="form-label">Fine Amount</label>
-                                    <input type="text" min="0" class="form-control @error('amount') is-invalid @enderror" wire:model="amount" value="{{ old('amount') }}" id="amount" placeholder="Enter Amount">
-                                    @error('amount')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="amount" class="form-label">Fine Amount</label>
+                                            <input type="text" min="0" class="form-control @error('amount') is-invalid @enderror" wire:model="amount" value="{{ old('amount') }}" id="amount" placeholder="Enter Amount">
+                                            @error('amount')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group ">
-                                    <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ $status==1?'checked':''; }} id="class_status"  wire:model="status" >
-                                    <label class="form-check-label m-1" for="class_status">In-Active Fine</label>
-                                    @error('status')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group ">
+                                            <label for="status" class="form-label mb-3">Status</label><br>
+                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
+                                            <label class="form-check-label m-1" for="class_status">In-Active Fine</label>
+                                            @error('status')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
+                                    </div>
                                 </div>
                                 <button type="submit"  class="btn btn-primary waves-effect waves-light">Update Data</button>
                             </form>

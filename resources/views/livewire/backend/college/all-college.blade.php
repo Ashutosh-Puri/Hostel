@@ -24,23 +24,30 @@
                         <div class="card-body">
                             <form  wire:submit.prevent="save" method="post" action="" id="myForm">
                                 @csrf
-                                <div class="mb-3 form-group">
-                                    <label for="name" class="form-label">College Name</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
-                                    @error('name')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="name" class="form-label">College Name</label>
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
+                                            @error('name')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group ">
-                                    <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
-                                    <label class="form-check-label m-1" for="class_status">In-Active College</label>
-                                    @error('status')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group ">
+                                            <label for="status" class="form-label mb-3">Status</label><br>
+                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
+                                            <label class="form-check-label m-1" for="class_status">In-Active College</label>
+                                            @error('status')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
+                                    </div>
                                 </div>
                                 <button type="submit"  class="btn btn-primary waves-effect waves-light">Save Data</button>
                             </form>
@@ -72,23 +79,30 @@
                         <div class="card-body">
                             <form  wire:submit.prevent="update({{ isset($C_id)?$C_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
-                                <div class="mb-3 form-group">
-                                    <label for="name" class="form-label">College Name</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ $name }}" id="name" placeholder="Enter Name">
-                                    @error('name')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="name" class="form-label">College Name</label>
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
+                                            @error('name')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group ">
-                                    <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ $status==1?'checked':''; }} id="class_status"  wire:model="status" >
-                                    <label class="form-check-label m-1" for="class_status">In-Active College</label>
-                                    @error('status')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group ">
+                                            <label for="status" class="form-label mb-3">Status</label><br>
+                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
+                                            <label class="form-check-label m-1" for="class_status">In-Active College</label>
+                                            @error('status')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
+                                    </div>
                                 </div>
                                 <button type="submit"  class="btn btn-primary waves-effect waves-light">Update Data</button>
                             </form>

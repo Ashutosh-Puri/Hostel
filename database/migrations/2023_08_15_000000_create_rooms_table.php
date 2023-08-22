@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id()->index();
-            $table->unsignedBigInteger('building_id');
-            $table->tinyInteger('floor')->comment('0-Ground Floor ,1-First Floor ,2..');
+            $table->unsignedBigInteger('floor_id');
+            $table->unsignedBigInteger('seated_id');
             $table->string('label');
             $table->integer('capacity');
-            $table->tinyInteger('type')->comment('0-Not Full ,1-Full');
             $table->tinyInteger('status')->nullable()->default('0')->comment('0-available ,1-unavailable');
             $table->timestamps();
-            $table->foreign('building_id')->references('id')->on('buildings')->onDelete('cascade');
+            $table->foreign('floor_id')->references('id')->on('floors')->onDelete('cascade');
+            $table->foreign('seated_id')->references('id')->on('seateds')->onDelete('cascade');
         });
     }
 

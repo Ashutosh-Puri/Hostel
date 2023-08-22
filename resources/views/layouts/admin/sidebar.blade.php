@@ -4,156 +4,168 @@
     <ul class="nav">
       <li class="nav-item nav-category">Navigation</li>
       <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.dashboard') }}" >
+        <a class="nav-link" href="{{ route('admin.dashboard') }}">
           <span class="icon-bg"><i class="mdi mdi-view-dashboard-outline menu-icon"></i></span>
           <span class="menu-title">Dashboard</span>
         </a>
       </li>
       <li class="nav-item nav-category">Main</li>
       <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_academic_year') }}" >
-            <span class="icon-bg"><i class="mdi mdi-calendar-today menu-icon"></i></span>
-            <span class="menu-title">Academic Year's</span>
+        <a class="nav-link" href="{{ route('all_academic_year') }}">
+          <span class="icon-bg"><i class="mdi mdi-calendar-today menu-icon"></i></span>
+          <span class="menu-title">Academic Year's</span>
         </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_admission') }}" >
-            <span class="icon-bg"><i class="mdi mdi-bulletin-board menu-icon"></i></span>
-            <span class="menu-title">Admission's</span>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_admission') }}">
+          <span class="icon-bg"><i class="mdi mdi-bulletin-board menu-icon"></i></span>
+          <span class="menu-title">Admission's</span>
         </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_admin') }}" >
-            <span class="icon-bg"><i class="mdi mdi-account-star menu-icon"></i></span>
-            <span class="menu-title">Admin's</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_allocation') }}">
+          <span class="icon-bg"><i class="mdi mdi-arrange-send-to-back menu-icon"></i></span>
+          <span class="menu-title">Allocation's</span>
         </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_allocation') }}" >
-            <span class="icon-bg"><i class="mdi mdi-arrange-send-to-back menu-icon"></i></span>
-            <span class="menu-title">Allocation's</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_class') }}">
+          <span class="icon-bg"><i class="mdi mdi-google-classroom menu-icon"></i></span>
+          <span class="menu-title">Class's</span>
         </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_bed') }}" >
-            <span class="icon-bg"><i class="mdi mdi-hotel menu-icon"></i></span>
-            <span class="menu-title">Bed's</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_quota') }}">
+          <span class="icon-bg"><i class="mdi mdi-codepen menu-icon"></i></span>
+          <span class="menu-title">Quota's</span>
         </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_building') }}" >
-            <span class="icon-bg"><i class="mdi mdi-office-building menu-icon"></i></span>
-            <span class="menu-title">Building's</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_college') }}">
+          <span class="icon-bg"><i class="mdi mdi mdi-city menu-icon"></i></span>
+          <span class="menu-title">College's</span>
         </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_cast') }}" >
-            <span class="icon-bg"><i class="mdi mdi-format-list-bulleted-type menu-icon"></i></span>
-            <span class="menu-title">Cast's</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_hostel') }}">
+          <span class="icon-bg"><i class="mdi mdi-hospital-building menu-icon"></i></span>
+          <span class="menu-title">Hostel's</span>
         </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_category') }}" >
-            <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
-            <span class="menu-title">Category's</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_building') }}">
+          <span class="icon-bg"><i class="mdi mdi-office-building menu-icon"></i></span>
+          <span class="menu-title">Building's</span>
         </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_class') }}" >
-            <span class="icon-bg"><i class="mdi mdi-google-classroom menu-icon"></i></span>
-            <span class="menu-title">Class's</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_floor') }}">
+          <span class="icon-bg"><i class="mdi mdi-office-building menu-icon"></i></span>
+          <span class="menu-title">Floor's</span>
         </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_college') }}" >
-            <span class="icon-bg"><i class="mdi mdi mdi-city menu-icon"></i></span>
-            <span class="menu-title">College's</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_seated') }}">
+          <span class="icon-bg"><i class="mdi mdi-office-building menu-icon"></i></span>
+          <span class="menu-title">Seated's</span>
         </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_facility') }}" >
-            <span class="icon-bg"><i class="mdi mdi-webhook menu-icon"></i></span>
-            <span class="menu-title">Facility's</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_fee') }}">
+          <span class="icon-bg"><i class="mdi mdi-cash menu-icon"></i></span>
+          <span class="menu-title">Fee's</span>
         </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_fee') }}" >
-            <span class="icon-bg"><i class="mdi mdi-cash menu-icon"></i></span>
-            <span class="menu-title">Fee's</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_room') }}">
+          <span class="icon-bg"><i class="mdi  mdi mdi-domain menu-icon"></i></span>
+          <span class="menu-title">Room's</span>
         </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_fine') }}" >
-            <span class="icon-bg"><i class="mdi mdi-cash-100 menu-icon"></i></span>
-            <span class="menu-title">Fine's</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_bed') }}">
+          <span class="icon-bg"><i class="mdi mdi-hotel menu-icon"></i></span>
+          <span class="menu-title">Bed's</span>
         </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_hostel') }}" >
-            <span class="icon-bg"><i class="mdi mdi-hospital-building menu-icon"></i></span>
-            <span class="menu-title">Hostel's</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_facility') }}">
+          <span class="icon-bg"><i class="mdi mdi-webhook menu-icon"></i></span>
+          <span class="menu-title">Facility's</span>
         </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_notice') }}" >
-            <span class="icon-bg"><i class="mdi mdi-information-outline menu-icon"></i></span>
-            <span class="menu-title">Notice's</span>
+      </li>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_student_fine') }}">
+          <span class="icon-bg"><i class="mdi mdi-cash-multiple menu-icon"></i></span>
+          <span class="menu-title">Student Fine's</span>
         </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_photogallery') }}" >
-            <span class="icon-bg"><i class="mdi mdi-google-photos menu-icon"></i></span>
-            <span class="menu-title">Photo Gallery's</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_fine') }}">
+          <span class="icon-bg"><i class="mdi mdi-cash-100 menu-icon"></i></span>
+          <span class="menu-title">Fine's</span>
         </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_quota') }}" >
-            <span class="icon-bg"><i class="mdi mdi-codepen menu-icon"></i></span>
-            <span class="menu-title">Quota's</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_notice') }}">
+          <span class="icon-bg"><i class="mdi mdi-information-outline menu-icon"></i></span>
+          <span class="menu-title">Notice's</span>
         </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_role') }}" >
-            <span class="icon-bg"><i class="mdi mdi-account-key menu-icon"></i></span>
-            <span class="menu-title">Role's</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_photogallery') }}">
+          <span class="icon-bg"><i class="mdi mdi-google-photos menu-icon"></i></span>
+          <span class="menu-title">Photo Gallery's</span>
         </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_room') }}" >
-            <span class="icon-bg"><i class="mdi  mdi mdi-domain menu-icon"></i></span>
-            <span class="menu-title">Room's</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_rule') }}">
+          <span class="icon-bg"><i class="mdi mdi-information-outline menu-icon"></i></span>
+          <span class="menu-title">Rule's</span>
         </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_rule') }}" >
-            <span class="icon-bg"><i class="mdi mdi-information-outline menu-icon"></i></span>
-            <span class="menu-title">Rule's</span>
-        </a>
-    </li>
-    <li class="nav-item">
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="{{ route('all_student') }}">
-            <span class="icon-bg"><i class="mdi mdi-account-plus menu-icon"></i></span>
-            <span class="menu-title">Student's</span>
+          <span class="icon-bg"><i class="mdi mdi-account-plus menu-icon"></i></span>
+          <span class="menu-title">Student's</span>
         </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_student_education') }}" >
-            <span class="icon-bg"><i class="mdi mdi mdi-certificate menu-icon"></i></span>
-            <span class="menu-title">Student Education's</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_student_payment') }}">
+          <span class="icon-bg"><i class="mdi mdi-currency-inr menu-icon"></i></span>
+          <span class="menu-title">Student Payment's</span>
         </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_student_fine') }}" >
-            <span class="icon-bg"><i class="mdi mdi-cash-multiple menu-icon"></i></span>
-            <span class="menu-title">Student Fine's</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_student_education') }}">
+          <span class="icon-bg"><i class="mdi mdi mdi-certificate menu-icon"></i></span>
+          <span class="menu-title">Student Education's</span>
         </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('all_student_payment') }}" >
-            <span class="icon-bg"><i class="mdi mdi-currency-inr menu-icon"></i></span>
-            <span class="menu-title">Student Payment's</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_role') }}">
+          <span class="icon-bg"><i class="mdi mdi-account-key menu-icon"></i></span>
+          <span class="menu-title">Role's</span>
         </a>
-    </li>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_admin') }}">
+          <span class="icon-bg"><i class="mdi mdi-account-star menu-icon"></i></span>
+          <span class="menu-title">Admin's</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_cast') }}">
+          <span class="icon-bg"><i class="mdi mdi-format-list-bulleted-type menu-icon"></i></span>
+          <span class="menu-title">Cast's</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_category') }}">
+          <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
+          <span class="menu-title">Category's</span>
+        </a>
+      </li>
       {{-- <li class="nav-item">
         <a class="nav-link" href="">
           <span class="icon-bg"><i class="mdi mdi-format-list-bulleted menu-icon"></i></span>

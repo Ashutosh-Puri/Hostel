@@ -72,7 +72,7 @@ class AllStudentFine extends Component
             $studentfine->academic_year_id = $validatedData['academic_year_id'];
             $studentfine->student_id = $validatedData['student_id'];
             $studentfine->fine_id = $validatedData['fine_id'];
-            $studentfine->amount = $validatedData['amount'];
+            $studentfine->amount = $this->amount;
             $studentfine->status = $this->status==1?1:0;
             $studentfine->save();
             $this->resetinput();
@@ -117,7 +117,7 @@ class AllStudentFine extends Component
             $studentfine->academic_year_id = $validatedData['academic_year_id'];
             $studentfine->student_id = $validatedData['student_id'];
             $studentfine->fine_id = $validatedData['fine_id'];
-            $studentfine->amount = $validatedData['amount'];
+            $studentfine->amount = $this->amount;
             $studentfine->status = $this->status==1?'1':'0';
             $studentfine->update();
             $this->resetinput();
@@ -182,6 +182,14 @@ class AllStudentFine extends Component
         $admissions = Admission::where('academic_year_id', $this->academic_year_id)->get();
         $students=Student::where('status',0)->whereIn('id',  $admissions->pluck('student_id'))->get();
         $fines=Fine::where('status',0)->where('academic_year_id', $this->academic_year_id)->get();
+        $amount=Fine::find($this->fine_id);
+        if( $amount)
+        {
+            $this->amount=$amount->amount;
+        }else
+        {
+            $this->amount=null;
+        }
         $query = StudentFine::orderBy('academic_year_id', 'DESC')->when($this->year, function ($query) {
             $query->whereIn('academic_year_id', function ($subQuery) {
                 $subQuery->select('id')->from('academic_years')->where('year', 'like', '%' . $this->year . '%');

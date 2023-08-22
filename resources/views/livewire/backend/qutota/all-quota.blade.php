@@ -24,51 +24,62 @@
                         <div class="card-body">
                             <form  wire:submit.prevent="save" method="post" action="" id="myForm">
                                 @csrf
-                                <div class="mb-3 form-group">
-                                    <label for="academic_year_id" class="form-label">Select Academic Year</label>
-                                    <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
-                                        <option value="" hidden>Select Academic Year</option>
-                                        @foreach ($academic_years as $item1)
-                                            <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
-                                        @endforeach
-                                    </select>
-                                    @error('academic_year_id')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="academic_year_id" class="form-label">Select Academic Year</label>
+                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
+                                                <option value="" hidden>Select Academic Year</option>
+                                                @foreach ($academic_years as $item1)
+                                                    <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
+                                                @endforeach
+                                            </select>
+                                            @error('academic_year_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="class_id" class="form-label">Select Class</label>
-                                    <select class="form-select @error('class_id') is-invalid @enderror" id="class_id" wire:model="class_id" >
-                                        <option value="" hidden>Select Class</option>
-                                        @foreach ($classes as $item1)
-                                            <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
-                                        @endforeach
-                                    </select>
-                                    @error('class_id')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="class_id" class="form-label">Select Class</label>
+                                            <select class="form-select @error('class_id') is-invalid @enderror" id="class_id" wire:model="class_id" >
+                                                <option value="" hidden>Select Class</option>
+                                                @foreach ($classes as $item1)
+                                                    <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
+                                                @endforeach
+                                            </select>
+                                            @error('class_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="max_capacity" class="form-label">Max Capacity</label>
-                                    <input type="number" min="1" class="form-control @error('max_capacity') is-invalid @enderror" wire:model="max_capacity" value="{{ old('max_capacity') }}" id="max_capacity" placeholder="Enter Max Capacity ">
-                                    @error('max_capacity')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="max_capacity" class="form-label">Max Capacity</label>
+                                            <input type="number" min="1" class="form-control @error('max_capacity') is-invalid @enderror" wire:model="max_capacity" value="{{ old('max_capacity') }}" id="max_capacity" placeholder="Enter Max Capacity ">
+                                            @error('max_capacity')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group ">
-                                    <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
-                                    <label class="form-check-label m-1" for="class_status">In-Active Quota</label>
-                                    @error('status')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group ">
+                                            <label for="status" class="form-label mb-3">Status</label><br>
+                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
+                                            <label class="form-check-label m-1" for="class_status">In-Active Quota</label>
+                                            @error('status')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
+                                    </div>
                                 </div>
                                 <button type="submit"  class="btn btn-primary waves-effect waves-light">Save Data</button>
                             </form>
@@ -100,51 +111,62 @@
                         <div class="card-body">
                             <form  wire:submit.prevent="update({{ isset($C_id)?$C_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
-                                <div class="mb-3 form-group">
-                                    <label for="academic_year_id" class="form-label">Select Academic Year</label>
-                                    <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
-                                        <option value="" hidden>Select Academic Year</option>
-                                        @foreach ($academic_years as $item1)
-                                            <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
-                                        @endforeach
-                                    </select>
-                                    @error('academic_year_id')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="academic_year_id" class="form-label">Select Academic Year</label>
+                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
+                                                <option value="" hidden>Select Academic Year</option>
+                                                @foreach ($academic_years as $item1)
+                                                    <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
+                                                @endforeach
+                                            </select>
+                                            @error('academic_year_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="class_id" class="form-label">Select Class</label>
-                                    <select class="form-select @error('class_id') is-invalid @enderror" id="class_id" wire:model="class_id" >
-                                        <option value="" hidden>Select Class</option>
-                                        @foreach ($classes as $item1)
-                                            <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
-                                        @endforeach
-                                    </select>
-                                    @error('class_id')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="class_id" class="form-label">Select Class</label>
+                                            <select class="form-select @error('class_id') is-invalid @enderror" id="class_id" wire:model="class_id" >
+                                                <option value="" hidden>Select Class</option>
+                                                @foreach ($classes as $item1)
+                                                    <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
+                                                @endforeach
+                                            </select>
+                                            @error('class_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="max_capacity" class="form-label">Max Capacity</label>
-                                    <input type="number" min="1" class="form-control @error('max_capacity') is-invalid @enderror" wire:model="max_capacity" value="{{ $max_capacity }}" id="max_capacity" placeholder="Enter Max Capacity ">
-                                    @error('max_capacity')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="max_capacity" class="form-label">Max Capacity</label>
+                                            <input type="number" min="1" class="form-control @error('max_capacity') is-invalid @enderror" wire:model="max_capacity" value="{{ old('max_capacity') }}" id="max_capacity" placeholder="Enter Max Capacity ">
+                                            @error('max_capacity')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group ">
-                                    <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ $status==1?'checked':''; }} id="class_status"  wire:model="status" >
-                                    <label class="form-check-label m-1" for="class_status">In-Active Quota</label>
-                                    @error('status')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group ">
+                                            <label for="status" class="form-label mb-3">Status</label><br>
+                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
+                                            <label class="form-check-label m-1" for="class_status">In-Active Quota</label>
+                                            @error('status')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
+                                    </div>
                                 </div>
                                 <button type="submit"  class="btn btn-primary waves-effect waves-light">Update Data</button>
                             </form>

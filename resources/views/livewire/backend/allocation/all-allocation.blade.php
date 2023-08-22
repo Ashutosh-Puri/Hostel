@@ -1,6 +1,134 @@
 <div class="content">
     <div class="container-fluid">
-        @if ($mode=='allocate')
+        @if ($mode=='add')
+            @section('title')
+                Add Allocation
+            @endsection
+            <div class="row">
+                <div class="col-12">
+                    <div class="bg-success">
+                        <div class="float-start pt-2 px-2">
+                            <h2>Add Allocation</h2>
+                        </div>
+                        <div class="float-end">
+                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
+                                Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form  wire:submit.prevent="save" method="post" action="" id="myForm">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="academic_year_id" class="form-label">Select  Academic Year</label>
+                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
+                                                <option value="" hidden>Select  Academic Year</option>
+                                                @foreach ($academicyears as $item1)
+                                                    <option  value="{{ $item1->id }}">{{ $item1->year }} </option>
+                                                @endforeach
+                                            </select>
+                                            @error('academic_year_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="admission_id" class="form-label">Select  Admission ID</label>
+                                            <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model="admission_id" >
+                                                <option value="" hidden>Select  Admission ID</option>
+                                                @foreach ($admissions as $item1)
+                                                    <option  value="{{ $item1->id }}">{{ $item1->id }} </option>
+                                                @endforeach
+                                            </select>
+                                            @error('admission_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit"  class="btn btn-primary waves-effect waves-light">Save Data</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @elseif ($mode=='edit')
+            @section('title')
+                Edit Allocation
+            @endsection
+            <div class="row">
+                <div class="col-12">
+                    <div class="bg-success">
+                        <div class="float-start pt-2 px-2">
+                            <h2>Edit Allocation</h2>
+                        </div>
+                        <div class="float-end">
+                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
+                                Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form  wire:submit.prevent="update({{ isset($C_id)?$C_id:''; }})" method="post" action="" id="myForm">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="academic_year_id" class="form-label">Select  Academic Year</label>
+                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
+                                                <option value="" hidden>Select  Academic Year</option>
+                                                @foreach ($academicyears as $item1)
+                                                    <option  value="{{ $item1->id }}">{{ $item1->year }} </option>
+                                                @endforeach
+                                            </select>
+                                            @error('academic_year_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="admission_id" class="form-label">Select  Admission ID</label>
+                                            <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model="admission_id" >
+                                                <option value="" hidden>Select  Admission ID</option>
+                                                @foreach ($admissions as $item1)
+                                                    <option  value="{{ $item1->id }}">{{ $item1->id }} </option>
+                                                @endforeach
+                                            </select>
+                                            @error('admission_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit"  class="btn btn-primary waves-effect waves-light">Save Data</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @elseif ($mode=='allocate')
             @section('title')
                 Allocate Bed
             @endsection
@@ -22,45 +150,70 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="save({{ $admission->id }})" method="post" action="" id="myForm">
+                            <form  wire:submit.prevent="allocatebed({{ isset($admission->id)?$admission->id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-12 col-md-12">
-                                        <hr>
-                                            <div class="text-center h3">
-                                                Current Status
-                                            </div>
-                                        <hr>
-                                    </div>
-                                    <div class="col-12 col-md-6">
+                                    <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="academic_year_id" class="form-label">Academic Year</label>
-                                            <label  class="form-control"for=""> {{ $admission->AcademicYear->year }}</label>
+                                            <label  class="form-control"for=""> {{ isset($admission->AcademicYear->year)?$admission->AcademicYear->year:''; }}</label>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-6">
+                                    <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="student_id" class="form-label">Student Name</label>
-                                            <label class="form-control" for=""> {{ $admission->Student->name }}</label>
+                                            <label class="form-control" for=""> {{ $admission->Student->name==null?$admission->Student->username:$admission->Student->name; }}</label>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-6">
+                                    <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="class_id" class="form-label">Class Name</label>
-                                            <label class="form-control" for=""> {{ $admission->Class->name }}</label>
+                                            <label class="form-control" for=""> {{ isset($admission->Class->name)?$admission->Class->name:''; }}</label>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-6">
+                                    <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
-                                            <label for="class_id" class="form-label">Class Type</label>
-                                            <label class="form-control" for=""> {{ $admission->Class->type }}</label>
+                                            <label for="class_id" class="form-label">Student Level</label>
+                                            <label class="form-control" for=""> {{ isset($admission->Class->type)?$admission->Class->type:''; }}</label>
                                         </div>
                                     </div>
-                                    @if ($admission->bed_id)
-                                        <div class="col-12 col-md-12">
+                                    @if ($alloc1->bed_id)
+                                        <div class="col-12 col-md-3">
+                                            <div class="mb-3 form-group">
+                                                <label for="class_id" class="form-label">Hostel</label>
+                                                <label class="form-control" for=""> {{ $alloc1->Bed->Room->Floor->Building->Hostel->name }}</label>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if ($alloc1->bed_id)
+                                        <div class="col-12 col-md-3">
+                                            <div class="mb-3 form-group">
+                                                <label for="class_id" class="form-label">Building</label>
+                                                <label class="form-control" for=""> {{ $alloc1->Bed->Room->Floor->Building->name }}</label>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if ($alloc1->bed_id)
+                                        <div class="col-12 col-md-2">
+                                            <div class="mb-3 form-group">
+                                                <label for="class_id" class="form-label">Floor</label>
+                                                <label class="form-control" for=""> {{  $alloc1->Bed->Room->Floor->floor }}</label>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if ($alloc1->bed_id)
+                                        <div class="col-12 col-md-2">
+                                            <div class="mb-3 form-group">
+                                                <label for="class_id" class="form-label">Room</label>
+                                                <label class="form-control" for=""> {{  $alloc1->Bed->Room->id."-(".$alloc1->Bed->Room->label.")"; }}</label>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if ($alloc1->bed_id)
+                                        <div class="col-12 col-md-2">
                                             <div class="mb-3 form-group">
                                                 <label for="class_id" class="form-label">Bed ID</label>
-                                                <label class="form-control" for=""> {{  "H-".$admission->Bed->Room->Building->Hostel->name." ---> B-".$admission->Bed->Room->Building->name." ---> R-".$admission->Bed->Room->id."-(".$admission->Bed->Room->label.") ---> Bed-".$admission->bed_id }}</label>
+                                                <label class="form-control" for=""> {{  $alloc1->bed_id }}</label>
                                             </div>
                                         </div>
                                     @endif
@@ -71,13 +224,101 @@
                                             </div>
                                         <hr>
                                     </div>
-                                    <div class="col-12 col-md-6">
+                                    <div class="col-12 col-md-3">
+                                        <div class="mb-3 form-group">
+                                            <label for="hostel_id" class="form-label">Select Hostel</label>
+                                            <select class="form-select @error('hostel_id') is-invalid @enderror" id="hostel_id" wire:model="hostel_id" >
+                                                <option hidden >Select Hostel</option>
+                                                @foreach ($hostels as $item1)
+                                                    <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
+                                                @endforeach
+                                            </select>
+                                            @error('hostel_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <div class="mb-3 form-group">
+                                            <label for="building_id" class="form-label">Select Building</label>
+                                            <select class="form-select @error('building_id') is-invalid @enderror" id="building_id" wire:model="building_id" >
+                                                <option hidden >Select Building</option>
+                                                @foreach ($buildings as $item1)
+                                                    <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
+                                                @endforeach
+                                            </select>
+                                            @error('building_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <div class="mb-3 form-group">
+                                            <label for="floor_id" class="form-label">Select Floor</label>
+                                            <select class="form-select @error('floor_id') is-invalid @enderror" id="floor_id" wire:model="floor_id" >
+                                                <option hidden >Select Floor</option>
+                                                @foreach ($floors as $item1)
+                                                    <option  value="{{ $item1->id }}"> 
+                                                        @switch($item1->floor)  @case(0) Ground @break @case(1) First @break @case(2) Second  @break @case(3) Third @break @case(4) Fourth @break  @case(5) Fifth @break @case(6) Sixth @break  @case(7) Seventh @break @case(8) Eighth @break @case(9) Nineth @break @case(10) Tenth @break @default {{ $item->floor }} @endswitch Floor 
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('floor_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <div class="mb-3 form-group">
+                                            <label for="room_id" class="form-label">Select Room</label>
+                                            <select class="form-select @error('room_id') is-invalid @enderror" id="room_id" wire:model="room_id" >
+                                                <option hidden >Select Room</option>
+                                                @foreach ($rooms as $item1)
+                                                    <option  value="{{ $item1->id }}">Room ID : {{ $item1->id }} - ( {{ $item1->label }} ) </option>
+                                                @endforeach
+                                            </select>
+                                            @error('room_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <div class="mb-3 form-group">
+                                            <label for="seated_id" class="form-label">Seated</label>
+                                            <label for="seated_id" class="form-control  @error('seated_id') is-invalid @enderror" id="seated_id" >{{ isset($seated )? $seated." Seated":''; }} </label>
+                                            @error('seated_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <div class="mb-3 form-group">
+                                            <label for="fee" class="form-label">Fee Amount</label>
+                                            <label for="fee"class="form-control @error('fee') is-invalid @enderror" wire:model="fee">{{ isset($fee)?$fee.' Rs.':''; }} </label>
+                                            @error('fee')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="bed_id" class="form-label">Select  Bed</label>
                                             <select class="form-select @error('bed_id') is-invalid @enderror" id="bed_id" wire:model="bed_id" >
                                                 <option value="" hidden>Select  Bed</option>
                                                 @foreach ($beds as $item1)
-                                                    <option  value="{{ $item1->id }}">{{ "H-".$item1->Room->Building->Hostel->name." ---> B-".$item1->Room->Building->name." ---> R-".$item1->Room->id."-(".$item1->Room->label.") ---> B-".$item1->id }} </option>
+                                                    <option  value="{{ $item1->id }}"> {{ $item1->id }} </option>
                                                 @endforeach
                                             </select>
                                             @error('bed_id')
@@ -87,24 +328,9 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="mb-3 form-group">
-                                            <label for="fee_id" class="form-label">Select  Fee</label>
-                                            <select class="form-select @error('fee_id') is-invalid @enderror" id="fee_id" wire:model="fee_id" >
-                                                <option value="" hidden>Select  Fee</option>
-                                                @foreach ($fees as $item1)
-                                                    <option  value="{{ $item1->id }}"> {{ $item1->type }} Seated ---> {{  $item1->amount }} Rs. </option>
-                                                @endforeach
-                                            </select>
-                                            @error('fee_id')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
+                                  
                                 </div>
-                                <button type="submit"  class="btn btn-primary waves-effect waves-light">Update Data</button>
+                                <button type="submit"  class="btn btn-primary waves-effect waves-light">Allocate Bed</button>
                             </form>
                         </div>
                     </div>
@@ -132,7 +358,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="update({{ $admission->id }})" method="post" action="" id="myForm">
+                            <form  wire:submit.prevent="exchangebed({{ $admission->id }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 col-md-12">
@@ -145,46 +371,86 @@
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="academic_year_id" class="form-label">Admission ID</label>
-                                            <label  class="form-control"for=""> {{ $admission->id }}</label>
+                                            <label  class="form-control"for="academic_year_id"> {{ $admission->id }}</label>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="academic_year_id" class="form-label">Academic Year</label>
-                                            <label  class="form-control"for=""> {{ $admission->AcademicYear->year }}</label>
+                                            <label  class="form-control"for="academic_year_id"> {{ $admission->AcademicYear->year }}</label>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="student_id" class="form-label">Student Name</label>
-                                            <label class="form-control" for=""> {{ $admission->Student->name }}</label>
+                                            <label class="form-control" for="student_id"> {{ $admission->Student->name }}</label>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="class_id" class="form-label">Class Name</label>
-                                            <label class="form-control" for=""> {{ $admission->Class->name }}</label>
+                                            <label class="form-control" for="class_id"> {{ $admission->Class->name }}</label>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
-                                            <label for="class_id" class="form-label">Class Type</label>
-                                            <label class="form-control" for="">{{ $admission->Class->type}}</label>
+                                            <label for="student_level" class="form-label">Student Level</label>
+                                            <label class="form-control" for="student_level">{{ $admission->Class->type}}</label>
                                         </div>
                                     </div>
-                                    @if ($admission->bed_id)
-                                        <div class="col-12 col-md-6">
+                                    @if ($alloc1->bed_id)
+                                        <div class="col-12 col-md-3">
                                             <div class="mb-3 form-group">
-                                                <label for="class_id" class="form-label">Bed ID</label>
-                                                <label class="form-control" for=""> {{  "H-".$admission->Bed->Room->Building->Hostel->name." ---> B-".$admission->Bed->Room->Building->name." ---> R-".$admission->Bed->Room->id."-(".$admission->Bed->Room->label.") ---> Bed-".$admission->bed_id }}</label> 
+                                                <label for="class_id" class="form-label">Hostel</label>
+                                                <label class="form-control" for=""> {{ $alloc1->Bed->Room->Floor->Building->Hostel->name }}</label> 
                                             </div>
                                         </div>
                                     @endif
-                                    @if ($alloc[0]->fee_id)
+                                    @if ($alloc1->bed_id)
                                         <div class="col-12 col-md-3">
                                             <div class="mb-3 form-group">
-                                                <label for="class_id" class="form-label">Fee</label>
-                                                <label class="form-control" for=""> {{ $alloc[0]->Fee->type }} Seated ---> {{ $alloc[0]->Fee->amount }} Rs.</label> 
+                                                <label for="Building" class="form-label">Building</label>
+                                                <label class="form-control" for="Building"> {{ $alloc1->Bed->Room->Floor->Building->name }}</label> 
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if ($alloc1->bed_id)
+                                        <div class="col-12 col-md-3">
+                                            <div class="mb-3 form-group">
+                                                <label for="Floor" class="form-label">Floor</label>
+                                                <label class="form-control" for="Floor"> {{ $alloc1->Bed->Room->Floor->floor }}</label> 
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if ($alloc1->bed_id)
+                                        <div class="col-12 col-md-3">
+                                            <div class="mb-3 form-group">
+                                                <label for="Room" class="form-label">Room</label>
+                                                <label class="form-control" for="Room"> {{  $alloc1->Bed->Room->id."-(".$alloc1->Bed->Room->label.")"; }}</label> 
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if ($alloc1->bed_id)
+                                        <div class="col-12 col-md-3">
+                                            <div class="mb-3 form-group">
+                                                <label for="Seated" class="form-label">Seated</label>
+                                                <label class="form-control" for="Seated"> {{ $alloc1->Bed->Room->Seated->seated." Seated"; }}</label> 
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if ($alloc1)
+                                        <div class="col-12 col-md-3">
+                                            <div class="mb-3 form-group">
+                                                <label for="Fee" class="form-label">Fee</label>
+                                                <label class="form-control" for="Fee"> {{ $alloc1->Fee->amount." Rs."; }} </label> 
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if ($alloc1->bed_id)
+                                        <div class="col-12 col-md-3">
+                                            <div class="mb-3 form-group">
+                                                <label for="Bed ID" class="form-label">Bed ID</label>
+                                                <label class="form-control" for="Bed ID"> {{  $alloc1->bed_id }}</label> 
                                             </div>
                                         </div>
                                     @endif
@@ -197,8 +463,8 @@
                                     </div>
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
-                                            <label for="academic_year_id" class="form-label">Admission ID</label>
-                                            <input type="number"class="form-control  @error('admissionid2') is-invalid @enderror" wire:model="admissionid2">
+                                            <label for="admissionid2" class="form-label">Admission ID</label>
+                                            <input type="number"class="form-control  @error('admissionid2') is-invalid @enderror" wire:model.debounce.500ms="admissionid2">
                                             @error('admissionid2')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -211,7 +477,7 @@
                                             <div class="col-12 col-md-3">
                                                 <div class="mb-3 form-group">
                                                     <label for="academic_year_id" class="form-label">Academic Year</label>
-                                                    <label  class="form-control"for=""> {{ $admission2->AcademicYear->year }}</label>
+                                                    <label  class="form-control"for="academic_year_id"> {{ $admission2->AcademicYear->year }}</label>
                                                 </div>
                                             </div>
                                         @endif
@@ -219,7 +485,7 @@
                                             <div class="col-12 col-md-3">
                                                 <div class="mb-3 form-group">
                                                     <label for="student_id" class="form-label">Student Name</label>
-                                                    <label class="form-control" for=""> {{ $admission2->Student->name }}</label>
+                                                    <label class="form-control" for="student_id"> {{ $admission2->Student->name }}</label>
                                                 </div>
                                             </div>
                                         @endif
@@ -227,31 +493,71 @@
                                             <div class="col-12 col-md-3">
                                                 <div class="mb-3 form-group">
                                                     <label for="class_id" class="form-label">Class Name</label>
-                                                    <label class="form-control" for=""> {{ $admission2->Class->name }}</label>
+                                                    <label class="form-control" for="class_id"> {{ $admission2->Class->name }}</label>
                                                 </div>
                                             </div>
                                         @endif
                                         @if (isset($admission2->Class->type))
                                             <div class="col-12 col-md-3">
                                                 <div class="mb-3 form-group">
-                                                    <label for="class_id" class="form-label">Class Type</label>
-                                                    <label class="form-control" for="">{{ $admission2->Class->type}}</label>
+                                                    <label for="student_level" class="form-label">Student Level</label>
+                                                    <label class="form-control" for="student_level">{{ $admission2->Class->type}}</label>
                                                 </div>
                                             </div>
                                         @endif
-                                        @if (isset($admission2->bed_id))
-                                            <div class="col-12 col-md-6">
-                                                <div class="mb-3 form-group">
-                                                    <label for="class_id" class="form-label">Bed ID</label>
-                                                    <label class="form-control" for=""> {{  "H-".$admission2->Bed->Room->Building->Hostel->name." ---> B-".$admission2->Bed->Room->Building->name." ---> R-".$admission2->Bed->Room->id."-(".$admission2->Bed->Room->label.") ---> Bed-".$admission2->bed_id }}</label> 
-                                                </div>
-                                            </div>
-                                        @endif
-                                        @if (isset($alloc[1]->fee_id))
+                                        @if (isset($alloc2->bed_id))
                                             <div class="col-12 col-md-3">
                                                 <div class="mb-3 form-group">
-                                                    <label for="class_id" class="form-label">Fee</label>
-                                                    <label class="form-control" for=""> {{ $alloc[1]->Fee->type }} Seated ---> {{ $alloc[1]->Fee->amount }} Rs.</label> 
+                                                    <label for="class_id" class="form-label">Hostel</label>
+                                                    <label class="form-control" for=""> {{ $alloc2->Bed->Room->Floor->Building->Hostel->name }}</label> 
+                                                </div>
+                                            </div>
+                                        @endif
+                                        @if (isset($alloc2->bed_id))
+                                            <div class="col-12 col-md-3">
+                                                <div class="mb-3 form-group">
+                                                    <label for="Building" class="form-label">Building</label>
+                                                    <label class="form-control" for="Building"> {{ $alloc2->Bed->Room->Floor->Building->name }}</label> 
+                                                </div>
+                                            </div>
+                                        @endif
+                                        @if (isset($alloc2->bed_id))
+                                            <div class="col-12 col-md-3">
+                                                <div class="mb-3 form-group">
+                                                    <label for="Floor" class="form-label">Floor</label>
+                                                    <label class="form-control" for="Floor"> {{ $alloc2->Bed->Room->Floor->floor }}</label> 
+                                                </div>
+                                            </div>
+                                        @endif
+                                        @if (isset($alloc2->bed_id))
+                                            <div class="col-12 col-md-3">
+                                                <div class="mb-3 form-group">
+                                                    <label for="Room" class="form-label">Room</label>
+                                                    <label class="form-control" for="Room"> {{  $alloc2->Bed->Room->id."-(".$alloc2->Bed->Room->label.")"; }}</label> 
+                                                </div>
+                                            </div>
+                                        @endif
+                                        @if (isset($alloc2->bed_id))
+                                            <div class="col-12 col-md-3">
+                                                <div class="mb-3 form-group">
+                                                    <label for="Seated" class="form-label">Seated</label>
+                                                    <label class="form-control" for="Seated"> {{ $alloc2->Bed->Room->Seated->seated." Seated"; }}</label> 
+                                                </div>
+                                            </div>
+                                        @endif
+                                        @if (isset($alloc2))
+                                            <div class="col-12 col-md-3">
+                                                <div class="mb-3 form-group">
+                                                    <label for="Fee" class="form-label">Fee</label>
+                                                    <label class="form-control" for="Fee"> {{ $alloc2->Fee->amount." Rs."; }} </label> 
+                                                </div>
+                                            </div>
+                                        @endif
+                                        @if (isset($alloc2->bed_id))
+                                            <div class="col-12 col-md-3">
+                                                <div class="mb-3 form-group">
+                                                    <label for="Bed ID" class="form-label">Bed ID</label>
+                                                    <label class="form-control" for="Bed ID"> {{  $alloc2->bed_id }}</label> 
                                                 </div>
                                             </div>
                                         @endif
@@ -281,9 +587,9 @@
                                 <h2>Data Allocations</h2>
                             </div>
                             <div class="float-end">
-                                {{-- <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
+                                <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
                                     Add Allocation<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
-                                </a> --}}
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -328,18 +634,18 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Admission ID</th>
-                                            <th>Academic Year</th>
+                                            <th>A ID</th>
+                                            <th>Year</th>
                                             <th>Student Name</th>
                                             <th>Class Name</th>
                                             <th>Bed Status</th>
                                             <th>Fee</th>
+                                            <th>A Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($allocations as $key => $item)
-                                            @if ( $item->Admission->status==1)
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->Admission->id }}</td>
@@ -347,10 +653,10 @@
                                                 <td>{{ $item->Admission->Student->name ?$item->Admission->Student->name:$item->Admission->Student->username; }}</td>
                                                 <td>{{ $item->Admission->Class->name }}</td>
                                                 <td>
-                                                    @if ($item->Admission->bed_id==null)
+                                                    @if ($item->bed_id==null)
                                                         <span class="badge bg-danger text-white">Not Allocated</span>
                                                     @else
-                                                        <span class="badge bg-success text-white">Allocated</span><span class="badge bg-success mx-1 text-white">{{ $item->Admission->bed_id }}</span>
+                                                        <span class="badge bg-success text-white">Allocated</span><span class="badge bg-success mx-1 text-white">{{ $item->bed_id }}</span>
                                                     @endif
                                                 </td>
                                                 <td>
@@ -361,13 +667,22 @@
                                                     @endif
                                                 </td>
                                                 <td>
+                                                    @if ( $item->Admission->status == '0')
+                                                        <span class="badge bg-warning text-white">Wating</span>
+                                                    @elseif ( $item->Admission->status == '1')
+                                                        <span class="badge bg-success text-white">Confirmed</span>
+                                                    @else
+                                                        <span class="badge bg-danger text-white">Canceled</span>
+                                                    @endif
+                                                </td>
+                                                <td>
                                                     <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-checkbox-marked mx-1"></i><i class="mdi mdi-hotel"></i></a>
-                                                    <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
-                                                    <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
-                                                    {{-- <a wire:loading.attr="disabled" wire:click="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-trash-can"></i></a> --}}
+                                                    <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning waves-effect waves-light"><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                    <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                    <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-pencil"></i></a>
+                                                    <a wire:loading.attr="disabled" wire:click="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-trash-can"></i></a>
                                                 </td>
                                             </tr>
-                                            @endif
                                         @endforeach
                                     </tbody>
                                 </table>

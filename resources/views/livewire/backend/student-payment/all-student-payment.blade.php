@@ -24,58 +24,85 @@
                         <div class="card-body">
                             <form  wire:submit.prevent="save" method="post" action="" id="myForm">
                                 @csrf
-                                <div class="mb-3 form-group">
-                                    <label for="academic_year_id" class="form-label">Select Academic Year</label>
-                                    <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
-                                        <option value="" hidden>Select Academic Year</option>
-                                        @foreach ($academic_years as $item1)
-                                            <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
-                                        @endforeach
-                                    </select>
-                                    @error('academic_year_id')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="academic_year_id" class="form-label">Select Academic Year</label>
+                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
+                                                <option value="" hidden>Select Academic Year</option>
+                                                @foreach ($academic_years as $item1)
+                                                    <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
+                                                @endforeach
+                                            </select>
+                                            @error('academic_year_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="admission_id" class="form-label">Select Admission</label>
-                                    <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model="admission_id" >
-                                        <option value="" hidden>Select Admission</option>
-                                        @foreach ($admissions as $item1)
-                                            <option  value="{{ $item1->id }}">Admisstion ID : {{ $item1->id }} --> Year : {{  $item1->AcademicYear->year }} --> Student Name : {{ $item1->Student->name==null?$item1->Student->username:$item1->Student->name; }} </option>
-                                        @endforeach
-                                    </select>
-                                    @error('admission_id')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="admission_id" class="form-label">Select Admission</label>
+                                            <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model="admission_id" >
+                                                <option value="" hidden>Select Admission</option>
+                                                @foreach ($admissions as $item1)
+                                                    <option  value="{{ $item1->id }}">Admisstion ID : {{ $item1->id }} --> Year : {{  $item1->AcademicYear->year }} --> Student Name : {{ $item1->Student->name==null?$item1->Student->username:$item1->Student->name; }} </option>
+                                                @endforeach
+                                            </select>
+                                            @error('admission_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="student_id" class="form-label">Select Student</label>
-                                    <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model="student_id" >
-                                        <option value="" hidden>Select Student</option>
-                                        @foreach ($students as $item1)
-                                            <option  value="{{ $item1->id }}"> {{ $item1->name!=null? $item1->name: $item1->username; }} </option>
-                                        @endforeach
-                                    </select>
-                                    @error('student_id')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="student_id" class="form-label">Select Student</label>
+                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model="student_id" >
+                                                <option value="" hidden>Select Student</option>
+                                                @foreach ($students as $item1)
+                                                    <option  value="{{ $item1->id }}"> {{ $item1->name!=null? $item1->name: $item1->username; }} </option>
+                                                @endforeach
+                                            </select>
+                                            @error('student_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="totalamount" class="form-label">Total Amount</label>
-                                    <input type="text" min="0" class="form-control @error('totalamount') is-invalid @enderror" wire:model="totalamount" value="{{ old('totalamount') }}" id="totalamount" placeholder="Enter Amount">
-                                    @error('totalamount')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="seated_id" class="form-label">Select Seated</label>
+                                            <select class="form-select @error('seated_id') is-invalid @enderror" id="seated_id" wire:model="seated_id" >
+                                                <option value="" hidden>Select Seated</option>
+                                                @foreach ($seateds as $item1)
+                                                    <option  value="{{ $item1->id }}"> {{ $item1->seated }} Seated</option>
+                                                @endforeach
+                                            </select>
+                                            @error('seated_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="totalamount" class="form-label">Total Amount</label>
+                                            <label for="totalamount"class="form-control @error('totalamount') is-invalid @enderror" wire:model="totalamount">{{ isset($totalamount)?$totalamount.' Rs.':''; }} </label>
+                                            {{-- <input type="text" min="0" @if (1) readonly @endif class="form-control readonly @error('totalamount') is-invalid @enderror" wire:model="totalamount" value="{{ old('totalamount') }}" id="totalamount" placeholder="Enter Fee Amount"> --}}
+                                            @error('totalamount')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
                                 </div>
-                                <button type="submit"  class="btn btn-primary waves-effect waves-light">Save Data</button>
+                               <button type="submit"  class="btn btn-primary waves-effect waves-light">Save Data</button>
                             </form>
                         </div>
                     </div>
@@ -105,56 +132,83 @@
                         <div class="card-body">
                             <form  wire:submit.prevent="update({{ isset($C_id)?$C_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
-                                <div class="mb-3 form-group">
-                                    <label for="academic_year_id" class="form-label">Select Academic Year</label>
-                                    <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
-                                        <option value="" hidden>Select Academic Year</option>
-                                        @foreach ($academic_years as $item1)
-                                            <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
-                                        @endforeach
-                                    </select>
-                                    @error('academic_year_id')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="academic_year_id" class="form-label">Select Academic Year</label>
+                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
+                                                <option value="" hidden>Select Academic Year</option>
+                                                @foreach ($academic_years as $item1)
+                                                    <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
+                                                @endforeach
+                                            </select>
+                                            @error('academic_year_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="admission_id" class="form-label">Select Admission</label>
-                                    <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model="admission_id" >
-                                        <option value="" hidden>Select Admission</option>
-                                        @foreach ($admissions as $item1)
-                                            <option  value="{{ $item1->id }}"> Admisstion ID : {{ $item1->id }} --> Year : {{  $item1->AcademicYear->year }} --> Student Name : {{ $item1->Student->name==null?$item1->Student->username:$item1->Student->name; }} </option>
-                                        @endforeach
-                                    </select>
-                                    @error('admission_id')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="admission_id" class="form-label">Select Admission</label>
+                                            <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model="admission_id" >
+                                                <option value="" hidden>Select Admission</option>
+                                                @foreach ($admissions as $item1)
+                                                    <option  value="{{ $item1->id }}">Admisstion ID : {{ $item1->id }} --> Year : {{  $item1->AcademicYear->year }} --> Student Name : {{ $item1->Student->name==null?$item1->Student->username:$item1->Student->name; }} </option>
+                                                @endforeach
+                                            </select>
+                                            @error('admission_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="student_id" class="form-label">Select Student</label>
-                                    <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model="student_id" >
-                                        <option value="" hidden>Select Student</option>
-                                        @foreach ($students as $item1)
-                                            <option  value="{{ $item1->id }}"> {{ $item1->name!=null? $item1->name: $item1->username; }} </option>
-                                        @endforeach
-                                    </select>
-                                    @error('student_id')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="student_id" class="form-label">Select Student</label>
+                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model="student_id" >
+                                                <option value="" hidden>Select Student</option>
+                                                @foreach ($students as $item1)
+                                                    <option  value="{{ $item1->id }}"> {{ $item1->name!=null? $item1->name: $item1->username; }} </option>
+                                                @endforeach
+                                            </select>
+                                            @error('student_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 form-group">
-                                    <label for="totalamount" class="form-label">Total Amount</label>
-                                    <input type="text" min="0" class="form-control @error('totalamount') is-invalid @enderror" wire:model="totalamount" value="{{ old('totalamount') }}" id="totalamount" placeholder="Enter Amount">
-                                    @error('totalamount')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="seated_id" class="form-label">Select Seated</label>
+                                            <select class="form-select @error('seated_id') is-invalid @enderror" id="seated_id" wire:model="seated_id" >
+                                                <option value="" hidden>Select Seated</option>
+                                                @foreach ($seateds as $item1)
+                                                    <option  value="{{ $item1->id }}"> {{ $item1->seated }} Seated</option>
+                                                @endforeach
+                                            </select>
+                                            @error('seated_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="totalamount" class="form-label">Total Amount</label>
+                                            <label for="totalamount"class="form-control @error('totalamount') is-invalid @enderror" wire:model="totalamount">{{ isset($totalamount)?$totalamount.' Rs.':''; }} </label>
+                                            {{-- <input type="text" min="0" class="form-control @error('totalamount') is-invalid @enderror" wire:model="totalamount" value="{{ old('totalamount') }}" id="totalamount" placeholder="Enter Fee Amount"> --}}
+                                            @error('totalamount')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
                                 </div>
                                 <button type="submit"  class="btn btn-primary waves-effect waves-light">Update Data</button>
                             </form>
@@ -221,6 +275,8 @@
                                             <th>Admission ID</th>
                                             <th>Academic Year</th>
                                             <th>Student Name</th>
+                                            <th>Amount</th>
+                                            <th>Deposite</th>
                                             <th>Total Amount</th>
                                             <th>Status</th>
                                             <th>Action</th>
@@ -233,6 +289,8 @@
                                                 <td>{{ $item->Admission->id }}</td>
                                                 <td>{{ $item->AcademicYear->year}}</td>
                                                 <td>{{ $item->Student->name!=null? $item->Student->name: $item->Student->username; }}</td>
+                                                <td>{{ $item->amount }} Rs.</td>
+                                                <td>{{ $item->deposite }} Rs.</td>
                                                 <td>{{ $item->total_amount }} Rs.</td>
                                                 <td>
                                                     @if ( $item->status == '0')

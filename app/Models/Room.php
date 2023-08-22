@@ -4,7 +4,8 @@ namespace App\Models;
 
 
 use App\Models\Bed;
-use App\Models\Building;
+use App\Models\Floor;
+use App\Models\Seated;
 use App\Models\Facility;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,9 +26,14 @@ class Room extends Model
     {
         return $this->hasMany(Facility::class, 'room_id', 'id');
     }
-
-    public function Building()
+    
+    public function Seated()
     {
-        return $this->belongsTo(Building::class, 'building_id', 'id');
+        return $this->belongsTo(Seated::class, 'seated_id', 'id');
+    }
+    
+    public function Floor()
+    {
+        return $this->belongsTo(Floor::class, 'floor_id', 'id');
     }
 }

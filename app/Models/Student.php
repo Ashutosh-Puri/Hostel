@@ -35,6 +35,7 @@ class Student extends Authenticatable implements MustVerifyEmail
         'member_id',
         'prn',
         'abc_id',
+        'cast_id',
         'eligibility_no',
         'last_login',
     ];

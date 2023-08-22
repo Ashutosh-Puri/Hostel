@@ -44,6 +44,9 @@
 
     <!-- Livewire JS -->
     @livewireScripts()
+    <!-- Livewire Turbolinks -->
+    <script src="{{ asset('assets/turbolinks/turbolinks.js') }}" data-turbolinks-eval="false" data-turbo-eval="false"></script>   
+</body>
 
     <!-- admin template -->
     <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --><!-- admin template -->

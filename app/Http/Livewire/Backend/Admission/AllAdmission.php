@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Backend\Admission;
 
 use App\Models\Bed;
 use App\Models\Cast;
+use App\Models\Quota;
 use App\Models\Classes;
 use App\Models\Student;
 use Livewire\Component;
@@ -25,6 +26,7 @@ class AllAdmission extends Component
     use WithFileUploads;
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
+    public $admissionfull=0;
     public $ad = '';
     public $s = '';
     public $a = '';
@@ -152,6 +154,26 @@ class AllAdmission extends Component
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
+        if ($propertyName === 'class_id') {
+            $this->checkfull();
+        }
+    }
+    public function checkfull()
+    {
+        $quota = Quota::where('academic_year_id', $this->academic_year_id)->where('class_id', $this->class_id)->first();
+        if ($quota) {
+            $maxCapacity = $quota->max_capacity;
+            $admissionCount = Admission::where('academic_year_id', $this->academic_year_id)->where('class_id', $this->class_id)->count();
+            if ($admissionCount >= $maxCapacity) {
+                $this->admissionfull=1;
+                $this->dispatchBrowserEvent('alert',[
+                    'type'=>'info',
+                    'message'=>"Admission Full In This  Academic Year For This class !!"
+                ]);
+            } else {
+                $this->admissionfull=0;
+            }
+        } 
     }
 
     public function setmode($mode)
@@ -197,85 +219,91 @@ class AllAdmission extends Component
     public function save()
     {
         $validatedData = $this->validate();
-        $student = Student::find($this->student_id);
-        if ($student){
-            $student->name = $this->name;
-            $student->mobile = $validatedData['mobile'];
-            $student->mother_name = $validatedData['mother_name'];
-            $student->dob = $validatedData['dob'];
-            $student->cast_id = $validatedData['cast_id'];
-            $student->parent_name = $validatedData['parent_name'];
-            $student->parent_mobile = $validatedData['parent_mobile'];
-            $student->parent_address = $validatedData['parent_address'];
-            $student->local_parent_name = $validatedData['local_parent_name'];
-            $student->local_parent_mobile = $validatedData['local_parent_mobile'];
-            $student->local_parent_address = $validatedData['local_parent_address'];
-            $student->blood_group = $validatedData['blood_group'];
-            $student->is_allergy = $validatedData['is_allergy'];
-            $student->is_ragging = $this->is_ragging == 1 ? '1' : '0';
-            $student->address_type = $this->address_type == 1 ? '1' : '0';
-            $student->member_id = $this->member_id;
-            if ($this->photo) {
-                if($student->photo)
-                {
-                    File::delete($student->photo);
+
+
+        if($this->admissionfull==0)
+        {
+            $student = Student::find($this->student_id);
+            if ($student){
+                $student->name = $this->name;
+                $student->mobile = $validatedData['mobile'];
+                $student->mother_name = $validatedData['mother_name'];
+                $student->dob = $validatedData['dob'];
+                $student->cast_id = $validatedData['cast_id'];
+                $student->parent_name = $validatedData['parent_name'];
+                $student->parent_mobile = $validatedData['parent_mobile'];
+                $student->parent_address = $validatedData['parent_address'];
+                $student->local_parent_name = $validatedData['local_parent_name'];
+                $student->local_parent_mobile = $validatedData['local_parent_mobile'];
+                $student->local_parent_address = $validatedData['local_parent_address'];
+                $student->blood_group = $validatedData['blood_group'];
+                $student->is_allergy = $validatedData['is_allergy'];
+                $student->is_ragging = $this->is_ragging == 1 ? '1' : '0';
+                $student->address_type = $this->address_type == 1 ? '1' : '0';
+                $student->member_id = $this->member_id;
+                if ($this->photo) {
+                    if($student->photo)
+                    {
+                        File::delete($student->photo);
+                    }
+                    $path = 'uploads/profile/photo/';
+                    $fileName = 'user-' . time(). '.' . $this->photo->getClientOriginalExtension();
+                    $this->photo->storeAs($path, $fileName, 'public');
+                    $student->photo = 'storage/' . $path . $fileName;
+                    $this->reset('photo');
                 }
-                $path = 'uploads/profile/photo/';
-                $fileName = 'user-' . time(). '.' . $this->photo->getClientOriginalExtension();
-                $this->photo->storeAs($path, $fileName, 'public');
-                $student->photo = 'storage/' . $path . $fileName;
-                $this->reset('photo');
+                $student->update();
+            }else{
+                $this->dispatchBrowserEvent('alert',[
+                    'type'=>'error',
+                    'message'=>"Student Not Found !!"
+                ]);
             }
-            $student->update();
-        }else{
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"Student Not Found !!"
-            ]);
-        }
-        $admission = new Admission;
-        if($admission){
-            $admission->academic_year_id =$validatedData['academic_year_id'];
-            $admission->student_id =$validatedData['student_id'];
-            $admission->class_id = $validatedData['class_id'];
-            $admission->status = '0';
-            $admission->save();
-        }else{
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"Admission Not Stored !!"
-            ]);
-        }
-        $allocation =new Allocation;
-        if($allocation){
-            $allocation->admission_id= $admission->id;
-            $allocation->save();
-        }else{
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"Allocation Not Stored !!"
-            ]);
-        }
-        $education = new StudentEducation;
-        if($education){
-            $education->admission_id = $admission->id;
-            $education->academic_year_id =$validatedData['last_academic_year_id'];
-            $education->student_id =$validatedData['student_id'];
-            $education->last_class_id = $validatedData['last_class_id'];
-            $education->sgpa = $validatedData['sgpa'];
-            $education->percentage = $validatedData['percentage'];
-            $education->save();
-            $this->resetinput();
-            $this->setmode('all');
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'success',
-                'message'=>"Admission Created Successfully !!"
-            ]);
-        }else{
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"Student Eduction Not Stored !!"
-            ]);
+    
+            $admission = new Admission;
+            if($admission){
+                $admission->academic_year_id =$validatedData['academic_year_id'];
+                $admission->student_id =$validatedData['student_id'];
+                $admission->class_id = $validatedData['class_id'];
+                $admission->status = '0';
+                $admission->save();
+            }else{
+                $this->dispatchBrowserEvent('alert',[
+                    'type'=>'error',
+                    'message'=>"Admission Not Stored !!"
+                ]);
+            }
+            $allocation =new Allocation;
+            if($allocation){
+                $allocation->admission_id= $admission->id;
+                $allocation->save();
+            }else{
+                $this->dispatchBrowserEvent('alert',[
+                    'type'=>'error',
+                    'message'=>"Allocation Not Stored !!"
+                ]);
+            }
+            $education = new StudentEducation;
+            if($education){
+                $education->admission_id = $admission->id;
+                $education->academic_year_id =$validatedData['last_academic_year_id'];
+                $education->student_id =$validatedData['student_id'];
+                $education->last_class_id = $validatedData['last_class_id'];
+                $education->sgpa = $validatedData['sgpa'];
+                $education->percentage = $validatedData['percentage'];
+                $education->save();
+                $this->resetinput();
+                $this->setmode('all');
+                $this->dispatchBrowserEvent('alert',[
+                    'type'=>'success',
+                    'message'=>"Admission Created Successfully !!"
+                ]);
+            }else{
+                $this->dispatchBrowserEvent('alert',[
+                    'type'=>'error',
+                    'message'=>"Student Eduction Not Stored !!"
+                ]);
+            }
         }
     }
 
@@ -470,53 +498,6 @@ class AllAdmission extends Component
         $status->update();
     }
 
-    public function cancel($id)
-    {
-        $admission=Admission::find($id);
-        if($admission){
-            if($admission->bed_id!=null)
-            {
-                $temp=$admission->bed_id;
-                $bed=Bed::find($temp);
-                $bed->status=0;
-                $bed->update();
-            }
-        }else{
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"Admisstion Not Found !!"
-            ]);
-        }
-
-        $allocation= Allocation::where('admission_id',$id)->first();
-        if($allocation){
-            $allocation->fee_id = null;
-            $allocation->update();
-        }else{
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"Allocation Not Found !!"
-            ]);
-        }
-        $studentpayment=StudentPayment::where('admission_id',$id)->first();
-        if($studentpayment)
-        {
-            $studentpayment->delete();
-        }else{
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"Student Payment Not Found !!"
-            ]);
-        }
-        $admission->bed_id=null;
-        $admission->status=2;
-        $admission->update();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Admission Cancelled Successfully !!"
-        ]);
-    }
 
     public function deleteconfirmation($id)
     {
@@ -526,7 +507,6 @@ class AllAdmission extends Component
 
     public function delete()
     {
-        $this->cancel($this->delete_id);
         $admission = Admission::find($this->delete_id);
         if ($admission)
         {
@@ -555,9 +535,9 @@ class AllAdmission extends Component
         }
     }
 
-
     public function render()
     {   
+
         $today = Carbon::today();
         $this->mindate=$minus15Years = $today->copy()->subYears(15)->format('Y-m-d');
         $this->name = $this->last_name." ".$this->first_name." ".$this->middle_name;

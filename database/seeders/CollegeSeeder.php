@@ -15,14 +15,26 @@ class CollegeSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create();
+        // $faker = Faker::create();
 
-        // Insert 1000 fake records into the Classes table
-        for ($i = 0; $i < 10; $i++) {
-            College::create([
-                'name' => $faker->unique()->name,
-                'status' => $faker->numberBetween(0, 1),
-            ]);
+        // // Insert 1000 fake records into the Classes table
+        // for ($i = 0; $i < 10; $i++) {
+        //     College::create([
+        //         'name' => $faker->unique()->name,
+        //         'status' => $faker->numberBetween(0, 1),
+        //     ]);
+        // }
+
+        $records = [
+            [   
+                'id'=>1,
+                'name' => "S. N. Arts, D. J. Malpani Commerce and B. N. Sarda Science College Sangamner",
+                'status' => 0,
+            ],
+        ];
+
+        foreach ($records as $record) {
+            College::create($record);
         }
     }
 }

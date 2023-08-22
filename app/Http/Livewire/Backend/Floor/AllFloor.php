@@ -1,38 +1,38 @@
 <?php
 
-namespace App\Http\Livewire\Backend\Fee;
+namespace App\Http\Livewire\Backend\Floor;
 
-use App\Models\Fee;
-use App\Models\Seated;
+use App\Models\Floor;
+use App\Models\Hostel;
 use Livewire\Component;
-use App\Models\AcademicYear;
+use App\Models\Building;
 use Livewire\WithPagination;
 use Illuminate\Validation\Rule;
 
-class AllFee extends Component
-{
-
+class AllFloor extends Component
+{   
     use WithPagination;
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
-    public $search = '';
+    public $floor_number = '';
+    public $building_name = '';
     public $per_page = 10;
     public $mode='all';
-    public $seated_id;
-    public $academic_year_id;
+    public $floor;
     public $status;
-    public $amount;
+    public $hostel_id;
+    public $building_id;
     public $c_id;
     public $current_id;
 
     protected function rules()
     {
         return [
-            'academic_year_id' => ['required','integer'],
-            'amount' => ['required', 'numeric'],
-            'seated_id' => ['required','integer',Rule::unique('fees')->where(function ($query) {
-                return $query->where('academic_year_id', $this->academic_year_id);
-            })->ignore($this->current_id)],
+            'floor' => ['required', 'integer', 'min:0', Rule::unique('floors', 'floor')->where(function ($query) {
+                return $query->where('building_id', $this->building_id);
+            })->ignore($this->current_id ?? null)],
+            'building_id'=>['required','integer'],
+            'hostel_id'=>['required','integer'],
         ];
     }
 
@@ -43,12 +43,13 @@ class AllFee extends Component
 
     public function resetinput()
     {
-        $this->search=null;
-        $this->academic_year_id=null;
-        $this->seated_id=null;
+        $this->hostel_id=null;
+        $this->building_id=null;
+        $this->floor=null;
         $this->status=null;
-        $this->amount=null;
         $this->c_id=null;
+        $this->floor_number =null;
+        $this->building_name =null;
         $this->current_id=null;
     }
 
@@ -59,19 +60,18 @@ class AllFee extends Component
 
     public function save()
     {
-        $validatedData = $this->validate();
-        $fee= new Fee;
-        if($fee){
-            $fee->academic_year_id = $validatedData['academic_year_id'];
-            $fee->seated_id = $validatedData['seated_id'];
-            $fee->amount = $validatedData['amount'];
-            $fee->status = $this->status==1?1:0;
-            $fee->save();
+        $validatedData = $validatedData = $this->validate();
+        $floor= new Floor;
+        if($floor){
+            $floor->floor = $validatedData['floor'];
+            $floor->building_id = $validatedData['building_id'];
+            $floor->status = $this->status==1?1:0;
+            $floor->save();
             $this->resetinput();
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'success',
-                'message'=>"Fee Created Successfully !!"
+                'message'=>"Floor Created Successfully !!"
             ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
@@ -84,13 +84,13 @@ class AllFee extends Component
     public function edit($id)
     {
         $this->current_id=$id;
-        $fee = Fee::find($id);
-        if($fee){
-            $this->C_id=$fee->id;
-            $this->academic_year_id=$fee->academic_year_id;
-            $this->seated_id = $fee->seated_id;
-            $this->status = $fee->status;
-            $this->amount = $fee->amount;
+        $floor = Floor::find($id);
+        if($floor){
+            $this->C_id=$floor->id;
+            $this->hostel_id=$floor->Building->Hostel->id;
+            $this->building_id=$floor->Building->id;
+            $this->status = $floor->status;
+            $this->floor = $floor->floor;
             $this->setmode('edit');
         }else{
             $this->dispatchBrowserEvent('alert',[
@@ -103,18 +103,17 @@ class AllFee extends Component
     public function update($id)
     {
         $validatedData = $this->validate();
-        $fee = Fee::find($id);
-        if($fee){
-            $fee->academic_year_id = $validatedData['academic_year_id'];
-            $fee->seated_id = $validatedData['seated_id'];
-            $fee->amount = $validatedData['amount'];
-            $fee->status = $this->status==1?'1':'0';
-            $fee->update();
+        $floor = Floor::find($id);
+        if($floor){
+            $floor->floor = $validatedData['floor'];
+            $floor->building_id = $validatedData['building_id'];
+            $floor->status = $this->status==1?1:0;
+            $floor->update();
             $this->resetinput();
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'success',
-                'message'=>"Fee Updated Successfully !!"
+                'message'=>"Floor Updated Successfully !!"
             ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
@@ -132,15 +131,14 @@ class AllFee extends Component
 
     public function delete()
     {
-        $fee = Fee::find($this->delete_id);
-        if($fee){
-            $fee->delete();
+        $floor = Floor::find($this->delete_id);
+        if($floor){
+            $floor->delete();
             $this->delete_id=null;
-            $this->resetinput();
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'success',
-                'message'=>"Fee Deleted Successfully !!"
+                'message'=>"Floor Deleted Successfully !!"
             ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
@@ -152,7 +150,7 @@ class AllFee extends Component
 
     public function status($id)
     {
-        $status = Fee::find($id);
+        $status = Floor::find($id);
         if($status->status==1)
         {   
             $status->status=0;
@@ -165,15 +163,15 @@ class AllFee extends Component
 
     public function render()
     {   
-        $seateds=Seated::where('status',0)->orderBy('seated', 'ASC')->get();
-        $academic_years=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
-        $feesQuery = Fee::orderBy('academic_year_id', 'ASC');
-        if ($this->search) {
-            $feesQuery->whereHas('AcademicYear', function ($query) {
-                $query->where('year', 'like', '%' . $this->search . '%');
+        $hostels=Hostel::where('status',0)->get();
+        $buildings=Building::where('status',0)->where('hostel_id',$this->hostel_id)->get();
+        $query = Floor::where('status',0)->orderBy('floor', 'ASC');
+        if ($this->building_name) {
+            $query->whereHas('Building', function ($query) {
+                $query->where('name', 'like', '%' . $this->building_name . '%');
             });
         }
-        $fees = $feesQuery->paginate($this->per_page);
-        return view('livewire.backend.fee.all-fee',compact('academic_years','fees','seateds'))->extends('layouts.admin.admin')->section('admin');
+        $floors = $query->where('floor', 'like',$this->floor_number. '%')->paginate($this->per_page);
+        return view('livewire.backend.floor.all-floor',compact('floors','buildings','hostels'))->extends('layouts.admin.admin')->section('admin');
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Room;
+use App\Models\Floor;
 use App\Models\Hostel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,9 +13,9 @@ class Building extends Model
     protected $guarded = [];
 
 
-    public function Rooms()
+    public function Floors()
     {
-        return $this->hasMany(Room::class, 'building_id', 'id');
+        return $this->hasMany(Floor::class, 'building_id', 'id');
     }
 
     public function Hostel()

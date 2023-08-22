@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('fees', function (Blueprint $table) {
             $table->id()->index();;
             $table->unsignedBigInteger('academic_year_id');
-            $table->tinyInteger('type')->comment('2-seated ,3-seated');
+            $table->unsignedBigInteger('seated_id');
             $table->decimal('amount', 10, 2);
             $table->tinyInteger('status')->nullable()->default('0')->comment('0-Active ,1-In Active');
             $table->timestamps();
             $table->foreign('academic_year_id')->references('id')->on('academic_years')->onDelete('cascade');
+            $table->foreign('seated_id')->references('id')->on('seateds')->onDelete('cascade');
         });
     }
 

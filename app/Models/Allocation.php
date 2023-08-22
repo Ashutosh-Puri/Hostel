@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Bed;
 use App\Models\Fee;
 use App\Models\Classes;
 use App\Models\Admission;
@@ -20,7 +21,10 @@ class Allocation extends Model
         return $this->belongsTo(Fee::class, 'fee_id', 'id');
     }
 
-   
+    public function Bed()
+    {
+        return $this->belongsTo(Bed::class, 'bed_id', 'id');
+    }
 
     public function Admission()
     {

@@ -13,10 +13,12 @@ use App\Http\Livewire\Backend\Room\AllRoom;
 use App\Http\Livewire\Backend\Rule\AllRule;
 use App\Http\Livewire\Backend\Admin\AllAdmin;
 use App\Http\Livewire\Backend\Class\AllClass;
+use App\Http\Livewire\Backend\Floor\AllFloor;
 use App\Http\Livewire\Backend\Qutota\AllQuota;
 use App\Http\Livewire\Backend\Admin\AdminLogin;
 use App\Http\Livewire\Backend\Hostel\AllHostel;
 use App\Http\Livewire\Backend\Notice\AllNotice;
+use App\Http\Livewire\Backend\Seated\AllSeated;
 use App\Http\Livewire\Frontend\StudentDashboard;
 use App\Http\Livewire\Backend\College\AllCollege;
 use App\Http\Livewire\Backend\Student\AllStudent;
@@ -150,6 +152,12 @@ Route::middleware(['auth:admin','check.role:superadmin'])->group(function () {
     
     // All Notice
     Route::get('all/notices',AllNotice::class)->name('all_notice');
+
+    // All Seated
+    Route::get('all/seateds',AllSeated::class)->name('all_seated');
+
+    // All Floor
+    Route::get('all/floors',AllFloor::class)->name('all_floor');
 });
 
 
