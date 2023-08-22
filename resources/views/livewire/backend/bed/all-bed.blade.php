@@ -308,6 +308,7 @@
                                             <th>Building</th>
                                             <th>Floor</th>
                                             <th>Room</th>
+                                            <th>Seated</th>
                                             <th>Bed</th>
                                             <th>Status</th>
                                             <th>Action</th>
@@ -360,6 +361,7 @@
                                                      Floor
                                                 </td>
                                                 <td>{{ $item->Room->id  }} - ( {{ $item->Room->label }} )</td>
+                                                <td>{{ $item->Room->Seated->seated." Seated";  }}</td>
                                                 <td>{{ $item->id }}</td>
                                                 <td>
                                                     @if ( $item->status == '0')

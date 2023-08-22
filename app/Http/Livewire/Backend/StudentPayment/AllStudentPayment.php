@@ -28,6 +28,7 @@ class AllStudentPayment extends Component
     public $student_id;
     public $seated_id;
     public $c_id;
+    public $deposite=0.00;
 
     public function resetinput()
     {
@@ -38,6 +39,7 @@ class AllStudentPayment extends Component
         $this->academic_year_id= null;
         $this->admission_id= null;
         $this->seated_id= null;
+        $this->deposite= null;
         $this->c_id= null;
     }
 
@@ -49,6 +51,7 @@ class AllStudentPayment extends Component
             'academic_year_id' => ['required','integer'],
             'admission_id' => ['required','integer'],
             'student_id' => ['required','integer'],
+            'deposite' => ['required','numeric'],
         ];
     }
     public function messages()
@@ -76,7 +79,9 @@ class AllStudentPayment extends Component
             $studentpayment->academic_year_id = $validatedData['academic_year_id'];
             $studentpayment->student_id = $validatedData['student_id'];
             $studentpayment->admission_id = $validatedData['admission_id'];
-            $studentpayment->total_amount = $this->totalamount;
+            $studentpayment->deposite = $validatedData['deposite'];
+            $studentpayment->amount = $this->totalamount;
+            $studentpayment->total_amount = ($this->totalamount - $validatedData['deposite']);
             $studentpayment->save();
             $this->resetinput();
             $this->setmode('all');
@@ -109,6 +114,7 @@ class AllStudentPayment extends Component
             $this->C_id=$studentpayment->id;
             $this->academic_year_id=$studentpayment->academic_year_id;
             $this->student_id = $studentpayment->student_id;
+            $this->deposite = $studentpayment->deposite;
             $this->admission_id = $studentpayment->admission_id;
             $this->setmode('edit');
         }else{
@@ -127,7 +133,9 @@ class AllStudentPayment extends Component
             $studentpayment->academic_year_id = $validatedData['academic_year_id'];
             $studentpayment->student_id = $validatedData['student_id'];
             $studentpayment->admission_id = $validatedData['admission_id'];
-            $studentpayment->total_amount = $this->totalamount;
+            $studentpayment->deposite = $validatedData['deposite'];
+            $studentpayment->amount = $this->totalamount;
+            $studentpayment->total_amount = ($this->totalamount - $validatedData['deposite']);
             $studentpayment->update();
             $this->resetinput();
             $this->setmode('all');

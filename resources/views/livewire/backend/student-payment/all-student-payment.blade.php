@@ -101,6 +101,17 @@
                                             @enderror
                                         </div>
                                     </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="deposite" class="form-label">Deposite</label>
+                                            <input type="text" min="0"  class="form-control readonly @error('deposite') is-invalid @enderror" wire:model="deposite" value="{{ old('deposite') }}" id="deposite" placeholder="Enter Fee Amount">
+                                            @error('deposite')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
                                 </div>
                                <button type="submit"  class="btn btn-primary waves-effect waves-light">Save Data</button>
                             </form>
@@ -209,6 +220,17 @@
                                             @enderror
                                         </div>
                                     </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="deposite" class="form-label">Deposite</label>
+                                            <input type="text" min="0"  class="form-control readonly @error('deposite') is-invalid @enderror" wire:model="deposite" value="{{ old('deposite') }}" id="deposite" placeholder="Enter Fee Amount">
+                                            @error('deposite')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
                                 </div>
                                 <button type="submit"  class="btn btn-primary waves-effect waves-light">Update Data</button>
                             </form>
@@ -291,7 +313,15 @@
                                                 <td>{{ $item->Student->name!=null? $item->Student->name: $item->Student->username; }}</td>
                                                 <td>{{ $item->amount }} Rs.</td>
                                                 <td>{{ $item->deposite }} Rs.</td>
-                                                <td>{{ $item->total_amount }} Rs.</td>
+                                                <td>
+                                                    @if ( $item->total_amount>0)
+                                                        <span class="badge p-2 bg-success text-white">{{ $item->total_amount }} Rs.</span>
+                                                    @elseif ( $item->total_amount<0)
+                                                        <span class="badge p-2 bg-danger text-white">{{ $item->total_amount }} Rs.</span>
+                                                    @else
+                                                        <span class="badge p-2 bg-primary text-white">{{ $item->total_amount }} Rs.</span>
+                                                    @endif
+                                                </td>
                                                 <td>
                                                     @if ( $item->status == '0')
                                                         <span class="badge bg-warning text-white">Not Paid</span>
