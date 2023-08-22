@@ -14,10 +14,8 @@ return new class extends Migration
         Schema::create('allocations', function (Blueprint $table) {
             $table->id()->index();
             $table->unsignedBigInteger('admission_id');
-            $table->unsignedBigInteger('fee_id')->nullable();
             $table->unsignedBigInteger('bed_id')->nullable();
             $table->foreign('admission_id')->references('id')->on('admissions')->onDelete('cascade');
-            $table->foreign('fee_id')->references('id')->on('fees')->onDelete('cascade');
             $table->foreign('bed_id')->references('id')->on('beds')->onDelete('cascade');
             $table->timestamps();
         });

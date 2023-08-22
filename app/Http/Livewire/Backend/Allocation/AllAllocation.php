@@ -231,7 +231,6 @@ class AllAllocation extends Component
                         }
                         if($allocation)
                         {
-                            $allocation->fee_id=$fee->id;
                             $allocation->bed_id=$validatedData['bed_id'];
                             $allocation->update();
                         }
@@ -269,7 +268,6 @@ class AllAllocation extends Component
                             $allocation=Allocation::where('admission_id',$admissionid)->first();
                             if($allocation)
                             {
-                                $allocation->fee_id=$fee->id;
                                 $allocation->bed_id=$validatedData['bed_id'];
                                 $allocation->update();
                             }
@@ -303,7 +301,7 @@ class AllAllocation extends Component
     
     public function exchangebed($id)
     {   
-        $this->validate([
+         $this->validate([
             'admissionid2' => ['required'],
         ]);
         $add1 = Admission::find($id);
@@ -315,24 +313,29 @@ class AllAllocation extends Component
             $all2 = Allocation::where('admission_id', $this->admissionid2)->first();
 
             if ($all1 && $all2) 
-            {
-                $fee1=Fee::find( $all1->fee_id);
-                $fee2=Fee::find( $all2->fee_id);
-                if($fee1 && $fee2)
+            {   
+                $b1=Bed::find($all1->bed_id);
+                $b2=Bed::find($all2->bed_id);
+                if($b1 && $b2)
                 {
-                    $payment1=StudentPayment::where('admission_id', $id)->first();
-                    $payment2=StudentPayment::where('admission_id', $this->admissionid2)->first();
-                    if($payment1 && $payment2)
-                    {   
-                        $payment1->total_amount = ($fee2->amount - $payment1->deposite);  //2000-0 =2000
-                        $payment2->total_amount = ($fee1->amount- $payment2->deposite); //1000-0=1000
-
-                        $payment1->amount= $fee2->amount;
-                        $payment2->amount=$fee1->amount;
-                        $payment1->update();
-                        $payment2->update();
-                    }
+                    $fee1=Fee::where('seated_id',$b1->Room->Seated->id)->first();
+                    $fee2=Fee::where('seated_id',$b2->Room->Seated->id)->first();
+                    if($fee1 && $fee2)
+                    {
+                        $payment1=StudentPayment::where('admission_id', $id)->first();
+                        $payment2=StudentPayment::where('admission_id', $this->admissionid2)->first();
+                        if($payment1 && $payment2)
+                        {   
+                            $payment1->total_amount = ($fee2->amount - $payment1->deposite);
+                            $payment2->total_amount = ($fee1->amount- $payment2->deposite); 
+                            $payment1->amount= $fee2->amount;
+                            $payment2->amount=$fee1->amount;
+                            $payment1->update();
+                            $payment2->update();
+                        }
+                    } 
                 }
+
                 $temp1= $all1->bed_id;
                 $all1->bed_id= $all2->bed_id;
                 $all2->bed_id=$temp1;
@@ -351,6 +354,7 @@ class AllAllocation extends Component
                 'type'=>'success',
                 'message'=>"Bed Exchanged Successfully !!"
             ]);
+
         }else
         {
             $this->dispatchBrowserEvent('alert',[

@@ -6,6 +6,7 @@ use App\Models\Allocation;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Backend\Bed\AllBed;
 use App\Http\Livewire\Backend\Fee\AllFee;
+use App\Http\Livewire\Guestend\Home\Home;
 use App\Http\Livewire\Backend\Cast\AllCast;
 use App\Http\Livewire\Backend\Fine\AllFine;
 use App\Http\Livewire\Backend\Role\AllRole;
@@ -38,9 +39,9 @@ use App\Http\Livewire\Backend\StudentEducation\AllStudentEducation;
 
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 
 
@@ -54,9 +55,7 @@ Route::middleware(['guest'])->group(function () {
     Route::get('not/admin', function(){ return view('not_admin') ;})->name('not.admin');
 
     // Home
-    Route::get('home', function () {
-        return view('welcome');
-    })->name('home');
+    Route::get('/', Home::class)->name('home');
 });
 
 
