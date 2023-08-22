@@ -16,10 +16,6 @@ class Allocation extends Model
     protected $guarded = [];
 
 
-    public function Fee()
-    {
-        return $this->belongsTo(Fee::class, 'fee_id', 'id');
-    }
 
     public function Bed()
     {

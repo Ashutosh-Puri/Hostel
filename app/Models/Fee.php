@@ -23,8 +23,4 @@ class Fee extends Model
         return $this->belongsTo(Seated::class, 'seated_id', 'id');
     }
 
-    public function Allocations()
-    {
-        return $this->hasMany(Allocation::class, 'fee_id', 'id');
-    }
 }
