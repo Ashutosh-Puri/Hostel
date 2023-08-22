@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Bed;
 use App\Models\Fee;
 use App\Models\Admission;
 use App\Models\Allocation;
@@ -22,6 +23,7 @@ class AllocationSeeder extends Seeder
             Allocation::create([
                 'admission_id' => Admission::inRandomOrder()->first()->id,
                 'fee_id' => Fee::inRandomOrder()->first()->id,
+                'bed_id' => Bed::inRandomOrder()->first()->id,
             ]);
         }
     }

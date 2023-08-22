@@ -1011,12 +1011,12 @@
                                         </label>
                                     </div>
                                     <div class="col-6 col-md-3 mb-3">
-                                        <label for="">Bed:</label>
+                                        <label for="">Seated:</label>
                                         <label for="">
-                                            @if ( $viewadmission[0]->bed_id==null)
-                                            <span class="badge bg-danger text-white">Not Allocated</span>
+                                            @if ( $viewadmission[0]->seated_id==null)
+                                            <span class="badge bg-danger text-white">NA</span>
                                             @else
-                                            <span class="badge bg-success text-white">Allocated</span><span class="badge bg-success mx-1 text-white">{{ $viewadmission[0]->bed_id }}</span>
+                                            <span class="badge bg-success mx-1 text-white">{{ $viewadmission[0]->Seated->seated." Seated"; }}</span>
                                             @endif
                                         </label>
                                     </div>
@@ -1268,8 +1268,8 @@
                                             <th>Academic Year</th>
                                             <th>Student Name</th>
                                             <th>Class Name</th>
-                                            <th>Seat Type</th>
-                                            <th>Bed Satus</th>
+                                            <th>Seated</th>
+                                            {{-- <th>Bed Satus</th> --}}
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -1282,14 +1282,14 @@
                                                 <td>{{ $item->AcademicYear->year}}</td>
                                                 <td>{{ $item->Student->name!=null?$item->Student->name: $item->Student->username; }}</td>
                                                 <td>{{ $item->Class->name}}</td>
-                                                <td>{{ $item->seat_type==null?'NA':$item->seat_type." Seated";}}</td>
-                                                <td>
+                                                <td>{{ isset($item->Seated->seated)?$item->Seated->seated." Seated":'NA'; }}</td>
+                                                {{-- <td>
                                                     @if ( $item->bed_id==null)
                                                         <span class="badge bg-danger text-white">Not Allocated</span>
                                                     @else
                                                         <span class="badge bg-success text-white">Allocated</span><span class="badge bg-success mx-1 text-white">{{ $item->bed_id }}</span>
                                                     @endif
-                                                </td>
+                                                </td> --}}
                                                 <td>
                                                     @if ( $item->status == '0')
                                                         <span class="badge bg-warning text-white">Wating</span>

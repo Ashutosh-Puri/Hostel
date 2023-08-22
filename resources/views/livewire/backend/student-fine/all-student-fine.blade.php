@@ -76,7 +76,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="amount" class="form-label">Fine Amount</label>
-                                            <label for="amount" class="form-control">{{ isset($amount)?$amount:'0.00'; }} Rs.</label>
+                                            <label for="amount"class="form-control @error('amount') is-invalid @enderror" wire:model="amount">{{ isset($amount)?$amount.' Rs.':''; }} </label>
                                             {{-- <input type="text" min="0" class="form-control @error('amount') is-invalid @enderror" wire:model="amount" value="{{ old('amount') }}" id="amount" placeholder="Enter Amount"> --}}
                                             @error('amount')
                                                 <div class="invalid-feedback">
@@ -179,7 +179,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="amount" class="form-label">Fine Amount</label>
-                                            <label for="amount" class="form-control">{{ isset($amount)?$amount:'0.00'; }} Rs.</label>
+                                            <label for="amount"class="form-control @error('amount') is-invalid @enderror" wire:model="amount">{{ isset($amount)?$amount.' Rs.':''; }} </label>
                                             {{-- <input type="text" min="0" class="form-control @error('amount') is-invalid @enderror" wire:model="amount" value="{{ old('amount') }}" id="amount" placeholder="Enter Amount"> --}}
                                             @error('amount')
                                                 <div class="invalid-feedback">

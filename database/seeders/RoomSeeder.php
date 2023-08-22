@@ -3,7 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Room;
-use App\Models\Building;
+use App\Models\Floor;
+use App\Models\Seated;
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -19,10 +20,9 @@ class RoomSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
             Room::create([
                 'label' => $faker->name,
-                'floor' => $faker->numberBetween(0, 10),
-                'type' => $faker->numberBetween(0, 10),
                 'capacity' => $faker->numberBetween(1, 50),
-                'building_id' => Building::inRandomOrder()->first()->id,
+                'seated_id' => Seated::inRandomOrder()->first()->id,
+                'floor_id' => Floor::inRandomOrder()->first()->id,
             ]);
         }
     }

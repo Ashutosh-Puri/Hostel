@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Bed;
+use App\Models\Seated;
 use App\Models\Classes;
 use App\Models\Student;
 use App\Models\Admission;
@@ -25,9 +26,7 @@ class AdmissionSeeder extends Seeder
                 'academic_year_id' => AcademicYear::inRandomOrder()->first()->id,
                 'student_id' => Student::inRandomOrder()->first()->id,
                 'class_id' => Classes::inRandomOrder()->first()->id,
-                'bed_id' => Bed::inRandomOrder()->first()->id,
-                'fee_type_id' => $faker->numberBetween(1, 2),
-                'seat_type' => $faker->numberBetween(1, 4),
+                'seated_id' => Seated::inRandomOrder()->first()->id,
                 'status' => $faker->numberBetween(0,2),
             ]);
         }

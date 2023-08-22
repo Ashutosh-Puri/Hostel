@@ -77,6 +77,22 @@
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
+                                            <label for="seated_id" class="form-label">Select Seated</label>
+                                            <select class="form-select @error('seated_id') is-invalid @enderror" id="seated_id" wire:model="seated_id" >
+                                                <option hidden >Select Seated</option>
+                                                @foreach ($seateds as $item1)
+                                                    <option  value="{{ $item1->id }}"> {{ $item1->seated}} Seated </option>
+                                                @endforeach
+                                            </select>
+                                            @error('seated_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
                                             <label for="room_id" class="form-label">Select Room</label>
                                             <select class="form-select @error('room_id') is-invalid @enderror" id="room_id" wire:model="room_id" >
                                                 <option hidden >Select Room</option>
@@ -179,6 +195,22 @@
                                                 @endforeach
                                             </select>
                                             @error('floor_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="seated_id" class="form-label">Select Seated</label>
+                                            <select class="form-select @error('seated_id') is-invalid @enderror" id="seated_id" wire:model="seated_id" >
+                                                <option hidden >Select Seated</option>
+                                                @foreach ($seateds as $item1)
+                                                    <option  value="{{ $item1->id }}"> {{ $item1->seated}} Seated </option>
+                                                @endforeach
+                                            </select>
+                                            @error('seated_id')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>

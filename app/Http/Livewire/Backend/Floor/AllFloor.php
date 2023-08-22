@@ -165,7 +165,6 @@ class AllFloor extends Component
     {   
         $hostels=Hostel::where('status',0)->get();
         $buildings=Building::where('status',0)->where('hostel_id',$this->hostel_id)->get();
-
         $query = Floor::where('status',0)->orderBy('floor', 'ASC');
         if ($this->building_name) {
             $query->whereHas('Building', function ($query) {

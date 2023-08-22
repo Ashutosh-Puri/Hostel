@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Fee;
+use App\Models\Seated;
 use Faker\Factory as Faker;
 use App\Models\AcademicYear;
 use Illuminate\Database\Seeder;
@@ -21,7 +22,7 @@ class FeeSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
             Fee::create([
                 'status' => $faker->numberBetween(0, 1),
-                'type' => $faker->numberBetween(1, 4),
+                'seated_id' => Seated::inRandomOrder()->first()->id,
                 'amount' => $faker->numberBetween(500, 14000),
                 'academic_year_id' => AcademicYear::inRandomOrder()->first()->id,
             ]);

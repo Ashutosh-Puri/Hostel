@@ -498,53 +498,6 @@ class AllAdmission extends Component
         $status->update();
     }
 
-    public function cancel($id)
-    {
-        $admission=Admission::find($id);
-        if($admission){
-            if($admission->bed_id!=null)
-            {
-                $temp=$admission->bed_id;
-                $bed=Bed::find($temp);
-                $bed->status=0;
-                $bed->update();
-            }
-        }else{
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"Admisstion Not Found !!"
-            ]);
-        }
-
-        $allocation= Allocation::where('admission_id',$id)->first();
-        if($allocation){
-            $allocation->fee_id = null;
-            $allocation->update();
-        }else{
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"Allocation Not Found !!"
-            ]);
-        }
-        $studentpayment=StudentPayment::where('admission_id',$id)->first();
-        if($studentpayment)
-        {
-            $studentpayment->delete();
-        }else{
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"Student Payment Not Found !!"
-            ]);
-        }
-        $admission->bed_id=null;
-        $admission->status=2;
-        $admission->update();
-        $this->setmode('all');
-        $this->dispatchBrowserEvent('alert',[
-            'type'=>'success',
-            'message'=>"Admission Cancelled Successfully !!"
-        ]);
-    }
 
     public function deleteconfirmation($id)
     {
@@ -554,7 +507,6 @@ class AllAdmission extends Component
 
     public function delete()
     {
-        $this->cancel($this->delete_id);
         $admission = Admission::find($this->delete_id);
         if ($admission)
         {

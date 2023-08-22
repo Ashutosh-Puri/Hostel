@@ -20,9 +20,9 @@ class Bed extends Model
         return $this->belongsTo(Room::class, 'room_id', 'id');
     }
 
-    public function Admissions()
+    public function Allocations()
     {
-        return $this->hasMany(Admission::class, 'bed_id', 'id');
+        return $this->hasMany(Allocation::class, 'bed_id', 'id');
     }
 
 

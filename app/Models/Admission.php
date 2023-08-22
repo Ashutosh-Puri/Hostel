@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Bed;
+use App\Models\Seated;
 use App\Models\Classes;
 use App\Models\Student;
 use App\Models\Allocation;
@@ -33,14 +34,16 @@ class Admission extends Model
         return $this->belongsTo(Classes::class, 'class_id', 'id');
     }
 
-    public function Bed()
-    {
-        return $this->belongsTo(Bed::class, 'bed_id', 'id');
-    }
+    
 
     public function AcademicYear()
     {
         return $this->belongsTo(AcademicYear::class, 'academic_year_id', 'id');
+    }
+
+    public function Seated()
+    {
+        return $this->belongsTo(Seated::class, 'seated_id', 'id');
     }
 
     public function StudentEducations()

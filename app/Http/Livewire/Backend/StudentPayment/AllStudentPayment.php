@@ -2,9 +2,12 @@
 
 namespace App\Http\Livewire\Backend\StudentPayment;
 
+use App\Models\Fee;
+use App\Models\Seated;
 use App\Models\Student;
 use Livewire\Component;
 use App\Models\Admission;
+use App\Models\Allocation;
 use App\Models\AcademicYear;
 use Livewire\WithPagination;
 use App\Models\StudentPayment;
@@ -23,6 +26,7 @@ class AllStudentPayment extends Component
     public $academic_year_id;
     public $admission_id;
     public $student_id;
+    public $seated_id;
     public $c_id;
 
     public function resetinput()
@@ -33,16 +37,24 @@ class AllStudentPayment extends Component
         $this->totalamount= null;
         $this->academic_year_id= null;
         $this->admission_id= null;
+        $this->seated_id= null;
         $this->c_id= null;
     }
 
     protected function rules()
     {
         return [
+            'seated_id' => ['required','integer'],
             'totalamount' => ['required','numeric'],
             'academic_year_id' => ['required','integer'],
             'admission_id' => ['required','integer'],
             'student_id' => ['required','integer'],
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'totalamount.required' => 'The Fee For This Seating Type In The Current Academic Year Is Not Available.',
         ];
     }
 
@@ -64,7 +76,7 @@ class AllStudentPayment extends Component
             $studentpayment->academic_year_id = $validatedData['academic_year_id'];
             $studentpayment->student_id = $validatedData['student_id'];
             $studentpayment->admission_id = $validatedData['admission_id'];
-            $studentpayment->total_amount = $validatedData['totalamount'];
+            $studentpayment->total_amount = $this->totalamount;
             $studentpayment->save();
             $this->resetinput();
             $this->setmode('all');
@@ -84,11 +96,20 @@ class AllStudentPayment extends Component
     {
         $studentpayment = StudentPayment::find($id);
         if($studentpayment){
+            $alloc =Allocation::where('admission_id',$studentpayment->admission_id)->first();
+            if($alloc)
+            {
+                $fee=Fee::find($alloc->fee_id);
+                if($fee)
+                {
+                    $this->seated_id=$fee->seated_id;
+                    $this->totalamount=$fee->amount;
+                }
+            }
             $this->C_id=$studentpayment->id;
             $this->academic_year_id=$studentpayment->academic_year_id;
             $this->student_id = $studentpayment->student_id;
             $this->admission_id = $studentpayment->admission_id;
-            $this->totalamount = $studentpayment->total_amount;
             $this->setmode('edit');
         }else{
             $this->dispatchBrowserEvent('alert',[
@@ -106,7 +127,7 @@ class AllStudentPayment extends Component
             $studentpayment->academic_year_id = $validatedData['academic_year_id'];
             $studentpayment->student_id = $validatedData['student_id'];
             $studentpayment->admission_id = $validatedData['admission_id'];
-            $studentpayment->total_amount = $validatedData['totalamount'];
+            $studentpayment->total_amount = $this->totalamount;
             $studentpayment->update();
             $this->resetinput();
             $this->setmode('all');
@@ -166,11 +187,17 @@ class AllStudentPayment extends Component
     public function render()
     {
         $academic_years=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
-
         $admissions = Admission::where('academic_year_id', $this->academic_year_id)->get();
-
         $students=Student::where('status',0)->whereIn('id',  $admissions->pluck('student_id'))->get();
-
+        $seateds=Seated::where('status',0)->orderBy('seated', 'ASC')->get();
+        $fees=Fee::where('status',0)->where('academic_year_id',$this->academic_year_id)->where('seated_id',$this->seated_id)->first();
+        if($fees)
+        {   
+            $this->totalamount=$fees->amount;
+        }else
+        {
+            $this->totalamount=null;
+        }
         $query = StudentPayment::orderBy('academic_year_id', 'DESC')->when($this->year, function ($query) {
             $query->whereIn('academic_year_id', function ($subQuery) {
                 $subQuery->select('id')->from('academic_years')->where('year', 'like', '%' . $this->year . '%');
@@ -185,6 +212,6 @@ class AllStudentPayment extends Component
             });
         });
         $student_payments = $query->paginate($this->per_page);
-        return view('livewire.backend.student-payment.all-student-payment',compact('academic_years','students','admissions','student_payments'))->extends('layouts.admin.admin')->section('admin');
+        return view('livewire.backend.student-payment.all-student-payment',compact('seateds','academic_years','students','admissions','student_payments'))->extends('layouts.admin.admin')->section('admin');
     }
 }

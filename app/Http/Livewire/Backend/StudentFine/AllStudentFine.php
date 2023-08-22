@@ -31,7 +31,7 @@ class AllStudentFine extends Component
     protected function rules()
     {
         return [
-            // 'amount' => ['required','numeric'],
+            'amount' => ['required','numeric'],
             'academic_year_id' => ['required','integer'],
             'fine_id' => ['required','integer'],
             'student_id' => ['required','integer'],
@@ -185,8 +185,10 @@ class AllStudentFine extends Component
         $amount=Fine::find($this->fine_id);
         if( $amount)
         {
-
             $this->amount=$amount->amount;
+        }else
+        {
+            $this->amount=null;
         }
         $query = StudentFine::orderBy('academic_year_id', 'DESC')->when($this->year, function ($query) {
             $query->whereIn('academic_year_id', function ($subQuery) {

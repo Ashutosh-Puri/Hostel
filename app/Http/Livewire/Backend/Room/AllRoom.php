@@ -17,7 +17,7 @@ class AllRoom extends Component
     use WithPagination;
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
-    public $r = '',$b = '',$f = '';
+    public $r = '',$f = '';
     public $per_page = 10;
     public $mode='all';
     public $hostel_id;
@@ -58,7 +58,6 @@ class AllRoom extends Component
     public function resetinput()
     {
         $this->r=null;
-        $this->b=null;
         $this->f=null;
         $this->label=null;
         $this->building_id=null;
@@ -90,12 +89,12 @@ class AllRoom extends Component
             $this->resetinput();
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
-                'seated_id'=>'success',
+                'type'=>'success',
                 'message'=>"Room Created Successfully !!"
             ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
-                'seated_id'=>'error',
+                'type'=>'error',
                 'message'=>"Something Went Wrong !!"
             ]);
         }
@@ -121,7 +120,7 @@ class AllRoom extends Component
             $this->setmode('edit');
         }else{
             $this->dispatchBrowserEvent('alert',[
-                'seated_id'=>'error',
+                'type'=>'error',
                 'message'=>"Something Went Wrong !!"
             ]);
         }
@@ -141,12 +140,12 @@ class AllRoom extends Component
             $this->resetinput();
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
-                'seated_id'=>'success',
+                'type'=>'success',
                 'message'=>"Room Updated Successfully !!"
             ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
-                'seated_id'=>'error',
+                'type'=>'error',
                 'message'=>"Something Went Wrong !!"
             ]);
         }
@@ -166,12 +165,12 @@ class AllRoom extends Component
             $this->delete_id=null;
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
-                'seated_id'=>'success',
+                'type'=>'success',
                 'message'=>"Room Deleted Successfully !!"
             ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
-                'seated_id'=>'error',
+                'type'=>'error',
                 'message'=>"Something Went Wrong !!"
             ]);
         }
@@ -192,11 +191,19 @@ class AllRoom extends Component
 
     public function render()
     {   
-        $hostels = Hostel::where('status', 0)->get();
-        $buildings = Building::where('hostel_id', $this->hostel_id)->get();
-        $floors = Floor::where('building_id', $this->building_id)->get();
+        $hostels = Hostel::where('status',0)->where('status', 0)->get();
+        $buildings = Building::where('status',0)->where('hostel_id', $this->hostel_id)->get();
+        $floors = Floor::where('status',0)->where('building_id', $this->building_id)->get();
         $seateds=Seated::where('status',0)->orderBy('seated', 'ASC')->get();
-        $rooms = Room::paginate($this->per_page);
+
+        $query = Room::orderBy('floor_id', 'ASC');
+        if ($this->f) {
+            $query->whereHas('Floor', function ($query) {
+                $query->where('floor', 'like', '%' . $this->f. '%');
+            });
+        }
+        $rooms = $query->where('label', 'like','%' .$this->r. '%')->paginate($this->per_page);
+        // $rooms = Room::paginate($this->per_page);
         return view('livewire.backend.room.all-room',compact('rooms','seateds','floors','hostels','buildings'))->extends('layouts.admin.admin')->section('admin');
     }
 }

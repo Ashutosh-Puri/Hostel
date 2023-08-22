@@ -300,10 +300,9 @@
                                     <span class="col-12 col-md-9 p-0">
                                         <span class="row">
                                             <div class="col-12 col-md-3 ">
-                                                    <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
-                                            <div class="col-12 col-md-3">
-                                                    <input class="w-100" wire:model="b" type="search" placeholder="Building Name">
+                                            <div class="col-12 col-md-3 ">
+                                                    <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
                                                     <input class="w-100" wire:model="f" type="number" min="0" placeholder="Floor Number">

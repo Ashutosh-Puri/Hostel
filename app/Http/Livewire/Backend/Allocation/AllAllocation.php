@@ -4,15 +4,21 @@ namespace App\Http\Livewire\Backend\Allocation;
 
 use App\Models\Bed;
 use App\Models\Fee;
+use App\Models\Room;
+use App\Models\Floor;
 use App\Models\Quota;
+use App\Models\Hostel;
+use App\Models\Seated;
 use App\Models\Classes;
 use App\Models\Student;
 use Livewire\Component;
+use App\Models\Building;
 use App\Models\Admission;
 use App\Models\Allocation;
 use App\Models\AcademicYear;
 use Livewire\WithPagination;
 use App\Models\StudentPayment;
+use Illuminate\Validation\Rule;
 
 class AllAllocation extends Component
 {
@@ -22,12 +28,19 @@ class AllAllocation extends Component
     public $per_page = 10;
     public $mode='all';
     public $admission_id;
+    public $academic_year_id;
+    public $hostel_id;
+    public $building_id;
+    public $floor_id;
+    public $room_id;
     public $bed_id;
     public $fee_id;
+    public $seated_id;
+    public $seated;
     public $c_id;
-    public $academicyear;
     public $admissionid;
     public $admissionid2;
+    public $fee;
 
     public function resetinput()
     {
@@ -36,20 +49,54 @@ class AllAllocation extends Component
         $this->c=null;
         $this->ad=null;
         $this->c_id=null;
+        $this->hostel_id=null;
+        $this->academic_year_id=null;
+        $this->admission_id=null;
+        $this->building_id=null;
+        $this->floor_id=null;
+        $this->room_id=null;
         $this->bed_id=null;
         $this->fee_id=null;
+        $this->seated_id=null;
+        $this->seated=null;
         $this->admissionid=null;
         $this->admissionid2=null;
+        $this->fee=null;
     }
 
-    protected $rules = [
-        'fee_id' => ['required','integer'],
-        'bed_id' => ['required','integer'],
-    ];
+    protected function rules()
+    {
+        return [
+
+            'admission_id' => [($this->mode=='edit'? 'required' : ($this->mode=='add'? 'required' : 'nullable')),'integer',Rule::unique('allocations')->where(function ($query) {
+                return $query->where('admission_id', $this->admission_id);
+            })],
+            'academic_year_id' => [($this->mode=='edit'? 'required' : ($this->mode=='add'? 'required' : 'nullable')),'integer',],
+            'hostel_id' => [($this->mode=='allocate'? 'required' : 'nullable'),'integer'],
+            'building_id' => [($this->mode=='allocate'? 'required' : 'nullable'),'integer'],
+            'floor_id' => [($this->mode=='allocate'? 'required' : 'nullable'),'integer'],
+            'room_id' => [($this->mode=='allocate'? 'required' : 'nullable'),'integer'],
+            'bed_id' => [($this->mode=='allocate'? 'required' : 'nullable'),'integer'],
+            'fee' => [($this->mode=='allocate'? 'required' : 'nullable'),'numeric'],
+        ];
+    }
 
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
+
+        if ($propertyName === 'admissionid2') {
+            $this->validate([
+                'admissionid2' => ['required', 'different:' . $this->admissionid],
+            ]);
+        }
+    }
+
+    public function messages()
+    {
+        return [
+            'fee.required' => 'The Fee For This Seating Type In The Current Academic Year Is Not Available.',
+        ];
     }
 
     public function setmode($mode)
@@ -57,14 +104,78 @@ class AllAllocation extends Component
         $this->mode=$mode;
     }
 
+
+    public function save()
+    {
+      $valideteData= $this->validate();
+        $allocation= new Allocation;
+        if( $allocation)
+        {
+            $allocation->admission_id = $valideteData['admission_id'];
+            $allocation->save();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Allocation Created Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+
+    public function edit($id)
+    {
+        $allocation=Allocation::find($id);
+        if( $allocation)
+        {   
+            $admission = Admission::find($allocation->admission_id);
+            $this->C_id=$allocation->id;
+            $this->academic_year_id=$admission->AcademicYear->id;
+            $this->admission_id=$admission->id;
+            $this->setmode('edit');
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function update($id)
+    {
+        $valideteData= $this->validate();
+        $allocation=Allocation::find($id);
+        if( $allocation)
+        {
+            $allocation->admission_id = $valideteData['admission_id'];
+            $allocation->save();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Allocation Updated Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
     public function allocate($id)
     {
         $this->admissionid=$id;
         $admission= Admission::find($id);
         if($admission)
-        {
-            $this->bed_id=$admission->bed_id;
-            $this->academicyear=$admission->academic_year_id;
+        {   
+            $this->academic_year_id=$admission->academic_year_id;
+            // $this->seated_id=$admission->seated_id;
+            
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
@@ -75,6 +186,15 @@ class AllAllocation extends Component
         if($allocation)
         {
             $this->fee_id=$allocation->fee_id;  
+            
+            $bed=Bed::find($allocation->bed_id);
+            if($bed)
+            {
+                $this->hostel_id=$bed->Room->Floor->Building->Hostel->id;
+                $this->building_id=$bed->Room->Floor->Building->id;
+                $this->floor_id=$bed->Room->Floor->id;
+                $this->room_id=$bed->Room->id;
+            }
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
@@ -84,122 +204,93 @@ class AllAllocation extends Component
         $this->setmode('allocate');
     }
 
-    public function save($admissionid)
+    public function allocatebed($admissionid)
     {
         $validatedData = $this->validate();
         $admission= Admission::find($admissionid);
         if($admission)
-        {   
+        {  
+
             $studentpayment=StudentPayment::where('admission_id',$admissionid)->first();
             if($studentpayment)
             {
                 $studentpayment->admission_id=$admission->id;
                 $studentpayment->student_id=$admission->student_id;
                 $studentpayment->academic_year_id=$admission->academic_year_id;
-                $fee=Fee::find($validatedData['fee_id']);
-                if($fee)
+                $bed=Bed::find($validatedData['bed_id']);
+                if($bed)
                 {
-                    $studentpayment->total_amount=$fee->amount;
+                    $fee=Fee::where('seated_id',$bed->Room->Seated->id)->first();
+                    if($fee)
+                    {   $allocation=Allocation::where('admission_id',$admissionid)->first();
+                        $oldbed=Bed::find($allocation->bed_id);
+                        if($oldbed)
+                        {
+                            $oldbed->status=0;
+                            $oldbed->update();
+                        }
+                        if($allocation)
+                        {
+                            $allocation->fee_id=$fee->id;
+                            $allocation->bed_id=$validatedData['bed_id'];
+                            $allocation->update();
+                        }
+                        $studentpayment->amount=$fee->amount;
+                        $studentpayment->total_amount= ($fee->amount - $studentpayment->deposite );
+                    }
+                    $studentpayment->update();
+                    $admission->seated_id=$bed->Room->Seated->id;
+                    $admission->update();
+                    $bed->status=1;
+                    $bed->update();
                 }
-                $studentpayment->update();
+               
+                $this->resetinput();
+                $this->setmode('all');
+                $this->dispatchBrowserEvent('alert',[
+                    'type'=>'success',
+                    'message'=>"Bed Re Allocated Successfully !!"
+                ]);
             }
             else
             {
                 $studentpayment= new StudentPayment;
-                $studentpayment->admission_id=$admission->id;
-                $studentpayment->student_id=$admission->student_id;
-                $studentpayment->academic_year_id=$admission->academic_year_id;
-                $fee=Fee::find($validatedData['fee_id']);
-                if($fee)
+                if($studentpayment)
                 {
-                    $studentpayment->total_amount=$fee->amount;
-                    $admission->seat_type=$fee->type;
+                    $studentpayment->admission_id=$admission->id;
+                    $studentpayment->student_id=$admission->student_id;
+                    $studentpayment->academic_year_id=$admission->academic_year_id;
+                    $bed=Bed::find($validatedData['bed_id']);
+                    if($bed)
+                    {
+                        $fee=Fee::where('seated_id',$bed->Room->Seated->id)->first();
+                        if($fee)
+                        {   
+                            $allocation=Allocation::where('admission_id',$admissionid)->first();
+                            if($allocation)
+                            {
+                                $allocation->fee_id=$fee->id;
+                                $allocation->bed_id=$validatedData['bed_id'];
+                                $allocation->update();
+                            }
+                            $studentpayment->amount=$fee->amount;
+                            $studentpayment->total_amount= ($fee->amount - $studentpayment->deposite );
+                        }
+                        $admission->seated_id=$bed->Room->Seated->id;
+                        $admission->update();
+                        $bed->status=1;
+                        $bed->update();
+                    } 
+                    $studentpayment->save();
                 }
-                $studentpayment->save();
-            }
-            if($admission->bed_id!=null)
-            {
-                $bed=Bed::find($admission->bed_id);
-                if($bed)
-                {
-                    $bed->status=0;
-                    $bed->update();
-                }
-            }
-            $admission->bed_id=$validatedData['bed_id'];
-            $admission->update();
-        }
 
-        $bed=Bed::find($validatedData['bed_id']);
-        if($bed)
-        {
-            $bed->status=1;
-            $bed->update();
-        }
-        $allocation= Allocation::where('admission_id',$admissionid)->first();
-        if($allocation)
-        {
-            $allocation->fee_id=$validatedData['fee_id'];
-            $allocation->update();
-            $this->resetinput();
-            $this->setmode('all');
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'success',
-                'message'=>"Bed Allocated Successfully !!"
-            ]);
-        }
-    }
-
-    public function deallocate($id)
-    {
-        $admission= Admission::find($id);
-        if($admission->bed_id!=null)
-        {
-            $temp=$admission->bed_id;
-            $bed=Bed::find($temp);
-            if($bed)
-            {
-                $bed->status=0;
-                $bed->update();
-            }else{
+                $this->resetinput();
+                $this->setmode('all');
                 $this->dispatchBrowserEvent('alert',[
-                    'type'=>'error',
-                    'message'=>"Something Went Wrong !!"
+                    'type'=>'success',
+                    'message'=>"Bed  Allocated Successfully !!"
                 ]);
             }
-        }else{
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
-        }
-        $admission->bed_id=null;
-        $admission->update();
-        $allocation= Allocation::where('admission_id',$id)->first();
-        if ($allocation) {
-            $allocation->fee_id = null;
-            $allocation->update();
-        }else{
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
-        }
-        $studentpayment=StudentPayment::where('admission_id',$id)->first();
-        if($studentpayment)
-        {
-            $studentpayment->delete();
-            $this->resetinput();
-            $this->setmode('all');
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'success',
-                'message'=>"Bed De Allocated Successfully !!"
-            ]);
-        }else{
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
         }
     }
 
@@ -209,37 +300,49 @@ class AllAllocation extends Component
         $this->setmode('exchange');
     }
 
-
-    public function update($id)
+    
+    public function exchangebed($id)
     {   
         $this->validate([
-            'admissionid2' => ['required', 'different:' . $id],
+            'admissionid2' => ['required'],
         ]);
-        $all1 = Allocation::where('admission_id', $id)->first();
-        $all2 = Allocation::where('admission_id', $this->admissionid2)->first();
-        if ($all1 && $all2) {
-            $temp1 = $all1->fee_id;
-            $all1->fee_id = $all2->fee_id;
-            $all2->fee_id = $temp1;
-            $all1->update();
-            $all2->update();
-        }else{
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
-        }
-
         $add1 = Admission::find($id);
         $add2 = Admission::find($this->admissionid2);
 
-        if ($add1 && $add2) {
-            $temp3 = $add1->bed_id;
-            $add1->bed_id = $add2->bed_id;
-            $add2->bed_id = $temp3;
-            $temp5 = $add1->seat_type;
-            $add1->seat_type = $add2->seat_type;
-            $add2->seat_type = $temp5;
+        if($add1  && $add2)
+        {
+            $all1 = Allocation::where('admission_id', $id)->first();
+            $all2 = Allocation::where('admission_id', $this->admissionid2)->first();
+
+            if ($all1 && $all2) 
+            {
+                $fee1=Fee::find( $all1->fee_id);
+                $fee2=Fee::find( $all2->fee_id);
+                if($fee1 && $fee2)
+                {
+                    $payment1=StudentPayment::where('admission_id', $id)->first();
+                    $payment2=StudentPayment::where('admission_id', $this->admissionid2)->first();
+                    if($payment1 && $payment2)
+                    {   
+                        $payment1->total_amount = ($fee2->amount - $payment1->deposite);  //2000-0 =2000
+                        $payment2->total_amount = ($fee1->amount- $payment2->deposite); //1000-0=1000
+
+                        $payment1->amount= $fee2->amount;
+                        $payment2->amount=$fee1->amount;
+                        $payment1->update();
+                        $payment2->update();
+                    }
+                }
+                $temp1= $all1->bed_id;
+                $all1->bed_id= $all2->bed_id;
+                $all2->bed_id=$temp1;
+                $all1->update();
+                $all2->update();
+            }  
+
+            $temp3 = $add1->seated_id;
+            $add1->seated_id = $add2->seated_id;
+            $add2->seated_id = $temp3;
             $add1->update();
             $add2->update();
             $this->resetinput();
@@ -248,13 +351,57 @@ class AllAllocation extends Component
                 'type'=>'success',
                 'message'=>"Bed Exchanged Successfully !!"
             ]);
+        }else
+        {
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+     
+    public function deallocate($id)
+    {   
+        $admission= Admission::find($id);
+        if($admission)
+        {   
+            $allocation =Allocation::where('admission_id',$id)->first();
+            if($allocation->bed_id!=null)
+            {
+                $bed=Bed::find($allocation->bed_id);
+                if($bed)
+                {
+                    $bed->status=0;
+                    $bed->update();
+                }
+                $allocation->bed_id=null;
+                $allocation->fee_id=null;
+                $allocation->update();
+            }
+            $studentpayment=StudentPayment::where('admission_id',$id)->first();
+            if($studentpayment)
+            {
+                $studentpayment->amount=0;
+                $studentpayment->total_amount=0- $studentpayment->deposite;
+                $studentpayment->update();
+            }
+            $admission->seated_id=null;
+            $admission->update();
+
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Bed De Allocated Successfully !!"
+            ]);
+            
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
                 'message'=>"Something Went Wrong !!"
             ]);
         }
-     }
+    }
 
     public function deleteconfirmation($id)
     {
@@ -267,7 +414,7 @@ class AllAllocation extends Component
         $allocation = Allocation::find($this->delete_id);
         if($allocation)
         {
-            $this->deallocate($this->delete_id);
+            $this->deallocate($allocation->admission_id);
             $allocation->delete();
             $this->delete_id=null;
             $this->setmode('all');
@@ -284,31 +431,77 @@ class AllAllocation extends Component
     }
 
     public function render()
-    {
+    {   
+        // Allocation Add , Edit
         $academicyears=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
-        $classes=Classes::where('status',0)->orderBy('name', 'ASC')->get();
-        $beds=Bed::where('status',0)->get();
-        $fees=Fee::where('status',0)->where('academic_year_id',$this->academicyear)->get();
-        $students=Student::where('status',0)->orderBy('name', 'ASC')->get();
-        if($this->admissionid2!=$this->admissionid)
+        $admissions=Admission::where('academic_year_id',$this->academic_year_id)->get();
+        // Allocation Allocate , Re Allocate
+        $hostels = Hostel::where('status', 0)->get();
+        $buildings = Building::where('status', 0)->where('hostel_id', $this->hostel_id)->get();
+        $floors = Floor::where('status', 0)->where('building_id', $this->building_id)->get();
+        $rooms=Room::where('floor_id', $this->floor_id)->get();
+        $beds=Bed::where('status',0)->where('room_id', $this->room_id)->get();
+        $r=Room::where('id',$this->room_id)->first();
+        if($r)
         {
-            $admission2=Admission::find($this->admissionid2);  
+            $this->seated_id=$r->seated_id;
+            $se=Seated::find($r->seated_id);
+            if($se)
+            {
+              $this->seated = $se->seated;
+            }
         }
-        else
+        if($this->room_id)
         {
-            $admission2=null;
+            $fees=Fee::where('status',0)->where('academic_year_id',$this->academic_year_id)->where('seated_id',$this->seated_id)->first();
+            if($fees)
+            {   
+                $this->fee_id=$fees->id;
+                $this->fee=$fees->amount;
+            }else
+            {   
+                $this->fee_id=null;
+                $this->fee=null;
+            }
         }
+
+        // for alllocation Student Information
         if($this->admissionid!=null)
         {
             $admission=Admission::find($this->admissionid);  
-            $alloc=Allocation::whereIn('admission_id',[$this->admissionid,$this->admissionid2])->get();
+            $alloc1=Allocation::where('admission_id',$this->admissionid)->first();
         }
         else
         {
             $admission=null;
-            $alloc=null;
+            $alloc1=null;
         }
-
+        
+        $students=Student::where('status',0)->orderBy('name', 'ASC')->get();
+        if($this->admissionid2!=$this->admissionid)
+        {
+            $admission2=Admission::find($this->admissionid2);  
+            $alloc2=Allocation::where('admission_id',$this->admissionid2)->first();
+            if(!$admission2 && $this->admissionid2)
+            {
+                $this->dispatchBrowserEvent('alert',[
+                    'type'=>'error',
+                    'message'=>"Admission Not Found !!"
+                ]);
+            }
+        }else
+        {
+            $admission2=null;
+            $alloc2=null;
+            if($this->mode=="exchange")
+            {
+                $this->dispatchBrowserEvent('alert',[
+                    'type'=>'info',
+                    'message'=>"Enter Unother Admission ID , You Have Enter Same Admission ID!!"
+                ]);
+            }
+        }
+        
         $query =Allocation::orderBy('admission_id', 'ASC');
         if ($this->ad) {
             $admissionIds = Admission::where('id', 'like',$this->ad. '%')->pluck('id');
@@ -335,6 +528,6 @@ class AllAllocation extends Component
             });
         }
         $allocations = $query->paginate($this->per_page);
-        return view('livewire.backend.allocation.all-allocation',compact('alloc','admission','admission2','fees','beds','allocations'))->extends('layouts.admin.admin')->section('admin');
+        return view('livewire.backend.allocation.all-allocation',compact('alloc1','alloc2','admission','admission2','beds','allocations','academicyears','admissions','hostels','buildings','floors','rooms',))->extends('layouts.admin.admin')->section('admin');
     }
 }
