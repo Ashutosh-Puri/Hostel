@@ -22,6 +22,7 @@ use App\Http\Livewire\Backend\Notice\AllNotice;
 use App\Http\Livewire\Backend\Seated\AllSeated;
 use App\Http\Livewire\Frontend\StudentDashboard;
 use App\Http\Livewire\Backend\College\AllCollege;
+use App\Http\Livewire\Backend\Inquiry\AllEnquiry;
 use App\Http\Livewire\Backend\Student\AllStudent;
 use App\Http\Livewire\Backend\Admin\AdminDashboard;
 use App\Http\Livewire\Backend\Building\AllBuilding;
@@ -157,6 +158,9 @@ Route::middleware(['auth:admin','check.role:superadmin'])->group(function () {
 
     // All Floor
     Route::get('all/floors',AllFloor::class)->name('all_floor');
+
+    // All Enquiry
+    Route::get('all/enquires',AllEnquiry::class)->name('all_enquiry');
 });
 
 

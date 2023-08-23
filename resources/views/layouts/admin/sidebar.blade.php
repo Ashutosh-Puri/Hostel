@@ -166,6 +166,12 @@
           <span class="menu-title">Category's</span>
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_enquiry') }}">
+          <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
+          <span class="menu-title">Enquiry's</span>
+        </a>
+      </li>
       {{-- <li class="nav-item">
         <a class="nav-link" href="">
           <span class="icon-bg"><i class="mdi mdi-format-list-bulleted menu-icon"></i></span>
