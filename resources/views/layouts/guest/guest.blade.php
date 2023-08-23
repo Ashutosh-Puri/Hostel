@@ -3,13 +3,12 @@
 
 <!-- body start -->
 <body>
-
-    <!-- Begin page -->
     <div id="wrapper">
-    @include('layouts.navbar')
+        @include('layouts.guest.navbar')
         <div class="content-page" style="background-color: #dbddf1;">
            @yield('guest')
         </div>
+        @include('layouts.guest.footer')
     </div>
 </body>
 @endsection

@@ -1,27 +1,12 @@
-<div>
+<div class="vh-100">
     @section('styles')
         <style>
-            .gallery {
-                padding: 30px 0px;
-            }
-
-            img {
-                max-width: 100%;
-            }
-
-            .gallery img {
+            .gallery-item {
                 background: #fff;
                 padding: 15px;
-                /* width: 100%; */
-                width: 356px;
-                height: 247px;
+                width: 100%;
                 box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
                 cursor: pointer;
-            }
-
-            #gallery-popup {
-                width: 80%;
-                margin: auto;
             }
 
             .image-container {
@@ -32,13 +17,13 @@
             .image-caption {
                 position: absolute;
                 bottom: 0;
-                left: 9px;
-                width: 95%;
+                left: 0px;
+                width: 100%;
                 padding: 10px;
-                background-color: rgba(0, 0, 0, 0.7);
+                background-color: rgba(0, 0, 0, 0.9);
                 color: white;
                 opacity: 0;
-                transition: opacity 0.3s;
+                transition: opacity 0.1s;
             }
 
             .image-container:hover .image-caption {
@@ -47,42 +32,43 @@
         </style>
     @endsection
     <section>
-        <section class="gallery min-vh-100">
-            <div class="container">
-                <h2 class="m-2">Photo Gallery</h2>
-                <hr>
-                <div class="row gy-4 row-cols-1 row-cols-sm-2 row-cols-md-3">
-                    @forelse ($gallery as $item)
-                        <div class="image-container">
-                            <img src="{{ asset($item->photo) }}" class="gallery-item" alt="{{ 'Gallery-' . $item->id }}">
-                            <div class="image-caption">
-                                {{ $item->title }}
+        <div class="row">
+            <div class="col-12 ">
+                <div class="row  py-3 px-3">
+                    <div class="col-12 col-md-12  mb-1">
+                        <h2>Photo Gallery</h2>
+                        <hr>
+                    </div>
+                    @foreach ($gallery as $item)
+                        <div class="col-12 col-md-3  text-center  mb-3">
+                            <div class="image-container">
+                                <img src="{{ asset($item->photo) }}" class="gallery-item  object-fit-contain"alt="{{ "Gallery-".$item->id }}" style=" width: 360px; height: 250px;">
+                                <div class="image-caption">
+                                    {{ $item->title }}
+                                </div>
                             </div>
                         </div>
-                    @empty
-                    @endforelse
+                    @endforeach
+                    {{ $gallery->links('pagination::bootstrap-5') }}
                 </div>
             </div>
-        </section>
-
-        <!-- Modal -->
-        <div class="modal fade" id="gallery-popup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="container">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            {{-- <h5 class="modal-title" id="modaltitle">ModalTitle</h5> --}}
-                            <button type="button" class="btn-close btn btn-danger text-white" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <img src="" class="modal-img" alt="Modal Image">
-                        </div>
+        </div>
+    </section>
+    <section>
+        <div class="modal fade" id="gallery-popup" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered" style="max-width: 60%; max-height: 80vh;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modaltitle">View Photo</h5>
+                        <button type="button" class="btn btn-danger fw-bold px-3 " data-bs-dismiss="modal"
+                            aria-label="Close">X</button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="" class="modal-img object-fit-contain" alt="Modal Image" style="height:500px; width:890px;">
                     </div>
                 </div>
             </div>
         </div>
-
     </section>
     @section('scripts')
         <script type="text/javascript">
@@ -96,5 +82,4 @@
             })
         </script>
     @endsection
-
 </div>

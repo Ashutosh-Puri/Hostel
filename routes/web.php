@@ -52,11 +52,9 @@ Route::middleware(['guest'])->group(function () {
     // Admin Login Route
     Route::get('admin/login', AdminLogin::class)->name('admin.login');
 
-    // Unauthorize Access
-    Route::get('not/admin', function(){ return view('not_admin') ;})->name('not.admin');
-
     // Home
     Route::get('/', Home::class)->name('home');
+
     // Gallery
     Route::get('gallery', Gallery::class)->name('gallery');
 });

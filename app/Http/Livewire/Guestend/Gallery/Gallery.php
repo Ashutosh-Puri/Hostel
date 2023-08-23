@@ -12,7 +12,7 @@ class Gallery extends Component
     use WithPagination;
     public function render()
     {
-        $gallery=PhotoGallery::where('status',0)->paginate(12);
+        $gallery=PhotoGallery::where('status',0)->paginate(8);
         return view('livewire.guestend.gallery.gallery',compact('gallery'))->extends('layouts.guest.guest')->section('guest');
     }
 }
