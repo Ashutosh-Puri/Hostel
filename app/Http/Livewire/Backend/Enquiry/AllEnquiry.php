@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Backend\Inquiry;
+namespace App\Http\Livewire\Backend\Enquiry;
 
 use App\Models\Enquiry;
 use Livewire\Component;
@@ -32,7 +32,7 @@ class AllEnquiry extends Component
     protected function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'], 
             'email' => ['required', 'string', 'email'],
             'mobile' => ['required', 'integer', 'digits:10'],
             'gender' => ['required', 'integer', 'in:0,1'],
@@ -145,17 +145,26 @@ class AllEnquiry extends Component
     }
 
      public function mail($id)
-    { 
+    {   
+        $enquiry = Enquiry::find($id);
         $this->m_id=$id;
+        $this->name=$enquiry->name;
+        $this->email=$enquiry->email;
+        $this->mobile=$enquiry->mobile;
+        $this->subject=$enquiry->subject;
+        $this->description=$enquiry->description;
         $this->setmode('mail');
     }
 
     public function sendmail($id)
     {  
+        $this->validate([ 'reply' => ['required','string']]);
+        $this->setmode('all');
         $enquiry = Enquiry::find($id);
-        $mail=Mail::to($enquiry->email)->send(new EnquiryReply($this->reply));
+        $mail=Mail::to($enquiry->email)->send(new EnquiryReply($this->reply ,$enquiry->name));
         if($mail)
-        {
+        {   
+            $this->resetinput();
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'success',
                 'message'=>"Email Send  Successfully !!"
@@ -167,6 +176,7 @@ class AllEnquiry extends Component
                 'message'=>"Email Not Send !!"
             ]);
         }
+       
     }
 
     public function deleteconfirmation($id)
@@ -210,7 +220,7 @@ class AllEnquiry extends Component
     public function render()
     {
         $enquiries=Enquiry::where('name', 'like', '%'.$this->search.'%')->orderBy('created_at', 'DESC')->paginate($this->per_page);
-        return view('livewire.backend.inquiry.all-enquiry',compact('enquiries'))->extends('layouts.admin.admin')->section('admin');
+        return view('livewire.backend.enquiry.all-enquiry',compact('enquiries'))->extends('layouts.admin.admin')->section('admin');
     }
 
 

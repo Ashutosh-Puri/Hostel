@@ -13,21 +13,20 @@ class EnquiryReply extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $messageBody;
+    public $messageBody ,$name;
     /**
      * Create a new message instance.
      */
-    public function __construct($messageBody)
+    public function __construct($messageBody ,$name)
     {
         $this->messageBody=$messageBody;
+        $this->name=$name;
     }
 
 
     public function build()
     {
-        return $this->subject('Enquiry Reply')
-                    ->markdown('emails.enquiry_reply')
-                    ->with('messageBody', $this->messageBody);
+        return $this->subject('Enquiry Reply')->markdown('emails.enquiry_reply')->with('messageBody','name', $this->messageBody ,$this->name);
     }
 
     /**

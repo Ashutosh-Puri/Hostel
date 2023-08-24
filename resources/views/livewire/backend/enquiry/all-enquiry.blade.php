@@ -25,6 +25,36 @@
                             <form  wire:submit.prevent="sendmail({{ isset($m_id)?$m_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
+                                    <div class="col-12 col-md-3">
+                                        <div class="mb-3 form-group">
+                                            <label for="reply" class="form-labell">Name</label>
+                                            <label for="reply" class="form-control">{{ $this->name }}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <div class="mb-3 form-group">
+                                            <label for="reply" class="form-labell">Email</label>
+                                            <label for="reply" class="form-control">{{ $this->email}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <div class="mb-3 form-group">
+                                            <label for="reply" class="form-labell">Mobile</label>
+                                            <label for="reply" class="form-control">{{ $this->mobile }}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <div class="mb-3 form-group">
+                                            <label for="reply" class="form-labell">Subject</label>
+                                            <label for="reply" class="form-control">{{ $this->subject }}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-12">
+                                        <div class="mb-3 form-group">
+                                            <label for="reply" class="form-labell">Description</label>
+                                            <label for="reply" class="form-control">{{ $this->description }}</label>
+                                        </div>
+                                    </div>
                                     <div class="col-12 col-md-12">
                                         <div class="mb-3 form-group">
                                             <label for="reply" class="form-label">Message Body</label>
@@ -37,7 +67,12 @@
                                         </div>
                                     </div>
                                     </div>
-                                <button type="submit"  class="btn btn-primary waves-effect waves-light">Send Mail</button>
+                                <button type="submit" wire:loading.remove wire:target="sendmail" class="btn btn-primary waves-effect waves-light">
+                                    Send Mail
+                                </button>
+                                <button type="submit" wire:loading wire:target="sendmail" class="btn btn-success waves-effect waves-light"> 
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending Email...
+                                </button>
                             </form>
                         </div>
                     </div>
@@ -351,12 +386,12 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    <a wire:loading.attr="disabled"  wire:click="mail({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-reply"></i></a>
+                                                    <a wire:loading.attr="disabled"  wire:click="mail({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-reply"></i></a>
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
-                                                    @if ($item->status==1) 
-                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
+                                                    @if ($item->status==0) 
+                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-eye"></i> </a>
                                                     @else
-                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-thumb-down"></i> </a>
+                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-eye-off"></i> </a>
                                                     @endif
                                                     <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
                                                 </td>
