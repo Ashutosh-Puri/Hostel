@@ -64,7 +64,7 @@
                             aria-label="Close">X</button>
                     </div>
                     <div class="modal-body">
-                        <img src="" class="modal-img object-fit-contain" alt="Modal Image" style="height:500px; width:890px;">
+                        <img src="" class="modal-img object-fit-contain" alt="Modal Image" style="height:500px; width:870px;">
                     </div>
                 </div>
             </div>
