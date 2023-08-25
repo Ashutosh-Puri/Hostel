@@ -27,7 +27,7 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col">
-                                        <form method="POST" action="{{ route('logout') }}">
+                                        <form method="POST" action="{{ route('student.logout') }}">
                                             @csrf
                                             <button type="submit" class="btn bg-danger btn-danger">
                                                 {{ __('Log Out') }}
@@ -35,7 +35,7 @@
                                         </form>
                                     </div>
                                     <div class="col">
-                                        <form method="POST" action="{{ route('verification.send') }}">
+                                        <form method="POST" action="{{ route('student.verification.send') }}">
                                             @csrf
                                 
                                             <div>

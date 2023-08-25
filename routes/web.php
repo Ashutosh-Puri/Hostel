@@ -58,8 +58,6 @@ Route::middleware(['guest'])->group(function () {
     // Gallery
     Route::get('gallery', Gallery::class)->name('gallery');
 
-    // Enquiry
-    Route::get('enquiry',ShowEnquiry::class)->name('enquiry');
 });
 
 
@@ -164,4 +162,4 @@ Route::middleware(['auth:admin','check.role:superadmin'])->group(function () {
 });
 
 
-require __DIR__.'/auth.php';
+require __DIR__.'/student_auth.php';

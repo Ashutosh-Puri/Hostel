@@ -18,7 +18,7 @@ Student Register
                             </div>
                         @endif
                     </div>
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('student.register') }}">
                         @csrf
                         <div class="form-group">
                             <input name="name" type="text" id="name" class="form-control form-control @error('name') is-invalid @enderror"  value="{{ old('name') }}" required autofocus autocomplete="name"placeholder="Username">
@@ -50,7 +50,7 @@ Student Register
                                     <button type="submit" class="btn btn-lg bg-primary btn-primary ">Register</button>
                                 </div>
                                 <div class="col py-2">
-                                    <a href="{{ route('login') }}" class="form-check-label mx-2 ">Already registered?</a>
+                                    <a href="{{ route('student.login') }}" class="form-check-label mx-2 ">Already registered?</a>
                                 </div>
                             </div>
                         </div>

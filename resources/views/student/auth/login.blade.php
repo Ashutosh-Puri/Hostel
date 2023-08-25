@@ -18,7 +18,7 @@
                             </div>
                         @endif
                     </div>
-                    <form method="POST" action="{{ route('login') }}" class="pt-3">
+                    <form method="POST" action="{{ route('student.login') }}" class="pt-3">
                         @csrf
                         <div class="form-group">
                             <input name="email" type="email" id="email"
@@ -43,7 +43,7 @@
                                     <label for="remember_me" class="form-check-label mx-2 mt-2">Remember Me</label>
                                 </div>
                                 <div class="col">
-                                    <a href="{{ route('password.request') }}" class="form-check-label mx-2 mt-2">Forgot
+                                    <a href="{{ route('student.password.request') }}" class="form-check-label mx-2 mt-2">Forgot
                                         Password?</a>
                                 </div>
                             </div>
