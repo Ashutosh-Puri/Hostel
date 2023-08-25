@@ -451,7 +451,7 @@ class StudentAdmission extends Component
 
     public function render()
     {   
-        $this->student_id=Auth::guard('web')->user()->id;
+        $this->student_id=Auth::guard('student')->user()->id;
 
         $academicyears = AcademicYear::where('status', 0)->orderBy('year', 'DESC')->get();
         $hasAdmission = true;

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-
 use App\Models\Student;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
@@ -32,20 +31,20 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'username' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.Student::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = Student::create([
-            'username' => $request->username,
+            'username' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
         event(new Registered($user));
 
-        Auth::login($user);
+        Auth::guard('student')->login($user);
 
         return redirect(RouteServiceProvider::HOME);
     }
