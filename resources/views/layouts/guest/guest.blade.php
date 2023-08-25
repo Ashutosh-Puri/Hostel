@@ -3,6 +3,16 @@
 
 <!-- body start -->
 <body>
+    @section('scripts')
+    <style>
+        .form-control 
+        {
+            font-family: "nunito-regular", sans-serif;
+            font-size: 12px;
+            height: 45px;
+        }
+    </style>
+    @endsection
     <div id="wrapper">
         @include('layouts.guest.navbar')
         <div class="content-page" style="background-color: #dbddf1;">
