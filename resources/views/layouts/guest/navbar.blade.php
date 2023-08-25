@@ -39,7 +39,7 @@
                     </li>
                 @else
                     <li class="nav-item">
-                        <a class="nav-link" href="">{{ __('Admin Login') }}</a>
+                        <a class="nav-link" href="{{ route('admin.login') }}">{{ __('Admin Login') }}</a>
                     </li>
                 @endauth
                 @auth('student')
@@ -60,19 +60,18 @@
                             </form>
                         </div>
                     </li>
-                @endauth
-                @guest
+                @else
                     @if (Route::has('student.login'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('student.login') }}">{{ __('Login') }}</a>
-                        </li>
-                    @endif
-                    @if (Route::has('student.register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('student.register') }}">{{ __('Register') }}</a>
-                        </li>
-                    @endif
-                @endguest
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('student.login') }}">{{ __('Login') }}</a>
+                            </li>
+                        @endif
+                        @if (Route::has('student.register'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('student.register') }}">{{ __('Register') }}</a>
+                            </li>
+                        @endif
+                    @endauth
             </ul>
         </div>
     </div>

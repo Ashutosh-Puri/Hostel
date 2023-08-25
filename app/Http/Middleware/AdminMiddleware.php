@@ -18,7 +18,7 @@ class AdminMiddleware
     {   
         if(!Auth::guard('admin')->check())
         {
-            return redirect('login');
+           abort(403);
         }
         return $next($request);
     }

@@ -14,6 +14,7 @@ class Admin  extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $guard="admin";
     /**
      * The attributes that are mass assignable.
      *
@@ -26,6 +27,8 @@ class Admin  extends Authenticatable implements MustVerifyEmail
         'mobile',
         'photo',
         'role_id',
+        'password',
+        'remember_token',
     ];
 
     /**
@@ -44,23 +47,22 @@ class Admin  extends Authenticatable implements MustVerifyEmail
      * @var array<string, string>
      */
     protected $casts = [
-        'mobile_verified_at' => 'datetime',
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 
-    public function hasRole($roleId,int $status): bool
-    {   
+    // public function hasRole($roleId,int $status): bool
+    // {   
       
-        if($roleId!=null && $status==0 || $status==1 )
-        {
-            return $this->role_id === $roleId && $this->status === $status;
-        }
-        else
-        {
-            return false;
-        }
-    }
+    //     if($roleId!=null && $status==0 || $status==1 )
+    //     {
+    //         return $this->role_id === $roleId && $this->status === $status;
+    //     }
+    //     else
+    //     {
+    //         return false;
+    //     }
+    // }
 
     public function Role()
     {

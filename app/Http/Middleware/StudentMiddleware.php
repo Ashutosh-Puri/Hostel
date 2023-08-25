@@ -18,7 +18,7 @@ class StudentMiddleware
     {   
         if(!Auth::guard('student')->check())
         {
-            return redirect('login');
+            abort(403);
         }
         return $next($request);
     }

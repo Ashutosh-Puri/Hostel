@@ -47,7 +47,7 @@ use App\Http\Livewire\Backend\StudentEducation\AllStudentEducation;
 */
 
 // Guest Routes
-Route::middleware(['guest'])->group(function () {
+Route::middleware(['guest:student'])->group(function () {
 
     // Admin Login Route
     // Route::get('admin/login', AdminLogin::class)->name('admin.login');
@@ -63,7 +63,7 @@ Route::middleware(['guest'])->group(function () {
 
 
 // Student Routes With Web Guard
-Route::middleware(['auth:student','verified'])->group(function () {
+Route::middleware(['auth:student','is_student','verified'])->group(function () {
 
    // Student Dashboard
    Route::get('student/dashboard', StudentDashboard::class)->name('student.dashboard');
@@ -74,13 +74,13 @@ Route::middleware(['auth:student','verified'])->group(function () {
 
 
 // Superadmin Routes With Admin Guard
-Route::middleware(['auth:admin','check.role:superadmin'])->group(function () {
+Route::middleware(['auth:admin','is_admin','verified'])->group(function () {
 
     // Admin Dashboard
     Route::get('admin/dashboard', AdminDashboard::class)->name('admin.dashboard');
 
-    // Admin Logout
-    Route::post('admin/logout', [AdminLogin::class, 'logout'])->name('admin.logout');
+    // // Admin Logout
+    // Route::post('admin/logout', [AdminLogin::class, 'logout'])->name('admin.logout');
 
     // All Role
     Route::get('all/roles',AllRole::class)->name('all_role');
@@ -163,3 +163,4 @@ Route::middleware(['auth:admin','check.role:superadmin'])->group(function () {
 
 
 require __DIR__.'/student_auth.php';
+require __DIR__.'/admin_auth.php';

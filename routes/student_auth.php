@@ -29,7 +29,7 @@ Route::middleware('guest:student')->group(function () {
     Route::post('student/reset-password', [NewPasswordController::class, 'store'])->name('student.password.store');
 });
 
-Route::middleware(['student','auth:student'])->group(function () {
+Route::middleware(['is_student'])->group(function () {
     Route::get('student/verify-email', EmailVerificationPromptController::class)->name('verification.notice');
 
     Route::get('student/verify-email/{id}/{hash}', VerifyEmailController::class)->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
