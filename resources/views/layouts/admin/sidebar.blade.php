@@ -246,20 +246,7 @@
       @endcan
       @can('')
       @endcan --}}
-      
 
-      
-      
-      
-      
-      
-      
-      
-      
-      
-
-      
-      
       {{-- <li class="nav-item">
         <a class="nav-link" href="">
           <span class="icon-bg"><i class="mdi mdi-format-list-bulleted menu-icon"></i></span>

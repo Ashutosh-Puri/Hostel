@@ -21,11 +21,13 @@ use App\Http\Livewire\Backend\Seated\AllSeated;
 use App\Http\Livewire\Guestend\Gallery\Gallery;
 use App\Http\Livewire\Frontend\StudentDashboard;
 use App\Http\Livewire\Backend\College\AllCollege;
+use App\Http\Livewire\Backend\Enquiry\AllEnquiry;
 use App\Http\Livewire\Backend\Student\AllStudent;
 use App\Http\Livewire\Backend\Admin\AdminDashboard;
 use App\Http\Livewire\Backend\Building\AllBuilding;
 use App\Http\Livewire\Backend\Category\AllCategory;
 use App\Http\Livewire\Backend\Facility\AllFacility;
+use App\Http\Livewire\Guestend\Enquiry\ShowEnquiry;
 use App\Http\Livewire\Backend\Admission\AllAdmission;
 use App\Http\Livewire\Backend\Allocation\AllAllocation;
 use App\Http\Livewire\Backend\Permission\AllPermission;
@@ -59,6 +61,9 @@ Route::middleware(['guest:student'])->group(function () {
 
     // Gallery
     Route::get('gallery', Gallery::class)->name('gallery');
+
+    // Enquiry
+    Route::get('enquiry', ShowEnquiry::class)->name('enquiry');
 
 });
 
@@ -176,6 +181,8 @@ Route::middleware(['auth:admin','is_admin','verified'])->group(function () {
     // All Notice
     Route::get('all/notices',AllNotice::class)->name('all_notice');
 
+    // All Enquiry
+    Route::get('all/enquires',AllEnquiry::class)->name('all_enquiry');
 
 });
 

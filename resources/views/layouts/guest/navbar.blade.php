@@ -14,6 +14,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('gallery') }}">{{ __('Gallery') }}</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('enquiry') }}">{{ __('Enquiry') }}</a>
+                </li>
             </ul>
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ms-auto">

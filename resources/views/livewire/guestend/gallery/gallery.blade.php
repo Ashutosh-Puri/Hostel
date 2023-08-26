@@ -33,7 +33,7 @@
     @endsection
     <section>
         <div class="row">
-            <div class="col-12 ">
+            <div class="col-12">
                 <div class="row  py-3 px-3">
                     <div class="col-12 col-md-12  mb-1">
                         <h2>Photo Gallery</h2>
