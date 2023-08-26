@@ -27,9 +27,9 @@
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
-                                            <label for="role" class="form-label">Role Name</label>
-                                            <input type="text" class="form-control @error('role') is-invalid @enderror" wire:model="role" value="{{ old('role') }}" id="role" placeholder="Enter Role Name">
-                                            @error('role')
+                                            <label for="name" class="form-label">Role Name</label>
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Role Name">
+                                            @error('name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -82,9 +82,9 @@
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
-                                            <label for="role" class="form-label">Role Name</label>
-                                            <input type="text" class="form-control @error('role') is-invalid @enderror" wire:model="role" value="{{ old('role') }}" id="role" placeholder="Enter Role Name">
-                                            @error('role')
+                                            <label for="name" class="form-label">Role Name</label>
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Role Name">
+                                            @error('name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -171,7 +171,7 @@
                                         @foreach ($roles as $key => $item)
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
-                                                <td>{{ $item->role }}</td>
+                                                <td>{{ $item->name }}</td>
                                                 <td>
                                                     @if ( $item->status == '0')
                                                         <span class="badge bg-success text-white">Active</span>

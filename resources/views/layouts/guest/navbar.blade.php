@@ -1,6 +1,6 @@
 
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-    <div class="container">
+    <div class="container-fluid">
         <a class="navbar-brand" href="{{ url('/') }}">
             {{ preg_replace('/(?<!\ )[A-Z]/', ' $0', config('app.name', 'Laravel'))  }}
         </a>
@@ -18,7 +18,6 @@
                     <a class="nav-link" href="{{ route('enquiry') }}">{{ __('Enquiry') }}</a>
                 </li>
             </ul>
-
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ms-auto">
                 <!-- Authentication Links -->
@@ -30,13 +29,12 @@
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::guard('admin')->user()->name }}
                         </a>
-                        <div class="dropdown-menu dropdown-menu-end z-index-5" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('logout') }}"
+                        <div class="dropdown-menu dropdown-menu-end my-2" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('admin.logout') }}"
                             onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();">
                                 {{ __('Admin Logout') }}
                             </a>
-                
                             <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
@@ -47,38 +45,36 @@
                         <a class="nav-link" href="{{ route('admin.login') }}">{{ __('Admin Login') }}</a>
                     </li>
                 @endauth
-                @guest
-                    @if (Route::has('login'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                        </li>
-                    @endif
-
-                    @if (Route::has('register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                        </li>
-                    @endif
-                @else
-           
+                @auth('student')
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->username }}
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();">
+                            <a class="dropdown-item" href="{{ route('student.logout') }}"
+                            onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            <form id="logout-form" action="{{ route('student.logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
                         </div>
                     </li>
-                @endguest
+                @else
+                    @if (Route::has('student.login'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('student.login') }}">{{ __('Login') }}</a>
+                            </li>
+                        @endif
+                        @if (Route::has('student.register'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('student.register') }}">{{ __('Register') }}</a>
+                            </li>
+                        @endif
+                    @endauth
             </ul>
         </div>
     </div>

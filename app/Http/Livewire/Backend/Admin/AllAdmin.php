@@ -2,12 +2,13 @@
 
 namespace App\Http\Livewire\Backend\Admin;
 
-use App\Models\Role;
 use App\Models\Admin;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
@@ -28,7 +29,7 @@ class AllAdmin extends Component
     public $password;
     public $mobile;
     public $status;
-    public $role_id;
+    public $role;
     public $password_confirmation;
     public $photo;
     public $photoold;
@@ -43,7 +44,7 @@ class AllAdmin extends Component
             'email' => ['required', 'string', 'email', 'max:255','unique:admins,email,'.($this->mode=='edit'? $this->current_id :'')],
             'mobile' => ['nullable', 'numeric', 'digits:10','unique:admins,mobile,'.($this->mode=='edit'? $this->current_id :'')],
             'photo' => ['nullable', 'image', 'mimes:jpg,png,jpeg', 'max:1024'],
-            'role_id' => ['required', 'integer',],
+            'role' => ['required', 'string',],
         ];
     }
 
@@ -59,7 +60,7 @@ class AllAdmin extends Component
         $this->email=null;
         $this->mobile=null;
         $this->status=null;
-        $this->role_id=null;
+        $this->role=null;
         $this->password=null;
         $this->password_confirmation=null;
         $this->photo=null;
@@ -79,7 +80,7 @@ class AllAdmin extends Component
         $admin= new Admin;
         if($admin)
         {
-            $admin->role_id = $validatedData['role_id'];
+
             $admin->name = $validatedData['name'];
             $admin->email= $validatedData['email'];
             $admin->password= Hash::make($validatedData['password']);
@@ -92,7 +93,15 @@ class AllAdmin extends Component
                 $admin->photo='storage/'.$path.$FileName ;
                 $this->reset('photo');
             }
+            if ($this->role) {
+
+                $admin->assignRole($this->role);
+
+            }
             $admin->save();
+
+            
+
             $this->resetinput();
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
@@ -112,9 +121,10 @@ class AllAdmin extends Component
         $this->current_id=$id;
         $admin = Admin::find($id);
         if($admin)
-        {
+        {   
+            $role=$admin->roles->pluck('name');
+            $this->role=$role[0];
             $this->C_id=$admin->id;
-            $this->role_id=$admin->role_id;
             $this->name=$admin->name;
             $this->email=$admin->email;
             $this->mobile=$admin->mobile;
@@ -135,7 +145,6 @@ class AllAdmin extends Component
         $admin = Admin::find($id);
         if($admin)
         {
-            $admin->role_id = $validatedData['role_id'];
             $admin->name = $validatedData['name'];
             $admin->email= $validatedData['email'];
             $admin->mobile= $validatedData['mobile'];
@@ -148,6 +157,11 @@ class AllAdmin extends Component
                 $this->reset('photo');
             }
             $admin->update();
+            $admin->roles()->detach();
+            if ($this->role) {
+                $admin->assignRole($this->role);
+            }
+
             $this->resetinput();
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
@@ -207,8 +221,8 @@ class AllAdmin extends Component
 
     public function render()
     {
-        $roles=Role::where('status',0)->orderBy('role', 'ASC')->get();
-        $admins=Admin::where('name', 'like', '%'.$this->search.'%')->orderBy('role_id', 'ASC')->paginate($this->per_page);
+        $roles=Role::where('status',0)->get();
+        $admins=Admin::where('name', 'like', '%'.$this->search.'%')->orderBy('name', 'ASC')->paginate($this->per_page);
         return view('livewire.backend.admin.all-admin',compact('admins','roles'))->extends('layouts.admin.admin')->section('admin');
     }
 }

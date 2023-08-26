@@ -19,7 +19,7 @@ class Student extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-  
+    protected $guard="student";
     /**
      * The attributes that are mass assignable.
      *
