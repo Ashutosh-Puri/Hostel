@@ -22,7 +22,6 @@ class AllocationSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
             Allocation::create([
                 'admission_id' => Admission::inRandomOrder()->first()->id,
-                'fee_id' => Fee::inRandomOrder()->first()->id,
                 'bed_id' => Bed::inRandomOrder()->first()->id,
             ]);
         }

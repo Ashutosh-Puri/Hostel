@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('admins', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('role_id');
             $table->string('name');
             $table->string('email')->unique();
             $table->string('mobile')->nullable()->unique();
@@ -23,7 +22,6 @@ return new class extends Migration
             $table->tinyInteger('status')->nullable()->default('0')->comment('0-Active ,1-In-Active');
             $table->rememberToken();
             $table->timestamps();
-            $table->foreign('role_id')->references('id')->on('roles');
         });
     }
 

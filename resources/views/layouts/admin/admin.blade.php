@@ -70,6 +70,11 @@
           cursor: pointer;
           background-size: 10px 10px;
         }
+
+        .dropdown:hover .dropdown-menu {
+  display: block;
+  padding: 0;
+}
       </style>
     @endsection
         <!-- Container Start -->
@@ -102,4 +107,5 @@
           </div>
            <!-- Container Enter -->
 </div>
+
 @endsection

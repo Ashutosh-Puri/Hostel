@@ -4,15 +4,18 @@ namespace App\Models;
 
 use App\Models\Role;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\DB;
+
+use Spatie\Permission\Traits\HasRoles;
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Admin  extends Authenticatable implements MustVerifyEmail
+class Admin  extends Authenticatable 
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable ,HasRoles;
 
     protected $guard="admin";
     /**
@@ -26,7 +29,6 @@ class Admin  extends Authenticatable implements MustVerifyEmail
         'status',
         'mobile',
         'photo',
-        'role_id',
         'password',
         'remember_token',
     ];
@@ -51,21 +53,43 @@ class Admin  extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
-    // public function hasRole($roleId,int $status): bool
-    // {   
-      
-    //     if($roleId!=null && $status==0 || $status==1 )
-    //     {
-    //         return $this->role_id === $roleId && $this->status === $status;
-    //     }
-    //     else
-    //     {
-    //         return false;
-    //     }
-    // }
+    protected function getDefaultGuardName(): string { return 'admin'; }
+    public static function getpermissionGroups(){
 
-    public function Role()
-    {
-        return $this->belongsTo(Role::class, 'role_id', 'id');
+        $permission_groups = DB::table('permissions')->select('group_name')->groupBy('group_name')->get();
+
+        return $permission_groups;
+
     }
+
+    public static function getpermissionByGroupName($group_name){
+
+        $permission = DB::table('permissions')->select('name','id')->where('group_name',$group_name)->get();
+
+        return $permission;
+
+    }
+
+    public static function roleHasPermissions($role,$permission){
+
+        $hasPermission = true;
+
+        foreach ($permission as $perm) {
+
+            // hasPermissionTo()  laravel spattie
+
+            if (!$role->hasPermissionTo($perm->name)) {
+
+                $hasPermission = false;
+
+                return $hasPermission;
+
+            }
+
+            return $hasPermission;
+
+        }
+
+    }
+
 }

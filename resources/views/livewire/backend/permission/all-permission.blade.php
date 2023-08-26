@@ -2,13 +2,13 @@
     <div class="container-fluid">
         @if ($mode=='add')
             @section('title')
-                Add Role
+                Add Permission
             @endsection
             <div class="row">
                 <div class="col-12">
                     <div class="bg-success">
                         <div class="float-start pt-2 px-2">
-                            <h2>Add Role</h2>
+                            <h2>Add Permission</h2>
                         </div>
                         <div class="float-end">
                             <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
@@ -27,8 +27,8 @@
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
-                                            <label for="name" class="form-label">Role Name</label>
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Role Name">
+                                            <label for="name" class="form-label">Permission Name</label>
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Permission Name">
                                             @error('name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -38,10 +38,14 @@
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
-                                            <label for="status" class="form-label mb-3">Status</label><br>
-                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
-                                            <label class="form-check-label m-1 " for="class_status">In-Active Role</label>
-                                            @error('status')
+                                            <label for="group_name" class="form-label ">Group Name</label>
+                                            <input list="group_name" class="form-control @error('group_name') is-invalid @enderror"  wire:model="group_name" id="group_name">
+                                            <datalist id="group_name">
+                                                @foreach ($groups as $item)
+                                                    <option value="{{ $item->group_name }}">{{ $item->group_name }}</option>
+                                                @endforeach
+                                            </datalist>
+                                            @error('group_name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -57,13 +61,13 @@
             </div>
         @elseif($mode=='edit')
             @section('title')
-                Edit Role
+                Edit Permission
             @endsection
             <div class="row">
                 <div class="col-12">
                     <div class="bg-success">
                         <div class="float-start pt-2 px-2">
-                            <h2>Edit Role</h2>
+                            <h2>Edit Permission</h2>
                         </div>
                         <div class="float-end">
                             <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
@@ -82,8 +86,8 @@
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
-                                            <label for="name" class="form-label">Role Name</label>
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Role Name">
+                                            <label for="name" class="form-label">Permission Name</label>
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Permission Name">
                                             @error('name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -93,10 +97,14 @@
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
-                                            <label for="status" class="form-label mb-3">Status</label><br>
-                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
-                                            <label class="form-check-label m-1 " for="class_status">In-Active Role</label>
-                                            @error('status')
+                                            <label for="group_name" class="form-label ">Group Name</label>
+                                            <input list="group_name" class="form-control @error('group_name') is-invalid @enderror"  wire:model="group_name" id="group_name">
+                                            <datalist id="group_name">
+                                                @foreach ($groups as $item)
+                                                    <option value="{{ $item->group_name }}">{{ $item->group_name }}</option>
+                                                @endforeach
+                                            </datalist>
+                                            @error('group_name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -113,17 +121,17 @@
         @elseif($mode=='all')
             <div>
                 @section('title')
-                    All Rolees
+                    All Permissions
                 @endsection
                 <div class="row">
                     <div class="col-12">
                         <div class="bg-success">
                             <div class="float-start pt-2 px-2">
-                                <h2>Data Roles</h2>
+                                <h2>Data Permissions</h2>
                             </div>
                             <div class="float-end">
                                 <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
-                                    Add Role<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
+                                    Add Permission<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
                                 </a>
                             </div>
                         </div>
@@ -151,7 +159,7 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                                 </div>
                                                 <div class="col-12 col-md-3">
-                                                    <input class="w-100" wire:model="search" type="search" placeholder="Role Name">
+                                                    <input class="w-100" wire:model="search" type="search" placeholder="Permission Name">
                                                 </div>
                                             </div>
                                     </span>
@@ -162,30 +170,19 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Role Name</th>
-                                            <th>Status</th>
+                                            <th>Group Name</th>
+                                            <th>Permission Name</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($roles as $key => $item)
+                                        @foreach ($permissions as $key => $item)
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
+                                                <td>{{ $item->group_name }}</td>
                                                 <td>{{ $item->name }}</td>
                                                 <td>
-                                                    @if ( $item->status == '0')
-                                                        <span class="badge bg-success text-white">Active</span>
-                                                    @else
-                                                        <span class="badge bg-danger text-white">In-Active</span>
-                                                    @endif
-                                                </td>
-                                                <td>
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
-                                                    @if ($item->status==1) 
-                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
-                                                    @else
-                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-thumb-down"></i> </a>
-                                                    @endif
                                                     <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
                                                 </td>
                                             </tr>
@@ -193,7 +190,7 @@
                                     </tbody>
                                 </table>
                                 <div class="mt-4">
-                                    {{ $roles->links('pagination::bootstrap-5') }}
+                                    {{ $permissions->links('pagination::bootstrap-5') }}
                                 </div>
                             </div>
                         </div>

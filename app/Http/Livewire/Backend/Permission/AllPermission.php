@@ -1,16 +1,13 @@
 <?php
 
-namespace App\Http\Livewire\Backend\Role;
-
+namespace App\Http\Livewire\Backend\Permission;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use Illuminate\Validation\Rule;
-use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Permission;
 
-class AllRole extends Component
-{
+class AllPermission extends Component
+{   
     use WithPagination;
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
@@ -18,14 +15,15 @@ class AllRole extends Component
     public $per_page = 10;
     public $mode='all';
     public $name;
-    public $status;
+    public $group_name;
     public $c_id;
     public $current_id;
 
     protected function rules()
     {
         return [
-            'name' => ['required','string','unique:roles,name,'.($this->mode=='edit'? $this->current_id :''),],
+            'name' => ['required','string','unique:permissions,name,'.($this->mode=='edit'? $this->current_id :''),],
+            'group_name' => ['required','string'],
         ];
     }
 
@@ -38,7 +36,7 @@ class AllRole extends Component
     {
         $this->search=null;
         $this->name=null;
-        $this->status=null;
+        $this->group_name=null;
         $this->c_id=null;
     }
 
@@ -50,16 +48,17 @@ class AllRole extends Component
     public function save()
     {
         $validatedData = $this->validate();
-        $name= new Role;
-        if($name){
-            $name->name = $validatedData['name'];
-            $name->status = $this->status==1?1:0;
-            $name->save();
+        $permission= new Permission;
+        if($permission){
+            $permission->name = $validatedData['name'];
+            $permission->group_name = $validatedData['group_name'];
+            $permission->guard_name = "admin";
+            $permission->save();
             $this->resetinput();
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'success',
-                'message'=>"Role Created Successfully !!"
+                'message'=>"Permission Created Successfully !!"
             ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
@@ -72,11 +71,11 @@ class AllRole extends Component
     public function edit($id)
     {
         $this->current_id=$id;
-        $name = Role::find($id);
-        if($name){
-            $this->C_id=$name->id;
-            $this->name = $name->name;
-            $this->status = $name->status;
+        $permission = Permission::find($id);
+        if($permission){
+            $this->C_id=$permission->id;
+            $this->name = $permission->name;
+            $this->group_name = $permission->group_name;
             $this->setmode('edit');
         }else{
             $this->dispatchBrowserEvent('alert',[
@@ -89,16 +88,17 @@ class AllRole extends Component
     public function update($id)
     {
         $validatedData = $this->validate();
-        $name = Role::find($id);
-        if($name){
-            $name->name = $validatedData['name'];
-            $name->status = $this->status==1?'1':'0';
-            $name->update();
+        $permission = Permission::find($id);
+        if($permission){
+            $permission->name = $validatedData['name'];
+            $permission->group_name = $validatedData['group_name'];
+            $permission->guard_name = "admin";
+            $permission->update();
             $this->resetinput();
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'success',
-                'message'=>"Role Updated Successfully !!"
+                'message'=>"Permission Updated Successfully !!"
             ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
@@ -116,14 +116,14 @@ class AllRole extends Component
 
     public function delete()
     {
-        $name = Role::find($this->delete_id);
-        if($name){
-            $name->delete();
+        $permission = Permission::find($this->delete_id);
+        if($permission){
+            $permission->delete();
             $this->delete_id=null;
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'success',
-                'message'=>"Role Deleted Successfully !!"
+                'message'=>"Permission Deleted Successfully !!"
             ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
@@ -133,22 +133,12 @@ class AllRole extends Component
         }
     }
 
-    public function status($id)
-    {
-        $status = Role::find($id);
-        if($status->status==1)
-        {   
-            $status->status=0;
-        }else
-        {
-            $status->status=1;
-        }
-        $status->update();
-    }
 
     public function render()
-    {
-        $roles=Role::where('name', 'like', '%'.$this->search.'%')->orderBy('created_at', 'ASC')->paginate($this->per_page);
-        return view('livewire.backend.role.all-role',compact('roles'))->extends('layouts.admin.admin')->section('admin');
+    {   
+        $groups=Permission::all();
+        $permissions=Permission::where('name', 'like', '%'.$this->search.'%')->orderBy('group_name', 'ASC')->paginate($this->per_page);
+        return view('livewire.backend.permission.all-permission',compact('groups','permissions'))->extends('layouts.admin.admin')->section('admin');
     }
+
 }

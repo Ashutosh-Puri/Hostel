@@ -27,14 +27,14 @@
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
-                                            <label for="role_id" class="form-label">Select Role</label>
-                                            <select class="form-select @error('role_id') is-invalid @enderror" id="role_id" wire:model="role_id" >
+                                            <label for="role" class="form-label">Select Role</label>
+                                            <select class="form-select @error('role') is-invalid @enderror" id="role" wire:model="role" >
                                                 <option hidden value="">Select Role</option>
                                                 @foreach ($roles as $item1)
-                                                    <option  value="{{ $item1->id }}"> {{ $item1->role }} </option>
+                                                    <option  value="{{ $item1->name}}"> {{ $item1->name }} </option>
                                                 @endforeach
                                             </select>
-                                            @error('role_id')
+                                            @error('role')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -167,14 +167,14 @@
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
-                                            <label for="role_id" class="form-label">Select Role</label>
-                                            <select class="form-select @error('role_id') is-invalid @enderror" id="role_id" wire:model="role_id" >
+                                            <label for="role" class="form-label">Select Role</label>
+                                            <select class="form-select @error('role') is-invalid @enderror" id="role" wire:model="role" >
                                                 <option hidden value="">Select Role</option>
                                                 @foreach ($roles as $item1)
-                                                    <option  value="{{ $item1->id }}"> {{ $item1->role }} </option>
+                                                    <option  value="{{ $item1->name  }}"> {{ $item1->name }} </option>
                                                 @endforeach
                                             </select>
-                                            @error('role_id')
+                                            @error('role')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -336,7 +336,13 @@
                                                 <td>{{ $item->name }}</td>
                                                 <td>{{ $item->email }}</td>
                                                 <td>{{ $item->mobile }}</td>
-                                                <td>{{ $item->Role->role }}</td>
+                                                <td>
+                                                    @foreach ($item->roles as $role)
+                                                        <span class="badge badge-pill bg-primary">
+                                                            {{ $role->name }}
+                                                        </span>
+                                                    @endforeach
+                                                </td>
                                                 <td>
                                                     @if ( $item->status == '0')
                                                         <span class="badge bg-success text-white">Active</span>

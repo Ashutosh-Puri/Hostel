@@ -28,10 +28,12 @@ use App\Http\Livewire\Backend\Category\AllCategory;
 use App\Http\Livewire\Backend\Facility\AllFacility;
 use App\Http\Livewire\Backend\Admission\AllAdmission;
 use App\Http\Livewire\Backend\Allocation\AllAllocation;
+use App\Http\Livewire\Backend\Permission\AllPermission;
 use App\Http\Livewire\Backend\StudentFine\AllStudentFine;
 use App\Http\Livewire\Frontend\Admission\StudentAdmission;
 use App\Http\Livewire\Backend\AcademicYear\AllAcademicYear;
 use App\Http\Livewire\Backend\PhotoGallery\AllPhotoGallery;
+use App\Http\Livewire\Backend\RolePermission\AllRolePermission;
 use App\Http\Livewire\Backend\StudentPayment\AllStudentPayment;
 use App\Http\Livewire\Backend\StudentEducation\AllStudentEducation;
 
@@ -73,8 +75,34 @@ Route::middleware(['auth:student','is_student','verified'])->group(function () {
 });
 
 
-// Superadmin Routes With Admin Guard
+
+
+//  Routes With admin Guard is_admin middleware 
 Route::middleware(['auth:admin','is_admin','verified'])->group(function () {
+
+    // Superadmin Routes With Admin Guard
+    Route::group(['middleware' => ['role:Super Admin']], function () {
+
+        // All Role
+        Route::get('all/roles',AllRole::class)->name('all_role');
+
+        // All Permission
+        Route::get('all/permissions',AllPermission::class)->name('all_permission');
+        
+        // All Role Permission
+        Route::get('all/rolewisepermission',AllRolePermission::class)->name('all_role_permission');
+
+        // All Admin
+        Route::get('all/admins',AllAdmin::class)->name('all_admin');
+
+        // All College
+        Route::get('all/colleges',AllCollege::class)->name('all_college');
+
+        // All Hostel
+        Route::get('all/hostels',AllHostel::class)->name('all_hostel');
+
+    });
+
 
     // Admin Dashboard
     Route::get('admin/dashboard', AdminDashboard::class)->name('admin.dashboard');
@@ -82,35 +110,29 @@ Route::middleware(['auth:admin','is_admin','verified'])->group(function () {
     // // Admin Logout
     // Route::post('admin/logout', [AdminLogin::class, 'logout'])->name('admin.logout');
 
-    // All Role
-    Route::get('all/roles',AllRole::class)->name('all_role');
-
-    // All Admin
-    Route::get('all/admins',AllAdmin::class)->name('all_admin');
-
     // All Classes
     Route::get('all/classes',AllClass::class)->name('all_class');
-
-    // All College
-    Route::get('all/colleges',AllCollege::class)->name('all_college');
-
-    // All Hostel
-    Route::get('all/hostels',AllHostel::class)->name('all_hostel');
 
     // All Building
     Route::get('all/buildings',AllBuilding::class)->name('all_building');
 
-    // All Academic Year
-    Route::get('all/academicyears',AllAcademicYear::class)->name('all_academic_year');
-
-    // All Facility
-    Route::get('all/facilitys',AllFacility::class)->name('all_facility');
+    // All Floor
+    Route::get('all/floors',AllFloor::class)->name('all_floor');
+    
+    // All Seated
+    Route::get('all/seateds',AllSeated::class)->name('all_seated');
 
     // All Room
     Route::get('all/rooms',AllRoom::class)->name('all_room');
 
     // All Bed
     Route::get('all/beds',AllBed::class)->name('all_bed');
+
+    // All Facility
+    Route::get('all/facilitys',AllFacility::class)->name('all_facility');
+
+    // All Academic Year
+    Route::get('all/academicyears',AllAcademicYear::class)->name('all_academic_year');
 
     // All Fee
     Route::get('all/fees',AllFee::class)->name('all_fee');
@@ -154,11 +176,7 @@ Route::middleware(['auth:admin','is_admin','verified'])->group(function () {
     // All Notice
     Route::get('all/notices',AllNotice::class)->name('all_notice');
 
-    // All Seated
-    Route::get('all/seateds',AllSeated::class)->name('all_seated');
 
-    // All Floor
-    Route::get('all/floors',AllFloor::class)->name('all_floor');
 });
 
 
