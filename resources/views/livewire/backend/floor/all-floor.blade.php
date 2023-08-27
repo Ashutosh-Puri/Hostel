@@ -186,9 +186,11 @@
                                 <h2>Data Floors</h2>
                             </div>
                             <div class="float-end">
-                                <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
-                                    Add Floor<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
-                                </a>
+                                @can('Add Floor')
+                                    <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
+                                        Add Floor<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
+                                    </a>
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -233,7 +235,11 @@
                                             <th>Building Name</th>
                                             <th>Floor Number</th>
                                             <th>Status</th>
-                                            <th>Action</th>
+                                            @can('Edit Floor')
+                                                <th>Action</th>
+                                            @elsecan('Delete Floor')
+                                                <th>Action</th>
+                                            @endcan
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -289,15 +295,35 @@
                                                         <span class="badge bg-danger text-white">In-Active</span>
                                                     @endif
                                                 </td>
-                                                <td>
-                                                    <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
-                                                    @if ($item->status==1) 
-                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
-                                                    @else
-                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-thumb-down"></i> </a>
-                                                    @endif
-                                                    <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
-                                                </td>
+                                                @can('Edit Floor')
+                                                    <td>
+                                                        @can('Edit Floor')
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                            @if ($item->status==1)
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
+                                                            @else
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-thumb-down"></i> </a>
+                                                            @endif
+                                                        @endcan
+                                                        @can('Delete Floor')
+                                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                        @endcan
+                                                    </td>
+                                                @elsecan('Delete Floor')
+                                                    <td>
+                                                        @can('Edit Floor')
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                            @if ($item->status==1)
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
+                                                            @else
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-thumb-down"></i> </a>
+                                                            @endif
+                                                        @endcan
+                                                        @can('Delete Floor')
+                                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                        @endcan
+                                                    </td>
+                                                @endcan
                                             </tr>
                                         @endforeach
                                     </tbody>

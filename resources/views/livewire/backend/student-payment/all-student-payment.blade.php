@@ -250,9 +250,11 @@
                                 <h3>Data Student Payments</h3>
                             </div>
                             <div class="float-end">
-                                <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
-                                    Add Student Payment<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
-                                </a>
+                                @can('Add Student Payment')
+                                    <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
+                                        Add Student Payment<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
+                                    </a>
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -301,7 +303,11 @@
                                             <th>Deposite</th>
                                             <th>Total Amount</th>
                                             <th>Status</th>
-                                            <th>Action</th>
+                                            @can('Edit Student Payment')
+                                                <th>Action</th>
+                                            @elsecan('Delete Student Payment')
+                                                <th>Action</th>
+                                            @endcan
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -331,17 +337,39 @@
                                                         <span class="badge bg-danger text-white">Cancelled</span>
                                                     @endif
                                                 </td>
-                                                <td>
-                                                    <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
-                                                    @if ($item->status==1) 
-                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-thumb-down"></i> </a>
-                                                    @elseif ($item->status==2)
-                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-warning waves-effect waves-light"> <i class="mdi mdi-clock"></i> </a>
-                                                    @elseif ($item->status==0)
-                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
-                                                    @endif
-                                                    <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
-                                                </td>
+                                                @can('Edit Student Payment')
+                                                    <td>
+                                                        @can('Edit Student Payment')
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                            @if ($item->status==1)
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-thumb-down"></i> </a>
+                                                            @elseif ($item->status==2)
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-warning waves-effect waves-light"> <i class="mdi mdi-clock"></i> </a>
+                                                            @elseif ($item->status==0)
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
+                                                            @endif
+                                                        @endcan
+                                                        @can('Delete Student Payment')
+                                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                        @endcan
+                                                    </td>
+                                                @elsecan('Delete Student Payment')
+                                                    <td>
+                                                        @can('Edit Student Payment')
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                            @if ($item->status==1)
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-thumb-down"></i> </a>
+                                                            @elseif ($item->status==2)
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-warning waves-effect waves-light"> <i class="mdi mdi-clock"></i> </a>
+                                                            @elseif ($item->status==0)
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
+                                                            @endif
+                                                        @endcan
+                                                        @can('Delete Student Payment')
+                                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                        @endcan
+                                                    </td>
+                                                @endcan
                                             </tr>
                                         @endforeach
                                     </tbody>

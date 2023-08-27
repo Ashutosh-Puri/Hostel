@@ -63,8 +63,8 @@
                                             <select class="form-select @error('floor_id') is-invalid @enderror" id="floor_id" wire:model="floor_id" >
                                                 <option hidden >Select Floor</option>
                                                 @foreach ($floors as $item1)
-                                                    <option  value="{{ $item1->id }}"> 
-                                                        @switch($item1->floor)  @case(0) Ground @break @case(1) First @break @case(2) Second  @break @case(3) Third @break @case(4) Fourth @break  @case(5) Fifth @break @case(6) Sixth @break  @case(7) Seventh @break @case(8) Eighth @break @case(9) Nineth @break @case(10) Tenth @break @default {{ $item->floor }} @endswitch Floor 
+                                                    <option  value="{{ $item1->id }}">
+                                                        @switch($item1->floor)  @case(0) Ground @break @case(1) First @break @case(2) Second  @break @case(3) Third @break @case(4) Fourth @break  @case(5) Fifth @break @case(6) Sixth @break  @case(7) Seventh @break @case(8) Eighth @break @case(9) Nineth @break @case(10) Tenth @break @default {{ $item->floor }} @endswitch Floor
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -184,8 +184,8 @@
                                             <select class="form-select @error('floor_id') is-invalid @enderror" id="floor_id" wire:model="floor_id" >
                                                 <option hidden >Select Floor</option>
                                                 @foreach ($floors as $item1)
-                                                    <option  value="{{ $item1->id }}"> 
-                                                        @switch($item1->floor)  @case(0) Ground @break @case(1) First @break @case(2) Second  @break @case(3) Third @break @case(4) Fourth @break  @case(5) Fifth @break @case(6) Sixth @break  @case(7) Seventh @break @case(8) Eighth @break @case(9) Nineth @break @case(10) Tenth @break @default {{ $item->floor }} @endswitch Floor 
+                                                    <option  value="{{ $item1->id }}">
+                                                        @switch($item1->floor)  @case(0) Ground @break @case(1) First @break @case(2) Second  @break @case(3) Third @break @case(4) Fourth @break  @case(5) Fifth @break @case(6) Sixth @break  @case(7) Seventh @break @case(8) Eighth @break @case(9) Nineth @break @case(10) Tenth @break @default {{ $item->floor }} @endswitch Floor
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -254,9 +254,11 @@
                                 <h2>Data Facilities</h2>
                             </div>
                             <div class="float-end">
-                                <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
-                                    Add Facility<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
-                                </a>
+                                @can('Add Facility')
+                                    <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
+                                        Add Facility<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
+                                    </a>
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -300,7 +302,11 @@
                                             <th>Room</th>
                                             <th>Name</th>
                                             <th>Status</th>
-                                            <th>Action</th>
+                                            @can('Edit Facility')
+                                                <th>Action</th>
+                                            @elsecan('Delete Facility')
+                                                <th>Action</th>
+                                            @endcan
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -358,15 +364,35 @@
                                                         <span class="badge bg-danger text-white">In-Active</span>
                                                     @endif
                                                 </td>
-                                                <td>
-                                                    <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
-                                                    @if ($item->status==1) 
-                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
-                                                    @else
-                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-thumb-down"></i> </a>
-                                                    @endif
-                                                    <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
-                                                </td>
+                                                @can('Edit Facility')
+                                                    <td>
+                                                        @can('Edit Facility')
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                            @if ($item->status==1)
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
+                                                            @else
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-thumb-down"></i> </a>
+                                                            @endif
+                                                        @endcan
+                                                        @can('Delete Facility')
+                                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                        @endcan
+                                                    </td>
+                                                @elsecan('Delete Facility')
+                                                    <td>
+                                                        @can('Edit Facility')
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                            @if ($item->status==1)
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
+                                                            @else
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-thumb-down"></i> </a>
+                                                            @endif
+                                                        @endcan
+                                                        @can('Delete Facility')
+                                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                        @endcan
+                                                    </td>
+                                                @endcan
                                             </tr>
                                         @endforeach
                                     </tbody>

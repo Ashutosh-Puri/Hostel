@@ -248,9 +248,11 @@
                                 <h2>Data Student Educations</h2>
                             </div>
                             <div class="float-end">
-                                <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
-                                    Add Student Education<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
-                                </a>
+                                @can('Add Student Education')
+                                    <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
+                                        Add Student Education<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
+                                    </a>
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -302,7 +304,11 @@
                                             <th>Class Name</th>
                                             <th>SGPA</th>
                                             <th>Percentage</th>
-                                            <th>Action</th>
+                                            @can('Edit Student Education')
+                                                <th>Action</th>
+                                            @elsecan('Delete Student Education')
+                                                <th>Action</th>
+                                            @endcan
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -315,10 +321,25 @@
                                                 <td>{{ $item->Class->name }}</td>
                                                 <td>{{ $item->sgpa }}</td>
                                                 <td>{{ $item->percentage }} %</td>
+                                                @can('Edit Student Education')
                                                 <td>
+                                                    @can('Edit Student Education')
                                                     <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                    @endcan
+                                                    @can('Delete Student Education')
                                                     <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                    @endcan
                                                 </td>
+                                                @elsecan('Delete Student Education')
+                                                <td>
+                                                    @can('Edit Student Education')
+                                                    <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                    @endcan
+                                                    @can('Delete Student Education')
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                    @endcan
+                                                </td>
+                                                @endcan
                                             </tr>
                                         @endforeach
                                     </tbody>
