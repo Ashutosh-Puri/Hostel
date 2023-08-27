@@ -665,6 +665,7 @@
                                             <th>A ID</th>
                                             <th>Year</th>
                                             <th>Student Name</th>
+                                            <th>Gender</th>
                                             <th>Class Name</th>
                                             <th>Seated</th>
                                             <th>Fee</th>
@@ -690,6 +691,8 @@
                                                 <td>{{ $item->Admission->id }}</td>
                                                 <td>{{ $item->Admission->AcademicYear->year }}</td>
                                                 <td>{{ $item->Admission->Student->name ?$item->Admission->Student->name:$item->Admission->Student->username; }}</td>
+                                                <td>{{ $item->Admission->Student->gender==0?"M":"F"; }}</td>
+                                                
                                                 <td>{{ $item->Admission->Class->name }}</td>
                                                 <td>
                                                     @if (isset($item->Admission->Seated->seated))

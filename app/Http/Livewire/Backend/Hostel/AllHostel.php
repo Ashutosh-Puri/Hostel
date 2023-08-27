@@ -19,6 +19,7 @@ class AllHostel extends Component
     public $mode='all';
     public $name;
     public $status;
+    public $gender;
     public $college_id;
     public $c_id;
     public $current_id;
@@ -28,6 +29,7 @@ class AllHostel extends Component
         return [
             'name' => ['required', 'string', 'max:255','unique:hostels,name,'.($this->mode=='edit'? $this->current_id :'')],
             'college_id'=>['required','integer'],
+            'gender'=>['required','integer','in:0,1'],
         ];
     }
 
@@ -41,6 +43,7 @@ class AllHostel extends Component
         $this->college_id=null;
         $this->name=null;
         $this->status=null;
+        $this->gender=null;
         $this->c_id=null;
         $this->college_name =null;
         $this->hostel_name =null;
@@ -60,6 +63,7 @@ class AllHostel extends Component
             $hostel->name = $validatedData['name'];
             $hostel->college_id = $validatedData['college_id'];
             $hostel->status = $this->status==1?1:0;
+            $hostel->gender = $this->gender==1?1:0;
             $hostel->save();
             $this->resetinput();
             $this->setmode('all');
@@ -83,6 +87,7 @@ class AllHostel extends Component
             $this->C_id=$hostel->id;
             $this->college_id=$hostel->college_id;
             $this->status = $hostel->status;
+            $this->gender = $hostel->gender;
             $this->name = $hostel->name;
             $this->setmode('edit');
         }else{
@@ -101,6 +106,7 @@ class AllHostel extends Component
             $hostel->name = $validatedData['name'];
             $hostel->college_id = $validatedData['college_id'];
             $hostel->status = $this->status==1?1:0;
+            $hostel->gender = $this->gender==1?1:0;
             $hostel->update();
             $this->resetinput();
             $this->setmode('all');

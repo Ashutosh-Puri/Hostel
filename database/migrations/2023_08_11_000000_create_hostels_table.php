@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id()->index();
             $table->unsignedBigInteger('college_id');
             $table->string('name')->unique()->index();
+            $table->tinyInteger('gender')->default('0')->comment('0-Boys ,1-Girls');
             $table->tinyInteger('status')->default('0')->comment('0-active ,1-inactive');
             $table->timestamps();
             $table->foreign('college_id')->references('id')->on('colleges')->onDelete('cascade');

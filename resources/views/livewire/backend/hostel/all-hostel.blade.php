@@ -53,6 +53,21 @@
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="gender" class="form-label">Select Gender Type</label>
+                                            <select class="form-select @error('gender') is-invalid @enderror" id="gender" wire:model="gender" >
+                                                <option hidden value="" >Select Gender</option>
+                                                <option  value="0">Boy's</option>
+                                                <option  value="1">Girl's</option>
+                                            </select>
+                                            @error('gender')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group ">
                                             <label for="status" class="form-label mb-3">Status</label><br>
                                             <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
@@ -117,6 +132,21 @@
                                             <label for="name" class="form-label">Hostel Name</label>
                                             <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
                                             @error('name')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="gender" class="form-label">Select Gender Type</label>
+                                            <select class="form-select @error('gender') is-invalid @enderror" id="gender" wire:model="gender" >
+                                                <option hidden value="" >Select Gender</option>
+                                                <option  value="0">Boy's</option>
+                                                <option  value="1">Girl's</option>
+                                            </select>
+                                            @error('gender')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -201,6 +231,7 @@
                                             <th>No</th>
                                             <th>College Name</th>
                                             <th>Hostel Name</th>
+                                            <th>Gender Type</th>
                                             <th>Status</th>
                                             @can('Edit Hostel')
                                                 <th>Action</th>
@@ -215,6 +246,7 @@
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->College->name }}</td>
                                                 <td>{{ $item->name }}</td>
+                                                <td>{{ $item->gender==0?"Boy's":"Girl's"; }}</td>
                                                 <td>
                                                     @if ( $item->status == '0')
                                                         <span class="badge bg-success text-white">Active</span>

@@ -1,4 +1,157 @@
 <div>
+    <div class="row">
+        <div class="col-12 col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover	 table-bordered table-info text-center table-sm align-middle">
+                    <thead class="table-light">
+                        <caption>College's And Hostel's</caption>
+                        <tr>
+                            <th class="text-start">Count</th>
+                            <th>College's</th>
+                            <th>Hostel's</th>
+                            <th>Boy's Hostel</th>
+                            <th>Girls's Hostel</th>
+                        </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                            <tr class="table-primary">
+                                <th class="text-start" scope="row">Active</th>
+                                <td>{{ $a_college }}</td>
+                                <td>{{ $a_hostel }}</td>
+                                <td>{{ $a_b_hostel }}</td>
+                                <td>{{ $a_g_hostel }}</td>
+                            </tr>
+                            <tr class="table-primary">
+                                <th class="text-start" scope="row">In Active</th>
+                                <td>{{ $i_college }}</td>
+                                <td>{{ $i_hostel }}</td>
+                                <td>{{ $i_b_hostel }}</td>
+                                <td>{{ $i_g_hostel }}</td>
+                            </tr>
+                            <tr class="table-primary" >
+                                <th class="text-start" scope="row">Total</th>
+                                <td>{{ $total_college }}</td>
+                                <td>{{ $total_hostel }}</td>
+                                <td>{{ $total_b_hostel }}</td>
+                                <td>{{ $total_g_hostel }}</td>
+                            </tr>
+                        </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-12 col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover	 table-bordered table-info text-center table-sm align-middle">
+                    <thead class="table-light">
+                        <caption>Building's</caption>
+                        <tr>
+                            <th class="text-start">Count</th>
+                            <th>Building's</th>
+                            <th>Boy's Hostel</th>
+                            <th>Girls's Hostel</th>
+                        </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                            <tr class="table-primary">
+                                <th class="text-start" scope="row">Active</th>
+                                <td>{{ $bca=App\Models\Building::where('status',0)->count(); }}</td>
+                                <td>  
+                                    @php
+                                        $bh=App\Models\Hostel::where('gender',0)->pluck('id');
+                                        $bhc=App\Models\Building::where('status',0)->where('hostel_id',$bh)->count();
+                                    @endphp
+                                    {{ $bhc }}
+                                </td>
+                                <td>  
+                                    @php
+                                        $gh=App\Models\Hostel::where('gender',1)->pluck('id');
+                                        $ghc=App\Models\Building::where('status',0)->where('hostel_id',$bh)->count();
+                                    @endphp
+                                    {{ $ghc }}
+                                </td>
+                            </tr>
+                            <tr class="table-primary">
+                                <th class="text-start" scope="row">In Active</th>
+                                <td>{{ $bci=App\Models\Building::where('status',1)->count(); }}</td>
+                                <td>  
+                                    @php
+                                        $bh=App\Models\Hostel::where('gender',0)->pluck('id');
+                                        $bhc=App\Models\Building::where('status',1)->where('hostel_id',$bh)->count();
+                                    @endphp
+                                    {{ $bhc }}
+                                </td>
+                                <td>  
+                                    @php
+                                        $gh=App\Models\Hostel::where('gender',1)->pluck('id');
+                                        $ghc=App\Models\Building::where('status',1)->where('hostel_id',$bh)->count();
+                                    @endphp
+                                    {{ $ghc }}
+                                </td>
+                            </tr>
+                            <tr class="table-primary" >
+                                <th class="text-start" scope="row">Total</th>
+                                <td>{{ $bc=App\Models\Building::count(); }}</td>
+                                <td>  
+                                    @php
+                                        $bh=App\Models\Hostel::where('gender',0)->pluck('id');
+                                        $bhc=App\Models\Building::where('hostel_id',$bh)->count();
+                                    @endphp
+                                    {{ $bhc }}
+                                </td>
+                                <td>  
+                                    @php
+                                        $gh=App\Models\Hostel::where('gender',1)->pluck('id');
+                                        $ghc=App\Models\Building::where('hostel_id',$bh)->count();
+                                    @endphp
+                                    {{ $ghc }}
+                                </td>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="col-12 col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover	 table-bordered table-info text-center table-sm align-middle">
+                    <thead class="table-light">
+                        <caption>Room's</caption>
+                        <tr>
+                            <th class="text-start">Room's</th>
+                            <th>Count</th>
+                            <th>Full</th>
+                            <th>Free</th>
+                        </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                            @foreach ($seated as $s)
+                                <tr class="table-primary" >
+                                   <th class="text-start">{{ $s->seated }} Seated</th>
+                                   <td>{{ $room=App\Models\Room::where('seated_id',$s->id)->count(); }}</td>  
+                                   <td>{{ $room=App\Models\Room::where('status',1)->where('seated_id',$s->id)->count(); }}</td>  
+                                   <td>{{ $room=App\Models\Room::where('status',0)->where('seated_id',$s->id)->count(); }}</td>  
+                                </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr class="table-primary ">
+                                <th class="text-start">Total</th>
+                                <th>{{ $total_room }}</th>
+                                <th>{{ $f_room }}</th>
+                                <th>{{ $a_room }}</th>
+                            </tr>
+                        </tfoot>
+                </table>
+            </div>
+        </div>
+        
+    </div>
+    <div>
+        
+        
+    </div>
+    <br>
+
   @section('title') Admin Dashboard @endsection
   <div class="row">
       <div class="col-md-12">

@@ -61,6 +61,7 @@ class StudentSeeder extends Seeder
                 'blood_group' => $faker->randomElement(['A-', 'A+','AB-', 'AB+','O-', 'O+','B-', 'B+']),
                 'is_allergy' => $faker->name,
                 'is_ragging' => $faker->numberBetween(0, 1),
+                'gender' => $faker->numberBetween(0, 1),
                 'cast_id' =>  Cast::inRandomOrder()->first()->id,
             ]);
         }
