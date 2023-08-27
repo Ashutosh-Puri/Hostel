@@ -88,101 +88,159 @@ Route::middleware(['auth:admin','is_admin','verified'])->group(function () {
     // Superadmin Routes With Admin Guard
     Route::group(['middleware' => ['role:Super Admin']], function () {
 
-        // All Role
-        Route::get('all/roles',AllRole::class)->name('all_role');
-
-        // All Permission
-        Route::get('all/permissions',AllPermission::class)->name('all_permission');
+        Route::group(['middleware' => ['permission:Access Role']], function () {
+            // All Role
+            Route::get('all/roles',AllRole::class)->name('all_role');
+        });
+    
+        Route::group(['middleware' => ['permission:Access Permission']], function () {
+            // All Permission
+            Route::get('all/permissions',AllPermission::class)->name('all_permission'); 
+        });
+    
+        Route::group(['middleware' => ['permission:Access Role Wise Permission']], function () {
+           // All Role Permission
+           Route::get('all/rolewisepermission',AllRolePermission::class)->name('all_role_permission');
+        });
         
-        // All Role Permission
-        Route::get('all/rolewisepermission',AllRolePermission::class)->name('all_role_permission');
+        Route::group(['middleware' => ['permission:Access Admin']], function () {
+            // All Admin
+            Route::get('all/admins',AllAdmin::class)->name('all_admin');
+        });
 
-        // All Admin
-        Route::get('all/admins',AllAdmin::class)->name('all_admin');
+        Route::group(['middleware' => ['permission:Access College']], function () {
+            // All College
+            Route::get('all/colleges',AllCollege::class)->name('all_college');
+        });
+    
+        Route::group(['middleware' => ['permission:Access Hostel']], function () {
+            // All Hostel
+            Route::get('all/hostels',AllHostel::class)->name('all_hostel');
+        });
+    });
 
-        // All College
-        Route::get('all/colleges',AllCollege::class)->name('all_college');
+    
+    Route::group(['middleware' => ['permission:Access Admission']], function () {
+        // All Admission
+        Route::get('all/admissions',AllAdmission::class)->name('all_admission');
+    });
 
-        // All Hostel
-        Route::get('all/hostels',AllHostel::class)->name('all_hostel');
+    Route::group(['middleware' => ['permission:Access Dashboard']], function () {
+        // Admin Dashboard
+        Route::get('admin/dashboard', AdminDashboard::class)->name('admin.dashboard');
+    });
 
+    Route::group(['middleware' => ['permission:Access Class']], function () {
+        // All Classes
+        Route::get('all/classes',AllClass::class)->name('all_class');
+    });
+
+    Route::group(['middleware' => ['permission:Access Building']], function () {
+        // All Building
+        Route::get('all/buildings',AllBuilding::class)->name('all_building');
+    });
+
+    Route::group(['middleware' => ['permission:Access Floor']], function () {
+        // All Floor
+        Route::get('all/floors',AllFloor::class)->name('all_floor');
+    });
+
+    Route::group(['middleware' => ['permission:Access Seated']], function () {
+        // All Seated
+        Route::get('all/seateds',AllSeated::class)->name('all_seated');
+    });
+
+    Route::group(['middleware' => ['permission:Access Room']], function () {
+        // All Room
+        Route::get('all/rooms',AllRoom::class)->name('all_room');
+    });
+    
+    Route::group(['middleware' => ['permission:Access Bed']], function () {
+        // All Bed
+        Route::get('all/beds',AllBed::class)->name('all_bed');
+    });
+
+    Route::group(['middleware' => ['permission:Access Facility']], function () {
+        // All Facility
+        Route::get('all/facilitys',AllFacility::class)->name('all_facility');
+    });
+
+    Route::group(['middleware' => ['permission:Access Academic Year']], function () {
+        // All Academic Year
+        Route::get('all/academicyears',AllAcademicYear::class)->name('all_academic_year');
+    });
+
+    Route::group(['middleware' => ['permission:Access Fee']], function () {
+        // All Fee
+        Route::get('all/fees',AllFee::class)->name('all_fee');
+    });
+
+    Route::group(['middleware' => ['permission:Access Fine']], function () {
+        // All Fine
+        Route::get('all/fines',AllFine::class)->name('all_fine');
+    });
+
+    Route::group(['middleware' => ['permission:Access Student Fine']], function () {
+        // All Student Fine
+        Route::get('all/studentdues', AllStudentFine::class)->name('all_student_fine');
+    });
+
+    Route::group(['middleware' => ['permission:Access Student Payment']], function () {
+        // All Student Payment
+        Route::get('all/payments',AllStudentPayment::class)->name('all_student_payment');
+    });
+
+    Route::group(['middleware' => ['permission:Access Quota']], function () {
+        // All Quota
+        Route::get('all/quotas',AllQuota::class)->name('all_quota');
+    });
+
+    Route::group(['middleware' => ['permission:Access Student']], function () {
+        // All Student
+        Route::get('all/students',AllStudent::class)->name('all_student');
+    });
+
+    Route::group(['middleware' => ['permission:Access Student Education']], function () {
+        // All Student Education
+        Route::get('all/ducations',AllStudentEducation::class)->name('all_student_education');
+    });
+
+    Route::group(['middleware' => ['permission:Access Allocation']], function () {
+        // All Allocation
+        Route::get('all/allocations',AllAllocation::class)->name('all_allocation');
+    });
+
+    Route::group(['middleware' => ['permission:Access Cast']], function () {
+        // All Cast
+        Route::get('all/casts',AllCast::class)->name('all_cast');
+    });
+
+    Route::group(['middleware' => ['permission:Access Category']], function () {
+        // All Category
+        Route::get('all/categories',AllCategory::class)->name('all_category');
+    });
+
+    Route::group(['middleware' => ['permission:Access Rule']], function () {
+        // All Rule
+        Route::get('all/rules',AllRule::class)->name('all_rule');
+    });
+
+    Route::group(['middleware' => ['permission:Access Photo Gallery']], function () {
+        // All Photo Gallery
+        Route::get('all/photogallery',AllPhotoGallery::class)->name('all_photogallery');
+    });
+
+    Route::group(['middleware' => ['permission:Access Notice']], function () {
+        // All Notice
+        Route::get('all/notices',AllNotice::class)->name('all_notice');
+    });
+
+    Route::group(['middleware' => ['permission:Access Enquiry']], function () {
+        // All Enquiry
+        Route::get('all/enquires',AllEnquiry::class)->name('all_enquiry');
     });
 
 
-    // Admin Dashboard
-    Route::get('admin/dashboard', AdminDashboard::class)->name('admin.dashboard');
-
-    // // Admin Logout
-    // Route::post('admin/logout', [AdminLogin::class, 'logout'])->name('admin.logout');
-
-    // All Classes
-    Route::get('all/classes',AllClass::class)->name('all_class');
-
-    // All Building
-    Route::get('all/buildings',AllBuilding::class)->name('all_building');
-
-    // All Floor
-    Route::get('all/floors',AllFloor::class)->name('all_floor');
-    
-    // All Seated
-    Route::get('all/seateds',AllSeated::class)->name('all_seated');
-
-    // All Room
-    Route::get('all/rooms',AllRoom::class)->name('all_room');
-
-    // All Bed
-    Route::get('all/beds',AllBed::class)->name('all_bed');
-
-    // All Facility
-    Route::get('all/facilitys',AllFacility::class)->name('all_facility');
-
-    // All Academic Year
-    Route::get('all/academicyears',AllAcademicYear::class)->name('all_academic_year');
-
-    // All Fee
-    Route::get('all/fees',AllFee::class)->name('all_fee');
-
-    // All Fine
-    Route::get('all/fines',AllFine::class)->name('all_fine');
-
-    // All Student Fine
-    Route::get('all/studentdues', AllStudentFine::class)->name('all_student_fine');
-
-    // All Student Payment
-    Route::get('all/payments',AllStudentPayment::class)->name('all_student_payment');
-
-    // All Quota
-    Route::get('all/quotas',AllQuota::class)->name('all_quota');
-
-    // All Student
-    Route::get('all/students',AllStudent::class)->name('all_student');
-
-    // All Admission
-    Route::get('all/admissions',AllAdmission::class)->name('all_admission');
-
-    // All Student Education
-    Route::get('all/ducations',AllStudentEducation::class)->name('all_student_education');
-
-    // All Allocation
-    Route::get('all/allocations',AllAllocation::class)->name('all_allocation');
-
-    // All Cast
-    Route::get('all/casts',AllCast::class)->name('all_cast');
-
-    // All Category
-    Route::get('all/categories',AllCategory::class)->name('all_category');
-
-    // All Rule
-    Route::get('all/rules',AllRule::class)->name('all_rule');
-
-    // All Photo Gallery
-    Route::get('all/photogallery',AllPhotoGallery::class)->name('all_photogallery');
-
-    // All Notice
-    Route::get('all/notices',AllNotice::class)->name('all_notice');
-
-    // All Enquiry
-    Route::get('all/enquires',AllEnquiry::class)->name('all_enquiry');
 
 });
 

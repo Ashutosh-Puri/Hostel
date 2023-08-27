@@ -15,6 +15,11 @@ class PermissionSeeder extends Seeder
     {
         $records = [
             [   
+                'name' => "Access Dashboard",
+                'group_name' => 'Dashboard',
+                'guard_name' => 'admin',
+            ],
+            [   
                 'name' => "Access Academic Year",
                 'group_name' => 'Academic Year',
                 'guard_name' => 'admin',
@@ -73,6 +78,11 @@ class PermissionSeeder extends Seeder
             ],
             [   
                 'name' => "Edit Allocation",
+                'group_name' => 'Allocation',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Delete Allocation",
                 'group_name' => 'Allocation',
                 'guard_name' => 'admin',
             ],

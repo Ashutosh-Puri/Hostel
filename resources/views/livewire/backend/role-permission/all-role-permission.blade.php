@@ -136,7 +136,7 @@
                                             <td>
                                                 @foreach ($per as $permissionitem)
                                                     <div class="form-group form-check mb-3 form-check-primary">
-                                                        <input class="form-check-input @error('permission') is-invalid @enderror" wire:model="permission.{{ $permissionitem->id }}" type="checkbox" value="{{ $permissionitem->id }}"  >
+                                                        <input class="form-check-input @error('permission') is-invalid @enderror" wire:model="permission.{{ $permissionitem->id }}" type="checkbox" value="{{ $permissionitem->id }}" id="customckeck{{ $permissionitem->id }}" >
                                                         <label class="form-check-label" for="customckeck{{ $permissionitem->id }}">{{ $permissionitem->name }}</label>
                                                         @error('permission')
                                                             <div class="invalid-feedback">
@@ -170,9 +170,11 @@
                                 <h2>Data Role Wise Permissions</h2>
                             </div>
                             <div class="float-end">
-                                <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
-                                    Add Role Permission<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
-                                </a>
+                                @can('Add Role Wise Permission')
+                                    <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
+                                        Add Role Permission<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
+                                    </a>
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -213,7 +215,11 @@
                                             <th>Role</th>
                                             <th>Status</th>
                                             <th>Permissions</th>
-                                            <th>Action</th>
+                                            @can('Edit Role Wise Permission')
+                                                <th>Action</th>
+                                            @elsecan('Edit Role Wise Permission')
+                                                <th>Action</th>
+                                            @endcan
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -233,10 +239,25 @@
                                                         <span class="badge rounded-pill m-1 bg-danger">{{ $permission->name }}</span>
                                                     @endforeach
                                                 </td>
-                                                <td>
-                                                    <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
-                                                    <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
-                                                </td>
+                                                @can('Edit Role Wise Permission')
+                                                    <td>
+                                                        @can('Edit Role Wise Permission')
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                        @endcan
+                                                        @can('Delete Role Wise Permission')
+                                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                        @endcan
+                                                    </td>
+                                                @elsecan('Edit Role Wise Permission')
+                                                    <td>
+                                                        @can('Edit Role Wise Permission')
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                        @endcan
+                                                        @can('Delete Role Wise Permission')
+                                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                        @endcan
+                                                    </td>
+                                                @endcan
                                             </tr>
                                         @endforeach
                                     </tbody>
