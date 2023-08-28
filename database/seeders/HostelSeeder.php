@@ -38,7 +38,7 @@ class HostelSeeder extends Seeder
                 'id'=>2,
                 'name' => "Girls Hostel",
                 'gender' => 1,
-                'status' => 1,
+                'status' => 0,
                 'college_id' => 1,
             ],
         ];

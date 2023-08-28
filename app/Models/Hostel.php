@@ -14,7 +14,7 @@ class Hostel extends Model
 
     public function Buildings()
     {
-        return $this->hasMany(Building::class, 'building_id', 'id');
+        return $this->hasMany(Building::class);
     }
 
     public function College()

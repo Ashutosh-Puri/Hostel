@@ -21,38 +21,38 @@ class Admission extends Model
 
     public function StudentPayments()
     {
-        return $this->hasMany(StudentPayment::class, 'admission_id', 'id');
+        return $this->hasMany(StudentPayment::class);
     }
 
     public function Student()
     {
-        return $this->belongsTo(Student::class, 'student_id', 'id');
+        return $this->belongsTo(Student::class);
     }
 
     public function Class()
     {
-        return $this->belongsTo(Classes::class, 'class_id', 'id');
+        return $this->belongsTo(Classes::class);
     }
 
     
 
     public function AcademicYear()
     {
-        return $this->belongsTo(AcademicYear::class, 'academic_year_id', 'id');
+        return $this->belongsTo(AcademicYear::class);
     }
 
     public function Seated()
     {
-        return $this->belongsTo(Seated::class, 'seated_id', 'id');
+        return $this->belongsTo(Seated::class);
     }
 
     public function StudentEducations()
     {
-        return $this->hasMany(StudentEducation::class, 'admission_id', 'id');
+        return $this->hasMany(StudentEducation::class);
     }
 
     public function Allocations()
     {
-        return $this->hasMany(Allocation::class, 'admission_id', 'id');
+        return $this->hasMany(Allocation::class);
     }
 }
