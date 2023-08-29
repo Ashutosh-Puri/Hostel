@@ -13,11 +13,16 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Notifications\StudentResetPasswordNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Student extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new StudentResetPasswordNotification($token));
+    }
 
     protected $guard="student";
     /**

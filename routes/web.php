@@ -55,7 +55,7 @@ Route::middleware(['guest:student'])->group(function () {
 
     // Admin Login Route
     // Route::get('admin/login', AdminLogin::class)->name('admin.login');
-
+    
     // Home
     Route::get('/', Home::class)->name('home');
 
@@ -83,7 +83,7 @@ Route::middleware(['auth:student','is_student','verified'])->group(function () {
 
 
 //  Routes With admin Guard is_admin middleware 
-Route::middleware(['auth:admin','is_admin','verified'])->group(function () {
+Route::middleware(['auth:admin','is_admin'])->group(function () {
 
     // Superadmin Routes With Admin Guard
     Route::group(['middleware' => ['role:Super Admin']], function () {
