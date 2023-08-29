@@ -30,13 +30,15 @@ class HostelSeeder extends Seeder
             [   
                 'id'=>1,
                 'name' => "Boys Hostel",
+                'gender' => 0,
                 'status' => 0,
                 'college_id' => 1,
             ],
             [
                 'id'=>2,
                 'name' => "Girls Hostel",
-                'status' => 1,
+                'gender' => 1,
+                'status' => 0,
                 'college_id' => 1,
             ],
         ];

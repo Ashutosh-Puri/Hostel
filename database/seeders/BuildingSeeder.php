@@ -41,13 +41,13 @@ class BuildingSeeder extends Seeder
             [
                 'id'=>3,
                 'name' => "G-Building 1",
-                'status' => 1,
+                'status' => 0,
                 'hostel_id' => 2,
             ],
             [   
                 'id'=>4,
                 'name' => "G-Building 2",
-                'status' => 1,
+                'status' => 0,
                 'hostel_id' => 2,
             ],
         ];

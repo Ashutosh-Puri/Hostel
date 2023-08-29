@@ -3,11 +3,11 @@
 @section('title')
 Student Register
 @endsection
-<div class="container-fulid page-body-wrapper">
+<div class="container-fulid page-body-wrapper  bg-img">
     <div class="content-wrapper d-flex align-items-center auth py-0">
         <div class="row flex-grow ">
             <div class="col-lg-4 mx-auto">
-                <div class="auth-form-light  p-5">
+                <div class="modal-bg  p-5">
                     <div>
                         <h1 class="text-center fw-bold fs-1 mb-3"> Student Register</h1>
                     </div>

@@ -1251,9 +1251,11 @@
                                 <h2>Data Admission Forms</h2>
                             </div>
                             <div class="float-end">
-                                <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
-                                    Add Admission Form<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
-                                </a>
+                                @can('Add Admission')
+                                    <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
+                                        Add Admission Form<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
+                                    </a>    
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -1303,9 +1305,14 @@
                                             <th>Student Name</th>
                                             <th>Class Name</th>
                                             <th>Seated</th>
-                                            {{-- <th>Bed Satus</th> --}}
                                             <th>Status</th>
-                                            <th>Action</th>
+                                            @can('View Admission')
+                                                <th>Action</th>
+                                            @elsecan('Edit Admission')
+                                                <th>Action</th>
+                                            @elsecan('Delete Admission')
+                                                <th>Action</th>
+                                            @endcan
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1317,13 +1324,6 @@
                                                 <td>{{ $item->Student->name!=null?$item->Student->name: $item->Student->username; }}</td>
                                                 <td>{{ $item->Class->name}}</td>
                                                 <td>{{ isset($item->Seated->seated)?$item->Seated->seated." Seated":'NA'; }}</td>
-                                                {{-- <td>
-                                                    @if ( $item->bed_id==null)
-                                                        <span class="badge bg-danger text-white">Not Allocated</span>
-                                                    @else
-                                                        <span class="badge bg-success text-white">Allocated</span><span class="badge bg-success mx-1 text-white">{{ $item->bed_id }}</span>
-                                                    @endif
-                                                </td> --}}
                                                 <td>
                                                     @if ( $item->status == '0')
                                                         <span class="badge bg-warning text-white">Wating</span>
@@ -1333,19 +1333,67 @@
                                                         <span class="badge bg-danger text-white">Canceled</span>
                                                     @endif
                                                 </td>
-                                                <td>
-                                                    <a wire:loading.attr="disabled"  wire:click="view({{ $item->id }})" class="btn btn-info waves-effect waves-light"><i class="mdi mdi-eye"></i></a>
-                                                        <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
-                                                    @if ($item->status==1) 
-                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-warning waves-effect waves-light"> <i class="mdi mdi-clock"></i> </a>
-                                                    @elseif ($item->status==0)
-                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
-                                                    @endif
-                                                    @if ($item->status!=2) 
-                                                        <a wire:loading.attr="disabled"  wire:click="cancel({{ $item->id }})" class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-thumb-down"></i></a>
-                                                    @endif
-                                                    <a  wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
-                                                </td>
+                                                @can('View Admission')
+                                                    <td>
+                                                        @can('View Admission')
+                                                            <a wire:loading.attr="disabled"  wire:click="view({{ $item->id }})" class="btn btn-info waves-effect waves-light"><i class="mdi mdi-eye"></i></a>
+                                                        @endcan
+                                                        @can('Edit Admission')
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                            @if ($item->status==1) 
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-warning waves-effect waves-light"> <i class="mdi mdi-clock"></i> </a>
+                                                            @elseif ($item->status==0)
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
+                                                            @endif
+                                                            @if ($item->status!=2) 
+                                                                <a wire:loading.attr="disabled"  wire:click="cancel({{ $item->id }})" class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-thumb-down"></i></a>
+                                                            @endif
+                                                        @endcan
+                                                        @can('Delete Admission')
+                                                            <a  wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                        @endcan
+                                                    </td>
+                                                @elsecan('Edit Admission')
+                                                    <td>
+                                                        @can('View Admission')
+                                                            <a wire:loading.attr="disabled"  wire:click="view({{ $item->id }})" class="btn btn-info waves-effect waves-light"><i class="mdi mdi-eye"></i></a>
+                                                        @endcan
+                                                        @can('Edit Admission')
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                            @if ($item->status==1) 
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-warning waves-effect waves-light"> <i class="mdi mdi-clock"></i> </a>
+                                                            @elseif ($item->status==0)
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
+                                                            @endif
+                                                            @if ($item->status!=2) 
+                                                                <a wire:loading.attr="disabled"  wire:click="cancel({{ $item->id }})" class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-thumb-down"></i></a>
+                                                            @endif
+                                                        @endcan
+                                                        @can('Delete Admission')
+                                                            <a  wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                        @endcan
+                                                    </td>
+                                                @elsecan('Delete Admission')
+                                                    <td>
+                                                        @can('View Admission')
+                                                            <a wire:loading.attr="disabled"  wire:click="view({{ $item->id }})" class="btn btn-info waves-effect waves-light"><i class="mdi mdi-eye"></i></a>
+                                                        @endcan
+                                                        @can('Edit Admission')
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                            @if ($item->status==1) 
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-warning waves-effect waves-light"> <i class="mdi mdi-clock"></i> </a>
+                                                            @elseif ($item->status==0)
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
+                                                            @endif
+                                                            @if ($item->status!=2) 
+                                                                <a wire:loading.attr="disabled"  wire:click="cancel({{ $item->id }})" class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-thumb-down"></i></a>
+                                                            @endif
+                                                        @endcan
+                                                        @can('Delete Admission')
+                                                            <a  wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                        @endcan
+                                                    </td>
+                                                @endcan
                                             </tr>
                                         @endforeach
                                     </tbody>

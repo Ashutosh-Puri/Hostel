@@ -41,6 +41,7 @@ class AllAllocation extends Component
     public $admissionid;
     public $admissionid2;
     public $fee;
+    public $gender;
 
     public function resetinput()
     {
@@ -62,6 +63,7 @@ class AllAllocation extends Component
         $this->admissionid=null;
         $this->admissionid2=null;
         $this->fee=null;
+        $this->gender=null;
     }
 
     protected function rules()
@@ -172,7 +174,8 @@ class AllAllocation extends Component
         $this->admissionid=$id;
         $admission= Admission::find($id);
         if($admission)
-        {   
+        {  
+            $this->gender= $admission->Student->gender;
             $this->academic_year_id=$admission->academic_year_id;
             // $this->seated_id=$admission->seated_id;
             
@@ -379,7 +382,6 @@ class AllAllocation extends Component
                     $bed->update();
                 }
                 $allocation->bed_id=null;
-                $allocation->fee_id=null;
                 $allocation->update();
             }
             $studentpayment=StudentPayment::where('admission_id',$id)->first();
@@ -440,7 +442,7 @@ class AllAllocation extends Component
         $academicyears=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
         $admissions=Admission::where('academic_year_id',$this->academic_year_id)->get();
         // Allocation Allocate , Re Allocate
-        $hostels = Hostel::where('status', 0)->get();
+        $hostels = Hostel::where('status', 0)->where('gender',$this->gender)->get();
         $buildings = Building::where('status', 0)->where('hostel_id', $this->hostel_id)->get();
         $floors = Floor::where('status', 0)->where('building_id', $this->building_id)->get();
         $rooms=Room::where('floor_id', $this->floor_id)->get();

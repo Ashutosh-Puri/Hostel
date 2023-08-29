@@ -21,12 +21,49 @@
             font-family: "nunito-regular", sans-serif;
             font-size: 12px;
             height: 45px;
+            
+        }
+
+        .bg-img {
+
+            margin: 0;
+                padding: 0;
+                background-image: url('{{ asset('assets/images/bg.png') }}');
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                height: 100vh;
+                color:white;
+
+        }
+
+
+        .modal-bg ,input{
+            color:white;
+            border: 1px solid lime;
+            opacity: 1;
+        }
+        .modal-bg input::placeholder {
+            color: white;
+        }
+        .modal-bg input{
+            color:lime;
+        }
+        .modal-bg  input:focus{
+            color:lime;
+        }
+
+
+        .guest-bg{
+            /* background-color: #f9f0e6; */
+            /* background-color: #f7cac9; */
+            background-color:  #A890FE;
         }
     </style>
     @endsection
     <div id="wrapper">
         @include('layouts.guest.navbar')
-        <div class="content-page" style="background-color: #b4b9ea;">
+        <div class="content-page guest-bg" >
            @yield('guest')
         </div>
         @include('layouts.guest.footer')

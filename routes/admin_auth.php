@@ -24,15 +24,16 @@ Route::middleware('guest:admin')->group(function () {
 
     Route::post('admin/forgot-password', [PasswordResetLinkController::class, 'store'])->name('admin.password.email');
 
-    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
+    Route::get('admin/reset-password/{token}', [NewPasswordController::class, 'create'])->name('admin.password.reset');
 
     Route::post('admin/reset-password', [NewPasswordController::class, 'store'])->name('admin.password.store');
 });
 
-Route::middleware(['is_admin'])->group(function () {
-    Route::get('admin/verify-email', EmailVerificationPromptController::class)->name('verification.notice');
 
-    Route::get('admin/verify-email/{id}/{hash}', VerifyEmailController::class)->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
+Route::middleware(['is_admin'])->group(function () {
+    // Route::get('verify-email', EmailVerificationPromptController::class)->name('verification.notice');
+
+    // Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
 
     Route::post('admin/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])->middleware('throttle:6,1')->name('admin.verification.send');
     

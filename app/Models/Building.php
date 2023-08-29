@@ -15,11 +15,11 @@ class Building extends Model
 
     public function Floors()
     {
-        return $this->hasMany(Floor::class, 'building_id', 'id');
+        return $this->hasMany(Floor::class);
     }
 
     public function Hostel()
     {
-        return $this->belongsTo(Hostel::class, 'hostel_id', 'id');
+        return $this->belongsTo(Hostel::class);
     }
 }
