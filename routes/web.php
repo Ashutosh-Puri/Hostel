@@ -29,6 +29,7 @@ use App\Http\Livewire\Backend\Category\AllCategory;
 use App\Http\Livewire\Backend\Facility\AllFacility;
 use App\Http\Livewire\Guestend\Enquiry\ShowEnquiry;
 use App\Http\Livewire\Backend\Admission\AllAdmission;
+use App\Http\Livewire\Backend\Report\AllStudentReport;
 use App\Http\Livewire\Backend\Allocation\AllAllocation;
 use App\Http\Livewire\Backend\Permission\AllPermission;
 use App\Http\Livewire\Backend\StudentFine\AllStudentFine;
@@ -238,6 +239,11 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
     Route::group(['middleware' => ['permission:Access Enquiry']], function () {
         // All Enquiry
         Route::get('all/enquires',AllEnquiry::class)->name('all_enquiry');
+    });
+
+    Route::group(['middleware' => ['permission:Access Report']], function () {
+        // All Student Report
+        Route::get('all/stud/reports',AllStudentReport::class)->name('all_student_report');
     });
 
 

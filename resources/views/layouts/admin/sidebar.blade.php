@@ -242,9 +242,23 @@
           </a>
         </li>
       @endcan
-      {{-- @can('')
+      @can('Access Report')
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#reports" aria-expanded="false" aria-controls="reports">
+            <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
+            <span class="menu-title">Reports</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="reports">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="{{ route('all_student_report') }}">Student Reports</a></li>
+              <li class="nav-item"> <a class="nav-link" href="">Room Reports</a></li>
+              <li class="nav-item"> <a class="nav-link" href="">Fee and Payment Reports</a></li>
+            </ul>
+          </div>
+        </li>
       @endcan
-      @can('')
+      {{--@can('')
       @endcan --}}
 
       {{-- <li class="nav-item">
@@ -281,21 +295,7 @@
           </ul>
         </div>
       </li> --}}
-      {{-- <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-          <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
-          <span class="menu-title">UI Elements</span>
-          <i class="menu-arrow"></i>
-        </a>
-        <div class="collapse" id="ui-basic">
-          <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="">Buttons</a></li>
-            <li class="nav-item"> <a class="nav-link" href="">Dropdowns</a></li>
-            <li class="nav-item"> <a class="nav-link" href="">Typography</a></li>
-          </ul>
-        </div>
-      </li>
-      <li class="nav-item nav-category">Setting</li>
+     {{-- <li class="nav-item nav-category">Setting</li>
       <li class="nav-item sidebar-user-actions">
         <div class="sidebar-user-menu">
           <a href="#" class="nav-link"><i class="mdi mdi-settings menu-icon"></i>
