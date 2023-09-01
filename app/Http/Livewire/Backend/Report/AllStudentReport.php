@@ -8,10 +8,8 @@ use Livewire\Component;
 use App\Models\Admission;
 use App\Models\AcademicYear;
 use Livewire\WithPagination;
-use Spatie\Browsershot\Browsershot;
 use App\Exports\StudentReportExport;
 use Maatwebsite\Excel\Facades\Excel;
-
 
 
 class AllStudentReport extends Component 
@@ -27,25 +25,27 @@ class AllStudentReport extends Component
         $this->class_id=null;
         $this->year_id=null;
         $this->bed_status=null;
+        $this->admissionArray=null;
     }
+
     public function generatePDF()
     {   
         try {
-            $allAdmissionRecords = Admission::whereIn('id', $this->admissionArray)->get();
 
+            $allAdmissionRecords = Admission::whereIn('id', $this->admissionArray)->get();
+             
             $pdf = view('livewire.backend.report.pdf-student-report', [
                 'admission' => $allAdmissionRecords,
-                'bed_status' => $this->bed_status
+                'bed_status' => $this->bed_status,
             ])->extends('layouts.app')->section('content');
-        
-            Browsershot::html($pdf)->save('student_report.pdf');
+
+            return Excel::download(new StudentReportExport($pdf), 'student_report.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
 
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'success',
                 'message'=>"PDF File Downloding...!!"
             ]);
 
-            return response()->download('student_report.pdf');
         } catch (\Exception $e) {
 
             $this->dispatchBrowserEvent('alert',[
@@ -59,19 +59,20 @@ class AllStudentReport extends Component
     {
         try 
         {
-             $allAdmissionRecords = Admission::whereIn('id', $this->admissionArray)->get();
+            $allAdmissionRecords = Admission::whereIn('id', $this->admissionArray)->get();
 
             $excel = view('livewire.backend.report.pdf-student-report', [
                 'admission' => $allAdmissionRecords,
                 'bed_status' => $this->bed_status
             ])->extends('layouts.app')->section('content');
 
+            return Excel::download(new StudentReportExport($excel), 'student_report.xlsx');
+
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'success',
                 'message'=>"EXCEL File Downloding..!"
             ]);
 
-            return Excel::download(new StudentReportExport($excel), 'student_report.xlsx');
         } 
         catch (\Exception $e) {
 
@@ -82,11 +83,8 @@ class AllStudentReport extends Component
         }
     }
 
-
-
     public function render()
     {   
-        
         $years=AcademicYear::all();
         $class=Classes::all();
 
@@ -96,11 +94,13 @@ class AllStudentReport extends Component
                 $query->where('id',$this->year_id );
             });
         }
+
         if ($this->class_id) {
             $query->whereHas('class', function ($query) {
                 $query->where('id',$this->class_id );
             });
         }
+
         if($this->bed_status!==null)
         {
             if ($this->bed_status ==1) {

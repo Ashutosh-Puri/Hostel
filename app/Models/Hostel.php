@@ -19,6 +19,6 @@ class Hostel extends Model
 
     public function College()
     {
-        return $this->belongsTo(College::class, 'college_id', 'id');
+        return $this->belongsTo(College::class);
     }
 }

@@ -1,19 +1,12 @@
-<style>
-   table, th, td {
-  border: 1px solid;
-  border-collapse: collapse;
-  text-align: center;
-} 
-</style>
+
 <div >
-    <table >
+    <table border="1" cellspacing="0" cellpadding="0" width="200" align="center" valign="center">
         <thead>
             <tr>
                 <th>No</th>
                 <th>Year</th>
                 <th>Class</th>
                 <th>Student Name</th>
-                <th>Email</th>
                 <th>Mobile</th>
                 <th>Parent Mobile</th>
                 <th>Status</th>
@@ -39,7 +32,6 @@
                     <td>{{ $item->AcademicYear->year }}</td>
                     <td>{{ $item->Class->name }}</td>                                  
                     <td>{{ $item->Student->name}}</td>
-                    <td>{{ $item->Student->email }}</td>
                     <td>{{ $item->Student->mobile}}</td>
                     <td>{{ $item->Student->parent_mobile}}</td>
                     <td>

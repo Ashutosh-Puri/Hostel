@@ -11,13 +11,13 @@
                 <div class="float-end">
                     
                         <a wire:loading.attr="disabled"wire:loading.remove wire:click="generatePDF()"class="btn btn-success waves-effect waves-light">
-                            Download PDF<span class="btn-label-right mx-2"><i class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
+                            PDF<span class="btn-label-right mx-2"><i class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
                         </a>
                         <a  wire:loading wire:target="generatePDF" class="btn btn-success waves-effect waves-light">
                             Processing..<span class="btn-label-right mx-2"><i class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
                         </a>
                         <a wire:loading.attr="disabled"wire:loading.remove wire:click="generateEXCEL()"class="btn btn-success waves-effect waves-light">
-                            Download EXCEL<span class="btn-label-right mx-2"><i class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
+                            EXCEL<span class="btn-label-right mx-2"><i class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
                         </a>
                         <a  wire:loading wire:target="generateEXCEL" class="btn btn-success waves-effect waves-light">
                             Processing..<span class="btn-label-right mx-2"><i class=" mdi mdi-arrow-down-bold fw-bold"></i></span>

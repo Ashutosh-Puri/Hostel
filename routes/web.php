@@ -27,8 +27,10 @@ use App\Http\Livewire\Backend\Admin\AdminDashboard;
 use App\Http\Livewire\Backend\Building\AllBuilding;
 use App\Http\Livewire\Backend\Category\AllCategory;
 use App\Http\Livewire\Backend\Facility\AllFacility;
+use App\Http\Livewire\Backend\Report\AllRoomReport;
 use App\Http\Livewire\Guestend\Enquiry\ShowEnquiry;
 use App\Http\Livewire\Backend\Admission\AllAdmission;
+use App\Http\Livewire\Backend\Report\AllPaymentReport;
 use App\Http\Livewire\Backend\Report\AllStudentReport;
 use App\Http\Livewire\Backend\Allocation\AllAllocation;
 use App\Http\Livewire\Backend\Permission\AllPermission;
@@ -243,9 +245,18 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
 
     Route::group(['middleware' => ['permission:Access Report']], function () {
         // All Student Report
-        Route::get('all/stud/reports',AllStudentReport::class)->name('all_student_report');
+        Route::get('all/studreports',AllStudentReport::class)->name('all_student_report');
     });
 
+    Route::group(['middleware' => ['permission:Access Report']], function () {
+        // All Room Report
+        Route::get('all/reportsroom',AllRoomReport::class)->name('all_room_report');
+    });
+    
+    Route::group(['middleware' => ['permission:Access Report']], function () {
+        // All Room Report
+        Route::get('all/reportpayment',AllPaymentReport::class)->name('all_payment_report');
+    });
 
 
 });

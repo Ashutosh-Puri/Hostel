@@ -90,14 +90,7 @@
           </a>
         </li>
       @endcan
-      @can('Access Fee')
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('all_fee') }}">
-            <span class="icon-bg"><i class="mdi mdi-cash menu-icon"></i></span>
-            <span class="menu-title">Fee's</span>
-          </a>
-        </li>
-      @endcan
+
       @can('Access Room')
         <li class="nav-item">
           <a class="nav-link" href="{{ route('all_room') }}">
@@ -122,22 +115,7 @@
           </a>
         </li>
       @endcan
-      @can('Access Student Fine')
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('all_student_fine') }}">
-            <span class="icon-bg"><i class="mdi mdi-cash-multiple menu-icon"></i></span>
-            <span class="menu-title">Student Fine's</span>
-          </a>
-        </li>
-      @endcan
-      @can('Access Fine')
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('all_fine') }}">
-            <span class="icon-bg"><i class="mdi mdi-cash-100 menu-icon"></i></span>
-            <span class="menu-title">Fine's</span>
-          </a>
-        </li>
-      @endcan
+
       @can('Access Notice')
         <li class="nav-item">
           <a class="nav-link" href="{{ route('all_notice') }}">
@@ -170,14 +148,7 @@
           </a>
         </li>
       @endcan
-      @can('Access Student Payment')
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('all_student_payment') }}">
-            <span class="icon-bg"><i class="mdi mdi-currency-inr menu-icon"></i></span>
-            <span class="menu-title">Student Payment's</span>
-          </a>
-        </li>
-      @endcan
+      
       @can('Access Student Education')
         <li class="nav-item">
           <a class="nav-link" href="{{ route('all_student_education') }}">
@@ -242,20 +213,58 @@
           </a>
         </li>
       @endcan
+      <li class="nav-item nav-category">Fee & Fines</li>
+      @can('Access Fee')
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_fee') }}">
+            <span class="icon-bg"><i class="mdi mdi-cash menu-icon"></i></span>
+            <span class="menu-title">Fee's</span>
+          </a>
+        </li>
+      @endcan
+      @can('Access Fine')
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_fine') }}">
+            <span class="icon-bg"><i class="mdi mdi-cash-100 menu-icon"></i></span>
+            <span class="menu-title">Fine's</span>
+          </a>
+        </li>
+      @endcan
+      @can('Access Student Payment')
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_student_payment') }}">
+            <span class="icon-bg"><i class="mdi mdi-currency-inr menu-icon"></i></span>
+            <span class="menu-title">Student Payment's</span>
+          </a>
+        </li>
+      @endcan
+      @can('Access Student Fine')
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_student_fine') }}">
+            <span class="icon-bg"><i class="mdi mdi-cash-multiple menu-icon"></i></span>
+            <span class="menu-title">Student Fine's</span>
+          </a>
+        </li>
+      @endcan
+      <li class="nav-item nav-category">Reports</li>
       @can('Access Report')
         <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="collapse" href="#reports" aria-expanded="false" aria-controls="reports">
-            <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
-            <span class="menu-title">Reports</span>
-            <i class="menu-arrow"></i>
+          <a class="nav-link" href="{{ route('all_student_report') }}">
+            <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
+            <span class="menu-title">Student Report's</span>
           </a>
-          <div class="collapse" id="reports">
-            <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <a class="nav-link" href="{{ route('all_student_report') }}">Student Reports</a></li>
-              <li class="nav-item"> <a class="nav-link" href="">Room Reports</a></li>
-              <li class="nav-item"> <a class="nav-link" href="">Fee and Payment Reports</a></li>
-            </ul>
-          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_room_report') }}">
+            <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
+            <span class="menu-title">Room Report's</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_payment_report') }}">
+            <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
+            <span class="menu-title">Payment Report's</span>
+          </a>
         </li>
       @endcan
       {{--@can('')
