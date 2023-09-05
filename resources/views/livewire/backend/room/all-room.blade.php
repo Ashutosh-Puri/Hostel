@@ -274,7 +274,7 @@
                         <div class="bg-success">
                             <div class="float-start pt-2 px-2">
                                 <h2>Data Rooms</h2>
-                                <div wire:loading class="loading-overlay">
+                                <div wire:loading wire:target="per_page" class="loading-overlay">
                                     <div class="loading-spinner">
                                         <div class="spinner-border spinner-border-lg text-primary" role="status">
                                             <span class="visually-hidden">Loading...</span>
@@ -314,10 +314,10 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                    <input class="w-100" wire:model="f" type="number" min="0" placeholder="Floor Number">
+                                                    <input class="w-100" wire:model.debounce.1000ms="f" type="number" min="0" placeholder="Floor Number">
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                    <input class="w-100" wire:model="r" type="search" placeholder="Room Label">
+                                                    <input class="w-100" wire:model.debounce.1000ms="r" type="search" placeholder="Room Label">
                                             </div>
                                         </span>
                                     </span>

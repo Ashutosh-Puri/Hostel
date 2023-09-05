@@ -7,7 +7,7 @@
             <div class="bg-success">
                 <div class="float-start pt-2 px-2">
                     <h2>Data Students Report</h2>
-                    <div wire:loading class="loading-overlay">
+                    <div wire:loading wire:target="per_page" class="loading-overlay">
                         <div class="loading-spinner">
                             <div class="spinner-border spinner-border-lg text-primary" role="status">
                                 <span class="visually-hidden">Loading...</span>
@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class="float-end">
-                    
+
                         <a wire:loading.attr="disabled"wire:loading.remove wire:click="generatePDF()"class="btn btn-success waves-effect waves-light">
                             PDF<span class="btn-label-right mx-2"><i class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
                         </a>
@@ -52,7 +52,7 @@
                                 <div class="col-6 col-md-3 ">
                                     <select class="w-100 py-1"  wire:loading.attr="disabled" wire:model="year_id">
                                         <option value="" hidden>Select Year</option>
-                                        @foreach ($years as $y) 
+                                        @foreach ($years as $y)
                                             <option value="{{ $y->id }}">{{ $y->year }}</option>
                                         @endforeach
                                     </select>
@@ -60,7 +60,7 @@
                                 <div class="col-6 col-md-3 ">
                                     <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="class_id">
                                         <option value="" hidden>Select Class</option>
-                                        @foreach ($class as $y) 
+                                        @foreach ($class as $y)
                                             <option value="{{ $y->id }}">{{ $y->name }}</option>
                                         @endforeach
                                     </select>
@@ -103,7 +103,7 @@
                                 <tr>
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $item->AcademicYear->year }}</td>
-                                    <td>{{ $item->Class->name }}</td>                                   
+                                    <td>{{ $item->Class->name }}</td>
                                     <td>{{ $item->Student->name}}</td>
                                     <td>{{ $item->Student->email }}</td>
                                     <td>{{ $item->Student->mobile}}</td>
@@ -133,4 +133,4 @@
     </script>
     @endpush
 </div>
-    
+

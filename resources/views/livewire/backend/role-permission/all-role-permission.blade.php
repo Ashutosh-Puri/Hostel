@@ -52,8 +52,8 @@
                                             <td>
                                                 {{ $key+1; }}
                                             </td>
-                                            <td>   
-                                                <div class="form-group form-check mb-3 form-check-primary">   
+                                            <td>
+                                                <div class="form-group form-check mb-3 form-check-primary">
                                                     <label class="form-check-label"  >{{ $group->group_name }}</label>
                                                 </div>
                                             </td>
@@ -112,7 +112,7 @@
                                 <div class="mb-3 form-group">
                                     <label for="role" class="form-label">All Roles</label>
                                     <span class="form-control fw-bold">{{ $role->name }} </span>
-                                    
+
                                 </div>
                                 <br>
                                 <table  id="datatable-buttons" data-page-length='25' class="table  dt-responsive nowrap w-100">
@@ -130,7 +130,7 @@
                                                 $per = App\Models\Admin::getpermissionByGroupName($group->group_name);
                                             @endphp
                                             <td>{{ $key+1 }}</td>
-                                            <td>                                          
+                                            <td>
                                                 <label class="form-check-label form-check " for="customckeck1">{{ $group->group_name }}</label>
                                             </td>
                                             <td>
@@ -168,7 +168,7 @@
                         <div class="bg-success">
                             <div class="float-start pt-2 px-2">
                                 <h2>Data Role Wise Permissions</h2>
-                                <div wire:loading class="loading-overlay">
+                                <div wire:loading wire:target="per_page" class="loading-overlay">
                                     <div class="loading-spinner">
                                         <div class="spinner-border spinner-border-lg text-primary" role="status">
                                             <span class="visually-hidden">Loading...</span>
@@ -215,7 +215,7 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                                 </div>
                                                 <div class="col-12 col-md-3">
-                                                    <input class="w-100" wire:model="search" type="search" placeholder="Role Name">
+                                                    <input class="w-100" wire:model.debounce.1000ms="search" type="search" placeholder="Role Name">
                                                 </div>
                                             </div>
                                     </span>

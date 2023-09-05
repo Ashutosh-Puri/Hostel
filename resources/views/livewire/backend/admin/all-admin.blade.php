@@ -275,7 +275,7 @@
                         <div class="bg-success">
                             <div class="float-start pt-2 px-2">
                                 <h2>Data Admins</h2>
-                                <div wire:loading class="loading-overlay">
+                                <div wire:loading wire:target="per_page" class="loading-overlay">
                                     <div class="loading-spinner">
                                         <div class="spinner-border spinner-border-lg text-primary" role="status">
                                             <span class="visually-hidden">Loading...</span>
@@ -315,7 +315,7 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                    <input class="w-100" wire:model="search" type="search" placeholder="Admin Name">
+                                                    <input class="w-100" wire:model.debounce.1000ms="search" type="search" placeholder="Admin Name">
                                             </div>
                                         </span>
                                     </span>
@@ -367,7 +367,7 @@
                                                     <td>
                                                         @can('Edit Admin')
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
-                                                            @if ($item->status==1) 
+                                                            @if ($item->status==1)
                                                                 <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
                                                             @else
                                                                 <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-thumb-down"></i> </a>
@@ -381,7 +381,7 @@
                                                     <td>
                                                         @can('Edit Admin')
                                                         <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
-                                                            @if ($item->status==1) 
+                                                            @if ($item->status==1)
                                                                 <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
                                                             @else
                                                                 <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-thumb-down"></i> </a>

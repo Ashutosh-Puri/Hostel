@@ -129,7 +129,7 @@
                                                         </div>
                                                     @enderror
                                                 </div>
-                                            </div> 
+                                            </div>
                                             <div class="col-12 col-md-6">
                                                 <div class="mb-3 form-group">
                                                     <label for="category_id" class="form-label">Select Category</label>
@@ -145,7 +145,7 @@
                                                         </div>
                                                     @enderror
                                                 </div>
-                                            </div> 
+                                            </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-12 col-md-3">
@@ -630,7 +630,7 @@
                                                         </div>
                                                     @enderror
                                                 </div>
-                                            </div> 
+                                            </div>
                                             <div class="col-12 col-md-6">
                                                 <div class="mb-3 form-group">
                                                     <label for="category_id" class="form-label">Select Category</label>
@@ -646,7 +646,7 @@
                                                         </div>
                                                     @enderror
                                                 </div>
-                                            </div> 
+                                            </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-12 col-md-3">
@@ -1051,8 +1051,8 @@
                                         </label>
                                     </div>
                                     <div class="col-6 col-md-3 mb-3">
-                                        @if ($viewadmission[0]->status!=2) 
-                                            @if ($viewadmission[0]->status==1) 
+                                        @if ($viewadmission[0]->status!=2)
+                                            @if ($viewadmission[0]->status==1)
                                                 <a wire:loading.attr="disabled"  wire:click="status({{ $viewadmission[0]->id }})" class="btn btn-warning waves-effect waves-light"> <i class="mdi mdi-clock"></i> </a>
                                             @elseif ($viewadmission[0]->status==0)
                                                 <a wire:loading.attr="disabled"  wire:click="status({{ $viewadmission[0]->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
@@ -1249,7 +1249,7 @@
                         <div class="bg-success">
                             <div class="float-start pt-2 px-2">
                                 <h2>Data Admission Forms</h2>
-                                <div wire:loading class="loading-overlay">
+                                <div wire:loading wire:target="per_page" class="loading-overlay">
                                     <div class="loading-spinner">
                                         <div class="spinner-border spinner-border-lg text-primary" role="status">
                                             <span class="visually-hidden">Loading...</span>
@@ -1261,7 +1261,7 @@
                                 @can('Add Admission')
                                     <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
                                         Add Admission Form<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
-                                    </a>    
+                                    </a>
                                 @endcan
                             </div>
                         </div>
@@ -1287,16 +1287,16 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                                 </div>
                                                 <div class="col-12 col-md-2 ">
-                                                    <input  class="w-100" wire:model="ad" type="search" placeholder="Admission ID ">
+                                                    <input  class="w-100" wire:model.debounce.1000ms="ad" type="search" placeholder="Admission ID ">
                                                 </div>
                                                 <div class="col-12 col-md-2">
-                                                    <input  class="w-100" wire:model="a" type="search" placeholder="Academic Year">
+                                                    <input  class="w-100" wire:model.debounce.1000ms="a" type="search" placeholder="Academic Year">
                                                 </div>
                                                 <div class="col-12 col-md-3">
-                                                    <input class="w-100"  wire:model="s" type="search" placeholder="Student Name">
+                                                    <input class="w-100"  wire:model.debounce.1000ms="s" type="search" placeholder="Student Name">
                                                 </div>
                                                 <div class="col-12 col-md-3">
-                                                    <input class="w-100"  wire:model="c" type="search" placeholder="Class Name">
+                                                    <input class="w-100"  wire:model.debounce.1000ms="c" type="search" placeholder="Class Name">
                                                 </div>
                                             </div>
                                     </span>
@@ -1347,12 +1347,12 @@
                                                         @endcan
                                                         @can('Edit Admission')
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
-                                                            @if ($item->status==1) 
+                                                            @if ($item->status==1)
                                                                 <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-warning waves-effect waves-light"> <i class="mdi mdi-clock"></i> </a>
                                                             @elseif ($item->status==0)
                                                                 <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
                                                             @endif
-                                                            @if ($item->status!=2) 
+                                                            @if ($item->status!=2)
                                                                 <a wire:loading.attr="disabled"  wire:click="cancel({{ $item->id }})" class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-thumb-down"></i></a>
                                                             @endif
                                                         @endcan
@@ -1367,12 +1367,12 @@
                                                         @endcan
                                                         @can('Edit Admission')
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
-                                                            @if ($item->status==1) 
+                                                            @if ($item->status==1)
                                                                 <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-warning waves-effect waves-light"> <i class="mdi mdi-clock"></i> </a>
                                                             @elseif ($item->status==0)
                                                                 <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
                                                             @endif
-                                                            @if ($item->status!=2) 
+                                                            @if ($item->status!=2)
                                                                 <a wire:loading.attr="disabled"  wire:click="cancel({{ $item->id }})" class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-thumb-down"></i></a>
                                                             @endif
                                                         @endcan
@@ -1387,12 +1387,12 @@
                                                         @endcan
                                                         @can('Edit Admission')
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
-                                                            @if ($item->status==1) 
+                                                            @if ($item->status==1)
                                                                 <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-warning waves-effect waves-light"> <i class="mdi mdi-clock"></i> </a>
                                                             @elseif ($item->status==0)
                                                                 <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
                                                             @endif
-                                                            @if ($item->status!=2) 
+                                                            @if ($item->status!=2)
                                                                 <a wire:loading.attr="disabled"  wire:click="cancel({{ $item->id }})" class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-thumb-down"></i></a>
                                                             @endif
                                                         @endcan

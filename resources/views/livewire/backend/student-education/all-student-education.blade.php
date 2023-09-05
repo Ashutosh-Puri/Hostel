@@ -9,7 +9,7 @@
                     <div class="bg-success">
                         <div class="float-start pt-2 px-2">
                             <h2>Add Student Education</h2>
-                            
+
                         </div>
                         <div class="float-end">
                             <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
@@ -247,7 +247,7 @@
                         <div class="bg-success">
                             <div class="float-start pt-2 px-2">
                                 <h2>Data Student Educations</h2>
-                                <div wire:loading class="loading-overlay">
+                                <div wire:loading wire:target="per_page" class="loading-overlay">
                                     <div class="loading-spinner">
                                         <div class="spinner-border spinner-border-lg text-primary" role="status">
                                             <span class="visually-hidden">Loading...</span>
@@ -286,16 +286,16 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                                 </div>
                                                 <div class="col-12 col-md-2 ">
-                                                    <input  class="w-100" wire:model="ad" type="search" placeholder="Admission ID ">
+                                                    <input  class="w-100" wire:model.debounce.1000ms="ad" type="search" placeholder="Admission ID ">
                                                 </div>
                                                 <div class="col-12 col-md-2">
-                                                    <input  class="w-100" wire:model="a" type="search" placeholder="Academic Year">
+                                                    <input  class="w-100" wire:model.debounce.1000ms="a" type="search" placeholder="Academic Year">
                                                 </div>
                                                 <div class="col-12 col-md-3">
-                                                    <input class="w-100"  wire:model="s" type="search" placeholder="Student Name">
+                                                    <input class="w-100"  wire:model.debounce.1000ms="s" type="search" placeholder="Student Name">
                                                 </div>
                                                 <div class="col-12 col-md-3">
-                                                    <input class="w-100"  wire:model="c" type="search" placeholder="Class Name">
+                                                    <input class="w-100"  wire:model.debounce.1000ms="c" type="search" placeholder="Class Name">
                                                 </div>
                                             </div>
                                     </span>

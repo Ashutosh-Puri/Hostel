@@ -184,7 +184,7 @@
                         <div class="bg-success">
                             <div class="float-start pt-2 px-2">
                                  <h2>Data Quotas</h2>
-                                 <div wire:loading class="loading-overlay">
+                                 <div wire:loading wire:target="per_page" class="loading-overlay">
                                     <div class="loading-spinner">
                                         <div class="spinner-border spinner-border-lg text-primary" role="status">
                                             <span class="visually-hidden">Loading...</span>
@@ -224,10 +224,10 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                                 </div>
                                                 <div class="col-12 col-md-3">
-                                                    <input class="w-100" wire:model="year" type="search" placeholder="Academic Year">
+                                                    <input class="w-100" wire:model.debounce.1000ms="year" type="search" placeholder="Academic Year">
                                                 </div>
                                                 <div class="col-12 col-md-3">
-                                                    <input class="w-100"  wire:model="class_name" type="search" placeholder="class Name">
+                                                    <input class="w-100"  wire:model.debounce.1000ms="class_name" type="search" placeholder="class Name">
                                                 </div>
                                             </div>
                                     </span>
