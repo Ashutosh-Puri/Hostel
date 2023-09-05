@@ -10,6 +10,7 @@ use Illuminate\Validation\Rule;
 class AllCollege extends Component
 {
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $search = '';
@@ -147,7 +148,10 @@ class AllCollege extends Component
 
     public function render()
     {
-        $colleges=College::where('name', 'like', '%'.$this->search.'%')->orderBy('name', 'ASC')->paginate($this->per_page);
+        $colleges = College::query()->when($this->search, function ($query) {
+            return $query->where('name', 'like', '%' . $this->search . '%');
+        })->orderBy('name', 'ASC')->paginate($this->per_page);
+
         return view('livewire.backend.College.all-College',compact('colleges'))->extends('layouts.admin.admin')->section('admin');
     }
 }

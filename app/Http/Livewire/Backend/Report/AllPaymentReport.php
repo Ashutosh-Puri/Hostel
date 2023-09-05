@@ -13,6 +13,7 @@ use Maatwebsite\Excel\Facades\Excel;
 class AllPaymentReport extends Component
 {   
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     public $per_page = 10;
     public $year_id;
     public $class_id;

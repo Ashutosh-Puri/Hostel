@@ -11,6 +11,7 @@ use Illuminate\Validation\Rule;
 class AllBuilding extends Component
 {
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $building_name = '';
@@ -158,13 +159,17 @@ class AllBuilding extends Component
     public function render()
     {
         $hostels=Hostel::where('status',0)->orderBy('name',"ASC")->get();
-        $query = Building::orderBy('name', 'ASC');
+        $query = Building::select('id','hostel_id','name','status')->with('hostel')->orderBy('name', 'ASC');
         if ($this->hostel_name) {
             $query->whereHas('hostel', function ($query) {
                 $query->where('status', 0)->where('name', 'like', '%' . $this->hostel_name . '%');
             });
         }
-        $building = $query->where('name', 'like', '%' . $this->building_name . '%')->with('hostel')->paginate($this->per_page);
+
+        $building = $query->when($this->building_name, function ($query) {
+            return $query->where('name', 'like', '%' . $this->building_name . '%');
+        })->paginate($this->per_page);
+
         return view('livewire.backend.building.all-building',compact('building','hostels'))->extends('layouts.admin.admin')->section('admin');
     }
 }

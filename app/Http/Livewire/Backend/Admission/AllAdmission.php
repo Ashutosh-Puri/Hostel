@@ -25,6 +25,7 @@ class AllAdmission extends Component
 {
     use WithPagination;
     use WithFileUploads;
+    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $admissionfull=0;
@@ -552,22 +553,36 @@ class AllAdmission extends Component
         if (is_numeric($this->sgpa) && $this->sgpa >=1) {
             $this->percentage = (($this->sgpa * 10) - 7.5);
         }
-        $academicyears = AcademicYear::where('status', 0)->orderBy('year', 'DESC')->get();
-        $lastacademicyears = AcademicYear::where('year', '<', function ($query) { 
+
+        $academicyears = AcademicYear::select('id','year')->where('status', 0)->orderBy('year', 'DESC')->get();
+        $lastacademicyears = AcademicYear::select('id','year')->where('year', '<', function ($query) { 
             $query->selectRaw('MAX(year)')->from('academic_years');
         })->orderBy('year', 'DESC')->get();
+
         $streams=Classes::select('stream')->where('status',0)->distinct('stream')->get();
-        $types=Classes::select('type')->where('status',0)->where('stream',$this->stream)->distinct('type')->get();
-        $classes=Classes::select('id','name')->where('status',0)->where('type',$this->stream_type)->orderBy('name',"ASC")->get();
-        $students=Student::where('status',0)->orderBy('username',"ASC")->get();
-        $casts=Cast::where('status',0)->orderBy('name',"ASC")->get();
-        $query =Admission::orderBy('academic_year_id', 'DESC');
+
+        if ($this->stream) {
+            $types=Classes::select('type')->select('type')->where('status',0)->where('stream',$this->stream)->distinct('type')->get();
+        } else { 
+            $types = [];
+        }
+
+        if ($this->stream_type) {
+            $classes=Classes::select('id','name')->where('status',0)->where('type',$this->stream_type)->orderBy('name',"ASC")->get();
+        } else { 
+            $classes = [];
+        }
+
+        $students=Student::select('id','username')->where('status',0)->orderBy('username',"ASC")->get();
+        $casts=Cast::select('id','name')->where('status',0)->orderBy('name',"ASC")->get();
+
         if ($this->cast_id) {
             $categories =Cast::find($this->cast_id)->category()->orderBy('name', 'ASC')->get();
         } else { 
             $categories = [];
         }
-        $query =Admission::orderBy('academic_year_id', 'DESC');    
+
+        $query =Admission::select('id','academic_year_id','student_id','class_id','seated_id', 'status')->orderBy('academic_year_id', 'DESC'); 
         if ($this->ad) {
             $admissionIds = Admission::where('id', 'like',$this->ad. '%')->pluck('id');
             $query->whereIn('id', $admissionIds);

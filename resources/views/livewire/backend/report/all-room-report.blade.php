@@ -7,6 +7,13 @@
             <div class="bg-success">
                 <div class="float-start pt-2 px-2">
                     <h2>Data Rooms Report</h2>
+                    <div wire:loading class="loading-overlay">
+                        <div class="loading-spinner">
+                            <div class="spinner-border spinner-border-lg text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="float-end">
                     <a wire:loading.attr="disabled" wire:loading.remove wire:click="generatePDF()"
@@ -44,6 +51,8 @@
                         </select>
                         <span class="col-12 col-md-10 p-0">
                             <div class="row ">
+                                <div class="col-6 col-md-1 ">
+                                </div>
                                 <div class="col-6 col-md-2 ">
                                     <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="college_id">
                                         <option value="" hidden>College</option>
@@ -73,59 +82,12 @@
                                         <option value="" hidden>Floor</option>
                                         @foreach ($floors as $f)
                                             <option value="{{ $f->id }}">
-                                                @switch($f->floor)
-                                                    @case(0)
-                                                        Ground
-                                                    @break
-
-                                                    @case(1)
-                                                        First
-                                                    @break
-
-                                                    @case(2)
-                                                        Second
-                                                    @break
-
-                                                    @case(3)
-                                                        Third
-                                                    @break
-
-                                                    @case(4)
-                                                        Fourth
-                                                    @break
-
-                                                    @case(5)
-                                                        Fifth
-                                                    @break
-
-                                                    @case(6)
-                                                        Sixth
-                                                    @break
-
-                                                    @case(7)
-                                                        Seventh
-                                                    @break
-
-                                                    @case(8)
-                                                        Eighth
-                                                    @break
-
-                                                    @case(9)
-                                                        Nineth
-                                                    @break
-
-                                                    @case(10)
-                                                        Tenth
-                                                    @break
-
-                                                    @default
-                                                        {{ $f->floor }}
-                                                @endswitch
+                                                @switch($f->floor) @case(0) Ground @break @case(1)  First @break @case(2)  Second  @break @case(3)  Third @break @case(4)  Fourth  @break @case(5)  Fifth  @break @case(6) Sixth @break @case(7)  Seventh  @break @case(8)  Eighth @break @case(9)  Nineth  @break  @case(10) Tenth @break @default  {{ $f->floor }}  @endswitch
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-6 col-md-2 ">
+                                <div class="col-6 col-md-1 ">
                                     <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="room_id">
                                         <option value="" hidden>Room</option>
                                         @foreach ($rooms as $r)

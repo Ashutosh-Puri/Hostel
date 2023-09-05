@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class AllClass extends Component
 {
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $search = '';
@@ -160,7 +161,10 @@ class AllClass extends Component
 
     public function render()
     {
-        $class=Classes::where('name', 'like', '%'.$this->search.'%')->orderBy('name', 'ASC')->paginate($this->per_page);
+        $class=Classes::query()->select('id','name','status')->when($this->search, function ($query) {
+            return $query->where('name', 'like', '%' . $this->search . '%');
+        })->orderBy('name', 'ASC')->paginate($this->per_page);
+
         return view('livewire.backend.class.all-class',compact('class'))->extends('layouts.admin.admin')->section('admin');
     }
 }

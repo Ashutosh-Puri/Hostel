@@ -1,92 +1,36 @@
-
-<div >
-    <table border="1" cellspacing="0" cellpadding="0" width="200" align="center" valign="center">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Year</th>
-                <th>Class</th>
-                <th>Student Name</th>
-                <th>Mobile</th>
-                <th>Parent Mobile</th>
-                <th>Status</th>
-                @if ($bed_status==null)
-                    <th>Hostel</th>
-                    <th>Building</th>
-                    <th>Floor</th>
-                    <th>Room</th>
-                    <th>Bed</th>  
-                @elseif ($bed_status==1)
-                    <th>Hostel</th>
-                    <th>Building</th>
-                    <th>Floor</th>
-                    <th>Room</th>
-                    <th>Bed</th>  
-                @endif
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($admission as $key => $item)
+<html>
+<body >
+    <div style="text-align: center;">
+        <table style="width:100% ; border: 1px solid; border-collapse: collapse; font-size: 12px;" >
+            <thead>
                 <tr>
-                    <td>{{ $key+1 }}</td>
-                    <td>{{ $item->AcademicYear->year }}</td>
-                    <td>{{ $item->Class->name }}</td>                                  
-                    <td>{{ $item->Student->name}}</td>
-                    <td>{{ $item->Student->mobile}}</td>
-                    <td>{{ $item->Student->parent_mobile}}</td>
-                    <td>
-                        @if ( $item->Student->status == '0')
-                            A
-                        @else
-                            I
-                        @endif
-                    </td>
-                    @if ($item->allocations->isEmpty())
-                        @if ($bed_status==null)
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td> 
-                        @elseif ($bed_status==1)
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        @endif
-                    @else
-                    @foreach ($item->allocations as $aIndex => $a)
-                    @if ($aIndex === 0)
-                        <td>
-                            {{ $a->Bed->Room->Floor->Building->Hostel->name }}
-                        </td>
-                    @endif
-                    @if ($aIndex === 0)
-                        <td>
-                            {{ $a->Bed->Room->Floor->Building->name }}
-                        </td>
-                    @endif
-                    @if ($aIndex === 0)
-                        <td>
-                            {{ in_array( $a->Bed->Room->Floor->floor, range(0, 10)) ? ['Ground', 'First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh', 'Eighth', 'Ninth', 'Tenth'][ $a->Bed->Room->Floor->floor] :  $a->Bed->Room->Floor->floor }}
-                        </td>
-                    @endif
-                    @if ($aIndex === 0)
-                        <td>
-                            {{ $a->Bed->Room->id }}-({{ $a->Bed->Room->label }})
-                        </td>
-                    @endif
-                    @if ($aIndex === 0)
-                        <td>
-                            {{ $a->Bed->id }}
-                        </td>
-                    @endif
-                @endforeach 
-                    @endif
-                    
+                    <th style="border: 1px solid; padding: 1px; text-align:center; vertical-align: center;">No</th>
+                    <th style="border: 1px solid; padding: 1px; text-align:center; vertical-align: center;">Year</th>
+                    <th style="border: 1px solid; padding: 1px; text-align:center; vertical-align: center;">Class</th>
+                    <th style="border: 1px solid; padding: 1px; text-align:center; vertical-align: center;">Student Name</th>
+                    <th style="border: 1px solid; padding: 1px; text-align:center; vertical-align: center;">Email</th>
+                    <th style="border: 1px solid; padding: 1px; text-align:center; vertical-align: center;">Mobile</th>
+                    <th style="border: 1px solid; padding: 1px; text-align:center; vertical-align: center;">Parent Mobile</th>
+                    <th style="border: 1px solid; padding: 1px; text-align:center; vertical-align: center;">Student Status</th>
+                    <th style="border: 1px solid; padding: 1px; text-align:center; vertical-align: center;">Admission Status</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                @foreach ($admission as $key => $item)
+                    <tr>
+                        <td style="border: 1px solid; padding: 1px; text-align:center; vertical-align: center;"> {{ $key+1 }} </td>
+                        <td style="border: 1px solid; padding: 1px; text-align:center; vertical-align: center;"> {{ $item->AcademicYear->year }} </td>
+                        <td style="border: 1px solid; padding: 1px; text-align:center; vertical-align: center;"> {{ $item->Class->name }} </td>                                  
+                        <td style="border: 1px solid; padding: 1px; text-align:center; vertical-align: center;"> {{ $item->Student->name }} </td>
+                        <td style="border: 1px solid; padding: 1px; text-align:center; vertical-align: center;"> {{ $item->Student->email }} </td>
+                        <td style="border: 1px solid; padding: 1px; text-align:center; vertical-align: center;"> {{ $item->Student->mobile }} </td>
+                        <td style="border: 1px solid; padding: 1px; text-align:center; vertical-align: center;"> {{ $item->Student->parent_mobile }} </td>
+                        <td style="border: 1px solid; padding: 1px; text-align:center; vertical-align: center;"> @if ($item->Student->status ==0) Active  @else In Active @endif </td>
+                        <td style="border: 1px solid; padding: 1px; text-align:center; vertical-align: center;"> @if ($item->status ==0) Waiting  @elseif($item->status ==1) Confirmed @else Canceled @endif </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

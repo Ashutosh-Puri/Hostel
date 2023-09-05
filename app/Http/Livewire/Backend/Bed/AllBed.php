@@ -14,6 +14,7 @@ use Livewire\WithPagination;
 class AllBed extends Component
 {
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $search = '';
@@ -182,12 +183,12 @@ class AllBed extends Component
 
     public function render()
     {   
-        $hostels = Hostel::where('status', 0)->get();
-        $buildings = Building::where('status', 0)->where('hostel_id', $this->hostel_id)->get();
-        $floors = Floor::where('status', 0)->where('building_id', $this->building_id)->get();
-        $seateds=Seated::where('status',0)->orderBy('seated', 'ASC')->get();
-        $rooms=Room::where('status', 0)->where('floor_id', $this->floor_id)->where('seated_id', $this->seated_id)->get();
-        $beds= Bed::with('room:id,label')->orderBy('room_id', 'ASC')->when($this->search, function ($query) {
+        $hostels = Hostel::select('id','name')->where('status', 0)->get();
+        $buildings = Building::select('id','name')->where('status', 0)->where('hostel_id', $this->hostel_id)->get();
+        $floors = Floor::select('id','floor')->where('status', 0)->where('building_id', $this->building_id)->get();
+        $seateds=Seated::select('id','seated')->where('status',0)->orderBy('seated', 'ASC')->get();
+        $rooms=Room::select('id','label')->where('status', 0)->where('floor_id', $this->floor_id)->where('seated_id', $this->seated_id)->get();
+        $beds= Bed::select('id','room_id','status')->with('room:id,label')->orderBy('room_id', 'ASC')->when($this->search, function ($query) {
             $query->whereHas('room', function ($query) {
                 $query->where('label', 'like', '%' . $this->search . '%');
             });

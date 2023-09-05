@@ -18,6 +18,7 @@ class AllAdmin extends Component
 {
     use WithFileUploads;
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $search = '';
@@ -221,8 +222,11 @@ class AllAdmin extends Component
 
     public function render()
     {
-        $roles=Role::where('status',0)->get();
-        $admins=Admin::where('name', 'like', '%'.$this->search.'%')->orderBy('name', 'ASC')->paginate($this->per_page);
+        $roles=Role::select('id','name')->where('status',0)->get();
+        $admins = Admin::query()->when($this->search, function ($query) {
+            return $query->where('name', 'like', '%' . $this->search . '%');
+        })->orderBy('name', 'ASC')->paginate($this->per_page);
+
         return view('livewire.backend.admin.all-admin',compact('admins','roles'))->extends('layouts.admin.admin')->section('admin');
     }
 }

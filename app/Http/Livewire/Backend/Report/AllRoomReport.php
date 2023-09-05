@@ -18,6 +18,7 @@ use Maatwebsite\Excel\Facades\Excel;
 class AllRoomReport extends Component
 {   
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     public $per_page = 10;
     public $college_id;
     public $hostel_id;
@@ -89,13 +90,40 @@ class AllRoomReport extends Component
     public function render()
     {   
 
-        $colleges=College::all();
-        $hostels = Hostel::where('college_id', $this->college_id)->get();
-        $buildings = Building::where('hostel_id', $this->hostel_id)->get();
-        $floors = Floor::where('building_id', $this->building_id)->get();
-        $rooms=Room::where('floor_id', $this->floor_id)->get();
+        $colleges = College::all();
+        $hostelsQuery = Hostel::where('college_id', $this->college_id);
 
-        $query = Bed::orderBy('created_at', 'DESC');
+        if ($this->college_id) {
+            $hostels = $hostelsQuery->get();
+        } else {
+            $hostels = [];
+        }
+
+        $buildingsQuery = Building::where('hostel_id', $this->hostel_id);
+        
+        if ($this->hostel_id) {
+            $buildings = $buildingsQuery->get();
+        } else {
+            $buildings = [];
+        }
+
+        $floorsQuery = Floor::where('building_id', $this->building_id);
+
+        if ($this->building_id) {
+            $floors = $floorsQuery->get();
+        } else {
+            $floors = [];
+        }
+
+        $roomsQuery = Room::where('floor_id', $this->floor_id);
+
+        if ($this->floor_id) {
+            $rooms = $roomsQuery->get();
+        } else {
+            $rooms = [];
+        }
+
+        $query = Bed::with(['room.floor.building.hostel.college'])->orderBy('created_at', 'DESC');
 
         if ($this->college_id) {
             $query->whereHas('room.floor.building.hostel.college', function ($query)  {

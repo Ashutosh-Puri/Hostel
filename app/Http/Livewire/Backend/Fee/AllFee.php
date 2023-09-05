@@ -13,6 +13,7 @@ class AllFee extends Component
 {
 
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $search = '';
@@ -165,9 +166,9 @@ class AllFee extends Component
 
     public function render()
     {   
-        $seateds=Seated::where('status',0)->orderBy('seated', 'ASC')->get();
-        $academic_years=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
-        $feesQuery = Fee::orderBy('academic_year_id', 'ASC');
+        $seateds=Seated::select('id','seated')->where('status',0)->orderBy('seated', 'ASC')->get();
+        $academic_years=AcademicYear::select('id','year')->where('status',0)->orderBy('year', 'DESC')->get();
+        $feesQuery = Fee::with('AcademicYear')->orderBy('academic_year_id', 'ASC');
         if ($this->search) {
             $feesQuery->whereHas('AcademicYear', function ($query) {
                 $query->where('year', 'like', '%' . $this->search . '%');

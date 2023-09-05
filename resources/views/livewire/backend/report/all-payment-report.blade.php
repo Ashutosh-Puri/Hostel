@@ -6,7 +6,14 @@
         <div class="col-12">
             <div class="bg-success">
                 <div class="float-start pt-2 px-2">
-                    <h2>Data Payments Report</h2>
+                    <h2>Data Payments Report</h2>  
+                    <div wire:loading class="loading-overlay">
+                        <div class="loading-spinner">
+                            <div class="spinner-border spinner-border-lg text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="float-end">
                     <a wire:loading.attr="disabled" wire:loading.remove wire:click="generatePDF()"
@@ -114,6 +121,9 @@
                         <tbody>
                             @php
                                 $key = 1;
+                                $amount=0;
+                                $deposite=0;
+                                $total_amount=0;
                             @endphp
                             @foreach ($payments as $p)
                                 <tr>
@@ -126,9 +136,28 @@
                                     <td>{{ $p->deposite}}</td>
                                     <td>{{ $p->total_amount}}</td>
                                     <td>{{ $p->status==0?"Not Paid": ($p->status==1?"Paid":"Cancel") }}</td>
+                                    @php
+                                        $amount+=$p->amount;
+                                        $deposite+=$p->deposite;
+                                        $total_amount+=$p->total_amount;
+                                    @endphp
                                 </tr>
                             @endforeach
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Total</td>
+                                <td>{{ $amount }}</td>
+                                <td>{{ $deposite }}</td>
+                                <td>{{ $total_amount }}</td>
+                                <td></td>
+                            </tr>
+
+                        </tfoot>
                     </table>
                     <div class="mt-4">
                         {{ $payments->links('pagination::bootstrap-5') }}
@@ -146,7 +175,5 @@
             });
         </script>
     @endpush
-
-
-
+   
 </div>

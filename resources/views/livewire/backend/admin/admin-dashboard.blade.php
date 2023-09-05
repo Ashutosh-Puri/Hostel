@@ -2,6 +2,13 @@
     <div class="row">
         <div class="col-12 col-md-4">
             <h3>College's</h3>
+            <div wire:loading class="loading-overlay">
+                <div class="loading-spinner">
+                    <div class="spinner-border spinner-border-lg text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-bordered table-info text-center table-sm align-middle">
                     <thead class="table-light">
@@ -106,7 +113,7 @@
                 </table>
             </div>
         </div>
-        <div class="col-12 col-md-12">
+        {{-- <div class="col-12 col-md-12">
             <h3>Floor's</h3>
             <div class="table-responsive">
                 <table  class="table table-striped table-hover table-bordered table-info text-center table-sm align-middle">
@@ -173,7 +180,7 @@
                     </tfoot>
                 </table>
             </div>
-        </div>
+        </div> --}}
         <div class="col-12 col-md-12">
             <h3>Room's</h3>
             <div class="table-responsive">

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 class AllRoom extends Component
 {
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $r = '',$f = '';

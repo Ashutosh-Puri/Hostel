@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Backend\Report;
 
+
 use App\Models\Classes;
 use Livewire\Component;
 use App\Models\Admission;
@@ -18,16 +19,13 @@ class AllStudentReport extends Component
     public $per_page = 10;
     public $class_id;
     public $year_id;
-    public $admission_status=null;
+    public $bed_status=null;
     public $admissionArray;
-    public $student_name;
-
     public function clear()
     {
         $this->class_id=null;
         $this->year_id=null;
-        $this->student_name=null;
-        $this->admission_status=null;
+        $this->bed_status=null;
         $this->admissionArray=null;
     }
 
@@ -39,7 +37,8 @@ class AllStudentReport extends Component
              
             $pdf = view('livewire.backend.report.pdf-student-report', [
                 'admission' => $allAdmissionRecords,
-            ]);
+                'bed_status' => $this->bed_status,
+            ])->extends('layouts.app')->section('content');
 
             return Excel::download(new StudentReportExport($pdf), 'student_report.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
 
@@ -65,7 +64,8 @@ class AllStudentReport extends Component
 
             $excel = view('livewire.backend.report.pdf-student-report', [
                 'admission' => $allAdmissionRecords,
-            ]);
+                'bed_status' => $this->bed_status
+            ])->extends('layouts.app')->section('content');
 
             return Excel::download(new StudentReportExport($excel), 'student_report.xlsx');
 
@@ -86,31 +86,39 @@ class AllStudentReport extends Component
 
     public function render()
     {   
-        $years = AcademicYear::all();
-        $class = Classes::all();
+        $years=AcademicYear::all();
+        $class=Classes::all();
 
-        $query = Admission::with(['academicyear', 'class', 'student'])->orderBy('created_at', 'DESC');
-
-        $query->when($this->year_id, function ($query) {
-            $query->whereHas('academicyear', function ($query) {
-                $query->where('id', $this->year_id);
+        $query = Admission::with(['AcademicYear','class','student','allocations.bed'])->orderBy('created_at', 'DESC');
+        if ($this->year_id) {
+            $query->whereHas('AcademicYear', function ($query) {
+                $query->where('id',$this->year_id );
             });
-        })->when($this->class_id, function ($query) {
+        }
+
+        if ($this->class_id) {
             $query->whereHas('class', function ($query) {
-                $query->where('id', $this->class_id);
+                $query->where('id',$this->class_id );
             });
-        })->when($this->student_name, function ($query) {
-            $query->whereHas('student', function ($query) {
-                $query->where('name', 'like', "%" . $this->student_name . "%");
-            });
-        })->when($this->admission_status !== null, function ($query) {
-            $query->where('status', $this->admission_status);
-        });
+        }
+
+        if($this->bed_status!==null)
+        {
+            if ($this->bed_status ==1) {
+                $query->whereHas('allocations', function ($query) {
+                    $query->whereNotNull('bed_id');
+                });
+            }elseif ($this->bed_status ==0) {
+                $query->whereDoesntHave('allocations', function ($query) {
+                    $query->whereNotNull('bed_id');
+                });
+            }
+        }
 
         $admission = $query->paginate($this->per_page);
 
-        $this->admissionArray = $admission->pluck('id')->all();
-
+        $this->admissionArray= $admission->pluck('id')->all();
+        
         return view('livewire.backend.report.all-student-report',compact('class','years','admission'))->extends('layouts.admin.admin')->section('admin');
     }
 }

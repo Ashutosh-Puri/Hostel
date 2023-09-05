@@ -49,6 +49,8 @@
                         <label class=" col-4 col-md-1  py-1 ">Records</label>
                         <span class="col-12 col-md-9 p-0">
                             <div class="row ">
+                                <div class="col-12 col-md-2 ">
+                                </div>
                                 <div class="col-6 col-md-3 ">
                                     <select class="w-100 py-1"  wire:loading.attr="disabled" wire:model="year_id">
                                         <option value="" hidden>Select Year</option>
@@ -65,15 +67,11 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-6 col-md-3 ">
-                                    <input class="w-100 py-1" type="search" wire:model.debounce.1000ms="student_name" id="" placeholder="Student Name">
-                                </div>
-                                <div class="col-6 col-md-2">
-                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="admission_status">
-                                        <option value="" hidden>Admission Status</option>
-                                        <option value="0">Waiting</option>
-                                        <option value="1">Confirmed</option>
-                                        <option value="2">Canceled</option>
+                                <div class="col-6 col-md-3">
+                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="bed_status">
+                                        <option value="" hidden>Select Bed Status</option>
+                                        <option value="1">Allocated</option>
+                                        <option value="0">Not Allocated</option>
                                     </select>
                                 </div>
                                 <div class="col-6 col-md-1  ">
@@ -94,8 +92,20 @@
                                 <th>Email</th>
                                 <th>Mobile</th>
                                 <th>Parent Mobile</th>
-                                <th>Student Status</th>
-                                <th>Admission Status</th>
+                                <th>Status</th>
+                                @if ($bed_status==null)
+                                    <th>Hostel</th>
+                                    <th>Building</th>
+                                    <th>Floor</th>
+                                    <th>Room</th>
+                                    <th>Bed</th>  
+                                @elseif ($bed_status==1)
+                                    <th>Hostel</th>
+                                    <th>Building</th>
+                                    <th>Floor</th>
+                                    <th>Room</th>
+                                    <th>Bed</th>  
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -108,8 +118,57 @@
                                     <td>{{ $item->Student->email }}</td>
                                     <td>{{ $item->Student->mobile}}</td>
                                     <td>{{ $item->Student->parent_mobile}}</td>
-                                    <td>{{ $item->Student->status ==0?"Active":"In Active";}}</td>
-                                    <td>{{ $item->status ==0?"Waiting":($item->status ==1?"Confirmed":"Canceled"); }}</td>
+                                    <td>
+                                        @if ( $item->Student->status == '0')
+                                            A
+                                        @else
+                                            I
+                                        @endif
+                                    </td>
+                                    @if ($item->allocations->isEmpty())
+                                        @if ($bed_status==null)
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td> 
+                                        @elseif ($bed_status==1)
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        @endif
+                                    @else
+                                    @foreach ($item->allocations as $aIndex => $a)
+                                    @if ($aIndex === 0)
+                                        <td>
+                                            {{ $a->Bed->Room->Floor->Building->Hostel->name }}
+                                        </td>
+                                    @endif
+                                    @if ($aIndex === 0)
+                                        <td>
+                                            {{ $a->Bed->Room->Floor->Building->name }}
+                                        </td>
+                                    @endif
+                                    @if ($aIndex === 0)
+                                        <td>
+                                            {{ in_array( $a->Bed->Room->Floor->floor, range(0, 10)) ? ['Ground', 'First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh', 'Eighth', 'Ninth', 'Tenth'][ $a->Bed->Room->Floor->floor] :  $a->Bed->Room->Floor->floor }}
+                                        </td>
+                                    @endif
+                                    @if ($aIndex === 0)
+                                        <td>
+                                            {{ $a->Bed->Room->id }}-({{ $a->Bed->Room->label }})
+                                        </td>
+                                    @endif
+                                    @if ($aIndex === 0)
+                                        <td>
+                                            {{ $a->Bed->id }}
+                                        </td>
+                                    @endif
+                                @endforeach 
+                                    @endif
+                                    
                                 </tr>
                             @endforeach
                         </tbody>

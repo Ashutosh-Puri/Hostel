@@ -130,6 +130,13 @@
                     <div class="bg-success">
                         <div class="float-start pt-2 px-2">
                             <h2>Edit Facility</h2>
+                            <div wire:loading class="loading-overlay">
+                                <div class="loading-spinner">
+                                    <div class="spinner-border spinner-border-lg text-primary" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="float-end">
                             <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">

@@ -23,6 +23,7 @@ use Illuminate\Validation\Rule;
 class AllAllocation extends Component
 {
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $a = '',$s = '',$c = '',$ad="";
     public $per_page = 10;
@@ -438,77 +439,101 @@ class AllAllocation extends Component
 
     public function render()
     {   
-        // Allocation Add , Edit
-        $academicyears=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
-        $admissions=Admission::where('academic_year_id',$this->academic_year_id)->get();
-        // Allocation Allocate , Re Allocate
-        $hostels = Hostel::where('status', 0)->where('gender',$this->gender)->get();
-        $buildings = Building::where('status', 0)->where('hostel_id', $this->hostel_id)->get();
-        $floors = Floor::where('status', 0)->where('building_id', $this->building_id)->get();
-        $rooms=Room::where('floor_id', $this->floor_id)->get();
-        $beds=Bed::where('status',0)->where('room_id', $this->room_id)->get();
-        $r=Room::where('id',$this->room_id)->first();
-        if($r)
+        if($this->mode=='add'|| $this->mode=='edit')
         {
-            $this->seated_id=$r->seated_id;
-            $se=Seated::find($r->seated_id);
-            if($se)
-            {
-              $this->seated = $se->seated;
-            }
-        }
-        if($this->room_id)
+              // Allocation Add , Edit
+            $academicyears=AcademicYear::select('id','year')->where('status',0)->orderBy('year', 'DESC')->get();
+            $admissions=Admission::where('academic_year_id',$this->academic_year_id)->get();
+        }else
         {
-            $fees=Fee::where('status',0)->where('academic_year_id',$this->academic_year_id)->where('seated_id',$this->seated_id)->first();
-            if($fees)
-            {   
-                $this->fee_id=$fees->id;
-                $this->fee=$fees->amount;
-            }else
-            {   
-                $this->fee_id=null;
-                $this->fee=null;
-            }
+            $academicyears=[];
+            $admissions=[];
         }
 
-        // for alllocation Student Information
-        if($this->admissionid!=null)
+        if($this->mode=='allocate'|| $this->mode=='exchange')
         {
-            $admission=Admission::find($this->admissionid);  
-            $alloc1=Allocation::where('admission_id',$this->admissionid)->first();
-        }
-        else
-        {
-            $admission=null;
-            $alloc1=null;
-        }
-        
-        $students=Student::where('status',0)->orderBy('name', 'ASC')->get();
-        if($this->admissionid2!=$this->admissionid)
-        {
-            $admission2=Admission::find($this->admissionid2);  
-            $alloc2=Allocation::where('admission_id',$this->admissionid2)->first();
-            if(!$admission2 && $this->admissionid2)
+            // Allocation Allocate , Re Allocate
+            $hostels = Hostel::where('status', 0)->where('gender',$this->gender)->get();
+            $buildings = Building::where('status', 0)->where('hostel_id', $this->hostel_id)->get();
+            $floors = Floor::where('status', 0)->where('building_id', $this->building_id)->get();
+            $rooms=Room::where('floor_id', $this->floor_id)->get();
+            $beds=Bed::where('status',0)->where('room_id', $this->room_id)->get();
+            $r=Room::where('id',$this->room_id)->first();
+            if($r)
             {
-                $this->dispatchBrowserEvent('alert',[
-                    'type'=>'error',
-                    'message'=>"Admission Not Found !!"
-                ]);
+                $this->seated_id=$r->seated_id;
+                $se=Seated::find($r->seated_id);
+                if($se)
+                {
+                $this->seated = $se->seated;
+                }
+            }
+            if($this->room_id)
+            {
+                $fees=Fee::where('status',0)->where('academic_year_id',$this->academic_year_id)->where('seated_id',$this->seated_id)->first();
+                if($fees)
+                {   
+                    $this->fee_id=$fees->id;
+                    $this->fee=$fees->amount;
+                }else
+                {   
+                    $this->fee_id=null;
+                    $this->fee=null;
+                }
+            }
+
+            // for alllocation Student Information
+            if($this->admissionid!=null)
+            {
+                $admission=Admission::find($this->admissionid);  
+                $alloc1=Allocation::where('admission_id',$this->admissionid)->first();
+            }
+            else
+            {
+                $admission=null;
+                $alloc1=null;
+            }
+            
+            $students=Student::where('status',0)->orderBy('name', 'ASC')->get();
+            if($this->admissionid2!=$this->admissionid)
+            {
+                $admission2=Admission::find($this->admissionid2);  
+                $alloc2=Allocation::where('admission_id',$this->admissionid2)->first();
+                if(!$admission2 && $this->admissionid2)
+                {
+                    $this->dispatchBrowserEvent('alert',[
+                        'type'=>'error',
+                        'message'=>"Admission Not Found !!"
+                    ]);
+                }
+            }else
+            {
+                $admission2=null;
+                $alloc2=null;
+                if($this->mode=="exchange")
+                {
+                    $this->dispatchBrowserEvent('alert',[
+                        'type'=>'info',
+                        'message'=>"Enter Unother Admission ID , You Have Enter Same Admission ID!!"
+                    ]);
+                }
             }
         }else
         {
-            $admission2=null;
             $alloc2=null;
-            if($this->mode=="exchange")
-            {
-                $this->dispatchBrowserEvent('alert',[
-                    'type'=>'info',
-                    'message'=>"Enter Unother Admission ID , You Have Enter Same Admission ID!!"
-                ]);
-            }
+            $alloc1=null;
+            $admission=null;
+            $admission2=null;
+            $beds=[];
+            $hostels=[];
+            $buildings=[];
+            $floors=[];
+            $rooms=[];
         }
+      
         
-        $query =Allocation::orderBy('admission_id', 'ASC');
+        
+        $query =Allocation::select('id','admission_id','bed_id')->with(['Admission'])->orderBy('created_at', 'DESC');
         if ($this->ad) {
             $admissionIds = Admission::where('id', 'like',$this->ad. '%')->pluck('id');
             $query->whereIn('admission_id', $admissionIds);

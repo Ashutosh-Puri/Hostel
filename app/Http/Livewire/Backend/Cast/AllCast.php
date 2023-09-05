@@ -9,6 +9,7 @@ use Livewire\WithPagination;
 class AllCast extends Component
 {   
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $search = '';
@@ -152,8 +153,12 @@ class AllCast extends Component
 
     public function render()
     {   
-        $categories=Category::all();
-        $cast=Cast::where('name', 'like', '%'.$this->search.'%')->orderBy('name', 'ASC')->paginate($this->per_page);
+        $categories=Category::select('id','name')->get();
+
+        $cast = Cast::query()->select('id','category_id','name','status')->when($this->search, function ($query) {
+            return $query->where('name', 'like', '%' . $this->search . '%');
+        })->orderBy('name', 'ASC')->paginate($this->per_page);
+
         return view('livewire.backend.cast.all-cast',compact('cast','categories'))->extends('layouts.admin.admin')->section('admin');
     }
 }

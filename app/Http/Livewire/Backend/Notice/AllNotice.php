@@ -9,6 +9,7 @@ use Livewire\WithPagination;
 class AllNotice extends Component
 {   
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $search = '';
@@ -153,7 +154,10 @@ class AllNotice extends Component
 
     public function render()
     {
-        $notice=Notice::where('description', 'like', '%'.$this->search.'%')->orderBy('description', 'ASC')->paginate($this->per_page);
+        $notice = Notice::query()->when($this->search, function ($query) {
+            return $query->where('description', 'like', '%' . $this->search . '%');
+        })->orderBy('description', 'ASC')->paginate($this->per_page);
+        
         return view('livewire.backend.notice.all-notice',compact('notice'))->extends('layouts.admin.admin')->section('admin');
     }
 

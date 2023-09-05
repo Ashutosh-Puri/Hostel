@@ -9,6 +9,7 @@ use Livewire\WithPagination;
 class AllCategory extends Component
 {   
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $search = '';
@@ -128,7 +129,10 @@ class AllCategory extends Component
 
     public function render()
     {
-        $category=Category::where('name', 'like', '%'.$this->search.'%')->orderBy('name', 'ASC')->paginate($this->per_page);
+        $category= Category::query()->select('id','name') ->when($this->search, function ($query) {
+            return $query->where('name', 'like', '%' . $this->search . '%');
+        })->orderBy('name', 'ASC')->paginate($this->per_page);
+        
         return view('livewire.backend.category.all-category',compact('category'))->extends('layouts.admin.admin')->section('admin');
     }
 }
