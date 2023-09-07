@@ -15,20 +15,20 @@ class Classes extends Model
 
     protected $guarded = [];
 
-    public function Quotas()
+    public function quotas()
     {
-        return $this->hasMany(Quota::class, 'class_id', 'id');
+        return $this->hasMany(Quota::class);
     }
 
 
-    public function StudentEducations()
+    public function studenteducations()
     {
-        return $this->hasMany(StudentEducation::class, 'last_class_id', 'id');
+        return $this->hasMany(StudentEducation::class);
     }
 
-    public function Admissions()
+    public function admissions()
     {
-        return $this->hasMany(Admission::class, 'class_id', 'id');
+        return $this->hasMany(Admission::class);
     }
 
 

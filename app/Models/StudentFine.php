@@ -14,16 +14,16 @@ class StudentFine extends Model
     protected $guarded=[];
 
 
-    public function Fine()
+    public function fine()
     {
-        return $this->belongsTo(Fine::class, 'fine_id', 'id');
+        return $this->belongsTo(Fine::class);
     }
-    public function Student()
+    public function student()
     {
-        return $this->belongsTo(Student::class, 'student_id', 'id');
+        return $this->belongsTo(Student::class);
     }
-    public function AcademicYear()
+    public function academicyear()
     {
-        return $this->belongsTo(AcademicYear::class, 'academic_year_id', 'id');
+        return $this->belongsTo(AcademicYear::class);
     }
 }

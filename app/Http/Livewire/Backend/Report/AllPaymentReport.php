@@ -83,8 +83,8 @@ class AllPaymentReport extends Component
     public function render()
     {   
 
-        $years=AcademicYear::all();
-        $class=Classes::all();
+        $years=AcademicYear::select('id','year')->get();
+        $class=Classes::select('id','name')->get();
         $query = StudentPayment::orderBy('created_at', 'DESC');
 
         if ($this->year_id) {

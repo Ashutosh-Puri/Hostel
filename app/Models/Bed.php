@@ -15,14 +15,14 @@ class Bed extends Model
     protected $guarded=[];
 
 
-    public function Room()
+    public function room()
     {
-        return $this->belongsTo(Room::class, 'room_id', 'id');
+        return $this->belongsTo(Room::class);
     }
 
-    public function Allocations()
+    public function allocations()
     {
-        return $this->hasMany(Allocation::class, 'bed_id', 'id');
+        return $this->hasMany(Allocation::class);
     }
 
 

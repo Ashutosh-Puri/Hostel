@@ -184,11 +184,11 @@
                                 </div>
                             </div>
                             <div class="float-end">
-                                @can('Add Role Wise Permission')
+                                {{-- @can('Add Role Wise Permission')
                                     <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
                                         Add Role Permission<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
                                     </a>
-                                @endcan
+                                @endcan --}}
                             </div>
                         </div>
                     </div>

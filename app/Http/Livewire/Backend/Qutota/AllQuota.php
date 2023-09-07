@@ -157,8 +157,8 @@ class AllQuota extends Component
 
     public function render()
     {
-        $academic_years=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
-        $classes=Classes::where('status',0)->get();
+        $academic_years=AcademicYear::select('id',"year")->where('status',0)->orderBy('year', 'DESC')->get();
+        $classes=Classes::select('id',"name")->where('status',0)->get();
         $query = Quota::with('AcademicYear', 'Class')->orderBy('academic_year_id', 'DESC');
         if ($this->year) {
             $query->whereHas('AcademicYear', function ($query) {

@@ -138,7 +138,10 @@ class AllPermission extends Component
     public function render()
     {   
         $groups=Permission::all();
-        $permissions=Permission::where('name', 'like', '%'.$this->search.'%')->orderBy('group_name', 'ASC')->paginate($this->per_page);
+        $permissions=Permission::select('id','name','group_name')->when($this->search, function ($query) {
+            return $query->where('name', 'like', '%' . $this->search . '%');
+        })->orderBy('group_name', 'ASC')->paginate($this->per_page);
+
         return view('livewire.backend.permission.all-permission',compact('groups','permissions'))->extends('layouts.admin.admin')->section('admin');
     }
 

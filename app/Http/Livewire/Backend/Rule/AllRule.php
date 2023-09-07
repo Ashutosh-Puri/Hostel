@@ -154,7 +154,10 @@ class AllRule extends Component
 
     public function render()
     {
-        $rule=Rule::where('description', 'like', '%'.$this->search.'%')->orderBy('description', 'ASC')->paginate($this->per_page);
+        $rule = Rule::query()->when($this->search, function ($query) {
+            return $query->where('description', 'like', '%' . $this->search . '%');
+        })->orderByRaw('CAST(SUBSTRING_INDEX(name, "Rule", -1) AS UNSIGNED) ASC')->paginate($this->per_page);
+
         return view('livewire.backend.rule.all-rule',compact('rule'))->extends('layouts.admin.admin')->section('admin');
     }
 }

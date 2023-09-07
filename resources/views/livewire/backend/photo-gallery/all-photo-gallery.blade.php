@@ -204,7 +204,7 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input  class="w-100" wire:model.debounce.1000ms="search" type="search" placeholder="Description">
+                                                <input  class="w-100" wire:model.debounce.1000ms="search" type="search" placeholder="Title">
                                             </div>
                                         </span>
                                     </span>

@@ -10,10 +10,7 @@
                     <th style="padding: 3px; text-align:center; vertical-align: center;">Year</th>
                     <th style="padding: 3px; text-align:center; vertical-align: center;">Class</th>
                     <th style="padding: 3px; text-align:center; vertical-align: center;">Student Name</th>
-                    <th style="padding: 3px; text-align:center; vertical-align: center;">Mobile</th>
-                    <th style="padding: 3px; text-align:center; vertical-align: center;">Parent Mobile</th>
-                    <th style="padding: 3px; text-align:center; vertical-align: center;">Status</th>
-                    {{-- @if ($bed_status==null)
+                    @if ($bed_status==null)
                         <th style="padding: 3px; text-align:center; vertical-align: center;">Hostel</th>
                         <th style="padding: 3px; text-align:center; vertical-align: center;">Building</th>
                         <th style="padding: 3px; text-align:center; vertical-align: center;">Floor</th>
@@ -25,7 +22,7 @@
                         <th style="padding: 3px; text-align:center; vertical-align: center;">Floor</th>
                         <th style="padding: 3px; text-align:center; vertical-align: center;">Room</th>
                         <th style="padding: 3px; text-align:center; vertical-align: center;">Bed</th>  
-                    @endif --}}
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -35,16 +32,7 @@
                         <td style="padding: 3px; text-align:center; vertical-align: center;">{{ $item->AcademicYear->year }}</td>
                         <td style="padding: 3px; text-align:center; vertical-align: center;">{{ $item->Class->name }}</td>                                  
                         <td style="padding: 3px; text-align:center; vertical-align: center;">{{ $item->Student->name}}</td>
-                        <td style="padding: 3px; text-align:center; vertical-align: center;">{{ $item->Student->mobile}}</td>
-                        <td style="padding: 3px; text-align:center; vertical-align: center;">{{ $item->Student->parent_mobile}}</td>
-                        <td style="padding: 3px; text-align:center; vertical-align: center;">
-                            @if ( $item->Student->status == '0')
-                                Active
-                            @else
-                                In Active
-                            @endif
-                        </td>
-                        {{-- @if ($item->allocations->isEmpty())
+                        @if ($item->allocations->isEmpty())
                             @if ($bed_status==null)
                                 <td></td>
                                 <td></td>
@@ -86,7 +74,7 @@
                                     </td>
                                 @endif
                             @endforeach 
-                        @endif --}}
+                        @endif
                     </tr>
                 @endforeach
             </tbody>

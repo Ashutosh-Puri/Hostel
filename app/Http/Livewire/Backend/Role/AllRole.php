@@ -149,7 +149,10 @@ class AllRole extends Component
 
     public function render()
     {
-        $roles=Role::where('name', 'like', '%'.$this->search.'%')->orderBy('created_at', 'ASC')->paginate($this->per_page);
+        $roles = Role::query()->when($this->search, function ($query) {
+            return $query->where('name', 'like', '%' . $this->search . '%');
+        })->orderBy('created_at', 'ASC')->paginate($this->per_page);
+
         return view('livewire.backend.role.all-role',compact('roles'))->extends('layouts.admin.admin')->section('admin');
     }
 }

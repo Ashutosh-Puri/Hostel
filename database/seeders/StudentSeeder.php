@@ -22,6 +22,7 @@ class StudentSeeder extends Seeder
             'email' => 'ashutoshpuri2000@gmail.com',
             'password' => Hash::make('123456789'),
             'status' => '0',
+            'email_verified_at' => now(),
         ]);
 
          Student::create([
@@ -29,6 +30,7 @@ class StudentSeeder extends Seeder
             'email' => 'tejas123@gmail.com',
             'password' => Hash::make('123456789'),
             'status' => '0',
+            'email_verified_at' => now(),
         ]);
 
         $faker = Faker::create();

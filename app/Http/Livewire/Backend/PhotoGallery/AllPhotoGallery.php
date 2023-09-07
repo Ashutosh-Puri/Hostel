@@ -182,7 +182,10 @@ class AllPhotoGallery extends Component
 
     public function render()
     {
-        $photogalleries=PhotoGallery::where('title', 'like', '%'.$this->search.'%')->orderBy('title', 'ASC')->paginate($this->per_page);
+        $photogalleries=PhotoGallery::select('id','photo','title','status')->when($this->search, function ($query) {
+            return $query->where('title', 'like', '%' . $this->search . '%');
+        })->orderBy('title', 'ASC')->paginate($this->per_page);
+
         return view('livewire.backend.photo-gallery.all-photo-gallery',compact('photogalleries'))->extends('layouts.admin.admin')->section('admin');
     }
 

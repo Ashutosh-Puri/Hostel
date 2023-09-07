@@ -147,7 +147,10 @@ class AllSeated extends Component
 
     public function render()
     {   
-        $seateds = Seated::where('seated', 'like',$this->seated_number. '%')->paginate($this->per_page);
+        $seateds = Seated::query()->when($this->seated_number, function ($query) {
+            return $query->where('seated', 'like', $this->seated_number . '%');
+        })->paginate($this->per_page);
+
         return view('livewire.backend.seated.all-seated',compact('seateds'))->extends('layouts.admin.admin')->section('admin');
     }
 }

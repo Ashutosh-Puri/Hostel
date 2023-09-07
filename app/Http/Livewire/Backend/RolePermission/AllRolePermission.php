@@ -70,10 +70,6 @@ class AllRolePermission extends Component
     public function setmode($mode)
     {
         $this->mode=$mode;
-        if($mode=="add")
-        {
-            $this->resetinput();
-        }
     }
 
     public function save()
@@ -122,16 +118,9 @@ class AllRolePermission extends Component
             $this->current_id=$id;
             $this->C_id=$id;
             $this->role= Role::findOrFail($id);
-           // $this->permission=[0,1,1,1,0,0,1];
            foreach($this->role->permissions->pluck('id') as $data){
             $this->permission[$data]=$data;
            }
-         
-         //  $this->permission=$this->role->permissions->pluck('id');
-
-
-
-            
             $this->setmode('edit');
         }else{
             $this->role=null;
@@ -177,7 +166,6 @@ class AllRolePermission extends Component
         $role= Role::findOrFail($this->delete_id);
         if (!is_null($role)) {
 
-            // $role->delete();
             $role->syncPermissions([]);
             $this->resetinput();
             $this->delete_id=null;
@@ -209,6 +197,17 @@ class AllRolePermission extends Component
 
     public function render()
     {   
+        if($this->role_id!=null)
+        {   
+            if($this->mode=="add")
+            {
+
+                $role= Role::findOrFail( $this->role_id);
+                foreach($role->permissions->pluck('id') as $data){
+                 $this->permission[$data]=$data;
+                }
+            }
+        }
         
         if($this->current_id)
         {
@@ -221,7 +220,6 @@ class AllRolePermission extends Component
         $roles=Role::where('status',0)->get();
         $permission = Permission::all();
 
-        $permission=[0,1,1,1];
         $permission_groups = Admin::getpermissionGroups();
         $allroles=Role::paginate($this->per_page);
         return view('livewire.backend.role-permission.all-role-permission',compact('role','permission_groups','permission','roles','allroles'))->extends('layouts.admin.admin')->section('admin');

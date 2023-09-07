@@ -25,11 +25,7 @@ class Student extends Authenticatable implements MustVerifyEmail
     }
 
     protected $guard="student";
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+
     protected $fillable = [
         'username',
         'email',
@@ -45,48 +41,38 @@ class Student extends Authenticatable implements MustVerifyEmail
         'last_login',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'mobile_verified_at' => 'datetime',
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 
-    public function StudentFines()
+    public function studentfines()
     {
-        return $this->hasMany(StudentFine::class, 'student_id', 'id');
+        return $this->hasMany(StudentFine::class);
     }
 
-    public function StudentPayments()
+    public function studentpayments()
     {
-        return $this->hasMany(StudentPayment::class, 'student_id', 'id');
+        return $this->hasMany(StudentPayment::class);
     }
 
-    public function StudentEducations()
+    public function studenteducations()
     {
-        return $this->hasMany(StudentEducation::class, 'student_id', 'id');
+        return $this->hasMany(StudentEducation::class);
     }
 
-    public function Admissions()
+    public function admissions()
     {
-        return $this->hasMany(Admission::class, 'student_id', 'id');
+        return $this->hasMany(Admission::class);
     }
 
-    public function Cast()
+    public function cast()
     {
         return $this->belongsTo(Cast::class);
     }

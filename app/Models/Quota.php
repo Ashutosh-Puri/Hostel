@@ -14,12 +14,12 @@ class Quota extends Model
 
 
    
-    public function Class()
+    public function class()
     {
-        return $this->belongsTo(Classes::class, 'class_id', 'id');
+        return $this->belongsTo(Classes::class);
     }
-    public function AcademicYear()
+    public function academicyear()
     {
-        return $this->belongsTo(AcademicYear::class, 'academic_year_id', 'id');
+        return $this->belongsTo(AcademicYear::class);
     }
 }

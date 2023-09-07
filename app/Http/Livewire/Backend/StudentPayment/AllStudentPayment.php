@@ -195,10 +195,10 @@ class AllStudentPayment extends Component
 
     public function render()
     {
-        $academic_years=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
-        $admissions = Admission::where('academic_year_id', $this->academic_year_id)->get();
-        $students=Student::where('status',0)->whereIn('id',  $admissions->pluck('student_id'))->get();
-        $seateds=Seated::where('status',0)->orderBy('seated', 'ASC')->get();
+        $academic_years=AcademicYear::select('id','year')->where('status',0)->orderBy('year', 'DESC')->get();
+        $admissions = Admission::select('student_id')->where('academic_year_id', $this->academic_year_id)->get();
+        $students=Student::select('id','name','username')->where('status',0)->whereIn('id',  $admissions->pluck('student_id'))->get();
+        $seateds=Seated::select('id','seated')->where('status',0)->orderBy('seated', 'ASC')->get();
         $fees=Fee::where('status',0)->where('academic_year_id',$this->academic_year_id)->where('seated_id',$this->seated_id)->first();
         if($fees)
         {   

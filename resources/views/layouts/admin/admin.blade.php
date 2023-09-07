@@ -1,8 +1,23 @@
 @extends('layouts.app')
 @section('content')
-<div>   
+<div>  
+  {{-- @section('styles')
+@endsection --}}
+ 
     @section('styles')
       <style>
+
+
+/* Style for the input type time */
+input[type="time"] {
+    /* Hide the default time picker arrow */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+}
+
+
 
         /* Ensure the loading overlay covers the entire screen */
         .loading-overlay {

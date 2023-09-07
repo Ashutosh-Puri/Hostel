@@ -12,7 +12,7 @@ class College extends Model
     protected $guarded=[];
 
 
-    public function Hostels()
+    public function hostels()
     {
         return $this->hasMany(Hostel::class);
     }

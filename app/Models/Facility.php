@@ -14,9 +14,9 @@ class Facility extends Model
     protected $guarded=[];
 
 
-    public function Room()
+    public function room()
     {
-        return $this->belongsTo(Room::class, 'room_id', 'id');
+        return $this->belongsTo(Room::class);
     }
 
 }
