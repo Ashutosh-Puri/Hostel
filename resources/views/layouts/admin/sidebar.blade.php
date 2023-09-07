@@ -18,6 +18,14 @@
           </a>
         </li>
       @endcan
+      @can('Access Class')
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_class') }}">
+          <span class="icon-bg"><i class="mdi mdi-google-classroom menu-icon"></i></span>
+          <span class="menu-title">Class's</span>
+        </a>
+      </li>
+      @endcan
       @can('Access Admission')
         <li class="nav-item">
           <a class="nav-link" href="{{ route('all_admission') }}">
@@ -34,22 +42,8 @@
           </a>
         </li>
       @endcan
-      @can('Access Class')
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('all_class') }}">
-            <span class="icon-bg"><i class="mdi mdi-google-classroom menu-icon"></i></span>
-            <span class="menu-title">Class's</span>
-          </a>
-        </li>
-      @endcan
-      @can('Access Quota')
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('all_quota') }}">
-            <span class="icon-bg"><i class="mdi mdi-codepen menu-icon"></i></span>
-            <span class="menu-title">Quota's</span>
-          </a>
-        </li>
-      @endcan
+
+      <li class="nav-item nav-category">College & Other</li>
       @can('Access College')
         <li class="nav-item">
           <a class="nav-link" href="{{ route('all_college') }}">
@@ -90,14 +84,7 @@
           </a>
         </li>
       @endcan
-      @can('Access Fee')
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('all_fee') }}">
-            <span class="icon-bg"><i class="mdi mdi-cash menu-icon"></i></span>
-            <span class="menu-title">Fee's</span>
-          </a>
-        </li>
-      @endcan
+
       @can('Access Room')
         <li class="nav-item">
           <a class="nav-link" href="{{ route('all_room') }}">
@@ -114,11 +101,32 @@
           </a>
         </li>
       @endcan
-      @can('Access Facility')
+    
+
+      
+      
+      <li class="nav-item nav-category">Fee & Fines</li>
+      @can('Access Fee')
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('all_facility') }}">
-            <span class="icon-bg"><i class="mdi mdi-webhook menu-icon"></i></span>
-            <span class="menu-title">Facility's</span>
+          <a class="nav-link" href="{{ route('all_fee') }}">
+            <span class="icon-bg"><i class="mdi mdi-cash menu-icon"></i></span>
+            <span class="menu-title">Fee's</span>
+          </a>
+        </li>
+      @endcan
+      @can('Access Fine')
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_fine') }}">
+            <span class="icon-bg"><i class="mdi mdi-cash-100 menu-icon"></i></span>
+            <span class="menu-title">Fine's</span>
+          </a>
+        </li>
+      @endcan
+      @can('Access Student Payment')
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_student_payment') }}">
+            <span class="icon-bg"><i class="mdi mdi-currency-inr menu-icon"></i></span>
+            <span class="menu-title">Student Payment's</span>
           </a>
         </li>
       @endcan
@@ -130,11 +138,98 @@
           </a>
         </li>
       @endcan
-      @can('Access Fine')
+      <li class="nav-item nav-category">Reports</li>
+      @can('Access Report')
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('all_fine') }}">
-            <span class="icon-bg"><i class="mdi mdi-cash-100 menu-icon"></i></span>
-            <span class="menu-title">Fine's</span>
+          <a class="nav-link" href="{{ route('all_student_report') }}">
+            <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
+            <span class="menu-title">Student Report's</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_allocation_report') }}">
+            <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
+            <span class="menu-title">Allocation Report's</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_room_report') }}">
+            <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
+            <span class="menu-title">Room Report's</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_payment_report') }}">
+            <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
+            <span class="menu-title">Payment Report's</span>
+          </a>
+        </li>
+      @endcan
+      <li class="nav-item nav-category">Roles & Permissions</li>
+      @can('Access Role')
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_role') }}">
+            <span class="icon-bg"><i class="mdi mdi-account-key menu-icon"></i></span>
+            <span class="menu-title">Role's</span>
+          </a>
+        </li>
+      @endcan
+      @can('Access Permission')
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_permission') }}">
+            <span class="icon-bg"><i class="mdi mdi-account-key menu-icon"></i></span>
+            <span class="menu-title">Permission's</span>
+          </a>
+        </li>
+      @endcan
+      @can('Access Role Wise Permission')
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_role_permission') }}">
+            <span class="icon-bg"><i class="mdi mdi-account-key menu-icon"></i></span>
+            <span class="menu-title">Role Via Permission's</span>
+          </a>
+        </li>
+      @endcan
+      @can('Access Admin')
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_admin') }}">
+            <span class="icon-bg"><i class="mdi mdi-account-star menu-icon"></i></span>
+            <span class="menu-title">Admin's</span>
+          </a>
+        </li>
+      @endcan
+      
+      <li class="nav-item nav-category">Other</li>
+      @can('Access Cast')
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_cast') }}">
+            <span class="icon-bg"><i class="mdi mdi-format-list-bulleted-type menu-icon"></i></span>
+            <span class="menu-title">Cast's</span>
+          </a>
+        </li>
+      @endcan
+      @can('Access Category')
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_category') }}">
+            <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
+            <span class="menu-title">Category's</span>
+          </a>
+        </li>
+      @endcan
+      @can('Access Facility')
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_facility') }}">
+            <span class="icon-bg"><i class="mdi mdi-webhook menu-icon"></i></span>
+            <span class="menu-title">Facility's</span>
+          </a>
+        </li>
+      @endcan
+            
+      @can('Access Quota')
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_quota') }}">
+            <span class="icon-bg"><i class="mdi mdi-codepen menu-icon"></i></span>
+            <span class="menu-title">Quota's</span>
           </a>
         </li>
       @endcan
@@ -170,14 +265,7 @@
           </a>
         </li>
       @endcan
-      @can('Access Student Payment')
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('all_student_payment') }}">
-            <span class="icon-bg"><i class="mdi mdi-currency-inr menu-icon"></i></span>
-            <span class="menu-title">Student Payment's</span>
-          </a>
-        </li>
-      @endcan
+      
       @can('Access Student Education')
         <li class="nav-item">
           <a class="nav-link" href="{{ route('all_student_education') }}">
@@ -186,78 +274,46 @@
           </a>
         </li>
       @endcan
-      @can('Access Role')
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('all_role') }}">
-            <span class="icon-bg"><i class="mdi mdi-account-key menu-icon"></i></span>
-            <span class="menu-title">Role's</span>
-          </a>
-        </li>
-      @endcan
-      @can('Access Permission')
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('all_permission') }}">
-            <span class="icon-bg"><i class="mdi mdi-account-key menu-icon"></i></span>
-            <span class="menu-title">Permission's</span>
-          </a>
-        </li>
-      @endcan
-      @can('Access Role Wise Permission')
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('all_role_permission') }}">
-            <span class="icon-bg"><i class="mdi mdi-account-key menu-icon"></i></span>
-            <span class="menu-title">Role Wise Permission's</span>
-          </a>
-        </li>
-      @endcan
-      @can('Access Admin')
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('all_admin') }}">
-            <span class="icon-bg"><i class="mdi mdi-account-star menu-icon"></i></span>
-            <span class="menu-title">Admin's</span>
-          </a>
-        </li>
-      @endcan
+      <li class="nav-item nav-category">Setting</li>
       @can('Access Cast')
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('all_cast') }}">
+          <a class="nav-link" href="{{ route('site_setting') }}">
             <span class="icon-bg"><i class="mdi mdi-format-list-bulleted-type menu-icon"></i></span>
-            <span class="menu-title">Cast's</span>
+            <span class="menu-title">Site Setting's</span>
           </a>
         </li>
       @endcan
-      @can('Access Category')
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('all_category') }}">
-            <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
-            <span class="menu-title">Category's</span>
-          </a>
-        </li>
-      @endcan
-      @can('Access Enquiry')
+
+
+      
+      <li class="nav-item nav-category">Forms</li>
+      @can('Access Forms')
         <li class="nav-item">
           <a class="nav-link" href="{{ route('all_enquiry') }}">
             <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
-            <span class="menu-title">Enquiry's</span>
+            <span class="menu-title">Enquiry</span>
           </a>
         </li>
-      @endcan
-      @can('Access Report')
         <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="collapse" href="#reports" aria-expanded="false" aria-controls="reports">
-            <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
-            <span class="menu-title">Reports</span>
-            <i class="menu-arrow"></i>
+          <a class="nav-link" href="{{ route('all_student_local_register') }}">
+            <span class="icon-bg"><i class="mdi mdi-format-list-bulleted-type menu-icon"></i></span>
+            <span class="menu-title">Local Register</span>
           </a>
-          <div class="collapse" id="reports">
-            <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <a class="nav-link" href="{{ route('all_student_report') }}">Student Reports</a></li>
-              <li class="nav-item"> <a class="nav-link" href="">Room Reports</a></li>
-              <li class="nav-item"> <a class="nav-link" href="">Fee and Payment Reports</a></li>
-            </ul>
-          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_student_come_from_home') }}">
+            <span class="icon-bg"><i class="mdi mdi-format-list-bulleted-type menu-icon"></i></span>
+            <span class="menu-title">Come From Home</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_student_night_out') }}">
+            <span class="icon-bg"><i class="mdi mdi-format-list-bulleted-type menu-icon"></i></span>
+            <span class="menu-title">Night Out</span>
+          </a>
         </li>
       @endcan
+
       {{--@can('')
       @endcan --}}
 

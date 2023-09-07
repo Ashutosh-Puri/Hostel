@@ -19,37 +19,37 @@ class AcademicYear extends Model
     protected $guarded = [];
 
 
-    public function Fines()
+    public function fines()
     {
         return $this->hasMany(Fine::class);
     }
 
-    public function Fees()
+    public function fees()
     {
         return $this->hasMany(Fee::class);
     }
 
-    public function StudentFines()
+    public function studentfines()
     {
         return $this->hasMany(StudentFine::class);
     }
 
-    public function StudentPaymets()
+    public function studentpaymets()
     {
         return $this->hasMany(StudentPayment::class);
     }
 
-    public function Quotas()
+    public function quotas()
     {
         return $this->hasMany(Quota::class);
     }
 
-    public function StudentEducations()
+    public function studenteducations()
     {
         return $this->hasMany(AcademicYear::class);
     }
 
-    public function Admissions()
+    public function admissions()
     {
         return $this->hasMany(Admission::class);
     }

@@ -15,7 +15,6 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
-        "puppeteer": "^21.1.1",
         "turbolinks": "^5.2.0"
     }
 }

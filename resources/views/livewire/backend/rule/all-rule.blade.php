@@ -142,6 +142,13 @@
                         <div class="bg-success">
                             <div class="float-start pt-2 px-2">
                                 <h2>Data Rules</h2>
+                                <div wire:loading wire:target="per_page" class="loading-overlay">
+                                    <div class="loading-spinner">
+                                        <div class="spinner-border spinner-border-lg text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="float-end">
                                 @can('Add Rule')
@@ -175,7 +182,7 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input  class="w-100" wire:model="search" type="search" placeholder="Description">
+                                                <input  class="w-100"wire:model.debounce.1000ms="search" type="search" placeholder="Description">
                                             </div>
                                         </span>
                                     </span>
@@ -201,7 +208,7 @@
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->name }}</td>
-                                                <td>{{ $item->description }}</td>
+                                                <td class="text-wrap lh-lg">{{ $item->description }}</td>
                                                 <td>
                                                     @if ( $item->status == '0')
                                                         <span class="badge bg-success text-white">Active</span>

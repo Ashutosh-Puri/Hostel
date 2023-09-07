@@ -14,6 +14,7 @@ use App\Http\Livewire\Backend\Admin\AllAdmin;
 use App\Http\Livewire\Backend\Class\AllClass;
 use App\Http\Livewire\Backend\Floor\AllFloor;
 use App\Http\Livewire\Backend\Qutota\AllQuota;
+use App\Http\Livewire\Backend\Setting\Setting;
 use App\Http\Livewire\Backend\Admin\AdminLogin;
 use App\Http\Livewire\Backend\Hostel\AllHostel;
 use App\Http\Livewire\Backend\Notice\AllNotice;
@@ -27,18 +28,24 @@ use App\Http\Livewire\Backend\Admin\AdminDashboard;
 use App\Http\Livewire\Backend\Building\AllBuilding;
 use App\Http\Livewire\Backend\Category\AllCategory;
 use App\Http\Livewire\Backend\Facility\AllFacility;
+use App\Http\Livewire\Backend\Report\AllRoomReport;
 use App\Http\Livewire\Guestend\Enquiry\ShowEnquiry;
 use App\Http\Livewire\Backend\Admission\AllAdmission;
+use App\Http\Livewire\Backend\Report\AllPaymentReport;
 use App\Http\Livewire\Backend\Report\AllStudentReport;
 use App\Http\Livewire\Backend\Allocation\AllAllocation;
 use App\Http\Livewire\Backend\Permission\AllPermission;
+use App\Http\Livewire\Backend\Report\AllAllocationReport;
 use App\Http\Livewire\Backend\StudentFine\AllStudentFine;
 use App\Http\Livewire\Frontend\Admission\StudentAdmission;
 use App\Http\Livewire\Backend\AcademicYear\AllAcademicYear;
 use App\Http\Livewire\Backend\PhotoGallery\AllPhotoGallery;
 use App\Http\Livewire\Backend\RolePermission\AllRolePermission;
 use App\Http\Livewire\Backend\StudentPayment\AllStudentPayment;
+use App\Http\Livewire\Backend\StudentNightOut\AllStudentNightOut;
 use App\Http\Livewire\Backend\StudentEducation\AllStudentEducation;
+use App\Http\Livewire\Backend\StudentComeFromHome\AllStudentComeFromHome;
+use App\Http\Livewire\Backend\StudentLocalRegister\AllStudentLocalRegister;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,7 +59,7 @@ use App\Http\Livewire\Backend\StudentEducation\AllStudentEducation;
 */
 
 // Guest Routes
-Route::middleware(['guest:student'])->group(function () {
+Route::middleware(['guest'])->group(function () {
 
     // Admin Login Route
     // Route::get('admin/login', AdminLogin::class)->name('admin.login');
@@ -109,6 +116,11 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
             Route::get('all/admins',AllAdmin::class)->name('all_admin');
         });
 
+        Route::group(['middleware' => ['permission:Access Setting']], function () {
+            // Site Setting
+            Route::get('site/setting',Setting::class)->name('site_setting');
+        });
+        
         Route::group(['middleware' => ['permission:Access College']], function () {
             // All College
             Route::get('all/colleges',AllCollege::class)->name('all_college');
@@ -118,6 +130,7 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
             // All Hostel
             Route::get('all/hostels',AllHostel::class)->name('all_hostel');
         });
+
     });
 
     
@@ -236,16 +249,40 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
         Route::get('all/notices',AllNotice::class)->name('all_notice');
     });
 
-    Route::group(['middleware' => ['permission:Access Enquiry']], function () {
-        // All Enquiry
-        Route::get('all/enquires',AllEnquiry::class)->name('all_enquiry');
-    });
+
 
     Route::group(['middleware' => ['permission:Access Report']], function () {
         // All Student Report
-        Route::get('all/stud/reports',AllStudentReport::class)->name('all_student_report');
+        Route::get('all/studreports',AllStudentReport::class)->name('all_student_report');
     });
 
+    Route::group(['middleware' => ['permission:Access Report']], function () {
+        // All Room Report
+        Route::get('all/reportsroom',AllRoomReport::class)->name('all_room_report');
+    });
+    
+    Route::group(['middleware' => ['permission:Access Report']], function () {
+        // All Room Report
+        Route::get('all/reportpayment',AllPaymentReport::class)->name('all_payment_report');
+    });
+
+    Route::group(['middleware' => ['permission:Access Report']], function () {
+        // All Allocation Report
+        Route::get('all/reportallocation',AllAllocationReport::class)->name('all_allocation_report');
+    });
+
+    Route::group(['middleware' => ['permission:Access Forms']], function () {
+        
+        // All Enquiry
+        Route::get('all/enquires',AllEnquiry::class)->name('all_enquiry');
+
+        // All Student local Register
+        Route::get('all/local/register',AllStudentLocalRegister::class)->name('all_student_local_register');
+        // All Student Come From home
+        Route::get('all/student/come/from/home',AllStudentComeFromHome::class)->name('all_student_come_from_home');
+        // All Student Night Out
+        Route::get('all/student/night/out',AllStudentNightOut::class)->name('all_student_night_out');
+    });
 
 
 });

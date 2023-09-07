@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div>
+  
     @section('styles')
       <style>
         .dropdown:hover .dropdown-menu {

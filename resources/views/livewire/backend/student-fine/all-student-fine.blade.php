@@ -216,6 +216,13 @@
                         <div class="bg-success">
                             <div class="float-start pt-2 px-2">
                                 <h2>Data Student Fines</h2>
+                                <div wire:loading wire:target="per_page" class="loading-overlay">
+                                    <div class="loading-spinner">
+                                        <div class="spinner-border spinner-border-lg text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="float-end">
                                 @can('Add Student Fine')
@@ -247,13 +254,13 @@
                                                 <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input  class="w-100" wire:model="year" type="search" placeholder="Academic Year">
+                                                <input  class="w-100" wire:model.debounce.1000ms="year" type="search" placeholder="Academic Year">
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input class="w-100"  wire:model="student_name" type="search" placeholder="Student Name">
+                                                <input class="w-100"  wire:model.debounce.1000ms="student_name" type="search" placeholder="Student Name">
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input class="w-100"  wire:model="fine_name" type="search" placeholder="Fine Name">
+                                                <input class="w-100"  wire:model.debounce.1000ms="fine_name" type="search" placeholder="Fine Name">
                                             </div>
                                         </div>
                                     </span>

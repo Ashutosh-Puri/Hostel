@@ -120,6 +120,13 @@
                         <div class="bg-success">
                             <div class="float-start pt-2 px-2">
                                 <h2>Data Seateds</h2>
+                                <div wire:loading wire:target="per_page" class="loading-overlay">
+                                    <div class="loading-spinner">
+                                        <div class="spinner-border spinner-border-lg text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="float-end">
                                 @can('Add Seated')
@@ -153,7 +160,7 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input class="w-100" wire:model="seated_number" type="search" placeholder="Seated Number">
+                                                <input class="w-100" wire:model.debounce.1000ms="seated_number" type="search" placeholder="Seated Number">
                                             </div>
                                         </span>
                                     </span>

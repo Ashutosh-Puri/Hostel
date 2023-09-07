@@ -17,22 +17,22 @@ class Room extends Model
     protected $guarded=[];
 
 
-    public function Beds()
+    public function beds()
     {
-        return $this->hasMany(Bed::class, 'room_id', 'id');
+        return $this->hasMany(Bed::class);
     }
 
-    public function Facilities()
+    public function facilities()
     {
-        return $this->hasMany(Facility::class, 'room_id', 'id');
+        return $this->hasMany(Facility::class);
     }
     
-    public function Seated()
+    public function seated()
     {
-        return $this->belongsTo(Seated::class, 'seated_id', 'id');
+        return $this->belongsTo(Seated::class);
     }
     
-    public function Floor()
+    public function floor()
     {
         return $this->belongsTo(Floor::class);
     }

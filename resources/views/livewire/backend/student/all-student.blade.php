@@ -174,6 +174,13 @@
                         <div class="bg-success">
                             <div class="float-start pt-2 px-2">
                                 <h2>Data Students</h2>
+                                <div wire:loading wire:target="per_page" class="loading-overlay">
+                                    <div class="loading-spinner">
+                                        <div class="spinner-border spinner-border-lg text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="float-end">
                                 @can('Add Student')

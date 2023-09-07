@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
-use App\Models\Student;
+use App\Models\Allocation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class StudentProfile extends Model
+class LocalRegister extends Model
 {
     use HasFactory;
     protected $guarded=[];
 
-    public function Student()
+    public function allocation()
     {
-        return $this->belongsTo(Student::class, 'student_id', 'id');
+        return $this->belongsTo(Allocation::class);
     }
 }

@@ -19,39 +19,38 @@ class Admission extends Model
     protected $guarded = [];
 
 
-    public function StudentPayments()
+    public function studentpayments()
     {
         return $this->hasMany(StudentPayment::class);
     }
 
-    public function Student()
+    public function student()
     {
         return $this->belongsTo(Student::class);
     }
 
-    public function Class()
+    public function class()
     {
         return $this->belongsTo(Classes::class);
     }
 
-    
 
-    public function AcademicYear()
+    public function academicyear()
     {
         return $this->belongsTo(AcademicYear::class);
     }
 
-    public function Seated()
+    public function seated()
     {
         return $this->belongsTo(Seated::class);
     }
 
-    public function StudentEducations()
+    public function studenteducations()
     {
         return $this->hasMany(StudentEducation::class);
     }
 
-    public function Allocations()
+    public function allocations()
     {
         return $this->hasMany(Allocation::class);
     }

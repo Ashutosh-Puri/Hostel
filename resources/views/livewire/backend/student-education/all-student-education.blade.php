@@ -9,6 +9,7 @@
                     <div class="bg-success">
                         <div class="float-start pt-2 px-2">
                             <h2>Add Student Education</h2>
+
                         </div>
                         <div class="float-end">
                             <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
@@ -27,46 +28,30 @@
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
-                                            <label for="admission_id" class="form-label">Select Admission ID</label>
-                                            <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model="admission_id" >
-                                                <option value="" hidden>Select Admission ID</option>
-                                                @foreach ($admissions as $item1)
-                                                    <option  value="{{ $item1->id }}"> {{ $item1->id }} </option>
-                                                @endforeach
-                                            </select>
-                                            @error('admission_id')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="mb-3 form-group">
                                             <label for="academic_year_id" class="form-label">Select Academic Year</label>
                                             <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
                                                 <option value="" hidden>Select Academic Year</option>
                                                 @foreach ($academicyears as $item1)
-                                                    <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
+                                                <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
                                                 @endforeach
                                             </select>
                                             @error('academic_year_id')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
                                             @enderror
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
-                                            <label for="student_id" class="form-label">Select Student</label>
-                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model="student_id" >
+                                            <label for="admission_id" class="form-label">Select Student </label>
+                                            <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model="admission_id" >
                                                 <option value="" hidden>Select Student</option>
-                                                @foreach ($students as $item1)
-                                                    <option  value="{{ $item1->id }}"> {{ $item1->name!=null?$item1->name:$item1->username; }} </option>
+                                                @foreach ($admissions as $item1)
+                                                    <option  value="{{ $item1->id }}"> {{ $item1->Student->name}} </option>
                                                 @endforeach
                                             </select>
-                                            @error('student_id')
+                                            @error('admission_id')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -143,22 +128,7 @@
                             <form  wire:submit.prevent="update({{ isset($C_id)?$C_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="mb-3 form-group">
-                                            <label for="admission_id" class="form-label">Select Admission ID</label>
-                                            <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model="admission_id" >
-                                                <option value="" hidden>Select Admission ID</option>
-                                                @foreach ($admissions as $item1)
-                                                    <option  value="{{ $item1->id }}"> {{ $item1->id }} </option>
-                                                @endforeach
-                                            </select>
-                                            @error('admission_id')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
+                                    
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="academic_year_id" class="form-label">Select Academic Year</label>
@@ -177,14 +147,14 @@
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
-                                            <label for="student_id" class="form-label">Select Student</label>
-                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model="student_id" >
+                                            <label for="admission_id" class="form-label">Select Student </label>
+                                            <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model="admission_id" >
                                                 <option value="" hidden>Select Student</option>
-                                                @foreach ($students as $item1)
-                                                    <option  value="{{ $item1->id }}"> {{ $item1->name!=null?$item1->name:$item1->username; }} </option>
+                                                @foreach ($admissions as $item1)
+                                                    <option  value="{{ $item1->id }}"> {{ $item1->Student->name}} </option>
                                                 @endforeach
                                             </select>
-                                            @error('student_id')
+                                            @error('admission_id')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -246,6 +216,13 @@
                         <div class="bg-success">
                             <div class="float-start pt-2 px-2">
                                 <h2>Data Student Educations</h2>
+                                <div wire:loading wire:target="per_page" class="loading-overlay">
+                                    <div class="loading-spinner">
+                                        <div class="spinner-border spinner-border-lg text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="float-end">
                                 @can('Add Student Education')
@@ -278,16 +255,16 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                                 </div>
                                                 <div class="col-12 col-md-2 ">
-                                                    <input  class="w-100" wire:model="ad" type="search" placeholder="Admission ID ">
+                                                    <input  class="w-100" wire:model.debounce.1000ms="ad" type="search" placeholder="Admission ID ">
                                                 </div>
                                                 <div class="col-12 col-md-2">
-                                                    <input  class="w-100" wire:model="a" type="search" placeholder="Academic Year">
+                                                    <input  class="w-100" wire:model.debounce.1000ms="a" type="search" placeholder="Academic Year">
                                                 </div>
                                                 <div class="col-12 col-md-3">
-                                                    <input class="w-100"  wire:model="s" type="search" placeholder="Student Name">
+                                                    <input class="w-100"  wire:model.debounce.1000ms="s" type="search" placeholder="Student Name">
                                                 </div>
                                                 <div class="col-12 col-md-3">
-                                                    <input class="w-100"  wire:model="c" type="search" placeholder="Class Name">
+                                                    <input class="w-100"  wire:model.debounce.1000ms="c" type="search" placeholder="Class Name">
                                                 </div>
                                             </div>
                                     </span>

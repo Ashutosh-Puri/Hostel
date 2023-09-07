@@ -198,7 +198,7 @@
                                             <div class="mb-3 form-group">
                                                 <label for="class_id" class="form-label">Floor</label>
                                                 <label class="form-control" for="">
-                                                    @switch(  $alloc1->Bed->Room->Floor->floor)  @case(0) Ground @break @case(1) First @break @case(2) Second  @break @case(3) Third @break @case(4) Fourth @break  @case(5) Fifth @break @case(6) Sixth @break  @case(7) Seventh @break @case(8) Eighth @break @case(9) Nineth @break @case(10) Tenth @break @default {{   $alloc1->Bed->Room->Floor->floor }} @endswitch Floor 
+                                                    @switch(  $alloc1->Bed->Room->Floor->floor)  @case(0) Ground @break @case(1) First @break @case(2) Second  @break @case(3) Third @break @case(4) Fourth @break  @case(5) Fifth @break @case(6) Sixth @break  @case(7) Seventh @break @case(8) Eighth @break @case(9) Nineth @break @case(10) Tenth @break @default {{   $alloc1->Bed->Room->Floor->floor }} @endswitch Floor
                                                 </label>
                                             </div>
                                         </div>
@@ -272,8 +272,8 @@
                                             <select class="form-select @error('floor_id') is-invalid @enderror" id="floor_id" wire:model="floor_id" >
                                                 <option hidden >Select Floor</option>
                                                 @foreach ($floors as $item1)
-                                                    <option  value="{{ $item1->id }}"> 
-                                                        @switch($item1->floor)  @case(0) Ground @break @case(1) First @break @case(2) Second  @break @case(3) Third @break @case(4) Fourth @break  @case(5) Fifth @break @case(6) Sixth @break  @case(7) Seventh @break @case(8) Eighth @break @case(9) Nineth @break @case(10) Tenth @break @default {{ $item->floor }} @endswitch Floor 
+                                                    <option  value="{{ $item1->id }}">
+                                                        @switch($item1->floor)  @case(0) Ground @break @case(1) First @break @case(2) Second  @break @case(3) Third @break @case(4) Fourth @break  @case(5) Fifth @break @case(6) Sixth @break  @case(7) Seventh @break @case(8) Eighth @break @case(9) Nineth @break @case(10) Tenth @break @default {{ $item->floor }} @endswitch Floor
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -338,7 +338,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                  
+
                                 </div>
                                 <button type="submit"  class="btn btn-primary waves-effect waves-light">Allocate Bed</button>
                             </form>
@@ -412,7 +412,7 @@
                                         <div class="col-12 col-md-3">
                                             <div class="mb-3 form-group">
                                                 <label for="class_id" class="form-label">Hostel</label>
-                                                <label class="form-control" for=""> {{ $alloc1->Bed->Room->Floor->Building->Hostel->name }}</label> 
+                                                <label class="form-control" for=""> {{ $alloc1->Bed->Room->Floor->Building->Hostel->name }}</label>
                                             </div>
                                         </div>
                                     @endif
@@ -420,7 +420,7 @@
                                         <div class="col-12 col-md-3">
                                             <div class="mb-3 form-group">
                                                 <label for="Building" class="form-label">Building</label>
-                                                <label class="form-control" for="Building"> {{ $alloc1->Bed->Room->Floor->Building->name }}</label> 
+                                                <label class="form-control" for="Building"> {{ $alloc1->Bed->Room->Floor->Building->name }}</label>
                                             </div>
                                         </div>
                                     @endif
@@ -430,7 +430,7 @@
                                                 <label for="Floor" class="form-label">Floor</label>
                                                 <label class="form-control" for="Floor">
                                                     @switch(  $alloc1->Bed->Room->Floor->floor)  @case(0) Ground @break @case(1) First @break @case(2) Second  @break @case(3) Third @break @case(4) Fourth @break  @case(5) Fifth @break @case(6) Sixth @break  @case(7) Seventh @break @case(8) Eighth @break @case(9) Nineth @break @case(10) Tenth @break @default {{   $alloc1->Bed->Room->Floor->floor }} @endswitch Floor
-                                                </label> 
+                                                </label>
                                             </div>
                                         </div>
                                     @endif
@@ -438,7 +438,7 @@
                                         <div class="col-12 col-md-3">
                                             <div class="mb-3 form-group">
                                                 <label for="Room" class="form-label">Room</label>
-                                                <label class="form-control" for="Room"> {{  $alloc1->Bed->Room->id."-(".$alloc1->Bed->Room->label.")"; }}</label> 
+                                                <label class="form-control" for="Room"> {{  $alloc1->Bed->Room->id."-(".$alloc1->Bed->Room->label.")"; }}</label>
                                             </div>
                                         </div>
                                     @endif
@@ -446,7 +446,7 @@
                                         <div class="col-12 col-md-3">
                                             <div class="mb-3 form-group">
                                                 <label for="Seated" class="form-label">Seated</label>
-                                                <label class="form-control" for="Seated"> {{ $alloc1->Bed->Room->Seated->seated." Seated"; }}</label> 
+                                                <label class="form-control" for="Seated"> {{ $alloc1->Bed->Room->Seated->seated." Seated"; }}</label>
                                             </div>
                                         </div>
                                     @endif
@@ -460,7 +460,7 @@
                                                                 {{ $fee->amount." Rs."; }}
                                                             @endif
                                                     @endforeach
-                                                </label> 
+                                                </label>
                                             </div>
                                         </div>
                                     @endif
@@ -468,7 +468,7 @@
                                         <div class="col-12 col-md-3">
                                             <div class="mb-3 form-group">
                                                 <label for="Bed ID" class="form-label">Bed ID</label>
-                                                <label class="form-control" for="Bed ID"> {{  $alloc1->bed_id }}</label> 
+                                                <label class="form-control" for="Bed ID"> {{  $alloc1->bed_id }}</label>
                                             </div>
                                         </div>
                                     @endif
@@ -527,7 +527,7 @@
                                             <div class="col-12 col-md-3">
                                                 <div class="mb-3 form-group">
                                                     <label for="class_id" class="form-label">Hostel</label>
-                                                    <label class="form-control" for=""> {{ $alloc2->Bed->Room->Floor->Building->Hostel->name }}</label> 
+                                                    <label class="form-control" for=""> {{ $alloc2->Bed->Room->Floor->Building->Hostel->name }}</label>
                                                 </div>
                                             </div>
                                         @endif
@@ -535,7 +535,7 @@
                                             <div class="col-12 col-md-3">
                                                 <div class="mb-3 form-group">
                                                     <label for="Building" class="form-label">Building</label>
-                                                    <label class="form-control" for="Building"> {{ $alloc2->Bed->Room->Floor->Building->name }}</label> 
+                                                    <label class="form-control" for="Building"> {{ $alloc2->Bed->Room->Floor->Building->name }}</label>
                                                 </div>
                                             </div>
                                         @endif
@@ -545,7 +545,7 @@
                                                     <label for="Floor" class="form-label">Floor</label>
                                                     <label class="form-control" for="Floor">
                                                         @switch(  $alloc2->Bed->Room->Floor->floor)  @case(0) Ground @break @case(1) First @break @case(2) Second  @break @case(3) Third @break @case(4) Fourth @break  @case(5) Fifth @break @case(6) Sixth @break  @case(7) Seventh @break @case(8) Eighth @break @case(9) Nineth @break @case(10) Tenth @break @default {{   $alloc2->Bed->Room->Floor->floor }} @endswitch Floor
-                                                    </label> 
+                                                    </label>
                                                 </div>
                                             </div>
                                         @endif
@@ -553,7 +553,7 @@
                                             <div class="col-12 col-md-3">
                                                 <div class="mb-3 form-group">
                                                     <label for="Room" class="form-label">Room</label>
-                                                    <label class="form-control" for="Room"> {{  $alloc2->Bed->Room->id."-(".$alloc2->Bed->Room->label.")"; }}</label> 
+                                                    <label class="form-control" for="Room"> {{  $alloc2->Bed->Room->id."-(".$alloc2->Bed->Room->label.")"; }}</label>
                                                 </div>
                                             </div>
                                         @endif
@@ -561,7 +561,7 @@
                                             <div class="col-12 col-md-3">
                                                 <div class="mb-3 form-group">
                                                     <label for="Seated" class="form-label">Seated</label>
-                                                    <label class="form-control" for="Seated"> {{ $alloc2->Bed->Room->Seated->seated." Seated"; }}</label> 
+                                                    <label class="form-control" for="Seated"> {{ $alloc2->Bed->Room->Seated->seated." Seated"; }}</label>
                                                 </div>
                                             </div>
                                         @endif
@@ -575,7 +575,7 @@
                                                                 {{ $fee->amount." Rs."; }}
                                                             @endif
                                                         @endforeach
-                                                    </label> 
+                                                    </label>
                                                 </div>
                                             </div>
                                         @endif
@@ -583,7 +583,7 @@
                                             <div class="col-12 col-md-3">
                                                 <div class="mb-3 form-group">
                                                     <label for="Bed ID" class="form-label">Bed ID</label>
-                                                    <label class="form-control" for="Bed ID"> {{  $alloc2->bed_id }}</label> 
+                                                    <label class="form-control" for="Bed ID"> {{  $alloc2->bed_id }}</label>
                                                 </div>
                                             </div>
                                         @endif
@@ -611,6 +611,13 @@
                         <div class="bg-success">
                             <div class="float-start pt-2 px-2">
                                 <h2>Data Allocations</h2>
+                                <div wire:loading wire:target="per_page" class="loading-overlay">
+                                    <div class="loading-spinner">
+                                        <div class="spinner-border spinner-border-lg text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="float-end">
                                 @can('Add Allocation')
@@ -642,16 +649,16 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                                 </div>
                                                 <div class="col-12 col-md-2 ">
-                                                    <input  class="w-100" wire:model="ad" type="search" placeholder="Admission ID ">
+                                                    <input  class="w-100" wire:model.debounce.1000ms="ad" type="search" placeholder="Admission ID ">
                                                 </div>
                                                 <div class="col-12 col-md-2">
-                                                    <input  class="w-100" wire:model="a" type="search" placeholder="Academic Year">
+                                                    <input  class="w-100" wire:model.debounce.1000ms="a" type="search" placeholder="Academic Year">
                                                 </div>
                                                 <div class="col-12 col-md-3">
-                                                    <input class="w-100"  wire:model="s" type="search" placeholder="Student Name">
+                                                    <input class="w-100"  wire:model.debounce.1000ms="s" type="search" placeholder="Student Name">
                                                 </div>
                                                 <div class="col-12 col-md-3">
-                                                    <input class="w-100"  wire:model="c" type="search" placeholder="Class Name">
+                                                    <input class="w-100"  wire:model.debounce.1000ms="c" type="search" placeholder="Class Name">
                                                 </div>
                                             </div>
                                     </span>
@@ -673,13 +680,13 @@
                                             <th>A Status</th>
                                             @can('Allocate Bed')
                                                 <th>Action</th>
-                                            @elsecan('Exchange Bed')  
+                                            @elsecan('Exchange Bed')
                                                 <th>Action</th>
-                                            @elsecan('De Allocate Bed') 
+                                            @elsecan('De Allocate Bed')
                                                 <th>Action</th>
-                                            @elsecan('Edit Allocation') 
+                                            @elsecan('Edit Allocation')
                                                 <th>Action</th>
-                                            @elsecan('Delete Allocation') 
+                                            @elsecan('Delete Allocation')
                                                 <th>Action</th>
                                             @endcan
                                         </tr>
@@ -692,7 +699,7 @@
                                                 <td>{{ $item->Admission->AcademicYear->year }}</td>
                                                 <td>{{ $item->Admission->Student->name ?$item->Admission->Student->name:$item->Admission->Student->username; }}</td>
                                                 <td>{{ $item->Admission->Student->gender==0?"M":"F"; }}</td>
-                                                
+
                                                 <td>{{ $item->Admission->Class->name }}</td>
                                                 <td>
                                                     @if (isset($item->Admission->Seated->seated))
@@ -746,7 +753,7 @@
                                                             <a wire:loading.attr="disabled" wire:click="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-trash-can"></i></a>
                                                         @endcan
                                                     </td>
-                                                @elsecan('Exchange Bed')  
+                                                @elsecan('Exchange Bed')
                                                     <td>
                                                         @can('Allocate Bed')
                                                             <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success waves-effect waves-light"> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
@@ -764,7 +771,7 @@
                                                             <a wire:loading.attr="disabled" wire:click="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-trash-can"></i></a>
                                                         @endcan
                                                     </td>
-                                                @elsecan('De Allocate Bed') 
+                                                @elsecan('De Allocate Bed')
                                                     <td>
                                                         @can('Allocate Bed')
                                                             <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success waves-effect waves-light"> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
@@ -782,7 +789,7 @@
                                                             <a wire:loading.attr="disabled" wire:click="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-trash-can"></i></a>
                                                         @endcan
                                                     </td>
-                                                @elsecan('Edit Allocation') 
+                                                @elsecan('Edit Allocation')
                                                     <td>
                                                         @can('Allocate Bed')
                                                             <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success waves-effect waves-light"> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
@@ -800,7 +807,7 @@
                                                             <a wire:loading.attr="disabled" wire:click="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-trash-can"></i></a>
                                                         @endcan
                                                     </td>
-                                                @elsecan('Delete Allocation') 
+                                                @elsecan('Delete Allocation')
                                                     <td>
                                                         @can('Allocate Bed')
                                                             <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success waves-effect waves-light"> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
@@ -817,7 +824,7 @@
                                                         @can('Delete Allocation')
                                                             <a wire:loading.attr="disabled" wire:click="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-trash-can"></i></a>
                                                         @endcan
-                                                    </td> 
+                                                    </td>
                                                 @endcan
                                             </tr>
                                         @endforeach

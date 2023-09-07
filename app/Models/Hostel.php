@@ -12,13 +12,13 @@ class Hostel extends Model
     use HasFactory;
     protected $guarded=[];
 
-    public function Buildings()
+    public function buildings()
     {
         return $this->hasMany(Building::class);
     }
 
-    public function College()
+    public function college()
     {
-        return $this->belongsTo(College::class, 'college_id', 'id');
+        return $this->belongsTo(College::class);
     }
 }

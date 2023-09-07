@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 class AllEnquiry extends Component
 {   
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $search = '';
@@ -219,7 +220,10 @@ class AllEnquiry extends Component
 
     public function render()
     {
-        $enquiries=Enquiry::where('name', 'like', '%'.$this->search.'%')->orderBy('created_at', 'DESC')->paginate($this->per_page);
+        $enquiries = Enquiry::query()->when($this->search, function ($query) {
+             return $query->where('name', 'like', '%' . $this->search . '%');
+        })->orderBy('created_at', 'DESC')->paginate($this->per_page);
+
         return view('livewire.backend.enquiry.all-enquiry',compact('enquiries'))->extends('layouts.admin.admin')->section('admin');
     }
 

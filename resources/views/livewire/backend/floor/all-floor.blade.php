@@ -184,6 +184,13 @@
                         <div class="bg-success">
                             <div class="float-start pt-2 px-2">
                                 <h2>Data Floors</h2>
+                                <div wire:loading wire:target="per_page" class="loading-overlay">
+                                    <div class="loading-spinner">
+                                        <div class="spinner-border spinner-border-lg text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="float-end">
                                 @can('Add Floor')
@@ -217,10 +224,10 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input class="w-100" wire:model="building_name" type="search" placeholder="Building Name">
+                                                <input class="w-100" wire:model.debounce.1000ms="building_name" type="search" placeholder="Building Name">
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input class="w-100" wire:model="floor_number" type="search" placeholder="Floor Number">
+                                                <input class="w-100" wire:model.debounce.1000ms="floor_number" type="search" placeholder="Floor Number">
                                             </div>
                                         </span>
                                     </span>

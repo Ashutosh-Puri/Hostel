@@ -13,14 +13,14 @@ class Fee extends Model
     protected $guarded=[];
 
 
-    public function AcademicYear()
+    public function academicyear()
     {
-        return $this->belongsTo(AcademicYear::class, 'academic_year_id', 'id');
+        return $this->belongsTo(AcademicYear::class);
     }
 
-    public function Seated()
+    public function seated()
     {
-        return $this->belongsTo(Seated::class, 'seated_id', 'id');
+        return $this->belongsTo(Seated::class);
     }
 
 }

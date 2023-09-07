@@ -11,6 +11,7 @@ use Illuminate\Validation\Rule;
 class AllHostel extends Component
 {
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $college_name = '';
@@ -162,7 +163,7 @@ class AllHostel extends Component
 
     public function render()
     {
-        $colleges=College::where('status',0)->orderBy('name',"ASC")->get();
+        $colleges=College::select('id','name')->where('status',0)->orderBy('name',"ASC")->get();
         $query = Hostel::orderBy('name', 'ASC');
         if ($this->college_name || $this->hostel_name) {
             $query->when($this->college_name, function ($query) {

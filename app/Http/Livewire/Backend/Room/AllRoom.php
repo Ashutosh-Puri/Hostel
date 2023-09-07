@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 class AllRoom extends Component
 {
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $r = '',$f = '';
@@ -191,10 +192,10 @@ class AllRoom extends Component
 
     public function render()
     {   
-        $hostels = Hostel::where('status',0)->where('status', 0)->get();
-        $buildings = Building::where('status',0)->where('hostel_id', $this->hostel_id)->get();
-        $floors = Floor::where('status',0)->where('building_id', $this->building_id)->get();
-        $seateds=Seated::where('status',0)->orderBy('seated', 'ASC')->get();
+        $hostels = Hostel::select('id','name')->where('status',0)->where('status', 0)->get();
+        $buildings = Building::select('id','name')->where('status',0)->where('hostel_id', $this->hostel_id)->get();
+        $floors = Floor::select('id','floor')->where('status',0)->where('building_id', $this->building_id)->get();
+        $seateds = Seated::select('id','seated')->where('status',0)->orderBy('seated', 'ASC')->get();
 
         $query = Room::orderBy('floor_id', 'ASC');
         if ($this->f) {
@@ -202,8 +203,11 @@ class AllRoom extends Component
                 $query->where('floor', 'like', '%' . $this->f. '%');
             });
         }
-        $rooms = $query->where('label', 'like','%' .$this->r. '%')->paginate($this->per_page);
-        // $rooms = Room::paginate($this->per_page);
+        
+        $rooms = $query->when($this->r, function ($query) {
+            return $query->where('label', 'like', '%' . $this->r . '%');
+        })->paginate($this->per_page);
+        
         return view('livewire.backend.room.all-room',compact('rooms','seateds','floors','hostels','buildings'))->extends('layouts.admin.admin')->section('admin');
     }
 }

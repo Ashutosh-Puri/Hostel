@@ -23,11 +23,7 @@ class Admin  extends Authenticatable
     }
 
     protected $guard="admin";
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+
     protected $fillable = [
         'name',
         'email',
@@ -38,28 +34,18 @@ class Admin  extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 
-    protected function getDefaultGuardName(): string { return 'admin'; }
-    public static function getpermissionGroups(){
+    protected function getdefaultguardgame(): string { return 'admin'; }
+    public static function getpermissiongroups(){
 
         $permission_groups = DB::table('permissions')->select('group_name')->groupBy('group_name')->get();
 
@@ -67,7 +53,7 @@ class Admin  extends Authenticatable
 
     }
 
-    public static function getpermissionByGroupName($group_name){
+    public static function getpermissionbygroupname($group_name){
 
         $permission = DB::table('permissions')->select('name','id')->where('group_name',$group_name)->get();
 
@@ -75,15 +61,12 @@ class Admin  extends Authenticatable
 
     }
 
-    public static function roleHasPermissions($role,$permission){
+    public static function rolehaspermissions($role,$permission){
 
         $hasPermission = true;
 
         foreach ($permission as $perm) {
-
-            // hasPermissionTo()  laravel spattie
-
-            if (!$role->hasPermissionTo($perm->name)) {
+            if (!$role->haspermissionto($perm->name)) {
 
                 $hasPermission = false;
 

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class AllAcademicYear extends Component
 {   
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $search = '';
@@ -155,7 +156,10 @@ class AllAcademicYear extends Component
 
     public function render()
     {   
-        $academicyear=AcademicYear::where('year', 'like', '%'.$this->search.'%')->orderBy('year', 'DESC')->paginate($this->per_page);
+        $academicyear = AcademicYear::query()->select('id','year', 'status')->when($this->search, function ($query) {
+            return $query->where('year', 'like', '%' . $this->search . '%');
+        })->orderByDesc('year')->paginate($this->per_page);
+
         return view('livewire.backend.academic-year.all-academic-year',compact('academicyear'))->extends('layouts.admin.admin')->section('admin');
     }
 }

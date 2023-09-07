@@ -16,23 +16,23 @@ class StudentEducation extends Model
     protected $guarded=[];
 
 
-    public function AcademicYear()
+    public function academicyear()
     {
-        return $this->belongsTo(AcademicYear::class, 'academic_year_id', 'id');
+        return $this->belongsTo(AcademicYear::class);
     }
 
-    public function Student()
+    public function student()
     {
-        return $this->belongsTo(Student::class, 'student_id', 'id');
+        return $this->belongsTo(Student::class);
     }
 
-    public function Class()
+    public function class()
     {
-        return $this->belongsTo(Classes::class, 'last_class_id', 'id');
+        return $this->belongsTo(Classes::class);
     }
 
-    public function Admission()
+    public function admission()
     {
-        return $this->belongsTo(Admission::class, 'admission_id', 'id');
+        return $this->belongsTo(Admission::class);
     }
 }

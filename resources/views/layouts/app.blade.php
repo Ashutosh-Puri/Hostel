@@ -33,6 +33,7 @@
 
     <!-- Styles-->
     @yield('styles')
+    @stack('styles')
 
     <!-- Livewire Styles-->
     @livewireStyles()
