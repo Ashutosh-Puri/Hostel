@@ -11,8 +11,8 @@
 
             html,
             body {
-                width: 220mm;
-                height: 295mm;
+                width: 225mm;
+                height: 310mm;
             }
 
         }
@@ -22,15 +22,14 @@
 <html>
 
 <body>
-    <div class="addmission_form" style="background-color:blueviolet;">
+    <div class="addmission_form">
         <div class="row">
             <div class="col-12 mt-2">
-                <img src="{{ asset('assets/images/shikshan-logo.png') }}" alt="form-logo"
-                    style="display: block; margin: 0 auto; width: 10%;">
+                <img src="{{ asset('assets/images/shikshan-logo.png') }}" alt="form-logo" style="display: block; margin: 0 auto; width: 10%;">
             </div>
             <div class="col-12">
-                <h5 class="text-center text-wrap mt-2">संगमनेर नगरपालिका कला, वाणिज्य, दा.ज.मालपाणी वाणिज्य आणि ब.ना.
-                    सारडा विज्ञान महाविद्यालय ( स्वायत्त ) संगमनेर</h5>
+                <h6 class="text-center mt-1">शिक्षण प्रसारक संस्था, संगमनेर</h6>
+                <h5 class="text-center text-wrap mt-2">संगमनेर नगरपालिका कला, वाणिज्य, दा.ज.मालपाणी वाणिज्य आणि ब.ना. सारडा विज्ञान महाविद्यालय ( स्वायत्त ) संगमनेर</h5>
                 <h2 class="text-center">विद्यार्थी वसतिगृह प्रवेश अर्ज ( २०२३-२४ )</h2>
                 <hr class="m-2" style="color:black;">
             </div>
@@ -63,8 +62,7 @@
                         <label class="form-label" for="search">विद्यार्थ्यांचे नांव : </label>
                     </div>
                     <div class="col-12 col-sm-8">
-                        <label class="form-label text-start" for="search"><strong>Tejas jhgsndjjgfsggsegs ehfuue
-                                Pawar</strong></label>
+                        <label class="form-label text-start" for="search"><strong>Suyash Popat Pawar</strong></label>
                     </div>
                     <div class="col-12 col-sm-2">
                         <label class="form-label" for="search">वर्ग : </label>
@@ -129,23 +127,23 @@
         <div class="row mx-3">
             <div class="col-12 col-sm-12">
 
-                <table style="width:100%; text-align: center;">
+                <table style="width:100%;">
                     <tr>
-                        <th style="border: 2px solid #000000; color:black; font-weight: bold;">वडिलांचे / पालकांचे नांव व संपर्क पत्ता</th>
-                        <th style="border: 2px solid #000000; color:black; font-weight: bold;">संगमनेरमधील पालकांचे नांव व संपर्क पत्ता</th>
+                        <td style="border: 1px solid #000000; color:black; text-align: center;">वडिलांचे / पालकांचे नांव व संपर्क पत्ता</td>
+                        <td style="border: 1px solid #000000; color:black; text-align: center;">संगमनेरमधील पालकांचे नांव व संपर्क पत्ता</td>
                     </tr>
                     <tr>
-                        <td class="text-start" style="border: 2px solid #000000; color:black; font-weight: bold; height:40px;">श्री / श्रीमती.</td>
-                        <td class="text-start" style="border: 2px solid #000000; color:black; font-weight: bold;">श्री / श्रीमती.</td>
+                        <td class="text-start" style="border: 1px solid #000000; color:black; height:40px;">श्री / श्रीमती. <strong>Suresh Bhausaheb Pansare</strong></td>
+                        <td class="text-start" style="border: 1px solid #000000; color:black;">श्री / श्रीमती. <strong>Suresh Bhausaheb Pansare</strong></td>
                     </tr>
                     <tr>
-                        <td style="border: 2px solid #000000; color:black; font-weight: bold; height:40px;"></td>
-                        <td style="border: 2px solid #000000; color:black;"></td>
+                        <td style="border: 1px solid #000000; color:black; height:40px;"><strong>Behind Sanagmner Colllege, Sangamner</strong></td>
+                        <td style="border: 1px solid #000000; color:black;"><strong>Behind Sanagmner Colllege, Sangamner</strong></td>
                     </tr>
                     <tr>
                         <td class="text-start"
-                            style="border: 2px solid #000000; color:black; font-weight: bold; height:40px;">फोन / मो.नं.</td>
-                        <td class="text-start" style="border: 2px solid #000000; color:black; font-weight: bold;">फोन / मो.नं.</td>
+                            style="border: 1px solid #000000; color:black; height:40px;">फोन / मो.नं. <strong>5678676767</strong></td>
+                        <td class="text-start" style="border: 1px solid #000000; color:black;">फोन / मो.नं. <strong>5678676767</strong></td>
                     </tr>
                 </table>
 
@@ -175,12 +173,12 @@
         <div class="row mx-3">
             <div class="col-12 col-sm-6">
                 <label class="form-label w-100" for="#">विद्यार्थ्यांचे नांव :
-                    <strong>........................................................</strong></label>
+                    <strong>Suyash Popat Pawar</strong></label>
             </div>
 
             <div class="col-12 col-sm-6">
                 <label class="form-label w-100" for="#">विद्यार्थ्याची सही :
-                    <strong>........................................................</strong></label>
+                    <strong>S.P.Pawar</strong></label>
             </div>
         </div>
         <div class="row mx-3">
@@ -193,39 +191,39 @@
         <div class="row mx-3">
             <div class="col-12 col-sm-6">
                 <label class="form-label w-100" for="#">पालकाचे नांव :
-                    <strong>........................................................</strong></label>
+                    <strong>Suyash Popat Pawar</strong></label>
             </div>
 
             <div class="col-12 col-sm-6">
                 <label class="form-label w-100" for="#">पालकाची सही :
-                    <strong>........................................................</strong></label>
+                    <strong>S.P.Pawar</strong></label>
             </div>
         </div>
 
 
 
         <div class="row mx-3 mt-2">
-            <h3 class="text-center">विद्यार्थी वसतिगृह फी तपशील</h3>
+            <h5 class="text-center text-pain">विद्यार्थी वसतिगृह फी तपशील</h5>
             <div class="col-md-12">
                 <table
                     style="width:100% auto; border-collapse: collapse; text-align: center; margin-left: auto; margin-right: auto;">
                     <tr>
-                        <th style="border: 2px solid #000000; color:black; height:50px; width:250px;">विद्यार्थी
-                            वसतिगृह फी तपशील</th>
-                        <th style="border: 2px solid #000000; color:black; height:50px; width:170px;">वसतिगृह फी</th>
-                        <th style="border: 2px solid #000000; color:black; height:50px; width:180px;">वसतिगृह डिपॉझीट
-                        </th>
-                        <th style="border: 2px solid #000000; color:black; height:50px; width:150px;">मेस डिपॉझीट</th>
-                        <th style="border: 2px solid #000000; color:black; height:50px; width:190px;">एकूण वसतिगृह फी
-                        </th>
+                        <td style="border: 1px solid #000000; color:black; height:50px; width:250px;">विद्यार्थी
+                            वसतिगृह फी तपशील</td>
+                        <td style="border: 1px solid #000000; color:black; height:50px; width:170px;">वसतिगृह फी</td>
+                        <td style="border: 1px solid #000000; color:black; height:50px; width:180px;">वसतिगृह डिपॉझीट
+                        </td>
+                        <td style="border: 1px solid #000000; color:black; height:50px; width:150px;">मेस डिपॉझीट</td>
+                        <td style="border: 1px solid #000000; color:black; height:50px; width:190px;">एकूण वसतिगृह फी
+                        </td>
                     </tr>
                     <tr>
-                        <td style="border: 2px solid #000000; color:black; font-weight: bold; height:60px;">टु सिटेड
+                        <td style="border: 1px solid #000000; color:black; height:60px;">टु सिटेड
                         </td>
-                        <td style="border: 2px solid #000000; color:black;">१२, ०००/-</td>
-                        <td style="border: 2px solid #000000; color:black;">१,०००/-</td>
-                        <td style="border: 2px solid #000000; color:black;">१,०००/-</td>
-                        <td style="border: 2px solid #000000; color:black; font-weight: bold;">१४,०००/-</td>
+                        <td style="border: 1px solid #000000; color:black;">१२, ०००/-</td>
+                        <td style="border: 1px solid #000000; color:black;">१,०००/-</td>
+                        <td style="border: 1px solid #000000; color:black;">१,०००/-</td>
+                        <td style="border: 1px solid #000000; color:black;">१४,०००/-</td>
                     </tr>
                 </table>
             </div>
@@ -234,7 +232,7 @@
 
         <div class="row mt-5 mx-3 pt-4">
             <div class="col-12 col-sm-3 text-center">
-                <strong>दिनांक: / /२०</strong>
+                <strong>दिनांक</strong>
             </div>
             <div class="col-12 col-sm-3 text-center">
                 <strong>रेक्टर</strong>
@@ -247,6 +245,21 @@
             </div>
         </div>
     </div>
+    <div class="row mt-3 mx-3">
+        <div class="col-12 col-sm-3 text-center">
+            <strong> 10 / 12 / 2023</strong>
+        </div>
+        <div class="col-12 col-sm-3 text-center">
+            <strong>Prof.S.P.Pawar</strong>
+        </div>
+        <div class="col-12 col-sm-3 text-center">
+            <strong>Sr.Clerk R.K.Pansare</strong>
+        </div>
+        <div class="col-12 col-sm-3 text-center">
+            <strong>Principle G.H. Gaikwad</strong>
+        </div>
+    </div>
+</div>
 </body>
 
 </html>
