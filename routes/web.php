@@ -40,9 +40,9 @@ use App\Http\Livewire\Backend\StudentEducation\AllStudentEducation;
 
 
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/admission_form', function () {
+    return view('admission_form');
+});
 
 
 
