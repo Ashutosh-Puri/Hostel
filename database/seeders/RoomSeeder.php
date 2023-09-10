@@ -17,7 +17,7 @@ class RoomSeeder extends Seeder
     public function run(): void
     {
         $faker = Faker::create();
-        for ($i = 0; $i < 1000; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             Room::create([
                 'label' => $faker->name,
                 'capacity' => $faker->numberBetween(1, 50),

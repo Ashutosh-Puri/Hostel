@@ -1,8 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div>  
-  {{-- @section('styles')
-@endsection --}}
+
  
     @section('styles')
       <style>

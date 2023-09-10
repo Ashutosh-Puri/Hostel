@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Student;
 use App\Models\Admission;
+use App\Models\Transaction;
 use App\Models\AcademicYear;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,8 +23,14 @@ class StudentPayment extends Model
     {
         return $this->belongsTo(Student::class);
     }
-    public function academicyear()
+    public function AcademicYear()
     {
         return $this->belongsTo(AcademicYear::class);
+    }
+
+
+    public function transaction()
+    {
+        return $this->hasOne(Transaction::class);
     }
 }

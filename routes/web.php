@@ -35,11 +35,13 @@ use App\Http\Livewire\Backend\Report\AllPaymentReport;
 use App\Http\Livewire\Backend\Report\AllStudentReport;
 use App\Http\Livewire\Backend\Allocation\AllAllocation;
 use App\Http\Livewire\Backend\Permission\AllPermission;
+use App\Http\Livewire\Backend\Razorpay\RazorpayPayment;
 use App\Http\Livewire\Backend\Report\AllAllocationReport;
 use App\Http\Livewire\Backend\StudentFine\AllStudentFine;
 use App\Http\Livewire\Frontend\Admission\StudentAdmission;
 use App\Http\Livewire\Backend\AcademicYear\AllAcademicYear;
 use App\Http\Livewire\Backend\PhotoGallery\AllPhotoGallery;
+use App\Http\Controllers\Backend\Razorpay\RazorpayController;
 use App\Http\Livewire\Backend\RolePermission\AllRolePermission;
 use App\Http\Livewire\Backend\StudentPayment\AllStudentPayment;
 use App\Http\Livewire\Backend\StudentNightOut\AllStudentNightOut;
@@ -283,6 +285,11 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
         // All Student Night Out
         Route::get('all/student/night/out',AllStudentNightOut::class)->name('all_student_night_out');
     });
+
+
+    Route::get('pay/fee/{id}',[RazorpayController::class,'pay_fee'])->name('pay_fee');
+    Route::get('refund/fee/{id}',[RazorpayController::class,'refund_fee'])->name('refund_fee');
+    Route::post('payment/verify',[RazorpayController::class,'payment_verify'])->name('payment_verify');
 
 
 });

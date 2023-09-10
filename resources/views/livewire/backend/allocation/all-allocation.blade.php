@@ -456,9 +456,11 @@
                                                 <label for="Fee" class="form-label">Fee</label>
                                                 <label class="form-control" for="Fee">
                                                     @foreach ($alloc1->Admission->Seated->Fees as $fee)
+                                                        @if ($fee->academic_year_id==$alloc1->Admission->academic_year_id)
                                                             @if ($fee->amount)
                                                                 {{ $fee->amount." Rs."; }}
                                                             @endif
+                                                        @endif
                                                     @endforeach
                                                 </label>
                                             </div>
@@ -571,8 +573,10 @@
                                                     <label for="Fee" class="form-label">Fee</label>
                                                     <label class="form-control" for="Fee">
                                                         @foreach ($alloc2->Admission->Seated->Fees as $fee)
-                                                            @if ($fee->amount)
-                                                                {{ $fee->amount." Rs."; }}
+                                                            @if ($fee->academic_year_id==$alloc2->Admission->academic_year_id)
+                                                                @if ($fee->amount)
+                                                                    {{ $fee->amount." Rs."; }}
+                                                                @endif
                                                             @endif
                                                         @endforeach
                                                     </label>
@@ -709,10 +713,14 @@
                                                     @endif
                                                 </td>
                                                 <td>
+                                                   
                                                     @if (isset($item->Admission->Seated->Fees))
                                                         @foreach ($item->Admission->Seated->Fees as $fee)
-                                                            @if ($fee->amount)
-                                                                {{ $fee->amount }}
+                                                            @if ($fee->academic_year_id==$item->Admission->academic_year_id)
+                                                                @if ($fee->amount)
+                                                                    {{ $fee->amount }} 
+                                                                @endif
+                                                                
                                                             @endif
                                                         @endforeach
                                                     @else

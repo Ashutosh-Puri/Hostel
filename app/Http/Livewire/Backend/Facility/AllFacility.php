@@ -9,6 +9,7 @@ use Livewire\Component;
 use App\Models\Building;
 use App\Models\Facility;
 use Livewire\WithPagination;
+use Illuminate\Validation\Rule;
 
 class AllFacility extends Component
 {
@@ -31,7 +32,7 @@ class AllFacility extends Component
     protected function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255','unique:facilities,name,'.($this->mode=='edit'? $this->current_id :'')],
+            'name' => ['required', 'string',Rule::unique('facilities', 'name')->where('room_id', $this->room_id)->ignore($this->current_id)],
             'room_id' => ['required','integer'],
         ];
     }

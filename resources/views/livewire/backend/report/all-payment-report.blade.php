@@ -151,9 +151,9 @@
                                 <td></td>
                                 <td></td>
                                 <td>Total</td>
-                                <td>{{ $amount }}</td>
-                                <td>{{ $deposite }}</td>
-                                <td>{{ $total_amount }}</td>
+                                <td>{{ number_format($amount ,2)}}</td>
+                                <td>{{ number_format($deposite,2) }}</td>
+                                <td>{{ number_format($total_amount,2) }}</td>
                                 <td></td>
                             </tr>
 

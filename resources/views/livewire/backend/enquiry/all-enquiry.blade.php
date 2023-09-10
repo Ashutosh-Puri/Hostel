@@ -51,8 +51,9 @@
                                     </div>
                                     <div class="col-12 col-md-12">
                                         <div class="mb-3 form-group">
-                                            <label for="reply" class="form-labell">Description</label>
-                                            <label for="reply" class="form-control">{{ $this->description }}</label>
+                                            <label for="reply"  class="form-labell">Description</label>
+                                            <textarea for="reply" class="pe-none w-100"    cols="30" rows="7" >{{ $this->description }}</textarea>
+                                           
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-12">
@@ -390,7 +391,7 @@
                                                 <td>{{ $item->mobile }}</td>
                                                 <td>{{ $item->email }}</td>
                                                 <td>{{ $item->subject }}</td>
-                                                <td>{{ $item->description }}</td>
+                                                <td class="text-wrap lh-lg">{{ $item->description }}</td>
                                                 <td>
                                                     @if ( $item->status == '0')
                                                         <span class="badge bg-success text-white">Unread</span>

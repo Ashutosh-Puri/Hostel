@@ -223,7 +223,14 @@ class AllAdmission extends Component
     }
 
     public function save()
-    {
+    {   
+        if( $this->admissionfull==1)
+        {
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'info',
+                'message'=>"Admission Full In This  Academic Year For This class !!"
+            ]);
+        }
         $validatedData = $this->validate();
 
 

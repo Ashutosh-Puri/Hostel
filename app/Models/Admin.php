@@ -44,8 +44,8 @@ class Admin  extends Authenticatable
         'password' => 'hashed',
     ];
 
-    protected function getdefaultguardgame(): string { return 'admin'; }
-    public static function getpermissiongroups(){
+    protected function getDefaultGuardName(): string { return 'admin'; }
+    public static function getpermissionGroups(){
 
         $permission_groups = DB::table('permissions')->select('group_name')->groupBy('group_name')->get();
 
@@ -53,7 +53,7 @@ class Admin  extends Authenticatable
 
     }
 
-    public static function getpermissionbygroupname($group_name){
+    public static function getpermissionByGroupName($group_name){
 
         $permission = DB::table('permissions')->select('name','id')->where('group_name',$group_name)->get();
 
@@ -61,12 +61,12 @@ class Admin  extends Authenticatable
 
     }
 
-    public static function rolehaspermissions($role,$permission){
+    public static function roleHasPermissions($role,$permission){
 
         $hasPermission = true;
 
         foreach ($permission as $perm) {
-            if (!$role->haspermissionto($perm->name)) {
+            if (!$role->hasPermissionTo($perm->name)) {
 
                 $hasPermission = false;
 

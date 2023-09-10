@@ -161,7 +161,7 @@ class AllClass extends Component
 
     public function render()
     {
-        $class=Classes::query()->select('id','name','status')->when($this->search, function ($query) {
+        $class=Classes::query()->select('id','name','stream','type','status')->when($this->search, function ($query) {
             return $query->where('name', 'like', '%' . $this->search . '%');
         })->orderBy('name', 'ASC')->paginate($this->per_page);
 

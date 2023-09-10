@@ -27,7 +27,7 @@ class AllBuilding extends Component
     protected function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255','unique:buildings,name,'.($this->mode=='edit'? $this->current_id :'')],
+            'name' => ['required', 'string', 'max:255',Rule::unique('buildings', 'name')->where('hostel_id', $this->hostel_id)->ignore($this->current_id), ],
             'hostel_id' => ['required','integer'],
         ];
     }

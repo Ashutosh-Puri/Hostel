@@ -238,8 +238,8 @@
                                         <div class="mb-3 form-group">
                                             <label for="is_ragging" class="form-label">Were you involved in ragging earlier?</label>
                                             <div class="form-group mt-2 ">
-                                                <input class="form-check-input @error('is_ragging') is-invalid @enderror" type="checkbox" value="1" {{ $is_ragging==1?'checked':''; }} id="class_is_ragging"  wire:model.debounce.500ms="is_ragging" >
-                                                <label class="form-check-label m-1" for="class_is_ragging">Yes</label>
+                                                <input class="form-check-input @error('is_ragging') is-invalid @enderror" type="checkbox" value="1" {{ $is_ragging==1?'checked':''; }} id="Class_is_ragging"  wire:model.debounce.500ms="is_ragging" >
+                                                <label class="form-check-label m-1" for="Class_is_ragging">Yes</label>
                                                 @error('is_ragging')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -739,8 +739,8 @@
                                         <div class="mb-3 form-group">
                                             <label for="is_ragging" class="form-label">Were you involved in ragging earlier?</label>
                                             <div class="form-group mt-2 ">
-                                                <input class="form-check-input @error('is_ragging') is-invalid @enderror" type="checkbox" value="1" {{ $is_ragging==1?'checked':''; }} id="class_is_ragging"  wire:model.debounce.500ms="is_ragging" >
-                                                <label class="form-check-label m-1" for="class_is_ragging">Yes</label>
+                                                <input class="form-check-input @error('is_ragging') is-invalid @enderror" type="checkbox" value="1" {{ $is_ragging==1?'checked':''; }} id="Class_is_ragging"  wire:model.debounce.500ms="is_ragging" >
+                                                <label class="form-check-label m-1" for="Class_is_ragging">Yes</label>
                                                 @error('is_ragging')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -974,7 +974,7 @@
                                     <div class="col-12 col-md-5">
                                         <div class="mb-3 form-group">
                                             <label for="parent_address" class="form-label">Parent Address</label>
-                                            <textarea class="form-control @error('parent_address') is-invalid @enderror" wire:model.debounce.500ms="parent_address" id="parent_address" placeholder="Enter Parent Address"   cols="30" rows="1">{{ old('parent_address') }}</textarea>
+                                            <textarea class="form-control @error('parent_address') is-invalid @enderror" wire:model.debounce.1000ms="parent_address" id="parent_address" placeholder="Enter Parent Address"   cols="30" rows="1"> {{ $parent_address }}</textarea>
                                             @error('parent_address')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -985,7 +985,7 @@
                                     <div class="col-12 col-md-5">
                                         <div class="mb-3 form-group">
                                             <label for="local_parent_address" class="form-label">Parent Address In Sangamner</label>
-                                            <textarea class="form-control @error('local_parent_address') is-invalid @enderror" wire:model.debounce.500ms="local_parent_address" id="local_parent_address" placeholder="Enter Parent Address In Sangamner"   cols="30" rows="3">{{ old('local_parent_address') }}</textarea>
+                                            <textarea class="form-control @error('local_parent_address') is-invalid @enderror" wire:model.debounce.1000ms="local_parent_address" id="local_parent_address" placeholder="Enter Parent Address In Sangamner"   cols="30" rows="3">{{ $local_parent_address }}</textarea>
                                             @error('local_parent_address')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -1041,12 +1041,12 @@
                                         </label>
                                     </div>
                                     <div class="col-6 col-md-3 mb-3">
-                                        <label for="">Seated:</label>
+                                        <label for="">seated:</label>
                                         <label for="">
                                             @if ( $viewadmission[0]->seated_id==null)
                                             <span class="badge bg-danger text-white">NA</span>
                                             @else
-                                            <span class="badge bg-success mx-1 text-white">{{ $viewadmission[0]->Seated->seated." Seated"; }}</span>
+                                            <span class="badge bg-success mx-1 text-white">{{ $viewadmission[0]->seated->seated." seated"; }}</span>
                                             @endif
                                         </label>
                                     </div>
@@ -1172,7 +1172,7 @@
                                         </div>
                                         <div class="col-12 col-md-4 mb-4">
                                             <label for="">Class :</label>
-                                            <label for="">{{ $lastclass->Class->name }}</label>
+                                            <label for="">{{ $lastclass->class->name }}</label>
                                         </div>
                                         <div class="col-12 col-md-4 mb-3">
                                             <label for="">Percentage :</label>
@@ -1311,7 +1311,7 @@
                                             <th>Academic Year</th>
                                             <th>Student Name</th>
                                             <th>Class Name</th>
-                                            <th>Seated</th>
+                                            <th>seated</th>
                                             <th>Status</th>
                                             @can('View Admission')
                                                 <th>Action</th>
@@ -1327,10 +1327,10 @@
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->id }}</td>
-                                                <td>{{ $item->AcademicYear->year}}</td>
+                                                <td>{{ $item->AcademicYear->year }}</td>
                                                 <td>{{ $item->Student->name!=null?$item->Student->name: $item->Student->username; }}</td>
                                                 <td>{{ $item->Class->name}}</td>
-                                                <td>{{ isset($item->Seated->seated)?$item->Seated->seated." Seated":'NA'; }}</td>
+                                                <td>{{ isset($item->seated->seated)?$item->seated->seated." seated":'NA'; }}</td>
                                                 <td>
                                                     @if ( $item->status == '0')
                                                         <span class="badge bg-warning text-white">Wating</span>

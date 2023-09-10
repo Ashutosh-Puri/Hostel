@@ -310,6 +310,7 @@
                                             <th>Deposite</th>
                                             <th>Total Amount</th>
                                             <th>Status</th>
+                                            <th>Paymet</th>
                                             @can('Edit Student Payment')
                                                 <th>Action</th>
                                             @elsecan('Delete Student Payment')
@@ -342,6 +343,24 @@
                                                         <span class="badge bg-success text-white">Paid</span>
                                                     @elseif ( $item->status == '2')
                                                         <span class="badge bg-danger text-white">Cancelled</span>
+                                                    @elseif ( $item->status == '3')
+                                                        <span class="badge bg-info text-white">Refunded</span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($item->status==0)                    
+                                                        @if ($item->total_amount >0)
+                                                            <a class="btn btn-sm btn-success" data-turbolinks="false" href="{{ route('pay_fee',$item->id) }}" >Pay</a>
+                                                        @endif
+                                                    @endif
+                                                    @if ($item->status==2)                    
+                                                        @if ($item->total_amount >=0)
+                                                            @if (isset($item->transaction->status))
+                                                                @if ($item->transaction->status==2)
+                                                                    <a  class="btn  btn-sm btn-primary" data-turbolinks="false" href="{{ route('refund_fee',$item->id) }}" >Refund</a>
+                                                                @endif
+                                                            @endif
+                                                        @endif
                                                     @endif
                                                 </td>
                                                 @can('Edit Student Payment')
@@ -377,10 +396,14 @@
                                                         @endcan
                                                     </td>
                                                 @endcan
+                                                
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
+                                <div class="mt-4">
+                                    {{ $student_payments->links('pagination::bootstrap-5') }}
+                                </div>
                             </div>
                         </div>
                     </div>

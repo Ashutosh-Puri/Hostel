@@ -107,6 +107,20 @@
         });
     });
     </script>
+
+<script>
+
+    @if(session('alert'))
+        const toastEvent = @json(session('alert'));
+
+        Toast.fire({
+            icon: toastEvent.type,
+            title: toastEvent.message
+        });
+        @php session()->forget('alert') @endphp
+    @endif
+</script>
+
     @yield('scripts')
 </body>
 </html>

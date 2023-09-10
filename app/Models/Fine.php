@@ -14,7 +14,7 @@ class Fine extends Model
 
 
 
-    public function academicyear()
+    public function AcademicYear()
     {
         return $this->belongsTo(AcademicYear::class);
     }
