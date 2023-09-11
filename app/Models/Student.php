@@ -6,6 +6,7 @@ use App\Models\Cast;
 use App\Models\Admission;
 use App\Models\Allocation;
 use App\Models\StudentFine;
+use App\Models\Transaction;
 use App\Models\StudentPayment;
 use App\Models\StudentProfile;
 use App\Models\StudentEducation;
@@ -70,6 +71,11 @@ class Student extends Authenticatable implements MustVerifyEmail
     public function admissions()
     {
         return $this->hasMany(Admission::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
     }
 
     public function cast()

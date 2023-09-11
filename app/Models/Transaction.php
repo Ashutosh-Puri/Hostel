@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Student;
 use App\Models\StudentFine;
 use App\Models\StudentPayment;
 use Illuminate\Database\Eloquent\Model;
@@ -21,6 +22,11 @@ class Transaction extends Model
     public function studentfine()
     {
         return $this->belongsTo(StudentFine::class);
+    }
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
     }
 
 

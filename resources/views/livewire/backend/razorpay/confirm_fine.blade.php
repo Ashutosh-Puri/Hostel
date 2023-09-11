@@ -6,7 +6,7 @@
             <div class="col-lg-6 mx-auto border border-3 border-success">
                 <div class="modal-bg p-5">
                     <div>
-                        <h1 class="text-center fw-bold fs-1 mb-3">Confirm Payment</h1>
+                        <h1 class="text-center fw-bold fs-1 mb-3">Confirm Fine</h1>
                     </div>
                     <div class="row mb-3">
                         <hr>
@@ -28,20 +28,20 @@
                     <div class="row mt-3">
                         <hr>
                         <div class="col-12 text-center ">
-                            <form name="paymentfeesuccess" action="{{ route('fee_payment_verify') }}" method="post">
+                            <form name="razorpayfineform" action="{{ route('fine_payment_verify') }}" method="post">
                                 @csrf
                                 <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id">
                                 <input type="hidden" name="razorpay_order_id" id="razorpay_order_id">
                                 <input type="hidden" name="razorpay_signature" id="razorpay_signature">
                             </form>
-                            <form name="paymentfeefail" action="{{ route('fee_payment_fail') }}" method="post">
+                            <form name="paymentfinefail" action="{{ route('fine_payment_fail') }}" method="post">
                                 @csrf
-                                <input type="hidden" name="error_razorpay_payment_id" id="error_razorpay_payment_id">
-                                <input type="hidden" name="error_razorpay_order_id" id="error_razorpay_order_id"> 
+                                <input type="hidden" name="error_razorpay_payment_id" id="fine_error_razorpay_payment_id">
+                                <input type="hidden" name="error_razorpay_order_id" id="fine_error_razorpay_order_id"> 
                             </form>
                             <div class="row mb-3">
                                 <div class="col-4">
-                                    <a href="{{ route('all_student_payment') }}" class="btn btn-lg w-100 btn-danger" > Cancel </a>
+                                    <a href="{{ route('all_student_fine') }}" class="btn btn-lg w-100 btn-danger" > Cancel </a>
                                 </div>
                                 <div class="col-8">
                                     <button type="submit" class="btn btn-lg w-100 btn-success" id="rzp-button1"> Pay  With Razorpay ( {{ $order->amount / 100  }} Rs. )</button>
@@ -52,25 +52,17 @@
                                 <script>
                                     var options = @json($jsondata);
                                     
-                                    options.handler= function (response){            
+                                    options.handler= function (response){
                                         document.getElementById('razorpay_payment_id').value=response.razorpay_payment_id;
                                         document.getElementById('razorpay_order_id').value=response.razorpay_order_id;
                                         document.getElementById('razorpay_signature').value=response.razorpay_signature;
-                                        document.paymentfeesuccess.submit();
+                                        document.razorpayfineform.submit();
                                     };
                                     var rzp1 = new Razorpay(options);
                                     rzp1.on('payment.failed', function (response){
-                                        document.getElementById('error_razorpay_payment_id').value=response.error.metadata.payment_id;
-                                        document.getElementById('error_razorpay_order_id').value=response.error.metadata.order_id;
-                                        document.paymentfeefail.submit();
-
-                                            // alert(response.error.code);
-                                            // alert(response.error.description);
-                                            // alert(response.error.source);
-                                            // alert(response.error.step);
-                                            // alert(response.error.reason);
-                                            // alert(response.error.metadata.order_id);
-                                            // alert(response.error.metadata.payment_id);
+                                        document.getElementById('fine_error_razorpay_payment_id').value=response.error.metadata.payment_id;
+                                        document.getElementById('fine_error_razorpay_order_id').value=response.error.metadata.order_id;
+                                        document.paymentfinefail.submit();
                                     });
 
                                     document.getElementById('rzp-button1').onclick = function(e){
