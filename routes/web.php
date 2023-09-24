@@ -44,6 +44,10 @@ Route::get('/admission_form', function () {
     return view('admission_form');
 });
 
+Route::get('/nightout_form', function () {
+    return view('nightout_form');
+});
+
 
 
 // Guest Routes
