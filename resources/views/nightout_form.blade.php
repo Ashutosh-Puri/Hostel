@@ -16,7 +16,7 @@
 
         <div class="container-md">
             <section name="page_1">
-                <div class="admission_form1" style:="border:orange; border-width:5px; border-style:solid;">
+                <div class="admission_form1">
                     <div class="row">
                         <div class="col-12">
                             <img src="{{ asset('assets/images/shikshan-logo.png') }}" alt="form-logo" style="display: block; margin: 0 auto; height: 80px; width: 120px;">

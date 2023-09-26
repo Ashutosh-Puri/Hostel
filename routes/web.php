@@ -48,7 +48,9 @@ Route::get('/nightout_form', function () {
     return view('nightout_form');
 });
 
-
+Route::get('/fee_reciept', function () {
+    return view('fee_reciept');
+});
 
 // Guest Routes
 Route::middleware(['guest'])->group(function () {
