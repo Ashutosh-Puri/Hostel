@@ -13,12 +13,12 @@ class Cast extends Model
 
     protected $guarded = [];
 
-    public function Students()
+    public function students()
     {
         return $this->hasMany(Student::class);
     }
 
-    public function Category()
+    public function category()
     {
         return $this->belongsTo(Category::class);
     }

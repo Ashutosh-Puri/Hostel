@@ -35,12 +35,12 @@
         <li class="nav-item nav-profile dropdown">
           <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
             <div class="nav-profile-img">
-                @if (auth()->user()->photo)
-                <img src="{{ (!empty(auth()->user()->photo)) ? asset(auth()->user()->photo) : asset('assets/images/no_image.jpg') }}" alt="image">
+                @if (auth()->guard('student')->user()->photo)
+                <img src="{{ (!empty(auth()->guard('student')->user()->photo)) ? asset(auth()->guard('student')->user()->photo) : asset('assets/images/no_image.jpg') }}" alt="image">
                 @endif
             </div>
             <div class="nav-profile-text">
-              <p class="mb-1  mx-3" >{{ auth()->user()->name== null ? auth()->user()->username : auth()->user()->name;}}</p>
+              <p class="mb-1  mx-3" >{{ auth()->guard('student')->user()->name== null ? auth()->guard('student')->user()->username : auth()->guard('student')->user()->name;}}</p>
             </div>
           </a>
           <div class="dropdown-menu navbar-dropdown dropdown-menu-right p-0 border-0 font-size-sm" aria-labelledby="profileDropdown" data-x-placement="bottom-end">
@@ -58,7 +58,7 @@
                 <span>Password Change</span>
                 <i class="mdi mdi-lock ms-1"></i>
               </a>
-              <form method="POST" action="{{ route('logout') }}" class="d-inline">
+              <form method="POST" action="{{ route('student.logout') }}" class="d-inline">
                 @csrf
                 <button class="dropdown-item py-1 d-flex align-items-center justify-content-between" onclick="event.preventDefault(); this.closest('form').submit();" type="submit">
                   <span>Log Out</span><i class="mdi mdi-logout ms-1"></i>

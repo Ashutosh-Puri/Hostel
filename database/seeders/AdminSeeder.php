@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Admin;
+use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Faker\Factory as Faker;
 
 class AdminSeeder extends Seeder
 {
@@ -15,23 +15,34 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        Admin::create([
-            'name' => 'Admin',
+        $user1= Admin::create([
+            'name' => 'Super Admin',
             'email' => 'cmdsofts@gmail.com',
             'password' => Hash::make('123456789'),
             'mobile'=>'9373545745',
             'status' => '0',
-            'role_id' => '1',
         ]);
 
-        Admin::create([
-            'name' => 'Teja Pawar',
+        $user1->assignRole('Super Admin');
+
+
+        $user2= Admin::create([
+            'name' => 'Tejas Pawar',
             'email' => 'rsofts74@gmail.com',
             'password' => Hash::make('123456789'),
             'mobile'=>'8888448451',
             'status' => '0',
-            'role_id' => '1',
         ]);
+        $user2->assignRole('Super Admin');
+
+        $user3= Admin::create([
+            'name' => 'Suyash Pawar',
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('123456789'),
+            'mobile'=>'1234567890',
+            'status' => '0',
+        ]);
+        $user3->assignRole('Admin');
 
     }
 }

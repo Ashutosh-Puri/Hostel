@@ -9,10 +9,12 @@ use Livewire\Component;
 use App\Models\Building;
 use App\Models\Facility;
 use Livewire\WithPagination;
+use Illuminate\Validation\Rule;
 
 class AllFacility extends Component
 {
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $search = '';
@@ -30,7 +32,7 @@ class AllFacility extends Component
     protected function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255','unique:facilities,name,'.($this->mode=='edit'? $this->current_id :'')],
+            'name' => ['required', 'string',Rule::unique('facilities', 'name')->where('room_id', $this->room_id)->ignore($this->current_id)],
             'room_id' => ['required','integer'],
         ];
     }
@@ -165,11 +167,11 @@ class AllFacility extends Component
 
     public function render()
     {
-        $hostels = Hostel::where('status', 0)->get();
-        $buildings = Building::where('hostel_id', $this->hostel_id)->get();
-        $floors = Floor::where('building_id', $this->building_id)->get();
-        $rooms=Room::where('floor_id', $this->floor_id)->get();
-        $facilityQuery = Facility::orderBy('room_id', 'ASC');
+        $hostels = Hostel::select('id','name')->where('status', 0)->get();
+        $buildings = Building::select('id','name')->where('hostel_id', $this->hostel_id)->get();
+        $floors = Floor::select('id','floor')->where('building_id', $this->building_id)->get();
+        $rooms=Room::select('id','label')->where('floor_id', $this->floor_id)->get();
+        $facilityQuery = Facility::select('id','name','status','room_id')->with('room')->orderBy('room_id', 'ASC');
         if ($this->search) {
             $facilityQuery->whereHas('room', function ($query) {
                 $query->where('label', 'like', '%' . $this->search . '%');

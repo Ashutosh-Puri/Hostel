@@ -13,6 +13,7 @@ use App\Models\StudentEducation;
 class AllStudentEducation extends Component
 {
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $a = '',$s = '',$c = '',$ad = '';
@@ -44,7 +45,7 @@ class AllStudentEducation extends Component
     protected function rules()
     {
         return [
-            'student_id' => ['required','integer'],
+            // 'student_id' => ['required','integer'],
             'academic_year_id' => ['required','integer'],
             'last_class_id' => ['required','integer'],
             'admission_id' => ['required','integer'],
@@ -70,7 +71,8 @@ class AllStudentEducation extends Component
         if($student_education){
             $student_education->admission_id = $validatedData['admission_id'];
             $student_education->academic_year_id = $validatedData['academic_year_id'];
-            $student_education->student_id = $validatedData['student_id'];
+            $admission=Admission::find($validatedData['admission_id']);
+            $student_education->student_id =  $admission->student_id;
             $student_education->last_class_id = $validatedData['last_class_id'];
             $student_education->percentage = $validatedData['percentage'];
             $student_education->sgpa = $validatedData['sgpa'];
@@ -96,7 +98,6 @@ class AllStudentEducation extends Component
             $this->C_id=$student_education->id;
             $this->academic_year_id = $student_education->academic_year_id;
             $this->admission_id = $student_education->admission_id;
-            $this->student_id = $student_education->student_id;
             $this->last_class_id =  $student_education->last_class_id;
             $this->percentage = $student_education->percentage;
             $this->sgpa = $student_education->sgpa;
@@ -116,7 +117,8 @@ class AllStudentEducation extends Component
         if($student_education){
             $student_education->academic_year_id = $validatedData['academic_year_id'];
             $student_education->admission_id = $validatedData['admission_id'];
-            $student_education->student_id = $validatedData['student_id'];
+            $admission=Admission::find($validatedData['admission_id']);
+            $student_education->student_id =  $admission->student_id;
             $student_education->last_class_id = $validatedData['last_class_id'];
             $student_education->percentage = $validatedData['percentage'];
             $student_education->sgpa = $validatedData['sgpa'];
@@ -165,10 +167,19 @@ class AllStudentEducation extends Component
         if (is_numeric($this->sgpa) && $this->sgpa > 0) {
             $this->percentage = (($this->sgpa * 10) - 7.5);
         }
-        $academicyears=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
-        $classes=Classes::where('status',0)->orderBy('name', 'ASC')->get();
-        $admissions=Admission::orderBy('academic_year_id', 'DESC')->get();
-        $students=Student::where('status',0)->orderBy('name', 'ASC')->get();
+        $academicyears=AcademicYear::select('id','year')->where('status',0)->orderBy('year', 'DESC')->get();
+
+        $admissions=Admission::select('id','student_id')->where('academic_year_id',$this->academic_year_id)->orderBy('academic_year_id', 'DESC')->get();
+
+        // $students=Student::where('status',0)->where('id',$this->academic_year_id)->orderBy('name', 'ASC')->get();
+
+
+        $classes=Classes::select('id','name')->where('status',0)->orderBy('name', 'ASC')->get();
+        
+        
+        
+        
+        
         $query = StudentEducation::orderBy('student_id', 'ASC')->when($this->ad, function ($query) {
             $query->whereIn('admission_id', function ($subQuery) {
                 $subQuery->select('id')->from('admissions')->where('id', 'like', '%' . $this->ad . '%');
@@ -187,7 +198,7 @@ class AllStudentEducation extends Component
             });
         });
         $student_educations = $query->paginate($this->per_page);
-        return view('livewire.backend.student-education.all-student-education',compact('admissions','classes','academicyears','student_educations','students'))->extends('layouts.admin.admin')->section('admin');
+        return view('livewire.backend.student-education.all-student-education',compact('admissions','classes','academicyears','student_educations'))->extends('layouts.admin.admin')->section('admin');
     }
 
 }

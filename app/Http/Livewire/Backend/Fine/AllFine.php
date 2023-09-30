@@ -11,6 +11,7 @@ use Illuminate\Validation\Rule;
 class AllFine extends Component
 {
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $year = '';
@@ -165,14 +166,18 @@ class AllFine extends Component
 
     public function render()
     {
-        $academic_years=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
-        $query = Fine::query();
+        $academic_years=AcademicYear::select('id','year')->where('status',0)->orderBy('year', 'DESC')->get();
+        $query = Fine::query()->with('academicyear');
         if ($this->year) {
-            $query->whereHas('academicYear', function ($subQuery) {
+            $query->whereHas('academicyear', function ($subQuery) {
                 $subQuery->where('year', 'like', '%' . $this->year . '%');
             });
         }
-        $fines = $query->where('name', 'like', '%' . $this->fine_name . '%')->orderBy('academic_year_id', 'ASC')->paginate($this->per_page);
+
+        $fines = $query->when($this->fine_name, function ($query) {
+            return $query->where('name', 'like', '%' . $this->fine_name . '%');
+        })->orderBy('academic_year_id', 'ASC')->paginate($this->per_page);
+
         return view('livewire.backend.fine.all-fine',compact('academic_years','fines'))->extends('layouts.admin.admin')->section('admin');
     }
 

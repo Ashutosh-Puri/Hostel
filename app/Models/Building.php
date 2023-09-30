@@ -13,13 +13,13 @@ class Building extends Model
     protected $guarded = [];
 
 
-    public function Floors()
+    public function floors()
     {
-        return $this->hasMany(Floor::class, 'building_id', 'id');
+        return $this->hasMany(Floor::class);
     }
 
-    public function Hostel()
+    public function hostel()
     {
-        return $this->belongsTo(Hostel::class, 'hostel_id', 'id');
+        return $this->belongsTo(Hostel::class);
     }
 }

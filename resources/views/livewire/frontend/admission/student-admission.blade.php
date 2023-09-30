@@ -125,7 +125,22 @@
                                             </div> 
                                         </div>
                                         <div class="row">
-                                            <div class="col-12 col-md-6">
+                                            <div class="col-12 col-md-3">
+                                                <div class="mb-3 form-group">
+                                                    <label for="gender" class="form-label">Select Gender</label>
+                                                    <select class="form-select  @error('gender') is-invalid @enderror" id="gender" wire:model.debounce.500ms="gender" >
+                                                        <option hidden value="" >Select </option>
+                                                        <option  value="0">Male</option>
+                                                        <option  value="1">Female</option>
+                                                    </select>
+                                                    @error('gender')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-3">
                                                 <div class="mb-3 form-group">
                                                     <label for="blood_group" class="form-label">Select Blood Group</label>
                                                     <select class="form-select @error('blood_group') is-invalid @enderror" id="blood_group" wire:model.debounce.1000ms="blood_group" >
@@ -588,7 +603,22 @@
                                             </div> 
                                         </div>
                                         <div class="row">
-                                            <div class="col-12 col-md-6">
+                                            <div class="col-12 col-md-3">
+                                                <div class="mb-3 form-group">
+                                                    <label for="gender" class="form-label">Select Gender</label>
+                                                    <select class="form-select  @error('gender') is-invalid @enderror" id="gender" wire:model.debounce.500ms="gender" >
+                                                        <option hidden value="" >Select </option>
+                                                        <option  value="0">Male</option>
+                                                        <option  value="1">Female</option>
+                                                    </select>
+                                                    @error('gender')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-3">
                                                 <div class="mb-3 form-group">
                                                     <label for="blood_group" class="form-label">Select Blood Group</label>
                                                     <select class="form-select @error('blood_group') is-invalid @enderror" id="blood_group" wire:model.debounce.1000ms="blood_group" >
@@ -948,11 +978,15 @@
                         <div class="card">
                             <div class="card-body ">
                                 <div class="row">
-                                    <div class="col-6 col-md-3 mb-3">
+                                    <div class="col-6 col-md-4 mb-3">
                                         <label for="">Admission ID :</label>
                                         <label for="">{{ $viewadmission[0]->id }}</label>
                                     </div>
-                                    <div class="col-6 col-md-3 mb-3">
+                                    <div class="col-6 col-md-4 mb-3">
+                                        <label for="">Academic Year:</label>
+                                        <label for="">{{ $viewadmission[0]->AcademicYear->year.' - '.$viewadmission[0]->AcademicYear->year+1 }}</label>
+                                    </div>
+                                    <div class="col-6 col-md-4 mb-3">
                                         <label for="">Status :</label>
                                         <label>
                                             @if ( $viewadmission[0]->status == '0')
@@ -961,20 +995,6 @@
                                                 <span class="badge bg-success text-white">Confirmed</span>
                                             @else
                                                 <span class="badge bg-danger text-white">Canceled</span>
-                                            @endif
-                                        </label>
-                                    </div>
-                                    <div class="col-6 col-md-3 mb-3">
-                                        <label for="">Academic Year:</label>
-                                        <label for="">{{ $viewadmission[0]->AcademicYear->year.' - '.$viewadmission[0]->AcademicYear->year+1 }}</label>
-                                    </div>
-                                    <div class="col-6 col-md-3 mb-3">
-                                        <label for="">Bed:</label>
-                                        <label for="">
-                                            @if ( $viewadmission[0]->bed_id==null)
-                                            <span class="badge bg-danger text-white">Not Allocated</span>
-                                            @else
-                                            <span class="badge bg-success text-white">Allocated</span><span class="badge bg-success mx-1 text-white">{{ $viewadmission[0]->bed_id }}</span>
                                             @endif
                                         </label>
                                     </div>
@@ -990,45 +1010,49 @@
                                     </div>
                                     <div class="col-12 col-md-10 mb-3">
                                         <div class="row">
-                                            <div class="col-12 col-md-6 mb-4">
+                                            <div class="col-12 col-md-6 mb-3">
                                                 <label for="">Member ID :</label>
                                                 <label for="">{{ $viewadmission[0]->Student->member_id }}</label>
                                             </div>
-                                            <div class="col-12 col-md-6 mb-4">
+                                            <div class="col-12 col-md-6 mb-3">
                                                 <label for="">Student Name :</label>
                                                 <label for="">{{ $viewadmission[0]->Student->name }}</label>
                                             </div>
-                                            <div class="col-12 col-md-6 mb-4">
+                                            <div class="col-12 col-md-6 mb-3">
                                                 <label for="">Email :</label>
                                                 <label for="">{{ $viewadmission[0]->Student->email }}</label>
                                             </div>
-                                            <div class="col-12 col-md-6 mb-4">
+                                            <div class="col-12 col-md-6 mb-3">
                                                 <label for="">Mobile :</label>
                                                 <label for="">{{ $viewadmission[0]->Student->mobile }}</label>
                                             </div>
-                                            <div class="col-12 col-md-6 mb-4">
+                                            <div class="col-12 col-md-6 mb-3">
                                                 <label for="">Date Of Birth :</label>
                                                 <label for="">{{ $viewadmission[0]->Student->dob }}</label>
                                             </div>
-                                            <div class="col-12 col-md-6 mb-4">
+                                            <div class="col-12 col-md-6 mb-3">
+                                                <label for="">Gender :</label>
+                                                <label for="">{{ $viewadmission[0]->Student->gender==1?'Female':'Male'; }}</label>
+                                            </div>
+                                            <div class="col-12 col-md-6 mb-3">
                                                 <label for="">Cast :</label>
                                                 <label for="">{{ $viewadmission[0]->Student->Cast->name }}</label>
                                             </div>
-                                            <div class="col-12 col-md-6 mb-4">
+                                            <div class="col-12 col-md-6 mb-3">
                                                 <label for="">Category :</label>
                                                 <label for="">{{ $viewadmission[0]->Student->Cast->Category->name}}</label>
                                             </div>
-                                            <div class="col-12 col-md-6 mb-4">
+                                            <div class="col-12 col-md-6 mb-3">
                                                 <label for="">Blood Group :</label>
                                                 <label for="">{{ $viewadmission[0]->Student->blood_group }}</label>
                                             </div>
                                             <div class="col-12 col-md-6 mb-3">
-                                                <label for="">Illness / Allergy :</label>
-                                                <label for="">{{ $viewadmission[0]->Student->is_allergy==null?'No':$viewadmission[0]->Student->is_allergy; }}</label>
-                                            </div>
-                                            <div class="col-12 col-md-6 mb-3">
                                                 <label for="">Are you involved in ragging? :</label>
                                                 <label for="">{{ $viewadmission[0]->Student->is_ragging==0?'No':'Yes'; }}</label>
+                                            </div>
+                                            <div class="col-12 col-md-12 mb-3">
+                                                <label for="">Illness / Allergy :</label>
+                                                <label for="">{{ $viewadmission[0]->Student->is_allergy==null?'No':$viewadmission[0]->Student->is_allergy; }}</label>
                                             </div>
                                         </div>
                                     </div>

@@ -18,21 +18,21 @@ class StudentEducation extends Model
 
     public function AcademicYear()
     {
-        return $this->belongsTo(AcademicYear::class, 'academic_year_id', 'id');
+        return $this->belongsTo(AcademicYear::class);
     }
 
-    public function Student()
+    public function student()
     {
-        return $this->belongsTo(Student::class, 'student_id', 'id');
+        return $this->belongsTo(Student::class);
     }
 
     public function Class()
     {
-        return $this->belongsTo(Classes::class, 'last_class_id', 'id');
+        return $this->belongsTo(Classes::class , 'last_class_id','id');
     }
 
-    public function Admission()
+    public function admission()
     {
-        return $this->belongsTo(Admission::class, 'admission_id', 'id');
+        return $this->belongsTo(Admission::class);
     }
 }

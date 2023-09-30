@@ -17,6 +17,7 @@ use Database\Seeders\FloorSeeder;
 use Database\Seeders\QuotaSeeder;
 use Database\Seeders\HostelSeeder;
 use Database\Seeders\SeatedSeeder;
+use Spatie\Permission\Models\Role;
 use Database\Seeders\ClassesSeeder;
 use Database\Seeders\CollegeSeeder;
 use Database\Seeders\StudentSeeder;
@@ -25,8 +26,10 @@ use Database\Seeders\CategorySeeder;
 use Database\Seeders\FacilitySeeder;
 use Database\Seeders\AdmissionSeeder;
 use Database\Seeders\AllocationSeeder;
+use Database\Seeders\PermissionSeeder;
 use Database\Seeders\StudentFineSeeder;
 use Database\Seeders\AcademicYearSeeder;
+use Spatie\Permission\Models\Permission;
 use Database\Seeders\StudentPaymentSeeder;
 use Database\Seeders\StudentProfileSeeder;
 use Database\Seeders\StudentEducationSeeder;
@@ -37,9 +40,10 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      */
     public function run(): void
-    {
-        //  Allways Run
+    {   
+        
         $this->call(RoleSeeder::class);
+        $this->call(PermissionSeeder::class);
         $this->call(AdminSeeder::class);               //  Role ,
         $this->call(CategorySeeder::class);
         $this->call(CastSeeder::class);                //  Category ,
@@ -48,12 +52,12 @@ class DatabaseSeeder extends Seeder
         //  Sometime Run
 
         // $this->call(AcademicYearSeeder::class);
-        $this->call(ClassesSeeder::class);
+        // $this->call(ClassesSeeder::class);
         // $this->call(StudentSeeder::class);          //  Cast ,
-        $this->call(CollegeSeeder::class);
-        $this->call(HostelSeeder::class);           //  College ,
-        $this->call(BuildingSeeder::class);         //  Hostel ,
-        $this->call(FloorSeeder::class);         //  Building ,
+        // $this->call(CollegeSeeder::class);
+        // $this->call(HostelSeeder::class);           //  College ,
+        // $this->call(BuildingSeeder::class);         //  Hostel ,
+        // $this->call(FloorSeeder::class);         //  Building ,
         $this->call(SeatedSeeder::class);
         // $this->call(FineSeeder::class);             //  Acadmic Year ,
         // $this->call(FeeSeeder::class);              //  Acadmic Year , Setaed

@@ -14,18 +14,18 @@ class Seated extends Model
     use HasFactory;
     protected $guarded=[];
 
-    public function Rooms()
+    public function rooms()
     {
-        return $this->hasMany(Room::class, 'seated_id', 'id');
+        return $this->hasMany(Room::class);
     }
 
-    public function Fees()
+    public function fees()
     {
-        return $this->hasMany(Fee::class, 'seated_id', 'id');
+        return $this->hasMany(Fee::class);
     }
 
-    public function Admisstions()
+    public function admisstions()
     {
-        return $this->hasMany(Admission::class, 'seated_id', 'id');
+        return $this->hasMany(Admission::class);
     }
 }

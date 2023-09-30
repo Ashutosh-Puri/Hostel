@@ -16,9 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger('academic_year_id');
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('admission_id');
-            $table->decimal('total_amount', 10, 2);
-            $table->decimal('deposite', 10, 2)->nullable()->default('0');
             $table->decimal('amount', 10, 2)->nullable()->default('0');
+            $table->decimal('deposite', 10, 2)->nullable()->default('0');
+            $table->decimal('total_amount', 10, 2);
             $table->tinyInteger('status')->nullable()->default('0')->comment('0-Not Paid,1-Paid,2-Cancel');
             $table->timestamps();
             $table->foreign('academic_year_id')->references('id')->on('academic_years')->onDelete('cascade');

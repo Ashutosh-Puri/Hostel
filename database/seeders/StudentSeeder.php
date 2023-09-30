@@ -22,6 +22,7 @@ class StudentSeeder extends Seeder
             'email' => 'ashutoshpuri2000@gmail.com',
             'password' => Hash::make('123456789'),
             'status' => '0',
+            'email_verified_at' => now(),
         ]);
 
          Student::create([
@@ -29,11 +30,12 @@ class StudentSeeder extends Seeder
             'email' => 'tejas123@gmail.com',
             'password' => Hash::make('123456789'),
             'status' => '0',
+            'email_verified_at' => now(),
         ]);
 
         $faker = Faker::create();
         $mobileNumberFormat = '##########';
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             Student::create([
                 'username' => Str::slug($faker->unique()->userName, '_'),
                 'name' => $faker->name,
@@ -61,6 +63,7 @@ class StudentSeeder extends Seeder
                 'blood_group' => $faker->randomElement(['A-', 'A+','AB-', 'AB+','O-', 'O+','B-', 'B+']),
                 'is_allergy' => $faker->name,
                 'is_ragging' => $faker->numberBetween(0, 1),
+                'gender' => $faker->numberBetween(0, 1),
                 'cast_id' =>  Cast::inRandomOrder()->first()->id,
             ]);
         }

@@ -20,10 +20,12 @@ class StudentPaymentSeeder extends Seeder
         $faker = Faker::create();
 
         // Insert 1000 fake records into the Classes table
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             StudentPayment::create([
-                'status' => $faker->numberBetween(0, 1),
-                'total_amount' => $faker->numberBetween(100,1000),
+                'status' => $faker->numberBetween(0,0),
+                'amount' => $temp= $faker->numberBetween(100,1000),
+                'deposite' => $temp1=$faker->numberBetween(100,1000),
+                'total_amount' => $temp-$temp1,
                 'academic_year_id' => AcademicYear::inRandomOrder()->first()->id,
                 'student_id' => Student::inRandomOrder()->first()->id,
                 'admission_id' => Admission::inRandomOrder()->first()->id,

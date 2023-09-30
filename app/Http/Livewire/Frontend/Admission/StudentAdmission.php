@@ -6,14 +6,17 @@ use App\Models\Cast;
 use App\Models\Classes;
 use App\Models\Student;
 use Livewire\Component;
+use App\Models\Category;
 use App\Models\Admission;
 use App\Models\Allocation;
 use App\Models\AcademicYear;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Carbon;
+use Illuminate\Validation\Rule;
 use App\Models\StudentEducation;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class StudentAdmission extends Component
 {   
@@ -59,6 +62,7 @@ class StudentAdmission extends Component
     public $reallocateid=null;
     public $current_id;
     public $mindate;
+    public $gender;
 
     public function resetinput()
     {
@@ -99,24 +103,26 @@ class StudentAdmission extends Component
         $this->allocateid=null;
         $this->reallocateid=null;
         $this->current_id=null;
+        $this->gender=null;
     }
 
     protected function rules()
     {   
         return [
-            'academic_year_id'=>['required','integer'],
-            'last_academic_year_id'=>['required','integer'],
+            'gender'=>['required','integer','in:0,1' ],
+            'academic_year_id'=>['required','integer',Rule::exists(AcademicYear::class, 'id')],
+            'last_academic_year_id'=>['required','integer',Rule::exists(AcademicYear::class, 'id')],
             'first_name'=>['required','string','max:255'],
             'middle_name'=>['required','string','max:255'],
             'last_name'=>['required','string','max:255'],
             'dob'=>['required','date','before_or_equal:15 years ago'],
-            'cast_id'=>['required','integer'],
-            'category_id'=>['required','integer'],
+            'cast_id'=>['required','integer',Rule::exists(Cast::class, 'id')],
+            'category_id'=>['required','integer',Rule::exists(Category::class, 'id')],
             'blood_group'=>['required','string','max:255'],    
             'stream'=>['required','string','max:255'],
             'stream_type'=>['required','string','max:255'],
-            'class_id'=>['required','integer'],
-            'last_class_id'=>['required','integer'],
+            'class_id'=>['required','integer',Rule::exists(Classes::class, 'id')],
+            'last_class_id'=>['required','integer',Rule::exists(Classes::class, 'id')],
             'percentage'=>['required','numeric','min:0','max:100'],
             'sgpa'=>['nullable','numeric','min:0.00','max:10.00'],
             'parent_name'=>['required','string','max:255'],
@@ -128,7 +134,7 @@ class StudentAdmission extends Component
             'local_parent_address'=>['nullable','string','max:255'],
             'address_type'=>['required','integer','max:255'],
             'is_allergy'=>['nullable','string','max:255'],
-            'is_ragging'=>['nullable'],
+            'is_ragging'=>['nullable','in:0,1'],
             'mobile'=>['required','numeric','digits:10','unique:students,mobile,'.($this->mode=='edit'? $this->student_id :($this->mode=='add'? Auth::user()->id :'')),],
             'member_id'=>['required','numeric','unique:students,member_id,'.($this->mode=='edit'? $this->student_id :($this->mode=='add'? Auth::user()->id :'')),],
             'photo'=>[($this->mode=='edit'? 'nullable' : ($this->photoold!=null? 'nullable' : 'required')),'image','mimes:jpeg,jpg,png','max:1024'],
@@ -174,6 +180,7 @@ class StudentAdmission extends Component
                 $this->blood_group = $student->blood_group;
                 $this->is_allergy = $student->is_allergy;
                 $this->is_ragging = $student->is_ragging;
+                $this->gender = $student->gender;
                 $this->address_type = $student->address_type;
                 $this->member_id = $student->member_id;
                 $this->photoold = $student->photo;
@@ -200,6 +207,7 @@ class StudentAdmission extends Component
             $student->blood_group = $validatedData['blood_group'];
             $student->is_allergy = $validatedData['is_allergy'];
             $student->is_ragging = $this->is_ragging == 1 ? '1' : '0';
+            $student->gender = $this->gender == 1 ? '1' : '0';
             $student->address_type = $this->address_type == 1 ? '1' : '0';
             $student->member_id = $this->member_id;
             if ($this->photo) {
@@ -276,7 +284,7 @@ class StudentAdmission extends Component
             $this->academic_year_id = $admission->academic_year_id;
             $this->student_id = $admission->student_id;
             $this->class_id = $admission->class_id;
-            $this->status = '0';
+            $this->status = $admission->status;
 
             $class = Classes::where('id', $admission->class_id)->latest()->first();
             if ($class)
@@ -323,6 +331,7 @@ class StudentAdmission extends Component
                 $this->blood_group = $student->blood_group;
                 $this->is_allergy = $student->is_allergy;
                 $this->is_ragging = $student->is_ragging;
+                $this->gender = $student->gender;
                 $this->address_type = $student->address_type;
                 $this->member_id = $student->member_id;
                 $this->photoold = $student->photo;
@@ -404,6 +413,7 @@ class StudentAdmission extends Component
             $student->is_allergy = $validatedData['is_allergy'];
             $student->is_ragging = $this->is_ragging==1?'1':'0';
             $student->address_type = $this->address_type==1?'1':'0';
+            $student->gender = $this->gender==1?'1':'0';
             $student->member_id = $this->member_id;
             if($this->photo)
             {
@@ -441,7 +451,7 @@ class StudentAdmission extends Component
 
     public function render()
     {   
-        $this->student_id=Auth::guard('web')->user()->id;
+        $this->student_id=Auth::guard('student')->user()->id;
 
         $academicyears = AcademicYear::where('status', 0)->orderBy('year', 'DESC')->get();
         $hasAdmission = true;

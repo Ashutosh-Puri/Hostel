@@ -1,8 +1,57 @@
 @extends('layouts.app')
 @section('content')
-<div>   
+<div>  
+
+ 
     @section('styles')
       <style>
+
+
+/* Style for the input type time */
+input[type="time"] {
+    /* Hide the default time picker arrow */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+}
+
+
+
+        /* Ensure the loading overlay covers the entire screen */
+        .loading-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent white background */
+    z-index: 9999; /* Ensure the spinner is above other content */
+}
+
+/* Center the spinner vertically */
+.loading-spinner {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+.loading-spinner .spinner-border {
+    width: 4rem;
+    height: 4rem;
+}
+
+/* Adjust spinner size for larger screens if needed */
+@media (min-width: 768px) {
+    .loading-spinner .spinner-border {
+        width: 6rem;
+        height: 6rem;
+    }
+}
 
         .sidebar-bg::-webkit-scrollbar {
           width: 0px; 
@@ -70,6 +119,11 @@
           cursor: pointer;
           background-size: 10px 10px;
         }
+
+        .dropdown:hover .dropdown-menu {
+  display: block;
+  padding: 0;
+}
       </style>
     @endsection
         <!-- Container Start -->
@@ -102,4 +156,5 @@
           </div>
            <!-- Container Enter -->
 </div>
+
 @endsection

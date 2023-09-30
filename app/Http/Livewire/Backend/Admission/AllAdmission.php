@@ -8,6 +8,7 @@ use App\Models\Quota;
 use App\Models\Classes;
 use App\Models\Student;
 use Livewire\Component;
+use App\Models\Category;
 use App\Models\Admission;
 use App\Models\Allocation;
 use App\Models\AcademicYear;
@@ -24,6 +25,7 @@ class AllAdmission extends Component
 {
     use WithPagination;
     use WithFileUploads;
+    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $admissionfull=0;
@@ -70,6 +72,7 @@ class AllAdmission extends Component
     public $reallocateid=null;
     public $current_id;
     public $mindate;
+    public $gender;
 
     public function resetinput()
     {
@@ -114,25 +117,27 @@ class AllAdmission extends Component
         $this->allocateid=null;
         $this->reallocateid=null;
         $this->current_id=null;
+        $this->gender=null;
     }
 
     protected function rules()
     {   
         return [
-            'student_id'=>['required','integer', ],
-            'academic_year_id'=>['required','integer'],
-            'last_academic_year_id'=>['required','integer'],
+            'student_id'=>['required','integer', Rule::exists(Student::class, 'id')],
+            'gender'=>['required','integer','in:0,1' ],
+            'academic_year_id'=>['required','integer', Rule::exists(AcademicYear::class, 'id')],
+            'last_academic_year_id'=>['required','integer', Rule::exists(AcademicYear::class, 'id')],
             'first_name'=>['required','string','max:255'],
             'middle_name'=>['required','string','max:255'],
             'last_name'=>['required','string','max:255'],
             'dob'=>['required','date','before_or_equal:15 years ago'],
-            'cast_id'=>['required','integer'],
-            'category_id'=>['required','integer'],
+            'cast_id'=>['required','integer', Rule::exists(Cast::class, 'id')],
+            'category_id'=>['required','integer', Rule::exists(Category::class, 'id')],
             'blood_group'=>['required','string','max:255'],    
             'stream'=>['required','string','max:255'],
             'stream_type'=>['required','string','max:255'],
-            'class_id'=>['required','integer'],
-            'last_class_id'=>['required','integer'],
+            'class_id'=>['required','integer', Rule::exists(Classes::class, 'id')],
+            'last_class_id'=>['required','integer',Rule::exists(Classes::class, 'id')],
             'percentage'=>['required','numeric','min:0','max:100'],
             'sgpa'=>['nullable','numeric','min:0.00','max:10.00'],
             'parent_name'=>['required','string','max:255'],
@@ -144,7 +149,7 @@ class AllAdmission extends Component
             'local_parent_address'=>['nullable','string','max:255'],
             'address_type'=>['required','integer','max:255'],
             'is_allergy'=>['nullable','string','max:255'],
-            'is_ragging'=>['nullable'],
+            'is_ragging'=>['nullable', 'in:0,1'],
             'mobile'=>['required','numeric','digits:10','unique:students,mobile,'.($this->mode=='edit'? $this->student_id :($this->mode=='add'? Auth::user()->id :'')),],
             'member_id'=>['required','numeric','unique:students,member_id,'.($this->mode=='edit'? $this->student_id :($this->mode=='add'? Auth::user()->id :'')),],
             'photo'=>[($this->mode=='edit'? 'nullable' : ($this->photoold!=null? 'nullable' : 'required')),'image','mimes:jpeg,jpg,png','max:1024'],
@@ -209,6 +214,7 @@ class AllAdmission extends Component
                 $this->blood_group = $student->blood_group;
                 $this->is_allergy = $student->is_allergy;
                 $this->is_ragging = $student->is_ragging;
+                $this->gender = $student->gender;
                 $this->address_type = $student->address_type;
                 $this->member_id = $student->member_id;
                 $this->photoold = $student->photo;
@@ -217,7 +223,14 @@ class AllAdmission extends Component
     }
 
     public function save()
-    {
+    {   
+        if( $this->admissionfull==1)
+        {
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'info',
+                'message'=>"Admission Full In This  Academic Year For This class !!"
+            ]);
+        }
         $validatedData = $this->validate();
 
 
@@ -239,6 +252,7 @@ class AllAdmission extends Component
                 $student->blood_group = $validatedData['blood_group'];
                 $student->is_allergy = $validatedData['is_allergy'];
                 $student->is_ragging = $this->is_ragging == 1 ? '1' : '0';
+                $student->gender = $this->gender == 1 ? '1' : '0';
                 $student->address_type = $this->address_type == 1 ? '1' : '0';
                 $student->member_id = $this->member_id;
                 if ($this->photo) {
@@ -317,7 +331,7 @@ class AllAdmission extends Component
             $this->academic_year_id = $admission->academic_year_id;
             $this->student_id = $admission->student_id;
             $this->class_id = $admission->class_id;
-            $this->status = '0';
+            $this->status = $admission->status;
 
             $class = Classes::where('id', $admission->class_id)->latest()->first();
             if ($class)
@@ -364,6 +378,7 @@ class AllAdmission extends Component
                 $this->blood_group = $student->blood_group;
                 $this->is_allergy = $student->is_allergy;
                 $this->is_ragging = $student->is_ragging;
+                $this->gender = $student->gender;
                 $this->address_type = $student->address_type;
                 $this->member_id = $student->member_id;
                 $this->photoold = $student->photo;
@@ -441,6 +456,7 @@ class AllAdmission extends Component
             $student->blood_group = $validatedData['blood_group'];
             $student->is_allergy = $validatedData['is_allergy'];
             $student->is_ragging = $this->is_ragging==1?'1':'0';
+            $student->gender = $this->gender==1?'1':'0';
             $student->address_type = $this->address_type==1?'1':'0';
             $student->member_id = $this->member_id;
             if($this->photo)
@@ -544,22 +560,36 @@ class AllAdmission extends Component
         if (is_numeric($this->sgpa) && $this->sgpa >=1) {
             $this->percentage = (($this->sgpa * 10) - 7.5);
         }
-        $academicyears = AcademicYear::where('status', 0)->orderBy('year', 'DESC')->get();
-        $lastacademicyears = AcademicYear::where('year', '<', function ($query) { 
+
+        $academicyears = AcademicYear::select('id','year')->where('status', 0)->orderBy('year', 'DESC')->get();
+        $lastacademicyears = AcademicYear::select('id','year')->where('year', '<', function ($query) { 
             $query->selectRaw('MAX(year)')->from('academic_years');
         })->orderBy('year', 'DESC')->get();
+
         $streams=Classes::select('stream')->where('status',0)->distinct('stream')->get();
-        $types=Classes::select('type')->where('status',0)->where('stream',$this->stream)->distinct('type')->get();
-        $classes=Classes::select('id','name')->where('status',0)->where('type',$this->stream_type)->orderBy('name',"ASC")->get();
-        $students=Student::where('status',0)->orderBy('username',"ASC")->get();
-        $casts=Cast::where('status',0)->orderBy('name',"ASC")->get();
-        $query =Admission::orderBy('academic_year_id', 'DESC');
+
+        if ($this->stream) {
+            $types=Classes::select('type')->select('type')->where('status',0)->where('stream',$this->stream)->distinct('type')->get();
+        } else { 
+            $types = [];
+        }
+
+        if ($this->stream_type) {
+            $classes=Classes::select('id','name')->where('status',0)->where('type',$this->stream_type)->orderBy('name',"ASC")->get();
+        } else { 
+            $classes = [];
+        }
+
+        $students=Student::select('id','username')->where('status',0)->orderBy('username',"ASC")->get();
+        $casts=Cast::select('id','name')->where('status',0)->orderBy('name',"ASC")->get();
+
         if ($this->cast_id) {
             $categories =Cast::find($this->cast_id)->category()->orderBy('name', 'ASC')->get();
         } else { 
             $categories = [];
         }
-        $query =Admission::orderBy('academic_year_id', 'DESC');    
+
+        $query =Admission::select('id','academic_year_id','student_id','class_id','seated_id', 'status')->orderBy('academic_year_id', 'DESC'); 
         if ($this->ad) {
             $admissionIds = Admission::where('id', 'like',$this->ad. '%')->pluck('id');
             $query->whereIn('id', $admissionIds);

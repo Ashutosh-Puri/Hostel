@@ -21,7 +21,7 @@ class AdmissionSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 200; $i++) {
             Admission::create([
                 'academic_year_id' => AcademicYear::inRandomOrder()->first()->id,
                 'student_id' => Student::inRandomOrder()->first()->id,

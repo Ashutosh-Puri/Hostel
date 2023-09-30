@@ -248,11 +248,20 @@
                         <div class="bg-success">
                             <div class="float-start pt-2 px-2">
                                 <h3>Data Student Payments</h3>
+                                <div wire:loading wire:target="per_page" class="loading-overlay">
+                                    <div class="loading-spinner">
+                                        <div class="spinner-border spinner-border-lg text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="float-end">
-                                <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
-                                    Add Student Payment<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
-                                </a>
+                                @can('Add Student Payment')
+                                    <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
+                                        Add Student Payment<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
+                                    </a>
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -277,13 +286,13 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input class="w-100" wire:model="admission_name" type="search" placeholder="Admission ID">
+                                                <input class="w-100" wire:model.debounce.1000ms="admission_name" type="search" placeholder="Admission ID">
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input class="w-100" wire:model="year" type="search" placeholder="Academic Year">
+                                                <input class="w-100" wire:model.debounce.1000ms="year" type="search" placeholder="Academic Year">
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input class="w-100" wire:model="student_name" type="search" placeholder="Student Name">
+                                                <input class="w-100" wire:model.debounce.1000ms="student_name" type="search" placeholder="Student Name">
                                             </div>
                                         </span>
                                     </span>
@@ -301,7 +310,12 @@
                                             <th>Deposite</th>
                                             <th>Total Amount</th>
                                             <th>Status</th>
-                                            <th>Action</th>
+                                            <th>Paymet</th>
+                                            @can('Edit Student Payment')
+                                                <th>Action</th>
+                                            @elsecan('Delete Student Payment')
+                                                <th>Action</th>
+                                            @endcan
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -329,23 +343,67 @@
                                                         <span class="badge bg-success text-white">Paid</span>
                                                     @elseif ( $item->status == '2')
                                                         <span class="badge bg-danger text-white">Cancelled</span>
+                                                    @elseif ( $item->status == '3')
+                                                        <span class="badge bg-info text-white">Refunded</span>
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
-                                                    @if ($item->status==1) 
-                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-thumb-down"></i> </a>
-                                                    @elseif ($item->status==2)
-                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-warning waves-effect waves-light"> <i class="mdi mdi-clock"></i> </a>
-                                                    @elseif ($item->status==0)
-                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
+                                                    @if ($item->status==0)                    
+                                                        @if ($item->total_amount >0)
+                                                            <a class="btn btn-sm btn-success" data-turbolinks="false" href="{{ route('pay_fee',$item->id) }}" >Pay</a>
+                                                        @endif
                                                     @endif
-                                                    <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                    @if ($item->status==2)                    
+                                                        @if ($item->total_amount >=0)
+                                                            @if (isset($item->transaction->status))
+                                                                @if ($item->transaction->status==2)
+                                                                    <a  class="btn  btn-sm btn-primary" data-turbolinks="false" href="{{ route('refund_fee',$item->id) }}" >Refund</a>
+                                                                @endif
+                                                            @endif
+                                                        @endif
+                                                    @endif
                                                 </td>
+                                                @can('Edit Student Payment')
+                                                    <td>
+                                                        @can('Edit Student Payment')
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                            @if ($item->status==1)
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-thumb-down"></i> </a>
+                                                            @elseif ($item->status==2)
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-warning waves-effect waves-light"> <i class="mdi mdi-clock"></i> </a>
+                                                            @elseif ($item->status==0)
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
+                                                            @endif
+                                                        @endcan
+                                                        @can('Delete Student Payment')
+                                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                        @endcan
+                                                    </td>
+                                                @elsecan('Delete Student Payment')
+                                                    <td>
+                                                        @can('Edit Student Payment')
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                            @if ($item->status==1)
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-thumb-down"></i> </a>
+                                                            @elseif ($item->status==2)
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-warning waves-effect waves-light"> <i class="mdi mdi-clock"></i> </a>
+                                                            @elseif ($item->status==0)
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
+                                                            @endif
+                                                        @endcan
+                                                        @can('Delete Student Payment')
+                                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                        @endcan
+                                                    </td>
+                                                @endcan
+                                                
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
+                                <div class="mt-4">
+                                    {{ $student_payments->links('pagination::bootstrap-5') }}
+                                </div>
                             </div>
                         </div>
                     </div>

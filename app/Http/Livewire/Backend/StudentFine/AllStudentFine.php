@@ -13,6 +13,7 @@ use Livewire\WithPagination;
 class AllStudentFine extends Component
 {
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $year = '';
@@ -178,9 +179,9 @@ class AllStudentFine extends Component
 
     public function render()
     {
-        $academic_years=AcademicYear::where('status',0)->orderBy('year', 'DESC')->get();
-        $admissions = Admission::where('academic_year_id', $this->academic_year_id)->get();
-        $students=Student::where('status',0)->whereIn('id',  $admissions->pluck('student_id'))->get();
+        $academic_years=AcademicYear::select('id','year')->where('status',0)->orderBy('year', 'DESC')->get();
+        $admissions = Admission::select('student_id')->where('academic_year_id', $this->academic_year_id)->get();
+        $students=Student::select('id','name')->where('status',0)->whereIn('id',  $admissions->pluck('student_id'))->get();
         $fines=Fine::where('status',0)->where('academic_year_id', $this->academic_year_id)->get();
         $amount=Fine::find($this->fine_id);
         if( $amount)

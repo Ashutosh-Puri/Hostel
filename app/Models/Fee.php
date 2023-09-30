@@ -15,12 +15,12 @@ class Fee extends Model
 
     public function AcademicYear()
     {
-        return $this->belongsTo(AcademicYear::class, 'academic_year_id', 'id');
+        return $this->belongsTo(AcademicYear::class);
     }
 
     public function Seated()
     {
-        return $this->belongsTo(Seated::class, 'seated_id', 'id');
+        return $this->belongsTo(Seated::class);
     }
 
 }

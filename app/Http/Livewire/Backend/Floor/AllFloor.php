@@ -12,6 +12,7 @@ use Illuminate\Validation\Rule;
 class AllFloor extends Component
 {   
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $floor_number = '';
@@ -163,15 +164,20 @@ class AllFloor extends Component
 
     public function render()
     {   
-        $hostels=Hostel::where('status',0)->get();
-        $buildings=Building::where('status',0)->where('hostel_id',$this->hostel_id)->get();
-        $query = Floor::where('status',0)->orderBy('floor', 'ASC');
+        $hostels=Hostel::select('id','name')->where('status',0)->get();
+        $buildings=Building::select('id','name')->where('status',0)->where('hostel_id',$this->hostel_id)->get();
+
+        $query = Floor::with('Building')->select('id','floor','building_id')->where('status',0)->orderBy('floor', 'ASC');
         if ($this->building_name) {
             $query->whereHas('Building', function ($query) {
                 $query->where('name', 'like', '%' . $this->building_name . '%');
             });
         }
-        $floors = $query->where('floor', 'like',$this->floor_number. '%')->paginate($this->per_page);
+
+        $floors = $query->when($this->floor_number, function ($query) {
+            return $query->where('floor', 'like', $this->floor_number . '%');
+        })->paginate($this->per_page);
+
         return view('livewire.backend.floor.all-floor',compact('floors','buildings','hostels'))->extends('layouts.admin.admin')->section('admin');
     }
 }

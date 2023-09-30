@@ -12,7 +12,7 @@ class Category extends Model
 
     protected $guarded = [];
 
-    public function Casts()
+    public function casts()
     {
         return $this->hasMany(Cast::class);
     }

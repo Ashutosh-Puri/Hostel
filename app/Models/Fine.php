@@ -16,12 +16,12 @@ class Fine extends Model
 
     public function AcademicYear()
     {
-        return $this->belongsTo(AcademicYear::class, 'academic_year_id', 'id');
+        return $this->belongsTo(AcademicYear::class);
     }
 
 
-    public function StudentFines()
+    public function studentfines()
     {
-        return $this->hasMany(StudentFine::class, 'fine_id', 'id');
+        return $this->hasMany(StudentFine::class);
     }
 }

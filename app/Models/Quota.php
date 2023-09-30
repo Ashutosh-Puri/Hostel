@@ -16,10 +16,10 @@ class Quota extends Model
    
     public function Class()
     {
-        return $this->belongsTo(Classes::class, 'class_id', 'id');
+        return $this->belongsTo(Classes::class);
     }
     public function AcademicYear()
     {
-        return $this->belongsTo(AcademicYear::class, 'academic_year_id', 'id');
+        return $this->belongsTo(AcademicYear::class);
     }
 }

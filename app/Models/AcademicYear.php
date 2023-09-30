@@ -18,40 +18,39 @@ class AcademicYear extends Model
     use HasFactory;
     protected $guarded = [];
 
-
     public function Fines()
     {
-        return $this->hasMany(Fine::class, 'academic_year_id', 'id');
+        return $this->hasMany(Fine::class);
     }
 
     public function Fees()
     {
-        return $this->hasMany(Fee::class, 'academic_year_id', 'id');
+        return $this->hasMany(Fee::class);
     }
 
     public function StudentFines()
     {
-        return $this->hasMany(StudentFine::class, 'academic_year_id', 'id');
+        return $this->hasMany(StudentFine::class);
     }
 
     public function StudentPaymets()
     {
-        return $this->hasMany(StudentPayment::class, 'academic_year_id', 'id');
+        return $this->hasMany(StudentPayment::class);
     }
 
     public function Quotas()
     {
-        return $this->hasMany(Quota::class, 'academic_year_id', 'id');
+        return $this->hasMany(Quota::class);
     }
 
     public function StudentEducations()
     {
-        return $this->hasMany(AcademicYear::class, 'academic_year_id', 'id');
+        return $this->hasMany(AcademicYear::class);
     }
 
     public function Admissions()
     {
-        return $this->hasMany(Admission::class, 'academic_year_id', 'id');
+        return $this->hasMany(Admission::class);
     }
 
 

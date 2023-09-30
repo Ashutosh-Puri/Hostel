@@ -9,6 +9,7 @@ use Livewire\WithPagination;
 class AllRule extends Component
 {   
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $search = '';
@@ -24,7 +25,7 @@ class AllRule extends Component
     {
         return [
             'name' => ['required', 'string', 'max:255','unique:rules,name,'.($this->mode=='edit'? $this->current_id :'')],
-            'description' => ['required', 'string', 'max:255','unique:rules,description,'.($this->mode=='edit'? $this->current_id :'')],
+            'description' => ['required', 'string', 'max:2000','unique:rules,description,'.($this->mode=='edit'? $this->current_id :'')],
         ];
     }
 
@@ -153,7 +154,10 @@ class AllRule extends Component
 
     public function render()
     {
-        $rule=Rule::where('description', 'like', '%'.$this->search.'%')->orderBy('description', 'ASC')->paginate($this->per_page);
+        $rule = Rule::query()->when($this->search, function ($query) {
+            return $query->where('description', 'like', '%' . $this->search . '%');
+        })->orderByRaw('CAST(SUBSTRING_INDEX(name, "Rule", -1) AS UNSIGNED) ASC')->paginate($this->per_page);
+
         return view('livewire.backend.rule.all-rule',compact('rule'))->extends('layouts.admin.admin')->section('admin');
     }
 }

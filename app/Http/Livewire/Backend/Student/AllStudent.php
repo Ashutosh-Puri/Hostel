@@ -14,6 +14,7 @@ class AllStudent extends Component
 {
     use WithFileUploads;
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $search = '';
@@ -162,7 +163,10 @@ class AllStudent extends Component
 
     public function render()
     {
-        $students=Student::where('username', 'like', '%'.$this->search.'%')->orderBy('username', 'ASC')->paginate($this->per_page);
+        $students = Student::query()->when($this->search, function ($query) {
+            return $query->where('username', 'like', '%' . $this->search . '%');
+        }) ->orderBy('username', 'ASC')->paginate($this->per_page);
+        
         return view('livewire.backend.student.all-student',compact('students'))->extends('layouts.admin.admin')->section('admin');
     }
 

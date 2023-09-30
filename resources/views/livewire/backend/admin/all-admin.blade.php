@@ -27,14 +27,14 @@
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
-                                            <label for="role_id" class="form-label">Select Role</label>
-                                            <select class="form-select @error('role_id') is-invalid @enderror" id="role_id" wire:model="role_id" >
+                                            <label for="role" class="form-label">Select Role</label>
+                                            <select class="form-select @error('role') is-invalid @enderror" id="role" wire:model="role" >
                                                 <option hidden value="">Select Role</option>
                                                 @foreach ($roles as $item1)
-                                                    <option  value="{{ $item1->id }}"> {{ $item1->role }} </option>
+                                                    <option  value="{{ $item1->name}}"> {{ $item1->name }} </option>
                                                 @endforeach
                                             </select>
-                                            @error('role_id')
+                                            @error('role')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -167,14 +167,14 @@
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
-                                            <label for="role_id" class="form-label">Select Role</label>
-                                            <select class="form-select @error('role_id') is-invalid @enderror" id="role_id" wire:model="role_id" >
+                                            <label for="role" class="form-label">Select Role</label>
+                                            <select class="form-select @error('role') is-invalid @enderror" id="role" wire:model="role" >
                                                 <option hidden value="">Select Role</option>
                                                 @foreach ($roles as $item1)
-                                                    <option  value="{{ $item1->id }}"> {{ $item1->role }} </option>
+                                                    <option  value="{{ $item1->name  }}"> {{ $item1->name }} </option>
                                                 @endforeach
                                             </select>
-                                            @error('role_id')
+                                            @error('role')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -275,11 +275,20 @@
                         <div class="bg-success">
                             <div class="float-start pt-2 px-2">
                                 <h2>Data Admins</h2>
+                                <div wire:loading wire:target="per_page" class="loading-overlay">
+                                    <div class="loading-spinner">
+                                        <div class="spinner-border spinner-border-lg text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="float-end">
-                                <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
-                                    Add Admin<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
-                                </a>
+                                @can('Add Admin')
+                                    <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
+                                        Add Admin<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
+                                    </a>
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -306,7 +315,7 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                    <input class="w-100" wire:model="search" type="search" placeholder="Admin Name">
+                                                    <input class="w-100" wire:model.debounce.1000ms="search" type="search" placeholder="Admin Name">
                                             </div>
                                         </span>
                                     </span>
@@ -323,7 +332,11 @@
                                             <th>Mobile</th>
                                             <th>Role</th>
                                             <th>Status</th>
-                                            <th>Action</th>
+                                            @can('Edit Admin')
+                                                <th>Action</th>
+                                            @elsecan('Delete Admin')
+                                                <th>Action</th>
+                                            @endcan
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -336,7 +349,13 @@
                                                 <td>{{ $item->name }}</td>
                                                 <td>{{ $item->email }}</td>
                                                 <td>{{ $item->mobile }}</td>
-                                                <td>{{ $item->Role->role }}</td>
+                                                <td>
+                                                    @foreach ($item->roles as $role)
+                                                        <span class="badge badge-pill bg-primary">
+                                                            {{ $role->name }}
+                                                        </span>
+                                                    @endforeach
+                                                </td>
                                                 <td>
                                                     @if ( $item->status == '0')
                                                         <span class="badge bg-success text-white">Active</span>
@@ -344,15 +363,35 @@
                                                         <span class="badge bg-danger text-white">In-Active</span>
                                                     @endif
                                                 </td>
-                                                <td>
-                                                    <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
-                                                    @if ($item->status==1) 
-                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
-                                                    @else
-                                                        <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-thumb-down"></i> </a>
-                                                    @endif
-                                                    <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
-                                                </td>
+                                                @can('Edit Admin')
+                                                    <td>
+                                                        @can('Edit Admin')
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                            @if ($item->status==1)
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
+                                                            @else
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-thumb-down"></i> </a>
+                                                            @endif
+                                                        @endcan
+                                                        @can('Delete Admin')
+                                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                        @endcan
+                                                    </td>
+                                                @elsecan('Delete Admin')
+                                                    <td>
+                                                        @can('Edit Admin')
+                                                        <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                            @if ($item->status==1)
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
+                                                            @else
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-thumb-down"></i> </a>
+                                                            @endif
+                                                        @endcan
+                                                        @can('Delete Admin')
+                                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                        @endcan
+                                                    </td>
+                                                @endcan
                                             </tr>
                                         @endforeach
                                     </tbody>
