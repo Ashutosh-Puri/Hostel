@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\temp;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Backend\Bed\AllBed;
 use App\Http\Livewire\Backend\Fee\AllFee;
@@ -43,6 +44,7 @@ use App\Http\Livewire\Backend\Report\AllAllocationReport;
 use App\Http\Livewire\Backend\StudentFine\AllStudentFine;
 use App\Http\Livewire\Backend\Transaction\AllTransaction;
 use App\Http\Livewire\Frontend\Admission\StudentAdmission;
+use App\Http\Controllers\Common\AdmissionFormPdfController;
 use App\Http\Livewire\Backend\AcademicYear\AllAcademicYear;
 use App\Http\Livewire\Backend\PhotoGallery\AllPhotoGallery;
 use App\Http\Controllers\Backend\Razorpay\RazorpayController;
@@ -290,24 +292,32 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
         Route::get('all/student/night/out',AllStudentNightOut::class)->name('all_student_night_out');
     });
 
-    Route::get('all/transactions',AllTransaction::class)->name('all_transaction');
-
-    Route::get('pay/fee/{id}',[RazorpayController::class,'pay_fee'])->name('pay_fee');
-    Route::get('refund/fee/{id}',[RazorpayController::class,'refund_fee'])->name('refund_fee');
-    Route::post('fee/payment/verify',[RazorpayController::class,'fee_payment_verify'])->name('fee_payment_verify');
-    Route::post('fee/payment/fail',[RazorpayController::class,'fee_payment_fail'])->name('fee_payment_fail');
-
-
-    Route::get('pay/fine/{id}',[RazorpayController::class,'pay_fine'])->name('pay_fine');
-    Route::get('refund/fine/{id}',[RazorpayController::class,'refund_fine'])->name('refund_fine');
-    Route::post('fine/payment/verify',[RazorpayController::class,'fine_payment_verify'])->name('fine_payment_verify');
-    Route::post('fine/payment/fail',[RazorpayController::class,'fine_payment_fail'])->name('fine_payment_fail');
-
-    Route::get('razorapay/payments',RazorpayPayments::class)->name('razorpay_payments');
-    Route::get('razorapay/orders',RazorpayOrders::class)->name('razorpay_orders');
-    Route::get('razorapay/refunds',RazorpayRefunds::class)->name('razorpay_refunds');
+   
 
 });
+
+Route::get('all/transactions',AllTransaction::class)->name('all_transaction');
+
+Route::get('pay/fee/{id}',[RazorpayController::class,'pay_fee'])->name('pay_fee');
+Route::get('refund/fee/{id}',[RazorpayController::class,'refund_fee'])->name('refund_fee');
+Route::post('fee/payment/verify',[RazorpayController::class,'fee_payment_verify'])->name('fee_payment_verify');
+Route::post('fee/payment/fail',[RazorpayController::class,'fee_payment_fail'])->name('fee_payment_fail');
+
+
+Route::get('pay/fine/{id}',[RazorpayController::class,'pay_fine'])->name('pay_fine');
+Route::get('refund/fine/{id}',[RazorpayController::class,'refund_fine'])->name('refund_fine');
+Route::post('fine/payment/verify',[RazorpayController::class,'fine_payment_verify'])->name('fine_payment_verify');
+Route::post('fine/payment/fail',[RazorpayController::class,'fine_payment_fail'])->name('fine_payment_fail');
+
+Route::get('razorapay/payments',RazorpayPayments::class)->name('razorpay_payments');
+Route::get('razorapay/orders',RazorpayOrders::class)->name('razorpay_orders');
+Route::get('razorapay/refunds',RazorpayRefunds::class)->name('razorpay_refunds');
+
+Route::get('view/admission_form/{id}',[AdmissionFormPdfController::class,'view_pdf'])->name('view_admission_form');
+Route::get('download/admission_form/{id}',[AdmissionFormPdfController::class,'download_pdf'])->name('download_admission_form');
+
+Route::get('form',[temp::class,'pdf']);
+
 
 
 require __DIR__.'/student_auth.php';

@@ -1,5 +1,13 @@
 
+@font-face {
+  font-family: 'Devanagari';
+  src: url('TiroDevanagariMarathi-Regular.ttf') format('truetype');
+  }
 
+  @font-face {
+    font-family: 'Mangal Regular';
+    src: url('Mangal Regular.ttf') format('truetype');
+    }
 
 
 
