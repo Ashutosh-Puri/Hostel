@@ -1,191 +1,493 @@
-@extends('layouts.app')
-@section('content')
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
 
-@section('styles')
+    <title>Admission Form</title>
+    <style>
+        td{
+            text-align: center;
+        }
+        tr{
+            margin-top: 10px;
+        }
 
-<style>
-    body {
-        border: 2px solid black;
-    }
-</style>
+        /* body{
+            font-family: marathi;
+        } */
 
-@endsection
-<html>
 
-    <body>
+        /* @media print {
 
-        <div class="container-md">
-            <section name="page_1">
-                <div class="admission_form1">
-                    <div class="row">
-                        <div class="col-12">
-                            <img src="{{ asset('assets/images/shikshan-logo.png') }}" alt="form-logo" style="display: block; margin: 0 auto; height: 80px; width: 120px;">
-                        </div>
-                        <div class="col-12">
-                            <h6 class="text-center mt-1">Shikshan Prasark Sanstha's</h6>
-                            <h5 class="text-center mx-0 text-wrap mt-2">S.N. Arts, D.J. Malpani Commerce & B.N. Sarda Science College(Autonomous), Sangamner</h5>
-                            <h5 class="text-center">Tal-Sangamner, Dist-Ahmednagar-422605</h5>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-4">
+            html,
+            body {
 
-                        </div>
-                        <div class="col-4">
-                            <label class="form-control w-100 mb-2 text-center" for="#" style="border: 1px solid #000000; color:black; font-size: 18px;">
-                                <strong>BOY'S HOSTEL</strong>
-                            </label>
-                        </div>
-                        <div class="col-4">
+                width: 225mm;
+                height: 950mm;
+            }
 
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <h5 class="text-center mt-3">Rector: Dr. Valmik A. Mendhkar-9822038727 / 8669002187</h5>
-                        </div>
-                    </div>
-                    <div class="row mt-3 mx-2">
-                        <div class="col-12">
-                            <label class="form-control w-100 mb-2 text-center" for="#" style="border: 1px solid #000000; color:black; font-size: 18px; word-spacing: 2em;">
-                                <strong>APPLICATION FORM FOR NIGHT OUT</strong>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-3">
+        } */
+    </style>
+</head>
+<body>
+<div >
 
-                        </div>
-                        <div class="col-3">
 
-                        </div>
-                        <div class="col-6">
-                            <div class="float-end mt-2 mx-3">
-                                <strong>Date Of Application : 28 / 07 / 2023</strong>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-sm-9">
-                            <div class="row mt-2">
-                                <div class="col-12 col-sm-3">
-                                    <label class="form-label" for="search">Name</label>
-                                </div>
-                                <div class="col-12 col-sm-9">
-                                    <label class="form-label text-start" for="search"><strong>: Suyash Popat Pawar</strong></label>
-                                </div>
-                                <div class="col-12 col-sm-3 mt-1">
-                                    <label class="form-label" for="search">Class</label>
-                                </div>
-                                <div class="col-12 col-sm-9">
-                                    <label class="form-label text-start" for="search"><strong>: F.Y.B.Sc.</strong></label>
-                                </div>
-                                <div class="col-12 col-sm-3 mt-1">
-                                    <label class="form-label" for="search">Hostel No</label>
-                                </div>
-                                <div class="col-12 col-sm-9">
-                                    <label class="form-label text-start" for="search"><strong>: B-1</strong></label>
-                                </div>
-                                <div class="col-12 col-sm-3 mt-1">
-                                    <label class="form-label" for="search">Room No</label>
-                                </div>
-                                <div class="col-12 col-sm-9">
-                                    <label class="form-label text-start" for="search"><strong>: G-9</strong></label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mx-4 mt-1">
-                        <div>To,</div>
-                        <div class="mt-2">The Rector Sir,</div>
-                        <div>Boy's Hostel,</div>
-                        <div>Sangamner College ( Autonomous ), Sangamner,</div>
-                        <div class="mt-2">Respected Sir,</div>
-                        <div class="row mt-2">
-                            <div class="col-1">
-                                <label class="form-label" for="search">I am</label>
-                            </div>
-                            <div class="col-6 text-center">
-                                <strong>Shinde Aniket Dyaneshwar</strong>
-                            </div>
-                            <div class="col-2">
-                                <label class="form-label" for="search">Class</label>
-                            </div>
-                            <div class="col-3 text-center">
-                                <strong>11th Science</strong>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            request you to grant permission from
-                        </div>
-                        <div class="col-6 text-start">
-                            <strong>28 / 08 / 2023 to 30 / 08 / 2023</strong>
-                        </div>
-                    </div>
-                    <div class="row mx-5 mt-2">
-                        <div class="col-6">
-                            Reason for Night Out
-                        </div>
-                        <div class="col-6 text-start">
-                            <strong>at home</strong>
-                        </div>
-                    </div>
-                    <div class="row mx-3 mt-2">
-                        <div class="col-12">
-                            I will stay at the following address during the above mentioned period. I will return to the
-                        </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-12">
-                           hostel on <strong class="mx-3">31 / 08 / 2023</strong>
-                        </div>
-                    </div>
-                    <div class="row mx-4 mt-2">
-                        <div class="col-6 text-start">
-                            <div>Thanking you,</div>
-                            <div class="mt-1">Yours faithfully,</div>
-                            <div class="mt-2 mb-2"><strong>A.S.Shinde</strong></div>
-                            <div>Signature</div>
-                            <div class="mt-2">( Student Sign )</div>
-                        </div>
-                        <div class="col-6">
-                            <div>Name, Address & Sign of Guardian</div>
-                            <div class="mt-2"><strong>Aniket Dyaneshwar Shinde</strong></div>
-                            <div class="mt-2"><strong>Musalgaon Tal.Sinner</strong></div>
-                            <div class="row mt-2">
-                                <div class="col-4">
-                                    <label>Mob.No :</label>
-                                </div>
-                                <div class="col-8 text-start">
-                                    <strong>3986589587</strong>
-                                </div>
-                            </div>
-                            <div class="row mt-2">
-                                <div class="col-4">
-                                    <label>Relation :</label>
-                                </div>
-                                <div class="col-8 text-start">
-                                    <strong>Sister</strong>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-2">
-                            Permitted by :
-                        </div>
-                        <div class="col-9 text-start">
-                            <strong>Valmik A. Mendhkar</strong>
-                            <div class="mt-2">( Rector Seal & Sign )</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+    <section style="break-after:page;">
+        <div >
+            <table   width="100%" style="margin: 0; border-collapse: collapse;">
+                <tr>
+                    <td width="10%"></td>
+                    <td  width="10%"></td>
+                    <td  width="10%"></td>
+                    <td  width="10%"></td>
+                    <td  width="10%"></td>
+                    <td  width="10%"></td>
+                    <td  width="10%"></td>
+                    <td  width="10%"></td>
+                    <td  width="10%"></td>
+                    <td  width="10%"></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="vertical-align: top; ">
+                    </td>
+                    <td colspan="4" style="text-align: center; vertical-align: top; ">
+                        <img src="./assets/images/shikshan-logo.png" alt="form-logo" class="custom-image" style="display: block; margin: 0 auto; height: 80px; width: 120px;">
+                    </td>
+                    <td colspan="3" style="text-align: right ;">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10" style="justify-content: center;">
+                        <h6 style="margin-top: 0px; text-align: center; margin-bottom:3px;">Shikshan Prasark Sanstha's</h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+                        <h4 style="margin-top: 0px; text-align: center; margin-bottom:3px;">S.N. Arts, D.J. Malpani Commerce & B.N. Sarda Science College(Autonomous), Sangamner</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+                        <h4 style="margin-top: 0px; text-align: center; margin-bottom:3px;">Tal-Sangamner, Dist-Ahmednagar-422605</h4>
+                    </td>
+                </tr>
+                <br>
+                <tr>
+                    <td colspan="2">
+
+                    </td>
+                    <td colspan="2">
+
+                    </td>
+                    <td colspan="2" style="align-items:center; border: 2px solid #000; padding: 10px; width: 10px; font-size:15px;">
+                        <p>BOY'S HOSTEL</p>
+                    </td>
+                    <td colspan="2">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10" style="text-align: center;">
+                        <label >Rector : </label><label ><strong>Dr. Valmik A. Mendhkar-9822038727 / 8669002187</strong></label>
+                    </td>
+                </tr>
+                <br>
+                <br>
+                <tr>
+                    <td colspan="10" style="align-items:center; border: 2px solid #000; padding: 10px; width: 10px; font-size: 18px; word-spacing: 2em;">
+                        <label>APPLICATION FORM FOR NIGHT OUT</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+
+                    </td>
+                    <td colspan="5" style="text-align: left;">
+                        <label >Date Of Application :</label>   <label ><strong>28 / 07 / 2023</strong></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <br>
+                <tr>
+                    <td colspan="2" style="text-align: left;">
+                        <label >Name</label>
+                    </td>
+                    <td colspan="1" style="text-align: left;">
+                        <label >:</label>
+                    </td>
+                    <td colspan="7" style="text-align: left;">
+                        <label ><strong>Suyash Popat Pawar</strong></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: left;">
+                        <label >Class</label>
+                    </td>
+                    <td colspan="1" style="text-align: left;">
+                        <label >:</label>
+                    </td>
+                    <td colspan="7" style="text-align: left;">
+                        <label ><strong>F.Y.B.Sc.</strong></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: left;">
+                        <label >Hostel No</label>
+                    </td>
+                    <td colspan="1" style="text-align: left;">
+                        <label >:</label>
+                    </td>
+                    <td colspan="7" style="text-align: left;">
+                        <label ><strong>B-1</strong></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: left;">
+                        <label >Room No</label>
+                    </td>
+                    <td colspan="1" style="text-align: left;">
+                        <label >:</label>
+                    </td>
+                    <td colspan="7" style="text-align: left;">
+                        <label ><strong>G-9</strong></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10" style="text-align: left;">
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;To,
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10" style="text-align: left;">
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;The Rector Sir,
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10" style="text-align: left;">
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Boy's Hostel,
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10" style="text-align: left;">
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Sangamner College ( Autonomous ), Sangamner,
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10" style="text-align: left;">
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Respected Sir,
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        &nbsp; &nbsp; &nbsp;I am,
+                    </td>
+                    <td colspan="3" style="text-align: left">
+                        <strong>Shinde Aniket Dyaneshwar</strong>
+                    </td>
+                    <td colspan="1" style="text-align: left">
+                        Class
+                    </td>
+                    <td colspan="2" style="text-align: left">
+                        <strong>11th Science</strong>
+                    </td>
+                    <td colspan="2" style="text-align: left">
+                      request you to grant
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: left;">
+                        permission from
+                    </td>
+                    <td colspan="2" style="text-align: left;">
+                        <strong>28 / 08 / 2023</strong>
+                    </td>
+                    <td colspan="1" style="text-align: left;">
+                        <strong>to</strong>
+                    </td>
+                    <td colspan="5" style="text-align: left;">
+                        <strong>30 / 08 / 2023</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr >
+                    <td colspan="4">
+                        &nbsp;&nbsp; &nbsp;&nbsp;Reason for Night Out
+                    </td>
+                    <td colspan="6" style="text-align: left;">
+                        <strong>at home</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+                      &nbsp;&nbsp;&nbsp;&nbsp;I will stay at the following address during the above mentioned period. I will return to the hostel on
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10" style="text-align: left;">
+                     <strong>21 /03 / 2023</strong>
+                    </td>
+                </tr>
+                <br>
+                <br>
+                <tr>
+                    <td colspan="10" style="text-align: left;">
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Thanking you,
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" style="text-align: left;">
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Your's Faithfully,
+                    </td>
+                    <td colspan="5" style="text-align: left;">
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Name, Address & Sign of Guardian
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" style="text-align: left;">
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<strong>A.S.Shinde</strong>
+                    </td>
+                    <td colspan="5" style="text-align: left;">
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<strong>Aniket Dyaneshwar Shinde</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="10">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" style="text-align: left;">
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Signature
+                    </td>
+                    <td colspan="5" style="text-align: left;">
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<strong>Musalgoan Tal.Sinner</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" style="text-align: left;">
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;( Student Sign )
+                    </td>
+                    <td colspan="5" style="text-align: left;">
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Mob No :<strong> 9370703153</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" style="text-align: left;">
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    </td>
+                    <td colspan="5" style="text-align: left;">
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Relation :<strong> Brother</strong>
+                    </td>
+                </tr>
+                <br>
+                <br>
+                <br>
+                <br>
+                <tr>
+                    <td colspan="2" style="text-align: left">
+                        Permitted by
+                    </td>
+                    <td colspan="1" style="text-align: left">
+                        :
+                    </td>
+                    <td colspan="7" style="text-align: left">
+                        <strong>Valmik A. Mendhkar</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: left">
+
+                    </td>
+                    <td colspan="1" style="text-align: left">
+
+                    </td>
+                    <td colspan="2" style="text-align: left">
+                        <strong>(Rector Seal & Sign)</strong>
+                    </td>
+                </tr>
+            </table>
         </div>
-
-    </body>
-
+    </section>
+</div>
+</body>
 </html>
-@endsection

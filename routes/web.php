@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\temp;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Backend\Bed\AllBed;
 use App\Http\Livewire\Backend\Fee\AllFee;
@@ -69,7 +70,7 @@ Route::middleware(['guest'])->group(function () {
 
     // Admin Login Route
     // Route::get('admin/login', AdminLogin::class)->name('admin.login');
-    
+
     // Home
     Route::get('/', Home::class)->name('home');
 
@@ -81,7 +82,7 @@ Route::middleware(['guest'])->group(function () {
 
 });
 
-
+Route::get('form',[temp::class,'pdf']);
 
 // Student Routes With Web Guard
 Route::middleware(['auth:student','is_student','verified'])->group(function () {
@@ -96,7 +97,7 @@ Route::middleware(['auth:student','is_student','verified'])->group(function () {
 
 
 
-//  Routes With admin Guard is_admin middleware 
+//  Routes With admin Guard is_admin middleware
 Route::middleware(['auth:admin','is_admin'])->group(function () {
 
     // Superadmin Routes With Admin Guard
@@ -106,17 +107,17 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
             // All Role
             Route::get('all/roles',AllRole::class)->name('all_role');
         });
-    
+
         Route::group(['middleware' => ['permission:Access Permission']], function () {
             // All Permission
-            Route::get('all/permissions',AllPermission::class)->name('all_permission'); 
+            Route::get('all/permissions',AllPermission::class)->name('all_permission');
         });
-    
+
         Route::group(['middleware' => ['permission:Access Role Wise Permission']], function () {
            // All Role Permission
            Route::get('all/rolewisepermission',AllRolePermission::class)->name('all_role_permission');
         });
-        
+
         Route::group(['middleware' => ['permission:Access Admin']], function () {
             // All Admin
             Route::get('all/admins',AllAdmin::class)->name('all_admin');
@@ -126,12 +127,12 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
             // Site Setting
             Route::get('site/setting',Setting::class)->name('site_setting');
         });
-        
+
         Route::group(['middleware' => ['permission:Access College']], function () {
             // All College
             Route::get('all/colleges',AllCollege::class)->name('all_college');
         });
-    
+
         Route::group(['middleware' => ['permission:Access Hostel']], function () {
             // All Hostel
             Route::get('all/hostels',AllHostel::class)->name('all_hostel');
@@ -139,7 +140,7 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
 
     });
 
-    
+
     Route::group(['middleware' => ['permission:Access Admission']], function () {
         // All Admission
         Route::get('all/admissions',AllAdmission::class)->name('all_admission');
@@ -174,7 +175,7 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
         // All Room
         Route::get('all/rooms',AllRoom::class)->name('all_room');
     });
-    
+
     Route::group(['middleware' => ['permission:Access Bed']], function () {
         // All Bed
         Route::get('all/beds',AllBed::class)->name('all_bed');
@@ -266,7 +267,7 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
         // All Room Report
         Route::get('all/reportsroom',AllRoomReport::class)->name('all_room_report');
     });
-    
+
     Route::group(['middleware' => ['permission:Access Report']], function () {
         // All Room Report
         Route::get('all/reportpayment',AllPaymentReport::class)->name('all_payment_report');
@@ -278,7 +279,7 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
     });
 
     Route::group(['middleware' => ['permission:Access Forms']], function () {
-        
+
         // All Enquiry
         Route::get('all/enquires',AllEnquiry::class)->name('all_enquiry');
 
