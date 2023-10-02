@@ -35,7 +35,7 @@ class AllStudentLocalRegister extends Component
         return [
             'entry_time' => ['required', 'date_format:H:i'],
             'exit_time' => ['required', 'date_format:H:i'],
-            'reason' => ['required','string'],
+            'reason' => ['required','string','max:2000'],
         ];
     }
 

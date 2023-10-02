@@ -208,7 +208,7 @@
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->name }}</td>
-                                                <td>{{ $item->description }}</td>
+                                                <td class="text-wrap lh-lg">{{ $item->description }}</td>
                                                 <td>
                                                     @if ( $item->status == '0')
                                                         <span class="badge bg-success text-white">Active</span>
@@ -216,6 +216,7 @@
                                                         <span class="badge bg-danger text-white">In-Active</span>
                                                     @endif
                                                 </td>
+                                                
                                                 @can('Edit Notice')
                                                     <td>
                                                         @can('Edit Notice')

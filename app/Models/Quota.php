@@ -14,11 +14,11 @@ class Quota extends Model
 
 
    
-    public function class()
+    public function Class()
     {
         return $this->belongsTo(Classes::class);
     }
-    public function academicyear()
+    public function AcademicYear()
     {
         return $this->belongsTo(AcademicYear::class);
     }

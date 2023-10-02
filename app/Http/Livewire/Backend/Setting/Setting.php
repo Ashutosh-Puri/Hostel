@@ -11,19 +11,34 @@ class Setting extends Component
     public function removesymboliclink()
     {
         $linkPath = public_path('storage');
-        if (is_dir($linkPath)) {
-            rmdir($linkPath);
 
+        if (is_link($linkPath)) {
+            unlink($linkPath);
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'success',
                 'message'=>"Symbolic Link Deleted Successfully !!"
             ]);
-
-        }else {
+        } else {
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
                 'message'=>"No symbolic link found. !!"
             ]);
+        }
+
+        if (is_dir($linkPath)) {
+            exec("rd /s /q $linkPath", $output, $returnVar);
+    
+            if ($returnVar === 0) {
+                $this->dispatchBrowserEvent('alert',[
+                    'type'=>'success',
+                    'message'=>"Directory Removed Successfully !!"
+                ]);
+            } else {
+                $this->dispatchBrowserEvent('alert',[
+                    'type'=>'error',
+                    'message'=>"An error occurred while removing the directory. !!"
+                ]);
+            }
         }
     }
 

@@ -16,7 +16,7 @@ class StudentEducation extends Model
     protected $guarded=[];
 
 
-    public function academicyear()
+    public function AcademicYear()
     {
         return $this->belongsTo(AcademicYear::class);
     }
@@ -26,9 +26,9 @@ class StudentEducation extends Model
         return $this->belongsTo(Student::class);
     }
 
-    public function class()
+    public function Class()
     {
-        return $this->belongsTo(Classes::class);
+        return $this->belongsTo(Classes::class , 'last_class_id','id');
     }
 
     public function admission()

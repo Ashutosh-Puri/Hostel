@@ -35,7 +35,7 @@ class StudentSeeder extends Seeder
 
         $faker = Faker::create();
         $mobileNumberFormat = '##########';
-        for ($i = 0; $i < 1000; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             Student::create([
                 'username' => Str::slug($faker->unique()->userName, '_'),
                 'name' => $faker->name,

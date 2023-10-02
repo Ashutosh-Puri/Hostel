@@ -34,7 +34,7 @@ class AllStudentNightOut extends Component
         return [
             'going_date' => ['required', 'date'],
             'comming_date' => ['required', 'date'],
-            'reason' => ['required','string'],
+            'reason' => ['required','string','max:2000'],
         ];
     }
 

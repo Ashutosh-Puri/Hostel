@@ -30,7 +30,7 @@
                                         <label for="going_date" class="form-label">Going Date</label>
                                         <input type="date"
                                             class="form-control @error('going_date') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="going_date" value="{{ old('going_date') }}"
+                                            wire:model.debounce.1000ms="going_date" value="{{ old('going_date') }}" min="{{ date('Y-m-d'); }}"
                                             id="going_date" />
                                         @error('going_date')
                                         <div class="invalid-feedback">
@@ -44,7 +44,7 @@
                                         <label for="comming_date" class="form-label">Comming Date</label>
                                         <input type="date"
                                             class="form-control @error('comming_date') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="comming_date" value="{{ old('comming_date') }}"
+                                            wire:model.debounce.1000ms="comming_date" value="{{ old('comming_date') }}" min="{{ date('Y-m-d'); }}"
                                             id="comming_date" />
                                         @error('comming_date')
                                         <div class="invalid-feedback">
@@ -110,7 +110,7 @@
                                         <label for="going_date" class="form-label">Going Date</label>
                                         <input type="date"
                                             class="form-control @error('going_date') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="going_date" value="{{ old('going_date') }}"
+                                            wire:model.debounce.1000ms="going_date" value="{{ old('going_date') }}" min="{{ date('Y-m-d'); }}"
                                             id="going_date" />
                                         @error('going_date')
                                         <div class="invalid-feedback">
@@ -124,7 +124,7 @@
                                         <label for="comming_date" class="form-label">Comming Date</label>
                                         <input type="date"
                                             class="form-control @error('comming_date') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="comming_date" value="{{ old('comming_date') }}"
+                                            wire:model.debounce.1000ms="comming_date" value="{{ old('comming_date') }}" min="{{ date('Y-m-d'); }}"
                                             id="comming_date" />
                                         @error('comming_date')
                                         <div class="invalid-feedback">

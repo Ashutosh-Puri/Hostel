@@ -22,8 +22,13 @@ class StudentFine extends Model
     {
         return $this->belongsTo(Student::class);
     }
-    public function academicyear()
+    public function AcademicYear()
     {
         return $this->belongsTo(AcademicYear::class);
+    }
+
+    public function transaction()
+    {
+        return $this->hasOne(Transaction::class);
     }
 }

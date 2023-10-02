@@ -296,7 +296,7 @@
                                                      Floor
                                                 </td>
                                                 <td>
-                                                    @if ( $item->status == '0')
+                                                    @if ( $item->status ==0)
                                                         <span class="badge bg-success text-white">Active</span>
                                                     @else
                                                         <span class="badge bg-danger text-white">In-Active</span>

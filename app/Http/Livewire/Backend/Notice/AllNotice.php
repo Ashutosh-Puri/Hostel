@@ -25,7 +25,7 @@ class AllNotice extends Component
     {
         return [
             'name' => ['required', 'string', 'max:255','unique:notices,name,'.($this->mode=='edit'? $this->current_id :'')],
-            'description' => ['required', 'string', 'max:255','unique:notices,description,'.($this->mode=='edit'? $this->current_id :'')],
+            'description' => ['required', 'string', 'max:2000','unique:notices,description,'.($this->mode=='edit'? $this->current_id :'')],
         ];
     }
 

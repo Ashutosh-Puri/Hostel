@@ -20,27 +20,27 @@ class Allocation extends Model
 
 
 
-    public function bed()
+    public function Bed()
     {
         return $this->belongsTo(Bed::class);
     }
 
-    public function admission()
+    public function Admission()
     {
         return $this->belongsTo(Admission::class);
     }
 
-    public function localregisters()
+    public function LocalRegisters()
     {
         return $this->hasMany(LocalRegister::class);
     }
 
-    public function comefromhomes()
+    public function ComeFromHomes()
     {
         return $this->hasMany(ComeFromHome::class);
     }
 
-    public function nightouts()
+    public function NightOuts()
     {
         return $this->hasMany(NightOut::class);
     }

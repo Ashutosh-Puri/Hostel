@@ -38,7 +38,7 @@ class AllEnquiry extends Component
             'mobile' => ['required', 'integer', 'digits:10'],
             'gender' => ['required', 'integer', 'in:0,1'],
             'subject' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string',],
+            'description' => ['required', 'string','max:2000'],
         ];
     }
 

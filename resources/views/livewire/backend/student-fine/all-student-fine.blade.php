@@ -276,6 +276,7 @@
                                             <th>Fine Name</th>
                                             <th>Amount</th>
                                             <th>Status</th>
+                                            <th>Paymet</th>
                                             @can('Edit Student Fine')
                                                 <th>Action</th>
                                             @elsecan('Delete Student Fine')
@@ -298,6 +299,24 @@
                                                         <span class="badge bg-success text-white">Paid</span>
                                                     @elseif ( $item->status == '2')
                                                         <span class="badge bg-danger text-white">Cancelled</span>
+                                                    @elseif ( $item->status == '3')
+                                                        <span class="badge bg-primary text-white">Refunded</span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($item->status==0)                    
+                                                        @if ($item->amount >0)
+                                                            <a class="btn btn-sm btn-success" data-turbolinks="false" href="{{ route('pay_fine',$item->id) }}" >Pay</a>
+                                                        @endif
+                                                    @endif
+                                                    @if ($item->status==2)                    
+                                                        @if ($item->amount >=0)
+                                                            @if (isset($item->transaction->status))
+                                                                @if ($item->transaction->status==2)
+                                                                    <a  class="btn  btn-sm btn-primary" data-turbolinks="false" href="{{ route('refund_fine',$item->id) }}" >Refund</a>
+                                                                @endif
+                                                            @endif
+                                                        @endif
                                                     @endif
                                                 </td>
                                                 @can('Edit Student Fine')
@@ -310,6 +329,8 @@
                                                             <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-warning waves-effect waves-light"> <i class="mdi mdi-clock"></i> </a>
                                                         @elseif ($item->status==0)
                                                             <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
+                                                            @elseif ($item->status==3)
+                                                            <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-primary waves-effect waves-light"> <i class="mdi mdi-refresh"></i> </a>
                                                         @endif
                                                         @endcan
                                                         @can('Delete Student Fine')

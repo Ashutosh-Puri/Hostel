@@ -25,7 +25,7 @@ class AllRule extends Component
     {
         return [
             'name' => ['required', 'string', 'max:255','unique:rules,name,'.($this->mode=='edit'? $this->current_id :'')],
-            'description' => ['required', 'string', 'max:255','unique:rules,description,'.($this->mode=='edit'? $this->current_id :'')],
+            'description' => ['required', 'string', 'max:2000','unique:rules,description,'.($this->mode=='edit'? $this->current_id :'')],
         ];
     }
 

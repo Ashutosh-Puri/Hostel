@@ -138,6 +138,12 @@
           </a>
         </li>
       @endcan
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('all_transaction') }}">
+          <span class="icon-bg"><i class="mdi mdi-cash-multiple menu-icon"></i></span>
+          <span class="menu-title">Transaction's</span>
+        </a>
+      </li>
       <li class="nav-item nav-category">Reports</li>
       @can('Access Report')
         <li class="nav-item">
@@ -313,6 +319,27 @@
           </a>
         </li>
       @endcan
+
+      <li class="nav-item nav-category">Razorpay</li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('razorpay_orders') }}">
+          <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
+          <span class="menu-title">Order's</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('razorpay_payments') }}">
+          <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
+          <span class="menu-title">Payment's</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('razorpay_refunds') }}">
+          <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
+          <span class="menu-title">Refund's</span>
+        </a>
+      </li>
+
 
       {{--@can('')
       @endcan --}}
