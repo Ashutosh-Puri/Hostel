@@ -42,7 +42,7 @@ class RazorpayController extends Controller
                     if( $transaction)
                     {
     
-                        $transaction->student_id =Auth::user()->id;
+                        $transaction->student_id =$student_payment->student_id;
                         $transaction->student_payment_id =$student_payment->id;
                         $transaction->order_id=$order->id;
                         $transaction->amount= $student_payment->total_amount;
@@ -58,12 +58,12 @@ class RazorpayController extends Controller
                         "description"=> "Student Paymnet",
                         "order_id"=> $order->id,
                         "prefill"=> [
-                            "name"=> Auth::user()->name,
-                            "email"=> Auth::user()->email,
-                            "contact"=>Auth::user()->mobile
+                            "name"=> $student_payment->student->name,
+                            "email"=>  $student_payment->student->email,
+                            "contact"=> $student_payment->student->mobile
                         ],
                         "notes"=> [
-                            "address"=> Auth::user()->parent_address
+                            "address"=>  $student_payment->student->parent_address
                         ],
                         "theme"=> [
                             "color"=> "#32CD32" //lime
@@ -203,7 +203,7 @@ class RazorpayController extends Controller
                     if( $transaction)
                     {
     
-                        $transaction->student_id =Auth::user()->id;
+                        $transaction->student_id =$student_fine->student_id;
                         $transaction->student_fine_id =$student_fine->id;
                         $transaction->order_id=$order->id;
                         $transaction->amount= $student_fine->amount;
@@ -219,12 +219,12 @@ class RazorpayController extends Controller
                         "description"=> "Student Paymnet",
                         "order_id"=> $order->id,
                         "prefill"=> [
-                            "name"=> Auth::user()->name,
-                            "email"=> Auth::user()->email,
-                            "contact"=>Auth::user()->mobile
+                            "name"=> $student_fine->student->name,
+                            "email"=> $student_fine->student->email,
+                            "contact"=>$student_fine->student->mobile
                         ],
                         "notes"=> [
-                            "address"=> Auth::user()->parent_address
+                            "address"=> $student_fine->student->parent_address
                         ],
                         "theme"=> [
                             "color"=> "#32CD32" //lime
@@ -272,7 +272,6 @@ class RazorpayController extends Controller
                 $student_fine= StudentFine::find(session('current_id'));
                 if($student_fine)
                 {   
-                    $student_fine->amount=0;
                     $student_fine->status=1;
                     $student_fine->update();
                     session()->forget('current_id');

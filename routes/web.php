@@ -39,10 +39,13 @@ use App\Http\Livewire\Backend\Allocation\AllAllocation;
 use App\Http\Livewire\Backend\Permission\AllPermission;
 use App\Http\Livewire\Backend\Razorpay\RazorpayPayment;
 use App\Http\Livewire\Backend\Razorpay\RazorpayRefunds;
+use App\Http\Controllers\Common\FeeRecipetPdfController;
 use App\Http\Livewire\Backend\Razorpay\RazorpayPayments;
+use App\Http\Controllers\Common\FineRecipetPdfController;
 use App\Http\Livewire\Backend\Report\AllAllocationReport;
 use App\Http\Livewire\Backend\StudentFine\AllStudentFine;
 use App\Http\Livewire\Backend\Transaction\AllTransaction;
+use App\Http\Controllers\Common\NightOutFormPdfController;
 use App\Http\Livewire\Frontend\Admission\StudentAdmission;
 use App\Http\Controllers\Common\AdmissionFormPdfController;
 use App\Http\Livewire\Backend\AcademicYear\AllAcademicYear;
@@ -316,7 +319,16 @@ Route::get('razorapay/refunds',RazorpayRefunds::class)->name('razorpay_refunds')
 Route::get('view/admission_form/{id}',[AdmissionFormPdfController::class,'view_pdf'])->name('view_admission_form');
 Route::get('download/admission_form/{id}',[AdmissionFormPdfController::class,'download_pdf'])->name('download_admission_form');
 
-Route::get('form',[temp::class,'pdf']);
+Route::get('view/fee_recipet/{id}',[FeeRecipetPdfController::class,'view_pdf'])->name('view_fee_recipet');
+Route::get('download/fee_recipet/{id}',[FeeRecipetPdfController::class,'download_pdf'])->name('download_fee_recipet');
+
+Route::get('view/fine_recipet/{id}',[FineRecipetPdfController::class,'view_pdf'])->name('view_fine_recipet');
+Route::get('download/fine_recipet/{id}',[FineRecipetPdfController::class,'download_pdf'])->name('download_fine_recipet');
+
+Route::get('view/night_out_form/{id}',[NightOutFormPdfController::class,'view_pdf'])->name('view_night_out_form');
+Route::get('download/night_out_form/{id}',[NightOutFormPdfController::class,'download_pdf'])->name('download_night_out_form');
+
+Route::get('form',[temp::class,'view_pdf']);
 
 
 

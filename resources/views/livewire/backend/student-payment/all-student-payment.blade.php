@@ -363,8 +363,36 @@
                                                         @endif
                                                     @endif
                                                 </td>
-                                                @can('Edit Student Payment')
-                                                    <td>
+                                                @can('view Student Payment')
+                                                    <td> 
+                                                        @can('View Student Payment Reciept')
+                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('view_fee_recipet', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
+                                                        @endcan
+                                                        @can('Download Student Payment Reciept')
+                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('download_fee_recipet', $item->id) }}"> <i class="mdi mdi-download"></i></a>
+                                                        @endcan
+                                                        @can('Edit Student Payment')
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                            @if ($item->status==1)
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-thumb-down"></i> </a>
+                                                            @elseif ($item->status==2)
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-warning waves-effect waves-light"> <i class="mdi mdi-clock"></i> </a>
+                                                            @elseif ($item->status==0)
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
+                                                            @endif
+                                                        @endcan
+                                                        @can('Delete Student Payment')
+                                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                        @endcan
+                                                    </td>
+                                                @elsecan('Edit Student Payment')
+                                                    <td> 
+                                                        @can('View Student Payment Reciept')
+                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('view_fee_recipet', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
+                                                        @endcan
+                                                        @can('Download Student Payment Reciept')
+                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('download_fee_recipet', $item->id) }}"> <i class="mdi mdi-download"></i></a>
+                                                        @endcan
                                                         @can('Edit Student Payment')
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
                                                             @if ($item->status==1)
@@ -381,6 +409,12 @@
                                                     </td>
                                                 @elsecan('Delete Student Payment')
                                                     <td>
+                                                        @can('View Student Payment Reciept')
+                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('view_fee_recipet', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
+                                                        @endcan
+                                                        @can('Download Student Payment Reciept')
+                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('download_fee_recipet', $item->id) }}"> <i class="mdi mdi-download"></i></a>
+                                                        @endcan
                                                         @can('Edit Student Payment')
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
                                                             @if ($item->status==1)

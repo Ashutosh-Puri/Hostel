@@ -29,7 +29,7 @@ class temp extends Controller
         ];
 
 
-        $html = view('form_a', compact('data'));
+        $html = view('fee', compact('data'));
         $pdf=new Mpdf;
     
         $pdf->autoScriptToLang=true;
