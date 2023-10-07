@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class="float-end">
-
+                    @can('Download Student Report')
                         <a wire:loading.attr="disabled"wire:loading.remove wire:click="generatePDF()"class="btn btn-success waves-effect waves-light">
                             PDF<span class="btn-label-right mx-2"><i class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
                         </a>
@@ -29,6 +29,7 @@
                         <a  wire:loading wire:target="generateEXCEL" class="btn btn-success waves-effect waves-light">
                             Processing..<span class="btn-label-right mx-2"><i class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
                         </a>
+                    @endcan
                 </div>
             </div>
         </div>

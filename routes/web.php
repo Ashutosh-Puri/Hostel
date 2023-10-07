@@ -107,43 +107,44 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
     // Superadmin Routes With Admin Guard
     Route::group(['middleware' => ['role:Super Admin']], function () {
 
-        Route::group(['middleware' => ['permission:Access Role']], function () {
-            // All Role
-            Route::get('all/roles',AllRole::class)->name('all_role');
-        });
-    
-        Route::group(['middleware' => ['permission:Access Permission']], function () {
-            // All Permission
-            Route::get('all/permissions',AllPermission::class)->name('all_permission'); 
-        });
-    
-        Route::group(['middleware' => ['permission:Access Role Wise Permission']], function () {
-           // All Role Permission
-           Route::get('all/rolewisepermission',AllRolePermission::class)->name('all_role_permission');
-        });
         
-        Route::group(['middleware' => ['permission:Access Admin']], function () {
-            // All Admin
-            Route::get('all/admins',AllAdmin::class)->name('all_admin');
-        });
-
-        Route::group(['middleware' => ['permission:Access Setting']], function () {
-            // Site Setting
-            Route::get('site/setting',Setting::class)->name('site_setting');
-        });
-        
-        Route::group(['middleware' => ['permission:Access College']], function () {
-            // All College
-            Route::get('all/colleges',AllCollege::class)->name('all_college');
-        });
-    
-        Route::group(['middleware' => ['permission:Access Hostel']], function () {
-            // All Hostel
-            Route::get('all/hostels',AllHostel::class)->name('all_hostel');
-        });
 
     });
 
+    Route::group(['middleware' => ['permission:Access Role']], function () {
+        // All Role
+        Route::get('all/roles',AllRole::class)->name('all_role');
+    });
+
+    Route::group(['middleware' => ['permission:Access Permission']], function () {
+        // All Permission
+        Route::get('all/permissions',AllPermission::class)->name('all_permission'); 
+    });
+
+    Route::group(['middleware' => ['permission:Access Role Wise Permission']], function () {
+       // All Role Permission
+       Route::get('all/rolewisepermission',AllRolePermission::class)->name('all_role_permission');
+    });
+    
+    Route::group(['middleware' => ['permission:Access Admin']], function () {
+        // All Admin
+        Route::get('all/admins',AllAdmin::class)->name('all_admin');
+    });
+
+    Route::group(['middleware' => ['permission:Access Site Setting']], function () {
+        // Site Setting
+        Route::get('site/setting',Setting::class)->name('site_setting');
+    });
+    
+    Route::group(['middleware' => ['permission:Access College']], function () {
+        // All College
+        Route::get('all/colleges',AllCollege::class)->name('all_college');
+    });
+
+    Route::group(['middleware' => ['permission:Access Hostel']], function () {
+        // All Hostel
+        Route::get('all/hostels',AllHostel::class)->name('all_hostel');
+    });
     
     Route::group(['middleware' => ['permission:Access Admission']], function () {
         // All Admission
@@ -262,44 +263,72 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
 
 
 
-    Route::group(['middleware' => ['permission:Access Report']], function () {
+    Route::group(['middleware' => ['permission:Access Student Report']], function () {
         // All Student Report
         Route::get('all/studreports',AllStudentReport::class)->name('all_student_report');
     });
 
-    Route::group(['middleware' => ['permission:Access Report']], function () {
+    Route::group(['middleware' => ['permission:Access Room Report']], function () {
         // All Room Report
         Route::get('all/reportsroom',AllRoomReport::class)->name('all_room_report');
     });
     
-    Route::group(['middleware' => ['permission:Access Report']], function () {
+    Route::group(['middleware' => ['permission:Access Payment Report']], function () {
         // All Room Report
         Route::get('all/reportpayment',AllPaymentReport::class)->name('all_payment_report');
     });
 
-    Route::group(['middleware' => ['permission:Access Report']], function () {
+    Route::group(['middleware' => ['permission:Access Allocation Report']], function () {
         // All Allocation Report
         Route::get('all/reportallocation',AllAllocationReport::class)->name('all_allocation_report');
     });
 
-    Route::group(['middleware' => ['permission:Access Forms']], function () {
-        
+    Route::group(['middleware' => ['permission:Access Enquiry Form']], function () {
         // All Enquiry
         Route::get('all/enquires',AllEnquiry::class)->name('all_enquiry');
+    });
 
-        // All Student local Register
-        Route::get('all/local/register',AllStudentLocalRegister::class)->name('all_student_local_register');
-        // All Student Come From home
-        Route::get('all/student/come/from/home',AllStudentComeFromHome::class)->name('all_student_come_from_home');
+    Route::group(['middleware' => ['permission:Access Nightout Form']], function () {
         // All Student Night Out
         Route::get('all/student/night/out',AllStudentNightOut::class)->name('all_student_night_out');
     });
+
+    Route::group(['middleware' => ['permission:Access Local Register Form']], function () {
+        // All Student local Register
+        Route::get('all/local/register',AllStudentLocalRegister::class)->name('all_student_local_register');
+    });
+
+    Route::group(['middleware' => ['permission:Access Student Come From Home Form']], function () {
+        // All Student Come From home
+        Route::get('all/student/come/from/home',AllStudentComeFromHome::class)->name('all_student_come_from_home');
+    });
+
+    Route::group(['middleware' => ['permission:Access Transaction']], function () {
+        // All Transaction
+        Route::get('all/transactions',AllTransaction::class)->name('all_transaction');
+    });
+
+    // Razorpay
+    Route::group(['middleware' => ['permission:Access Razorpay Payments']], function () {
+        // Razorpay Payments
+        Route::get('razorapay/payments',RazorpayPayments::class)->name('razorpay_payments');
+    });
+
+    Route::group(['middleware' => ['permission:Access Razorpay Orders']], function () {
+        // Razorpay Orders
+        Route::get('razorapay/orders',RazorpayOrders::class)->name('razorpay_orders');
+    });
+    Route::group(['middleware' => ['permission:Access Razorpay Refunds']], function () {
+         // Razorpay Refunds
+        Route::get('razorapay/refunds',RazorpayRefunds::class)->name('razorpay_refunds');
+    });
+  
 
    
 
 });
 
-Route::get('all/transactions',AllTransaction::class)->name('all_transaction');
+
 
 Route::get('pay/fee/{id}',[RazorpayController::class,'pay_fee'])->name('pay_fee');
 Route::get('refund/fee/{id}',[RazorpayController::class,'refund_fee'])->name('refund_fee');
@@ -312,9 +341,7 @@ Route::get('refund/fine/{id}',[RazorpayController::class,'refund_fine'])->name('
 Route::post('fine/payment/verify',[RazorpayController::class,'fine_payment_verify'])->name('fine_payment_verify');
 Route::post('fine/payment/fail',[RazorpayController::class,'fine_payment_fail'])->name('fine_payment_fail');
 
-Route::get('razorapay/payments',RazorpayPayments::class)->name('razorpay_payments');
-Route::get('razorapay/orders',RazorpayOrders::class)->name('razorpay_orders');
-Route::get('razorapay/refunds',RazorpayRefunds::class)->name('razorpay_refunds');
+
 
 Route::get('view/admission_form/{id}',[AdmissionFormPdfController::class,'view_pdf'])->name('view_admission_form');
 Route::get('download/admission_form/{id}',[AdmissionFormPdfController::class,'download_pdf'])->name('download_admission_form');

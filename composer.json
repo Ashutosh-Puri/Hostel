@@ -17,7 +17,8 @@
         "maatwebsite/excel": "^3.1",
         "mpdf/mpdf": "^8.2",
         "razorpay/razorpay": "^2.8",
-        "spatie/laravel-permission": "^5.10"
+        "spatie/laravel-permission": "^5.10",
+        "vonage/client": "^4.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",

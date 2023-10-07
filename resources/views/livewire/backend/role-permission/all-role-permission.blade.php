@@ -110,12 +110,11 @@
                             <form  wire:submit.prevent="update({{ isset($C_id)?$C_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="mb-3 form-group">
-                                    <label for="role" class="form-label">All Roles</label>
+                                    <label for="role" class="form-label">Role</label>
                                     <span class="form-control fw-bold">{{ $role->name }} </span>
 
                                 </div>
-                                <br>
-                                <table  id="datatable-buttons" data-page-length='25' class="table  dt-responsive nowrap w-100">
+                                <table  id="datatable-buttons"   class="table  dt-responsive nowrap w-100">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -125,7 +124,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($permission_groups as $key => $group)
-                                        <tr>
+                                        <tr >
                                             @php
                                                 $per = App\Models\Admin::getpermissionByGroupName($group->group_name);
                                             @endphp
@@ -135,7 +134,7 @@
                                             </td>
                                             <td>
                                                 @foreach ($per as $permissionitem)
-                                                    <div class="form-group form-check mb-3 form-check-primary">
+                                                    <div class="form-group form-check   form-check-primary">
                                                         <input class="form-check-input @error('permission') is-invalid @enderror" wire:model="permission.{{ $permissionitem->id }}" type="checkbox" value="{{ $permissionitem->id }}" id="customckeck{{ $permissionitem->id }}" >
                                                         <label class="form-check-label" for="customckeck{{ $permissionitem->id }}">{{ $permissionitem->name }}</label>
                                                         @error('permission')

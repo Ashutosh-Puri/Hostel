@@ -149,7 +149,7 @@ class AllRole extends Component
 
     public function render()
     {
-        $roles = Role::query()->when($this->search, function ($query) {
+        $roles = Role::query()->whereNotIn('name', ['super admin'])->when($this->search, function ($query) {
             return $query->where('name', 'like', '%' . $this->search . '%');
         })->orderBy('created_at', 'ASC')->paginate($this->per_page);
 

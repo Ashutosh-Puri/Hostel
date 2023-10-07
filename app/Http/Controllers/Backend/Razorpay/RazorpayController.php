@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Backend\Razorpay;
 
 use Razorpay\Api\Api;
+use App\Models\Student;
 use App\Models\StudentFine;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\StudentPayment;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\PaymentFailNotification;
+use App\Notifications\PaymentRefundNotification;
+use App\Notifications\PaymentSuccessNotification;
 use Razorpay\Api\Errors\SignatureVerificationError;
 
 class RazorpayController extends Controller
@@ -116,6 +120,8 @@ class RazorpayController extends Controller
                     $student_payment->status=1;
                     $student_payment->update();
                     session()->forget('current_id');
+                    $student =Student::find($student_payment->student_id);
+                    $student->notify(new PaymentSuccessNotification($this->api->payment->fetch($request->razorpay_payment_id)));
 
                     return redirect()->route('all_student_payment')->with('alert', ['type' => 'success', 'message' => 'Payment Success & Verification Success.']);
                 }
@@ -134,9 +140,12 @@ class RazorpayController extends Controller
       $transaction=Transaction::where('order_id',$request->error_razorpay_order_id)->first();
       if( $transaction)
       {
+        $temp=$transaction->student_id;
         $transaction->razorpay_payment_id=$request->error_razorpay_payment_id;
         $transaction->status=4;
         $transaction->update();
+        $student =Student::find($temp);
+        $student->notify(new PaymentFailNotification($this->api->payment->fetch($request->error_razorpay_payment_id)));
 
         return redirect()->route('all_student_payment')->with('alert', ['type' => 'error', 'message' => 'Payment Failed.']);
       }
@@ -167,6 +176,9 @@ class RazorpayController extends Controller
                     $student_payment->status=3;
                     $student_payment->update();
                     session()->forget('current_id');
+
+                    $student =Student::find($student_payment->student_id);
+                    $student->notify(new PaymentRefundNotification($this->api->payment->fetch($transaction->razorpay_payment_id)->fetchRefund($refund->id)));
                 }
 
                 return redirect()->route('all_student_payment')->with('alert', ['type' => 'success', 'message' => 'Payment refund was successful. Refund ID: '.$refund->id]);
@@ -260,10 +272,10 @@ class RazorpayController extends Controller
             ];
     
             $this->api->utility->verifyPaymentSignature($attributes);
-
             $transaction = Transaction::where('order_id', $request->razorpay_order_id)->first();
             if( $transaction)
-            {
+            {   
+                $temp=$transaction->student_id;
                 $transaction->razorpay_payment_id= $request->razorpay_payment_id;
                 $transaction->razorpay_signature= $request->razorpay_signature;
                 $transaction->status=2;
@@ -275,7 +287,8 @@ class RazorpayController extends Controller
                     $student_fine->status=1;
                     $student_fine->update();
                     session()->forget('current_id');
-
+                    $student =Student::find($student_fine->student_id);
+                    $student->notify(new PaymentSuccessNotification($this->api->payment->fetch($request->razorpay_payment_id)));
                     return redirect()->route('all_student_fine')->with('alert', ['type' => 'success', 'message' => 'Payment Success & Verification Success.']);
                 }
             }
@@ -291,9 +304,12 @@ class RazorpayController extends Controller
       $transaction=Transaction::where('order_id',$request->error_razorpay_order_id)->first();
       if( $transaction)
       {
+        $temp=$transaction->student_id;
         $transaction->razorpay_payment_id=$request->error_razorpay_payment_id;
         $transaction->status=4;
         $transaction->update();
+        $student =Student::find($temp);
+        $student->notify(new PaymentFailNotification($this->api->payment->fetch($request->error_razorpay_payment_id)));
 
         return redirect()->route('all_student_fine')->with('alert', ['type' => 'error', 'message' => 'Payment Failed.']);
       }
@@ -324,6 +340,8 @@ class RazorpayController extends Controller
                     $student_fine->status=3;
                     $student_fine->update();
                     session()->forget('current_id');
+                    $student =Student::find($student_fine->student_id);
+                    $student->notify(new PaymentRefundNotification($this->api->payment->fetch($transaction->razorpay_payment_id)->fetchRefund($refund->id)));
                 }
 
                 return redirect()->route('all_student_fine')->with('alert', ['type' => 'success', 'message' => 'Payment refund was successful. Refund ID: '.$refund->id]);
