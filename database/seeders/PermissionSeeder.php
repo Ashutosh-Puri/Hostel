@@ -14,11 +14,13 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         $records = [
+            // dashboard
             [   
                 'name' => "Access Dashboard",
                 'group_name' => 'Dashboard',
                 'guard_name' => 'admin',
             ],
+            // academic year
             [   
                 'name' => "Access Academic Year",
                 'group_name' => 'Academic Year',
@@ -39,7 +41,7 @@ class PermissionSeeder extends Seeder
                 'group_name' => 'Academic Year',
                 'guard_name' => 'admin',
             ],
-
+            // Admission
             [   
                 'name' => "Access Admission",
                 'group_name' => 'Admission',
@@ -47,6 +49,16 @@ class PermissionSeeder extends Seeder
             ],
             [   
                 'name' => "Add Admission",
+                'group_name' => 'Admission',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "View Admission Form",
+                'group_name' => 'Admission',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Download Admission Form",
                 'group_name' => 'Admission',
                 'guard_name' => 'admin',
             ],
@@ -60,12 +72,7 @@ class PermissionSeeder extends Seeder
                 'group_name' => 'Admission',
                 'guard_name' => 'admin',
             ],
-            [   
-                'name' => "View Admission",
-                'group_name' => 'Admission',
-                'guard_name' => 'admin',
-            ],
-            
+            // allocation
             [   
                 'name' => "Access Allocation",
                 'group_name' => 'Allocation',
@@ -101,7 +108,7 @@ class PermissionSeeder extends Seeder
                 'group_name' => 'Allocation',
                 'guard_name' => 'admin',
             ],
-
+            // Class
             [   
                 'name' => "Access Class",
                 'group_name' => 'Class',
@@ -249,7 +256,15 @@ class PermissionSeeder extends Seeder
                 'group_name' => 'Seated',
                 'guard_name' => 'admin',
             ],
-            //Fee
+
+
+            // Transaction
+            [   
+                'name' => "Access Transaction",
+                'group_name' => 'Transaction',
+                'guard_name' => 'admin',
+            ],
+            // Fee
             [   
                 'name' => "Access Fee",
                 'group_name' => 'Fee',
@@ -336,6 +351,11 @@ class PermissionSeeder extends Seeder
             //Student Fine
             [   
                 'name' => "Access Student Fine",
+                'group_name' => 'Student Fine',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Pay Student Fine",
                 'group_name' => 'Student Fine',
                 'guard_name' => 'admin',
             ],
@@ -466,6 +486,11 @@ class PermissionSeeder extends Seeder
                 'guard_name' => 'admin',
             ],
             [   
+                'name' => "Pay Student Payment",
+                'group_name' => 'Student Payment',
+                'guard_name' => 'admin',
+            ],
+            [   
                 'name' => "Add Student Payment",
                 'group_name' => 'Student Payment',
                 'guard_name' => 'admin',
@@ -522,27 +547,7 @@ class PermissionSeeder extends Seeder
                 'group_name' => 'Role',
                 'guard_name' => 'admin',
             ],
-            //Admin
-            [   
-                'name' => "Access Admin",
-                'group_name' => 'Admin',
-                'guard_name' => 'admin',
-            ],
-            [   
-                'name' => "Add Admin",
-                'group_name' => 'Admin',
-                'guard_name' => 'admin',
-            ],
-            [   
-                'name' => "Edit Admin",
-                'group_name' => 'Admin',
-                'guard_name' => 'admin',
-            ],
-            [   
-                'name' => "Delete Admin",
-                'group_name' => 'Admin',
-                'guard_name' => 'admin',
-            ],
+           
             //Cast
             [   
                 'name' => "Access Cast",
@@ -585,155 +590,146 @@ class PermissionSeeder extends Seeder
                 'group_name' => 'Category',
                 'guard_name' => 'admin',
             ],
-            //Enquiry
+            
+            // Enquiry Form
             [   
-                'name' => "Access Enquiry",
-                'group_name' => 'Enquiry',
+                'name' => "Access Enquiry Form",
+                'group_name' => 'Forms',
                 'guard_name' => 'admin',
             ],
             [   
-                'name' => "Add Enquiry",
-                'group_name' => 'Enquiry',
+                'name' => "Add Enquiry Form",
+                'group_name' => 'Forms',
                 'guard_name' => 'admin',
             ],
             [   
-                'name' => "Edit Enquiry",
-                'group_name' => 'Enquiry',
+                'name' => "Send Enquiry Reply",
+                'group_name' => 'Forms',
                 'guard_name' => 'admin',
             ],
             [   
-                'name' => "Delete Enquiry",
-                'group_name' => 'Enquiry',
-                'guard_name' => 'admin',
-            ],
-            //Slider
-            [   
-                'name' => "Access Slider",
-                'group_name' => 'Slider',
+                'name' => "Edit Enquiry Form",
+                'group_name' => 'Forms',
                 'guard_name' => 'admin',
             ],
             [   
-                'name' => "Add Slider",
-                'group_name' => 'Slider',
+                'name' => "Delete Enquiry Form",
+                'group_name' => 'Forms',
                 'guard_name' => 'admin',
             ],
-            [   
-                'name' => "Edit Slider",
-                'group_name' => 'Slider',
-                'guard_name' => 'admin',
-            ],
-            [   
-                'name' => "Delete Slider",
-                'group_name' => 'Slider',
-                'guard_name' => 'admin',
-            ],
-            //Contact
-            [   
-                'name' => "Access Contact",
-                'group_name' => 'Contact',
-                'guard_name' => 'admin',
-            ],
-            [   
-                'name' => "Add Contact",
-                'group_name' => 'Contact',
-                'guard_name' => 'admin',
-            ],
-            [   
-                'name' => "Edit Contact",
-                'group_name' => 'Contact',
-                'guard_name' => 'admin',
-            ],
-            [   
-                'name' => "Delete Contact",
-                'group_name' => 'Contact',
-                'guard_name' => 'admin',
-            ],
-            //Nightout Form
+
+            // Nightout Form
             [   
                 'name' => "Access Nightout Form",
-                'group_name' => 'Nightout Form',
+                'group_name' => 'Forms',
                 'guard_name' => 'admin',
             ],
             [   
                 'name' => "Add Nightout Form",
-                'group_name' => 'Nightout Form',
+                'group_name' => 'Forms',
                 'guard_name' => 'admin',
             ],
             [   
                 'name' => "Edit Nightout Form",
-                'group_name' => 'Nightout Form',
+                'group_name' => 'Forms',
                 'guard_name' => 'admin',
             ],
             [   
                 'name' => "Delete Nightout Form",
-                'group_name' => 'Nightout Form',
+                'group_name' => 'Forms',
                 'guard_name' => 'admin',
             ],
-            //Local Register Form
+            // Local Register Form
             [   
                 'name' => "Access Local Register Form",
-                'group_name' => 'Local Register Form',
+                'group_name' => 'Forms',
                 'guard_name' => 'admin',
             ],
             [   
                 'name' => "Add Local Register Form",
-                'group_name' => 'Local Register Form',
+                'group_name' => 'Forms',
                 'guard_name' => 'admin',
             ],
             [   
                 'name' => "Edit Local Register Form",
-                'group_name' => 'Local Register Form',
+                'group_name' => 'Forms',
                 'guard_name' => 'admin',
             ],
             [   
                 'name' => "Delete Local Register Form",
-                'group_name' => 'Local Register Form',
+                'group_name' => 'Forms',
                 'guard_name' => 'admin',
             ],
-            //Student Come From Home Form
+            // Student Come From Home Form
             [   
                 'name' => "Access Student Come From Home Form",
-                'group_name' => 'Student Come From Home Form',
+                'group_name' => 'Forms',
                 'guard_name' => 'admin',
             ],
             [   
                 'name' => "Add Student Come From Home Form",
-                'group_name' => 'Student Come From Home Form',
+                'group_name' => 'Forms',
                 'guard_name' => 'admin',
             ],
             [   
                 'name' => "Edit Student Come From Home Form",
-                'group_name' => 'Student Come From Home Form',
+                'group_name' => 'Forms',
                 'guard_name' => 'admin',
             ],
             [   
                 'name' => "Delete Student Come From Home Form",
-                'group_name' => 'Student Come From Home Form',
+                'group_name' => 'Forms',
                 'guard_name' => 'admin',
             ],
-            //Report
+            // Student Report
             [   
-                'name' => "Access Report",
+                'name' => "Access Student Report",
                 'group_name' => 'Report',
                 'guard_name' => 'admin',
             ],
             [   
-                'name' => "Add Report",
-                'group_name' => 'Report',
-                'guard_name' => 'admin',
-            ],
-            [   
-                'name' => "Edit Report",
-                'group_name' => 'Report',
-                'guard_name' => 'admin',
-            ],
-            [   
-                'name' => "Delete Report",
+                'name' => "Download Student Report",
                 'group_name' => 'Report',
                 'guard_name' => 'admin',
             ],
 
+            // Payment Report
+            [   
+                'name' => "Access Payment Report",
+                'group_name' => 'Report',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Download Payment Report",
+                'group_name' => 'Report',
+                'guard_name' => 'admin',
+            ],
 
+            // Allocation Report
+            [   
+                'name' => "Access Allocation Report",
+                'group_name' => 'Report',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Download Allocation Report",
+                'group_name' => 'Report',
+                'guard_name' => 'admin',
+            ],
+
+            // Room Report
+            [   
+                'name' => "Access Room Report",
+                'group_name' => 'Report',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Download Room Report",
+                'group_name' => 'Report',
+                'guard_name' => 'admin',
+            ],
+
+            // Permission
             [   
                 'name' => "Access Permission",
                 'group_name' => 'Permission',
@@ -754,8 +750,28 @@ class PermissionSeeder extends Seeder
                 'group_name' => 'Permission',
                 'guard_name' => 'admin',
             ],
-
-
+            //Admin
+            [   
+                'name' => "Access Admin",
+                'group_name' => 'Admin',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Add Admin",
+                'group_name' => 'Admin',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Edit Admin",
+                'group_name' => 'Admin',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Delete Admin",
+                'group_name' => 'Admin',
+                'guard_name' => 'admin',
+            ],
+            //Role Wise Permission
             [   
                 'name' => "Access Role Wise Permission",
                 'group_name' => 'Role Wise Permission',
@@ -774,6 +790,29 @@ class PermissionSeeder extends Seeder
             [   
                 'name' => "Delete Role Wise Permission",
                 'group_name' => 'Role Wise Permission',
+                'guard_name' => 'admin',
+            ],
+
+            // site Setting
+            [   
+                'name' => "Access Site Setting",
+                'group_name' => 'Setting',
+                'guard_name' => 'admin',
+            ],
+            // Razorpay
+            [   
+                'name' => "Access Razorpay Orders",
+                'group_name' => 'Razorpay',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Access Razorpay Payments",
+                'group_name' => 'Razorpay',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Access Razorpay Refunds",
+                'group_name' => 'Razorpay',
                 'guard_name' => 'admin',
             ],
 

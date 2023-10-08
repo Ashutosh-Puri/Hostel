@@ -378,6 +378,8 @@
                                             @can('Edit Enquiry')
                                                 <th>Action</th>
                                             @elsecan('Delete Enquiry')
+                                             <th>Action</th>
+                                            @elsecan('Send Enquiry Reply')
                                                 <th>Action</th>
                                             @endcan
                                         </tr>
@@ -399,12 +401,12 @@
                                                         <span class="badge bg-danger text-white">Read</span>
                                                     @endif
                                                 </td>
-                                                @can('Edit Enquiry')
+                                                @can('Edit Enquiry Form')
                                                     <td>
-                                                        @can('Send Reply')
+                                                        @can('Send Enquiry Reply')
                                                             <a wire:loading.attr="disabled"  wire:click="mail({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-reply"></i></a>
                                                         @endcan
-                                                        @can('Edit Enquiry')
+                                                        @can('Edit Enquiry Form')
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
                                                             @if ($item->status==0)
                                                                 <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-eye"></i> </a>
@@ -412,16 +414,16 @@
                                                                 <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-eye-off"></i> </a>
                                                             @endif
                                                         @endcan
-                                                        @can('Delete Enquiry')
+                                                        @can('Delete Enquiry Form')
                                                             <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
                                                         @endcan
                                                     </td>
-                                                @elsecan('Send Reply')
+                                                @elsecan('Send Enquiry Reply')
                                                     <td>
-                                                        @can('Send Reply')
+                                                        @can('Send Enquiry Reply')
                                                             <a wire:loading.attr="disabled"  wire:click="mail({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-reply"></i></a>
                                                         @endcan
-                                                        @can('Edit Enquiry')
+                                                        @can('Edit Enquiry Form')
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
                                                             @if ($item->status==0)
                                                                 <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-eye"></i> </a>
@@ -429,16 +431,16 @@
                                                                 <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-eye-off"></i> </a>
                                                             @endif
                                                         @endcan
-                                                        @can('Delete Enquiry')
+                                                        @can('Delete Enquiry Form')
                                                             <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
                                                         @endcan
                                                     </td>
-                                                @elsecan('Delete Enquiry')
+                                                @elsecan('Delete Enquiry Form')
                                                     <td>
-                                                        @can('Send Reply')
+                                                        @can('Send Enquiry Reply')
                                                             <a wire:loading.attr="disabled"  wire:click="mail({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-reply"></i></a>
                                                         @endcan
-                                                        @can('Edit Enquiry')
+                                                        @can('Edit Enquiry Form')
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
                                                             @if ($item->status==0)
                                                                 <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-eye"></i> </a>
@@ -446,7 +448,7 @@
                                                                 <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-eye-off"></i> </a>
                                                             @endif
                                                         @endcan
-                                                        @can('Delete Enquiry')
+                                                        @can('Delete Enquiry Form')
                                                             <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
                                                         @endcan
                                                     </td>

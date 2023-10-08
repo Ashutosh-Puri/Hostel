@@ -221,7 +221,7 @@ class AllRolePermission extends Component
         $permission = Permission::all();
 
         $permission_groups = Admin::getpermissionGroups();
-        $allroles=Role::paginate($this->per_page);
+        $allroles=Role::whereNotIn('name', ['super admin'])->paginate($this->per_page);
         return view('livewire.backend.role-permission.all-role-permission',compact('role','permission_groups','permission','roles','allroles'))->extends('layouts.admin.admin')->section('admin');
     }
 

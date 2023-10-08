@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name')->nullable()->index();
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('mobile')->nullable()->unique();
+            $table->string('mobile')->nullable();
             $table->string('photo')->nullable();
             $table->string('mother_name')->nullable();
             $table->string('dob')->nullable();
@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('parent_mobile')->nullable();
             $table->string('parent_address')->nullable();
             $table->string('local_parent_name')->nullable();
-            $table->string('local_parent_mobile')->nullable()->unique();
+            $table->string('local_parent_mobile')->nullable();
             $table->string('local_parent_address')->nullable();
             $table->string('blood_group')->nullable();
             $table->tinyInteger('gender')->nullable()->default(0)->comment('0-Male ,1-Female');
@@ -41,6 +41,7 @@ return new class extends Migration
             $table->timestamp('last_login')->nullable();
             $table->tinyInteger('address_type')->nullable()->default(0)->comment('0-Rural ,1-Urbon');
             $table->tinyInteger('status')->nullable()->default('0')->comment('0-Active ,1-In-Active');
+            $table->string('rfid')->nullable()->unique();
             $table->rememberToken();
             $table->timestamps();
             $table->foreign('cast_id')->references('id')->on('casts')->onDelete('cascade');

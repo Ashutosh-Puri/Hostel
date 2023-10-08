@@ -1340,10 +1340,13 @@
                                                         <span class="badge bg-danger text-white">Canceled</span>
                                                     @endif
                                                 </td>
-                                                @can('View Admission')
+                                                @can('View Admission Form')
                                                     <td>
-                                                        @can('View Admission')
-                                                            <a wire:loading.attr="disabled"  wire:click="view({{ $item->id }})" class="btn btn-info waves-effect waves-light"><i class="mdi mdi-eye"></i></a>
+                                                        @can('View Admission Form')
+                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('view_admission_form', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
+                                                        @endcan
+                                                        @can('Download Admission Form')
+                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('download_admission_form', $item->id) }}"> <i class="mdi mdi-download"></i></a>
                                                         @endcan
                                                         @can('Edit Admission')
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
@@ -1362,8 +1365,11 @@
                                                     </td>
                                                 @elsecan('Edit Admission')
                                                     <td>
-                                                        @can('View Admission')
-                                                            <a wire:loading.attr="disabled"  wire:click="view({{ $item->id }})" class="btn btn-info waves-effect waves-light"><i class="mdi mdi-eye"></i></a>
+                                                        @can('View Admission Form')
+                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('view_admission_form', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
+                                                        @endcan
+                                                        @can('Download Admission Form')
+                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('download_admission_form', $item->id) }}"> <i class="mdi mdi-download"></i></a>
                                                         @endcan
                                                         @can('Edit Admission')
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
@@ -1382,8 +1388,11 @@
                                                     </td>
                                                 @elsecan('Delete Admission')
                                                     <td>
-                                                        @can('View Admission')
-                                                            <a wire:loading.attr="disabled"  wire:click="view({{ $item->id }})" class="btn btn-info waves-effect waves-light"><i class="mdi mdi-eye"></i></a>
+                                                         @can('View Admission Form')
+                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('view_admission_form', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
+                                                        @endcan
+                                                        @can('Download Admission Form')
+                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('download_admission_form', $item->id) }}"> <i class="mdi mdi-download"></i></a>
                                                         @endcan
                                                         @can('Edit Admission')
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
