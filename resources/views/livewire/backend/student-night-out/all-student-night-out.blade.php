@@ -1,7 +1,7 @@
 <div class="content">
     <div class="container-fluid">
         @if ($mode == 'add') @section('title')
-        Add Night Out Entry
+            Add Night Out Entry
         @endsection
         <div class="row">
             <div class="col-12">
@@ -30,12 +30,12 @@
                                         <label for="going_date" class="form-label">Going Date</label>
                                         <input type="date"
                                             class="form-control @error('going_date') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="going_date" value="{{ old('going_date') }}" min="{{ date('Y-m-d'); }}"
-                                            id="going_date" />
+                                            wire:model.debounce.1000ms="going_date" value="{{ old('going_date') }}"
+                                            min="{{ date('Y-m-d') }}" id="going_date" />
                                         @error('going_date')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
                                         @enderror
                                     </div>
                                 </div>
@@ -44,12 +44,13 @@
                                         <label for="comming_date" class="form-label">Comming Date</label>
                                         <input type="date"
                                             class="form-control @error('comming_date') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="comming_date" value="{{ old('comming_date') }}" min="{{ date('Y-m-d'); }}"
+                                            wire:model.debounce.1000ms="comming_date"
+                                            value="{{ old('comming_date') }}" min="{{ date('Y-m-d') }}"
                                             id="comming_date" />
                                         @error('comming_date')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
                                         @enderror
                                     </div>
                                 </div>
@@ -58,14 +59,13 @@
                                 <div class="col-12 col-md-12">
                                     <div class="mb-3 form-group">
                                         <label for="reason" class="form-label">Hostel Leaving Reasone</label>
-                                        <textarea class="w-100 @error('reason') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="reason" id="reason"
+                                        <textarea class="w-100 @error('reason') is-invalid @enderror" wire:model.debounce.1000ms="reason" id="reason"
                                             placeholder="Enter Reasone To Leave Hostel" cols="30" rows="4">
                                             {{ old('reason') }}</textarea>
                                         @error('reason')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
                                         @enderror
                                     </div>
                                 </div>
@@ -78,9 +78,9 @@
                 </div>
             </div>
         </div>
-        @elseif($mode == 'edit')
+    @elseif($mode == 'edit')
         @section('title')
-        Edit Night Out Entry
+            Edit Night Out Entry
         @endsection
         <div class="row">
             <div class="col-12">
@@ -101,8 +101,8 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form wire:submit.prevent="update({{ isset($C_id) ? $C_id : '' }})" method="post" action=""
-                            id="myForm">
+                        <form wire:submit.prevent="update({{ isset($C_id) ? $C_id : '' }})" method="post"
+                            action="" id="myForm">
                             @csrf
                             <div class="row">
                                 <div class="col-12 col-md-6">
@@ -110,12 +110,12 @@
                                         <label for="going_date" class="form-label">Going Date</label>
                                         <input type="date"
                                             class="form-control @error('going_date') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="going_date" value="{{ old('going_date') }}" min="{{ date('Y-m-d'); }}"
-                                            id="going_date" />
+                                            wire:model.debounce.1000ms="going_date" value="{{ old('going_date') }}"
+                                            min="{{ date('Y-m-d') }}" id="going_date" />
                                         @error('going_date')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
                                         @enderror
                                     </div>
                                 </div>
@@ -124,12 +124,13 @@
                                         <label for="comming_date" class="form-label">Comming Date</label>
                                         <input type="date"
                                             class="form-control @error('comming_date') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="comming_date" value="{{ old('comming_date') }}" min="{{ date('Y-m-d'); }}"
+                                            wire:model.debounce.1000ms="comming_date"
+                                            value="{{ old('comming_date') }}" min="{{ date('Y-m-d') }}"
                                             id="comming_date" />
                                         @error('comming_date')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
                                         @enderror
                                     </div>
                                 </div>
@@ -138,14 +139,13 @@
                                 <div class="col-12 col-md-12">
                                     <div class="mb-3 form-group">
                                         <label for="reason" class="form-label">Hostel Leaving Reasone</label>
-                                        <textarea class="w-100 @error('reason') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="reason" id="reason"
+                                        <textarea class="w-100 @error('reason') is-invalid @enderror" wire:model.debounce.1000ms="reason" id="reason"
                                             placeholder="Enter Reasone To Leave Hostel" cols="30" rows="4">
                                             {{ old('reason') }}</textarea>
                                         @error('reason')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
                                         @enderror
                                     </div>
                                 </div>
@@ -158,10 +158,10 @@
                 </div>
             </div>
         </div>
-        @elseif($mode = 'all')
+    @elseif($mode = 'all')
         <div>
             @section('title')
-            All Student Night Out Register
+                All Student Night Out Register
             @endsection
             <div class="row">
                 <div class="col-12">
@@ -178,11 +178,11 @@
                         </div>
                         <div class="float-end">
                             @can('Add Student Night Out Register')
-                            <a wire:loading.attr="disabled" wire:click="setmode('add')"
-                                class="btn btn-success waves-effect waves-light">
-                                Add Night Out Entry<span class="btn-label-right mx-2"><i
-                                        class="mdi mdi-plus-circle fw-bold"></i></span>
-                            </a>
+                                <a wire:loading.attr="disabled" wire:click="setmode('add')"
+                                    class="btn btn-success waves-effect waves-light">
+                                    Add Night Out Entry<span class="btn-label-right mx-2"><i
+                                            class="mdi mdi-plus-circle fw-bold"></i></span>
+                                </a>
                             @endcan
                         </div>
                     </div>
@@ -194,7 +194,8 @@
                         <div class="card-header">
                             <div class="row">
                                 <label class="col-4 col-md-1 py-1">Per Page</label>
-                                <select class="col-4 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                <select class="col-4 col-md-1" wire:loading.attr="disabled"
+                                    wire:model="per_page">
                                     <option value="10">10</option>
                                     <option value="50">50</option>
                                     <option value="100">100</option>
@@ -208,16 +209,16 @@
                                             <label class="w-100 p-1 text-md-end">Search</label>
                                         </div>
                                         <div class="col-12 col-md-3">
-                                            <input class="w-100" wire:model.debounce.1000ms="year" type="search"
-                                                placeholder="Academic Year" />
+                                            <input class="w-100" wire:model.debounce.1000ms="year"
+                                                type="search" placeholder="Academic Year" />
                                         </div>
                                         <div class="col-12 col-md-3">
-                                            <input class="w-100" wire:model.debounce.1000ms="class_name" type="search"
-                                                placeholder="Class Name" />
+                                            <input class="w-100" wire:model.debounce.1000ms="class_name"
+                                                type="search" placeholder="Class Name" />
                                         </div>
                                         <div class="col-12 col-md-3">
-                                            <input class="w-100" wire:model.debounce.1000ms="student_name" type="search"
-                                                placeholder="Student Name" />
+                                            <input class="w-100" wire:model.debounce.1000ms="student_name"
+                                                type="search" placeholder="Student Name" />
                                         </div>
                                     </div>
                                 </span>
@@ -231,7 +232,7 @@
                                         <th>Year</th>
                                         <th>Class</th>
                                         <th>Student</th>
-                                        <th>Reason</th>
+                                        {{-- <th>Reason</th> --}}
                                         <th>Going Date</th>
                                         <th>Comming Date</th>
                                         <th>Room</th>
@@ -241,89 +242,136 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($night_out as $key => $item)
-                                    <tr>
-                                        <td>{{ $key + 1 }}</td>
-                                        <td>
-                                            {{ $item->allocation->admission->academicyear->year }}
-                                        </td>
-                                        <td>
-                                            {{ $item->allocation->admission->Class->name }}
-                                        </td>
-                                        <td>
-                                            {{ $item->allocation->admission->Student->name }}
-                                        </td>
-                                        <td class="text-wrap lh-lg">
-                                            {{ $item->reason }}
-                                        </td>
-                                        <td>
-                                            {{ date('d / m / Y', strtotime($item->going_date)) }}
-                                        </td>
-                                        <td>
-                                            {{ date('d / m / Y', strtotime($item->comming_date)) }}
-                                        </td>
-                                        <td>
-                                            {{  $item->allocation->Bed->Room->id }} - (  {{  $item->allocation->Bed->Room->label }} )
-                                        </td>
-                                        <td>
-                                            @if ($item->status == '0')
-                                            <span class="badge bg-warning text-white">Pending</span>
-                                            @else
-                                            <span class="badge bg-success text-white">Approved</span>
-                                            @endif
-                                        </td>
-                                        @can('Edit Student Night Out Register')
-                                        <td>
-                                            @can('Edit Student Night Out Register')
-                                            <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})"
-                                                class="btn btn-success waves-effect waves-light"><i
-                                                    class="mdi mdi-lead-pencil"></i></a>
-                                            @if ($item->status == 1)
-                                            <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
-                                                class="btn btn-danger waves-effect waves-light">
-                                                <i class="mdi mdi-thumb-down"></i>
-                                            </a>
-                                            @elseif ($item->status == 0)
-                                            <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
-                                                class="btn btn-success waves-effect waves-light">
-                                                <i class="mdi mdi-thumb-up"></i>
-                                            </a>
-                                            @endif
-                                            @endcan @can('Delete Student
-                                            Night Out Register')
-                                            <a wire:loading.attr="disabled"
-                                                wire:click.prevent="deleteconfirmation({{ $item->id }})"
-                                                class="btn btn-danger waves-effect waves-light"><i
-                                                    class="mdi mdi-delete"></i></a>
+                                        <tr>
+                                            <td>{{ $key + 1 }}</td>
+                                            <td>
+                                                {{ $item->allocation->admission->academicyear->year }}
+                                            </td>
+                                            <td>
+                                                {{ $item->allocation->admission->Class->name }}
+                                            </td>
+                                            <td>
+                                                {{ $item->allocation->admission->Student->name }}
+                                            </td>
+                                            {{-- <td class="text-wrap lh-lg">
+                                                {{ $item->reason }}
+                                            </td> --}}
+                                            <td>
+                                                {{ date('d / m / Y', strtotime($item->going_date)) }}
+                                            </td>
+                                            <td>
+                                                {{ date('d / m / Y', strtotime($item->comming_date)) }}
+                                            </td>
+                                            <td>
+                                                {{ $item->allocation->Bed->Room->id }} - (
+                                                {{ $item->allocation->Bed->Room->label }} )
+                                            </td>
+                                            <td>
+                                                @if ($item->status == '0')
+                                                    <span class="badge bg-warning text-white">Pending</span>
+                                                @else
+                                                    <span class="badge bg-success text-white">Approved</span>
+                                                @endif
+                                            </td>
+                                            @can('View Student Night Out Form')
+                                                <td>
+                                                    @can('View Student Night Out Form')
+                                                        <a   target="_blank"  class="btn btn-warning " href="{{ route('view_night_out_form', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
+                                                    @endcan
+                                                    @can('Download Student Night Out Form')
+                                                        <a   target="_blank"  class="btn btn-warning " href="{{ route('download_night_out_form', $item->id) }}"> <i class="mdi mdi-download"></i></a>
+                                                    @endcan
+                                                    @can('Edit Student Night Out Register')
+                                                        <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                        @if ($item->status == 1)
+                                                            <a wire:loading.attr="disabled"
+                                                                wire:click="status({{ $item->id }})"
+                                                                class="btn btn-danger waves-effect waves-light">
+                                                                <i class="mdi mdi-thumb-down"></i>
+                                                            </a>
+                                                        @elseif ($item->status == 0)
+                                                            <a wire:loading.attr="disabled"
+                                                                wire:click="status({{ $item->id }})"
+                                                                class="btn btn-success waves-effect waves-light">
+                                                                <i class="mdi mdi-thumb-up"></i>
+                                                            </a>
+                                                        @endif
+                                                        @endcan @can('Delete Student
+                                                        Night Out Register')
+                                                        <a wire:loading.attr="disabled"
+                                                            wire:click.prevent="deleteconfirmation({{ $item->id }})"
+                                                            class="btn btn-danger waves-effect waves-light"><i
+                                                                class="mdi mdi-delete"></i></a>
+                                                    @endcan
+                                                </td>
+                                            @elsecan('Edit Student Night Out Register')
+                                                <td>
+                                                    @can('View Student Night Out Form')
+                                                        <a   target="_blank"  class="btn btn-warning " href="{{ route('view_night_out_form', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
+                                                    @endcan
+                                                    @can('Download Student Night Out Form')
+                                                        <a   target="_blank"  class="btn btn-warning " href="{{ route('download_night_out_form', $item->id) }}"> <i class="mdi mdi-download"></i></a>
+                                                    @endcan
+                                                    @can('Edit Student Night Out Register')
+                                                        <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                        @if ($item->status == 1)
+                                                            <a wire:loading.attr="disabled"
+                                                                wire:click="status({{ $item->id }})"
+                                                                class="btn btn-danger waves-effect waves-light">
+                                                                <i class="mdi mdi-thumb-down"></i>
+                                                            </a>
+                                                        @elseif ($item->status == 0)
+                                                            <a wire:loading.attr="disabled"
+                                                                wire:click="status({{ $item->id }})"
+                                                                class="btn btn-success waves-effect waves-light">
+                                                                <i class="mdi mdi-thumb-up"></i>
+                                                            </a>
+                                                        @endif
+                                                        @endcan @can('Delete Student
+                                                        Night Out Register')
+                                                        <a wire:loading.attr="disabled"
+                                                            wire:click.prevent="deleteconfirmation({{ $item->id }})"
+                                                            class="btn btn-danger waves-effect waves-light"><i
+                                                                class="mdi mdi-delete"></i></a>
+                                                    @endcan
+                                                </td>
+                                            @elsecan('Delete Student Night Out
+                                                Register')
+                                                <td>
+                                                    @can('View Student Night Out Form')
+                                                        <a   target="_blank"  class="btn btn-warning " href="{{ route('view_night_out_form', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
+                                                    @endcan
+                                                    @can('Download Student Night Out Form')
+                                                        <a   target="_blank"  class="btn btn-warning " href="{{ route('download_night_out_form', $item->id) }}"> <i class="mdi mdi-download"></i></a>
+                                                    @endcan
+                                                    @can('Edit Student Night Out Register')
+                                                        <a wire:loading.attr="disabled"
+                                                            wire:click="edit({{ $item->id }})"
+                                                            class="btn btn-success waves-effect waves-light"><i
+                                                                class="mdi mdi-lead-pencil"></i></a>
+                                                        @if ($item->status == 1)
+                                                            <a wire:loading.attr="disabled"
+                                                                wire:click="status({{ $item->id }})"
+                                                                class="btn btn-danger waves-effect waves-light">
+                                                                <i class="mdi mdi-thumb-down"></i>
+                                                            </a>
+                                                        @elseif ($item->status == 0)
+                                                            <a wire:loading.attr="disabled"
+                                                                wire:click="status({{ $item->id }})"
+                                                                class="btn btn-success waves-effect waves-light">
+                                                                <i class="mdi mdi-thumb-up"></i>
+                                                            </a>
+                                                        @endif
+                                                        @endcan @can('Delete Student
+                                                        Night Out Register')
+                                                        <a wire:loading.attr="disabled"
+                                                            wire:click.prevent="deleteconfirmation({{ $item->id }})"
+                                                            class="btn btn-danger waves-effect waves-light"><i
+                                                                class="mdi mdi-delete"></i></a>
+                                                    @endcan
+                                                </td>
                                             @endcan
-                                        </td>
-                                        @elsecan('Delete Student Night Out
-                                        Register')
-                                        <td>
-                                            @can('Edit Student Night Out Register')
-                                            <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})"
-                                                class="btn btn-success waves-effect waves-light"><i
-                                                    class="mdi mdi-lead-pencil"></i></a>
-                                            @if ($item->status == 1)
-                                            <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
-                                                class="btn btn-danger waves-effect waves-light">
-                                                <i class="mdi mdi-thumb-down"></i>
-                                            </a>
-                                            @elseif ($item->status == 0)
-                                            <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
-                                                class="btn btn-success waves-effect waves-light">
-                                                <i class="mdi mdi-thumb-up"></i>
-                                            </a>
-                                            @endif
-                                            @endcan @can('Delete Student
-                                            Night Out Register')
-                                            <a wire:loading.attr="disabled"
-                                                wire:click.prevent="deleteconfirmation({{ $item->id }})"
-                                                class="btn btn-danger waves-effect waves-light"><i
-                                                    class="mdi mdi-delete"></i></a>
-                                            @endcan
-                                        </td>
-                                        @endcan
-                                    </tr>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -335,6 +383,6 @@
                 </div>
             </div>
         </div>
-        @endif
-    </div>
+    @endif
+</div>
 </div>

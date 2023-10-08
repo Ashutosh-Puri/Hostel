@@ -74,7 +74,9 @@
                         <label >Class : <strong> {{ $admission->Class->name }} </strong></label>
                     </td>
                     <td colspan="3">
-                        <label >Room No : <strong> {{ $allocation->bed->room->label }} ( {{ $allocation->bed->room->id }}  )</strong></label>
+                        <label >Room No : <strong> 
+                       N.A.
+                    </strong></label>
                     </td>
                 </tr>
                 <tr>
@@ -90,7 +92,7 @@
                     <td rowspan="6" colspan=2 style="text-align: left;">
                         <div style="text-align: center;">
                             <img src="{{ asset($admission->Student->photo) }}" alt="Student Image"
-                                style="max-width: 135px; height: 200px;" class="mx-auto d-block img-fluid">
+                                style="width: 135px; height: 150px;" class="mx-auto d-block img-fluid">
                         </div>
                     </td>
                 </tr>
@@ -113,7 +115,16 @@
                 </tr>
                 <tr>
                     <td colspan="5" style="text-align: left;">
-                        <label >मागील वार्षिक परीक्षेत मिळालेले शेकडा गुण :</label>   <label ><strong> {{ $education->percentage }} %</strong></label>
+                        <label >मागील वार्षिक परीक्षेत मिळालेले शेकडा गुण :</label>   
+                        <label >
+                            <strong> 
+                                @if (isset($education->percentage))
+                                     {{ $education->percentage }} %
+                                @else
+                                    0.00 %
+                                @endif 
+                            </strong>
+                        </label>
                     </td>
                     <td colspan="3" style="text-align: left;">
                         <label >रक्तगट :</label>   <label ><strong> {{ $admission->Student->blood_group }} </strong></label>
@@ -210,20 +221,22 @@
                                 <td style="border: 1px solid #000000; color:black; padding: 5px;">मेस डिपॉझीट</td>
                                 <td style="border: 1px solid #000000; color:black; padding: 5px;">एकूण वसतिगृह फी</td>
                             </tr>
+                            @foreach ($fee as $key => $f)
+                                 @if ($key==4)
+                                     @break
+                                 @endif
                             <tr>
-                                <td style="border: 1px solid #000000; color:black; padding: 5px;"> {{ $admission->seated->seated }}  सिटेड</td>
-                                <td style="border: 1px solid #000000; color:black;padding: 5px;">@php
-                                    $amt=0.00;
-                                 @endphp
-                                 @foreach ($allocation->bed->room->seated->fees as $a)
-                                  @if ($a->academic_year_id== $admission->academic_year_id)
-                                     {{ $amt=$a->amount}}  
-                                  @endif
-                                 @endforeach/-</td>
+                                @php
+                                    $amt=0;
+                                @endphp
+
+                                <td style="border: 1px solid #000000; color:black; padding: 5px;"> {{ $f->seated->seated }}  सिटेड</td>
+                                <td style="border: 1px solid #000000; color:black;padding: 5px;"> {{ $amt=$f->amount }}/-</td>
                                 <td style="border: 1px solid #000000; color:black;padding: 5px;">1000.00/-</td>
                                 <td style="border: 1px solid #000000; color:black;padding: 5px;">1000.00/-</td>
-                                <td style="border: 1px solid #000000; color:black;padding: 5px;"> {{ number_format($amt+=2000, 2) }} /-</td>
+                                <td style="border: 1px solid #000000; color:black;padding: 5px;"> {{ number_format($amt+2000, 2) }} /-</td>
                             </tr>
+                            @endforeach
                         </table>
                     </td>
                 </tr>

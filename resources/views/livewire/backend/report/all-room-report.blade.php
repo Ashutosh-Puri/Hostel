@@ -16,22 +16,24 @@
                     </div>
                 </div>
                 <div class="float-end">
-                    <a wire:loading.attr="disabled" wire:loading.remove wire:click="generatePDF()"
-                        class="btn btn-success ">
-                        PDF<span class="btn-label-right"><i class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
-                    </a>
-                    <a wire:loading wire:target="generatePDF" class="btn btn-success ">
-                        Processing..<span class="btn-label-right"><i
-                                class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
-                    </a>
-                    <a wire:loading.attr="disabled" wire:loading.remove wire:click="generateEXCEL()"
-                        class="btn btn-success ">
-                        EXCEL<span class="btn-label-right"><i class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
-                    </a>
-                    <a wire:loading wire:target="generateEXCEL" class="btn btn-success ">
-                        Processing..<span class="btn-label-right"><i
-                                class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
-                    </a>
+                    @can('Download Room Report')
+                        <a wire:loading.attr="disabled" wire:loading.remove wire:click="generatePDF()"
+                            class="btn btn-success ">
+                            PDF<span class="btn-label-right"><i class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
+                        </a>
+                        <a wire:loading wire:target="generatePDF" class="btn btn-success ">
+                            Processing..<span class="btn-label-right"><i
+                                    class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
+                        </a>
+                        <a wire:loading.attr="disabled" wire:loading.remove wire:click="generateEXCEL()"
+                            class="btn btn-success ">
+                            EXCEL<span class="btn-label-right"><i class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
+                        </a>
+                        <a wire:loading wire:target="generateEXCEL" class="btn btn-success ">
+                            Processing..<span class="btn-label-right"><i
+                                    class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
+                        </a>
+                    @endcan
                 </div>
             </div>
         </div>

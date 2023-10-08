@@ -15,24 +15,26 @@
                         </div>
                     </div>
                 </div>
-                <div class="float-end">
-                    <a wire:loading.attr="disabled" wire:loading.remove wire:click="generatePDF()"
-                        class="btn btn-success ">
-                        PDF<span class="btn-label-right"><i class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
-                    </a>
-                    <a wire:loading wire:target="generatePDF" class="btn btn-success ">
-                        Processing..<span class="btn-label-right"><i
-                                class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
-                    </a>
-                    <a wire:loading.attr="disabled" wire:loading.remove wire:click="generateEXCEL()"
-                        class="btn btn-success ">
-                        EXCEL<span class="btn-label-right"><i class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
-                    </a>
-                    <a wire:loading wire:target="generateEXCEL" class="btn btn-success ">
-                        Processing..<span class="btn-label-right"><i
-                                class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
-                    </a>
-                </div>
+                @can('Download Payment Report')
+                    <div class="float-end">
+                        <a wire:loading.attr="disabled" wire:loading.remove wire:click="generatePDF()"
+                            class="btn btn-success ">
+                            PDF<span class="btn-label-right"><i class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
+                        </a>
+                        <a wire:loading wire:target="generatePDF" class="btn btn-success ">
+                            Processing..<span class="btn-label-right"><i
+                                    class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
+                        </a>
+                        <a wire:loading.attr="disabled" wire:loading.remove wire:click="generateEXCEL()"
+                            class="btn btn-success ">
+                            EXCEL<span class="btn-label-right"><i class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
+                        </a>
+                        <a wire:loading wire:target="generateEXCEL" class="btn btn-success ">
+                            Processing..<span class="btn-label-right"><i
+                                    class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
+                        </a>
+                    </div>
+                @endcan
             </div>
         </div>
     </div>

@@ -16,6 +16,38 @@
           <span class="menu-title">Admission's</span>
         </a>
       </li>
+      <li class="nav-item nav-category">Forms</li>
+      <li class="nav-item">
+        <a class="nav-link" href="" >
+          <span class="icon-bg"><i class="mdi mdi-account-key menu-icon"></i></span>
+          <span class="menu-title">Come From Home</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="" >
+          <span class="icon-bg"><i class="mdi mdi-account-key menu-icon"></i></span>
+          <span class="menu-title">Local Register</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="" >
+          <span class="icon-bg"><i class="mdi mdi-account-key menu-icon"></i></span>
+          <span class="menu-title">Night Out</span>
+        </a>
+      </li>
+      <li class="nav-item nav-category">Payment</li>
+      <li class="nav-item">
+        <a class="nav-link" href="" >
+          <span class="icon-bg"><i class="mdi mdi-account-key menu-icon"></i></span>
+          <span class="menu-title">Pay Fee</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="" >
+          <span class="icon-bg"><i class="mdi mdi-account-key menu-icon"></i></span>
+          <span class="menu-title">Pay Fine</span>
+        </a>
+      </li>
       {{-- <li class="nav-item">
         <a class="nav-link" href="">
           <span class="icon-bg"><i class="mdi mdi-format-list-bulleted menu-icon"></i></span>
