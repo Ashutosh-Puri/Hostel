@@ -96,10 +96,13 @@ Route::middleware(['guest'])->group(function () {
     Route::get('contact', Contact::class)->name('contact');
 
     // Rules
-    Route::get('view-rules', ViewRules::class)->name('view-rules');
+    Route::get('view-rules', ViewRules::class)->name('rules');
 
     // Rules
-    Route::get('show-notice', ShowNotice::class)->name('show-notice');
+    Route::get('show-notice', ShowNotice::class)->name('notice');
+
+    // Rules
+    Route::get('all-notice', ShowNotice::class)->name('team');
 
 
 });
