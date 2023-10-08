@@ -44,15 +44,15 @@ use App\Http\Livewire\Backend\Allocation\AllAllocation;
 use App\Http\Livewire\Backend\Permission\AllPermission;
 use App\Http\Livewire\Backend\Razorpay\RazorpayPayment;
 use App\Http\Livewire\Backend\Razorpay\RazorpayRefunds;
-use App\Http\Controllers\Common\FeeRecipetPdfController;
+use App\Http\Controllers\Backend\FeeRecipetPdfController;
 use App\Http\Livewire\Backend\Razorpay\RazorpayPayments;
-use App\Http\Controllers\Common\FineRecipetPdfController;
+use App\Http\Controllers\Backend\FineRecipetPdfController;
 use App\Http\Livewire\Backend\Report\AllAllocationReport;
 use App\Http\Livewire\Backend\StudentFine\AllStudentFine;
 use App\Http\Livewire\Backend\Transaction\AllTransaction;
-use App\Http\Controllers\Common\NightOutFormPdfController;
+use App\Http\Controllers\Backend\NightOutFormPdfController;
 use App\Http\Livewire\Frontend\Admission\StudentAdmission;
-use App\Http\Controllers\Common\AdmissionFormPdfController;
+use App\Http\Controllers\Backend\AdmissionFormPdfController;
 use App\Http\Livewire\Backend\AcademicYear\AllAcademicYear;
 use App\Http\Livewire\Backend\PhotoGallery\AllPhotoGallery;
 use App\Http\Controllers\Backend\Razorpay\RazorpayController;
@@ -60,6 +60,7 @@ use App\Http\Livewire\Backend\RolePermission\AllRolePermission;
 use App\Http\Livewire\Backend\StudentPayment\AllStudentPayment;
 use App\Http\Livewire\Backend\StudentNightOut\AllStudentNightOut;
 use App\Http\Livewire\Backend\StudentEducation\AllStudentEducation;
+use App\Http\Controllers\Frontend\StudentAdmissionFormPdfController;
 use App\Http\Livewire\Backend\StudentComeFromHome\AllStudentComeFromHome;
 use App\Http\Livewire\Backend\StudentLocalRegister\AllStudentLocalRegister;
 
@@ -114,6 +115,11 @@ Route::middleware(['auth:student','is_student','verified'])->group(function () {
 
    // Student Admission
    Route::get('student/admission', StudentAdmission::class)->name('student.admission');
+
+    // view Admission Form
+    Route::get('student/view/admission_form/{id}',[StudentAdmissionFormPdfController::class,'view_pdf'])->name('student_view_admission_form');
+    // Download Admission Form
+    Route::get('student/download/admission_form/{id}',[StudentAdmissionFormPdfController::class,'download_pdf'])->name('student_download_admission_form');
 });
 
 
@@ -357,16 +363,13 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
         Route::post('fee/payment/fail',[RazorpayController::class,'fee_payment_fail'])->name('fee_payment_fail');
     });
 
-    Route::group(['middleware' => ['permission:View Admission Form']], function () {
-        // view Admission Form
-        Route::get('view/admission_form/{id}',[AdmissionFormPdfController::class,'view_pdf'])->name('view_admission_form');
-    });
-
-    Route::group(['middleware' => ['permission:Download Admission Form']], function () {
-       // Download Admission Form
-        Route::get('download/admission_form/{id}',[AdmissionFormPdfController::class,'download_pdf'])->name('download_admission_form');
-    });
-
+    // view Admission Form
+    Route::get('view/admission_form/{id}',[AdmissionFormPdfController::class,'view_pdf'])->name('view_admission_form');
+    // Download Admission Form
+    Route::get('download/admission_form/{id}',[AdmissionFormPdfController::class,'download_pdf'])->name('download_admission_form');
+    
+    
+    
 
 });
 

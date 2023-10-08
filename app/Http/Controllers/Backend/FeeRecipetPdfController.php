@@ -1,31 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Common;
+namespace App\Http\Controllers\Backend;
 
 use Mpdf\Mpdf;
-use App\Models\Admission;
 use App\Models\StudentFine;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Models\StudentPayment;
 use App\Http\Controllers\Controller;
 
-class FineRecipetPdfController extends Controller
+class FeeRecipetPdfController extends Controller
 {
+
     public function view_pdf($id)
     {   
-        $studentfine=StudentFine::find($id);
-        $admission=Admission::where('academic_year_id',$studentfine->academic_year_id)->where('student_id',$studentfine->student_id)->first();
-        $transaction = Transaction::where('student_fine_id', $id)->latest()->limit(1)->first(); 
-        if($studentfine->status==1 )
-        {
-            $n_to_w =  $this->convertCurrencyToWords($studentfine->amount);
-        }
-        else
-        {
-            $n_to_w =  $this->convertCurrencyToWords(0.00);
-        }
-        
-        $html = view('pdf.admission_fine_recipet', compact('studentfine','transaction','n_to_w','admission'));
+        $studentpayment=StudentPayment::find($id);
+        $transaction=Transaction::where('student_payment_id', $id)->first();
+        $n_to_w =  $this->convertCurrencyToWords($studentpayment->deposite);
+        $html = view('pdf.admission_fee_recipet', compact('studentpayment','transaction','n_to_w'));
         $pdf=new Mpdf;
         $pdf->autoScriptToLang=true;
         $pdf->autoLangToFont=true;
@@ -35,24 +27,15 @@ class FineRecipetPdfController extends Controller
     
     public function download_pdf($id)
     {
-        $studentfine=StudentFine::find($id);
-        $admission=Admission::where('academic_year_id',$studentfine->academic_year_id)->where('student_id',$studentfine->student_id)->first();
-        $transaction = Transaction::where('student_fine_id', $id)->latest()->limit(1)->first(); 
-        if($studentfine->status==1 )
-        {
-            $n_to_w =  $this->convertCurrencyToWords($studentfine->amount);
-        }
-        else
-        {
-            $n_to_w =  $this->convertCurrencyToWords(0.00);
-        }
-        
-        $html = view('pdf.admission_fine_recipet', compact('studentfine','transaction','n_to_w','admission'));
+        $studentpayment=StudentPayment::find($id);
+        $transaction=Transaction::where('student_payment_id', $id)->first();
+        $n_to_w =  $this->convertCurrencyToWords($studentpayment->deposite);
+        $html = view('pdf.admission_fee_recipet', compact('studentpayment','transaction','n_to_w'));
         $pdf=new Mpdf;
         $pdf->autoScriptToLang=true;
         $pdf->autoLangToFont=true;
         $pdf->WriteHTML($html);
-        $filename = 'Student__Fine_Recipet_'.now().'.pdf';
+        $filename = 'Admission__Fee_Recipet_'.now().'.pdf';
         $pdfContent = $pdf->Output('', \Mpdf\Output\Destination::STRING_RETURN);
         header('Content-Type: application/pdf');
         header('Content-Disposition: attachment; filename="' . $filename . '"');

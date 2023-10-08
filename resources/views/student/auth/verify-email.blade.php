@@ -11,7 +11,7 @@
                 <div class="col-lg-4 mx-auto">
                     <div class="modal-bg   p-5">
                         <div>
-                            <h1 class="text-center fw-bold fs-1 mb-3"> Verify Email</h1>
+                            <h1 class="text-center fw-bold fs-1 mb-3 text-primary"> Verify Email</h1>
                         </div>
                         <div>
                             <div class="form-group">

@@ -70,7 +70,7 @@ class StudentAdmission extends Component
         $this->c_id=null;
         $this->academic_year_id=null;
         $this->last_academic_year_id=null;
-        $this->student_id=null;
+        // $this->student_id=null;
         $this->class_id = null;
         $this->stream=null;
         $this->stream_type=null;
@@ -152,6 +152,7 @@ class StudentAdmission extends Component
         $this->mode=$mode;
         if($mode=="add")
         {   
+            $this->resetinput();
             $student = Student::find($this->student_id);
             if ($student)
             {
