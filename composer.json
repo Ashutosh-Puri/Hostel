@@ -16,7 +16,10 @@
         "livewire/livewire": "^2.12.6",
         "maatwebsite/excel": "^3.1",
         "mpdf/mpdf": "^8.2",
+        "phpseclib/phpseclib": "^3.0",
         "razorpay/razorpay": "^2.8",
+        "react/event-loop": "^1.4",
+        "react/socket": "^1.14",
         "spatie/laravel-permission": "^5.10",
         "vonage/client": "^4.0"
     },

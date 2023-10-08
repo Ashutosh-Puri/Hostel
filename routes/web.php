@@ -14,6 +14,7 @@ use App\Http\Livewire\Backend\Rule\AllRule;
 use App\Http\Livewire\Backend\Admin\AllAdmin;
 use App\Http\Livewire\Backend\Class\AllClass;
 use App\Http\Livewire\Backend\Floor\AllFloor;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Livewire\Backend\Qutota\AllQuota;
 use App\Http\Livewire\Backend\Setting\Setting;
 use App\Http\Livewire\Backend\Admin\AdminLogin;
@@ -323,28 +324,35 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
         Route::get('razorapay/refunds',RazorpayRefunds::class)->name('razorpay_refunds');
     });
   
+    Route::group(['middleware' => ['permission:Pay Student Fine']], function () {
+        // Pay Fine And Refund Fine
+        Route::get('pay/fine/{id}',[RazorpayController::class,'pay_fine'])->name('pay_fine');
+        Route::get('refund/fine/{id}',[RazorpayController::class,'refund_fine'])->name('refund_fine');
+        Route::post('fine/payment/verify',[RazorpayController::class,'fine_payment_verify'])->name('fine_payment_verify');
+        Route::post('fine/payment/fail',[RazorpayController::class,'fine_payment_fail'])->name('fine_payment_fail');
+    });
+    
+    Route::group(['middleware' => ['permission:Pay Student Payment']], function () {
+        // Pay Fee And Refund Fee
+        Route::get('pay/fee/{id}',[RazorpayController::class,'pay_fee'])->name('pay_fee');
+        Route::get('refund/fee/{id}',[RazorpayController::class,'refund_fee'])->name('refund_fee');
+        Route::post('fee/payment/verify',[RazorpayController::class,'fee_payment_verify'])->name('fee_payment_verify');
+        Route::post('fee/payment/fail',[RazorpayController::class,'fee_payment_fail'])->name('fee_payment_fail');
+    });
 
+    Route::group(['middleware' => ['permission:View Admission Form']], function () {
+        // view Admission Form
+        Route::get('view/admission_form/{id}',[AdmissionFormPdfController::class,'view_pdf'])->name('view_admission_form');
+    });
+
+    Route::group(['middleware' => ['permission:Download Admission Form']], function () {
+       // Download Admission Form
+        Route::get('download/admission_form/{id}',[AdmissionFormPdfController::class,'download_pdf'])->name('download_admission_form');
+    });
    
 
 });
 
-
-
-Route::get('pay/fee/{id}',[RazorpayController::class,'pay_fee'])->name('pay_fee');
-Route::get('refund/fee/{id}',[RazorpayController::class,'refund_fee'])->name('refund_fee');
-Route::post('fee/payment/verify',[RazorpayController::class,'fee_payment_verify'])->name('fee_payment_verify');
-Route::post('fee/payment/fail',[RazorpayController::class,'fee_payment_fail'])->name('fee_payment_fail');
-
-
-Route::get('pay/fine/{id}',[RazorpayController::class,'pay_fine'])->name('pay_fine');
-Route::get('refund/fine/{id}',[RazorpayController::class,'refund_fine'])->name('refund_fine');
-Route::post('fine/payment/verify',[RazorpayController::class,'fine_payment_verify'])->name('fine_payment_verify');
-Route::post('fine/payment/fail',[RazorpayController::class,'fine_payment_fail'])->name('fine_payment_fail');
-
-
-
-Route::get('view/admission_form/{id}',[AdmissionFormPdfController::class,'view_pdf'])->name('view_admission_form');
-Route::get('download/admission_form/{id}',[AdmissionFormPdfController::class,'download_pdf'])->name('download_admission_form');
 
 Route::get('view/fee_recipet/{id}',[FeeRecipetPdfController::class,'view_pdf'])->name('view_fee_recipet');
 Route::get('download/fee_recipet/{id}',[FeeRecipetPdfController::class,'download_pdf'])->name('download_fee_recipet');
@@ -357,7 +365,18 @@ Route::get('download/night_out_form/{id}',[NightOutFormPdfController::class,'dow
 
 Route::get('form',[temp::class,'view_pdf']);
 
+Route::post('scan', [AttendanceController::class,'recordAttendance'])->name('attendance.scan');
 
+Route::get('contact', function () {
+    return view('contact');
+});
+
+Route::get('about', function () {
+    return view('about');
+});
+Route::get('h', function () {
+    return view('welcome');
+});
 
 require __DIR__.'/student_auth.php';
 require __DIR__.'/admin_auth.php';
