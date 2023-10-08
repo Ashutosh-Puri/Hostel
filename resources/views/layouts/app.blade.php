@@ -13,7 +13,7 @@
 
     <!-- Title -->
     <title>{{preg_replace('/(?<!\ )[A-Z]/', ' $0', config('app.name', 'Laravel'))  }} | @yield('title')</title>
-  
+    
         
         <!-- admin template -->
         <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --><!-- admin template --> 
@@ -24,26 +24,17 @@
         <!-- admin template 1-->     <link rel="stylesheet" href="{{ asset('assets/admin_template/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">                        <!-- admin template -->
         <!-- admin template -->     <link rel="stylesheet" href="{{ asset('assets/admin_template/css/style.css') }}">                                                                             <!-- admin template -->                                                                                                                                                                        <!-- admin template -->
         <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --><!-- admin template -->
-        
-        
+
         <!-- data Table-->
         <link rel="stylesheet" href="{{ asset('assets/datatable/jquery.dataTables.min.css') }}">
-    
+   
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     
 
-    @guest
-        <!-- Libraries Stylesheet -->
-    <link href="{{ asset('assets/guest_template/lib/animate/animate.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/guest_template/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link rel="stylesheet" href="{{ asset('assets/guest_template/css/bootstrap.min.css') }}">
     
-    <!-- Template Stylesheet -->
-    <link href="{{ asset('assets/guest_template/css/style.css') }}" rel="stylesheet">
-    @endguest
+        
+    
 
     <!-- Styles-->
     @yield('styles')
@@ -63,6 +54,7 @@
     <script src="{{ asset('assets/turbolinks/turbolinks.js') }}" data-turbolinks-eval="false" data-turbo-eval="false"></script>   
 </body>
    
+        
         <!-- admin template -->
         <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --><!-- admin template -->
         <!-- admin template -->     <script src="{{ asset('assets/admin_template/vendors/js/vendor.bundle.base.js') }}"></script>                                        <!-- admin template -->
@@ -134,19 +126,10 @@
                 @php session()->forget('alert') @endphp
             @endif
         </script>
+   
+   
         
-  
-
-    @guest
-        <!-- JavaScript Libraries -->
-    <script src="{{ asset('assets/guest_template/lib/wow/wow.min.js') }}"></script>
-    <script src="{{ asset('assets/guest_template/lib/easing/easing.min.js') }}"></script>
-    <script src="{{ asset('assets/guest_template/lib/waypoints/waypoints.min.js') }}"></script>
-    <script src="{{ asset('assets/guest_template/lib/owlcarousel/owl.carousel.min.js') }}"></script>
-
-    <!-- Template Javascript -->
-    <script src="{{ asset('assets/guest_template/js/main.js') }}"></script>
-    @endguest
+   
 
     @yield('scripts')
 </body>

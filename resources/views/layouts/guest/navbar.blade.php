@@ -38,7 +38,6 @@
                   <li><a class="dropdown-item" href="#">Something else here</a></li>
                 </ul>
             </li>
-
         </ul>
         <!-- Right Side Of Navbar -->
         <ul class="navbar-nav ms-auto">
