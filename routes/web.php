@@ -11,6 +11,7 @@ use App\Http\Livewire\Backend\Fine\AllFine;
 use App\Http\Livewire\Backend\Role\AllRole;
 use App\Http\Livewire\Backend\Room\AllRoom;
 use App\Http\Livewire\Backend\Rule\AllRule;
+use App\Http\Livewire\Guestend\About\About;
 use App\Http\Livewire\Backend\Admin\AllAdmin;
 use App\Http\Livewire\Backend\Class\AllClass;
 use App\Http\Livewire\Backend\Floor\AllFloor;
@@ -21,17 +22,20 @@ use App\Http\Livewire\Backend\Admin\AdminLogin;
 use App\Http\Livewire\Backend\Hostel\AllHostel;
 use App\Http\Livewire\Backend\Notice\AllNotice;
 use App\Http\Livewire\Backend\Seated\AllSeated;
+use App\Http\Livewire\Guestend\Contact\Contact;
 use App\Http\Livewire\Guestend\Gallery\Gallery;
 use App\Http\Livewire\Frontend\StudentDashboard;
 use App\Http\Livewire\Backend\College\AllCollege;
 use App\Http\Livewire\Backend\Enquiry\AllEnquiry;
 use App\Http\Livewire\Backend\Student\AllStudent;
+use App\Http\Livewire\Guestend\Notice\ShowNotice;
 use App\Http\Livewire\Backend\Admin\AdminDashboard;
 use App\Http\Livewire\Backend\Building\AllBuilding;
 use App\Http\Livewire\Backend\Category\AllCategory;
 use App\Http\Livewire\Backend\Facility\AllFacility;
 use App\Http\Livewire\Backend\Report\AllRoomReport;
 use App\Http\Livewire\Guestend\Enquiry\ShowEnquiry;
+use App\Http\Livewire\Guestend\ViewRules\ViewRules;
 use App\Http\Livewire\Backend\Admission\AllAdmission;
 use App\Http\Livewire\Backend\Razorpay\RazorpayOrders;
 use App\Http\Livewire\Backend\Report\AllPaymentReport;
@@ -75,7 +79,7 @@ Route::middleware(['guest'])->group(function () {
 
     // Admin Login Route
     // Route::get('admin/login', AdminLogin::class)->name('admin.login');
-    
+
     // Home
     Route::get('/', Home::class)->name('home');
 
@@ -84,6 +88,19 @@ Route::middleware(['guest'])->group(function () {
 
     // Enquiry
     Route::get('enquiry', ShowEnquiry::class)->name('enquiry');
+
+    // About
+    Route::get('about', About::class)->name('about');
+
+    // Contact
+    Route::get('contact', Contact::class)->name('contact');
+
+    // Rules
+    Route::get('view-rules', ViewRules::class)->name('view-rules');
+
+    // Rules
+    Route::get('show-notice', ShowNotice::class)->name('show-notice');
+
 
 });
 
@@ -102,13 +119,13 @@ Route::middleware(['auth:student','is_student','verified'])->group(function () {
 
 
 
-//  Routes With admin Guard is_admin middleware 
+//  Routes With admin Guard is_admin middleware
 Route::middleware(['auth:admin','is_admin'])->group(function () {
 
     // Superadmin Routes With Admin Guard
     Route::group(['middleware' => ['role:Super Admin']], function () {
 
-        
+
 
     });
 
@@ -119,14 +136,14 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
 
     Route::group(['middleware' => ['permission:Access Permission']], function () {
         // All Permission
-        Route::get('all/permissions',AllPermission::class)->name('all_permission'); 
+        Route::get('all/permissions',AllPermission::class)->name('all_permission');
     });
 
     Route::group(['middleware' => ['permission:Access Role Wise Permission']], function () {
        // All Role Permission
        Route::get('all/rolewisepermission',AllRolePermission::class)->name('all_role_permission');
     });
-    
+
     Route::group(['middleware' => ['permission:Access Admin']], function () {
         // All Admin
         Route::get('all/admins',AllAdmin::class)->name('all_admin');
@@ -136,7 +153,7 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
         // Site Setting
         Route::get('site/setting',Setting::class)->name('site_setting');
     });
-    
+
     Route::group(['middleware' => ['permission:Access College']], function () {
         // All College
         Route::get('all/colleges',AllCollege::class)->name('all_college');
@@ -146,7 +163,7 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
         // All Hostel
         Route::get('all/hostels',AllHostel::class)->name('all_hostel');
     });
-    
+
     Route::group(['middleware' => ['permission:Access Admission']], function () {
         // All Admission
         Route::get('all/admissions',AllAdmission::class)->name('all_admission');
@@ -181,7 +198,7 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
         // All Room
         Route::get('all/rooms',AllRoom::class)->name('all_room');
     });
-    
+
     Route::group(['middleware' => ['permission:Access Bed']], function () {
         // All Bed
         Route::get('all/beds',AllBed::class)->name('all_bed');
@@ -273,7 +290,7 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
         // All Room Report
         Route::get('all/reportsroom',AllRoomReport::class)->name('all_room_report');
     });
-    
+
     Route::group(['middleware' => ['permission:Access Payment Report']], function () {
         // All Room Report
         Route::get('all/reportpayment',AllPaymentReport::class)->name('all_payment_report');
@@ -323,7 +340,7 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
          // Razorpay Refunds
         Route::get('razorapay/refunds',RazorpayRefunds::class)->name('razorpay_refunds');
     });
-  
+
     Route::group(['middleware' => ['permission:Pay Student Fine']], function () {
         // Pay Fine And Refund Fine
         Route::get('pay/fine/{id}',[RazorpayController::class,'pay_fine'])->name('pay_fine');
@@ -331,7 +348,7 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
         Route::post('fine/payment/verify',[RazorpayController::class,'fine_payment_verify'])->name('fine_payment_verify');
         Route::post('fine/payment/fail',[RazorpayController::class,'fine_payment_fail'])->name('fine_payment_fail');
     });
-    
+
     Route::group(['middleware' => ['permission:Pay Student Payment']], function () {
         // Pay Fee And Refund Fee
         Route::get('pay/fee/{id}',[RazorpayController::class,'pay_fee'])->name('pay_fee');
@@ -349,7 +366,7 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
        // Download Admission Form
         Route::get('download/admission_form/{id}',[AdmissionFormPdfController::class,'download_pdf'])->name('download_admission_form');
     });
-   
+
 
 });
 
@@ -366,17 +383,6 @@ Route::get('download/night_out_form/{id}',[NightOutFormPdfController::class,'dow
 Route::get('form',[temp::class,'view_pdf']);
 
 Route::post('scan', [AttendanceController::class,'recordAttendance'])->name('attendance.scan');
-
-Route::get('contact', function () {
-    return view('contact');
-});
-
-Route::get('about', function () {
-    return view('about');
-});
-Route::get('h', function () {
-    return view('welcome');
-});
 
 require __DIR__.'/student_auth.php';
 require __DIR__.'/admin_auth.php';
