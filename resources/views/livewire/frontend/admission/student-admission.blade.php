@@ -452,7 +452,7 @@
                                     <div class="col-12 col-md-5">
                                         <div class="mb-3 form-group">
                                             <label for="parent_address" class="form-label">Parent Address</label>
-                                            <textarea class="form-control @error('parent_address') is-invalid @enderror" wire:model.debounce.1000ms="parent_address" id="parent_address" placeholder="Enter Parent Address"   cols="30" rows="1"> {{ old('parent_address') }}{{ $parent_address }}</textarea>
+                                            <textarea class="w-100 @error('parent_address') is-invalid @enderror" wire:model.debounce.1000ms="parent_address" id="parent_address" placeholder="Enter Parent Address"   cols="30" rows="4"> {{ old('parent_address') }}{{ $parent_address }}</textarea>
                                             @error('parent_address')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -463,7 +463,7 @@
                                     <div class="col-12 col-md-5">
                                         <div class="mb-3 form-group">
                                             <label for="local_parent_address" class="form-label">Parent Address In Sangamner</label>
-                                            <textarea class="form-control @error('local_parent_address') is-invalid @enderror" wire:model.debounce.1000ms="local_parent_address" id="local_parent_address" placeholder="Enter Parent Address In Sangamner"   cols="30" rows="3">{{ old('local_parent_address') }} {{ $local_parent_address }}</textarea>
+                                            <textarea class="w-100 @error('local_parent_address') is-invalid @enderror" wire:model.debounce.1000ms="local_parent_address" id="local_parent_address" placeholder="Enter Parent Address In Sangamner"   cols="30" rows="4">{{ old('local_parent_address') }} {{ $local_parent_address }}</textarea>
                                             @error('local_parent_address')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -928,7 +928,7 @@
                                     <div class="col-12 col-md-5">
                                         <div class="mb-3 form-group">
                                             <label for="parent_address" class="form-label">Parent Address</label>
-                                            <textarea class="form-control @error('parent_address') is-invalid @enderror" wire:model.debounce.1000ms="parent_address" id="parent_address" placeholder="Enter Parent Address"   cols="30" rows="1">{{ old('parent_address') }}</textarea>
+                                            <textarea class="w-100 @error('parent_address') is-invalid @enderror" wire:model.debounce.1000ms="parent_address" id="parent_address" placeholder="Enter Parent Address"   cols="30" rows="4">{{ old('parent_address') }}</textarea>
                                             @error('parent_address')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -939,7 +939,7 @@
                                     <div class="col-12 col-md-5">
                                         <div class="mb-3 form-group">
                                             <label for="local_parent_address" class="form-label">Parent Address In Sangamner</label>
-                                            <textarea class="form-control @error('local_parent_address') is-invalid @enderror" wire:model.debounce.1000ms="local_parent_address" id="local_parent_address" placeholder="Enter Parent Address In Sangamner"   cols="30" rows="3">{{ old('local_parent_address') }}</textarea>
+                                            <textarea class="w-100 @error('local_parent_address') is-invalid @enderror" wire:model.debounce.1000ms="local_parent_address" id="local_parent_address" placeholder="Enter Parent Address In Sangamner"   cols="30" rows="4">{{ old('local_parent_address') }}</textarea>
                                             @error('local_parent_address')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -950,229 +950,6 @@
                                 </div>
                                 <button type="submit"  class="btn btn-primary waves-effect waves-light">Update Data</button>
                             </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @elseif($mode=="view")
-            <div>
-                @section('title')
-                View Admission Form
-             @endsection
-                <div class="row">
-                    <div class="col-12">
-                        <div class="bg-success">
-                            <div class="float-start pt-2 px-2">
-                                <h2>View Admission Form</h2>
-                            </div>
-                            <div class="float-end">
-                                <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
-                                    Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-5">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body ">
-                                <div class="row">
-                                    <div class="col-6 col-md-4 mb-3">
-                                        <label for="">Admission ID :</label>
-                                        <label for="">{{ $viewadmission[0]->id }}</label>
-                                    </div>
-                                    <div class="col-6 col-md-4 mb-3">
-                                        <label for="">Academic Year:</label>
-                                        <label for="">{{ $viewadmission[0]->AcademicYear->year.' - '.$viewadmission[0]->AcademicYear->year+1 }}</label>
-                                    </div>
-                                    <div class="col-6 col-md-4 mb-3">
-                                        <label for="">Status :</label>
-                                        <label>
-                                            @if ( $viewadmission[0]->status == '0')
-                                                <span class="badge bg-warning text-white">Wating</span>
-                                            @elseif( $viewadmission[0]->status == '1')
-                                                <span class="badge bg-success text-white">Confirmed</span>
-                                            @else
-                                                <span class="badge bg-danger text-white">Canceled</span>
-                                            @endif
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-12 text-center mb-3">
-                                    <hr>
-                                        <h3 for="">Student Information</h3>
-                                    <hr>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 col-md-2 text-center mb-3 border p-2">
-                                        <img src="{{ asset($viewadmission[0]->Student->photo) }}" alt="" style="max-width: 160px; height: 200px;" class=" mx-auto d-block img-fluid ">
-                                    </div>
-                                    <div class="col-12 col-md-10 mb-3">
-                                        <div class="row">
-                                            <div class="col-12 col-md-6 mb-3">
-                                                <label for="">Member ID :</label>
-                                                <label for="">{{ $viewadmission[0]->Student->member_id }}</label>
-                                            </div>
-                                            <div class="col-12 col-md-6 mb-3">
-                                                <label for="">Student Name :</label>
-                                                <label for="">{{ $viewadmission[0]->Student->name }}</label>
-                                            </div>
-                                            <div class="col-12 col-md-6 mb-3">
-                                                <label for="">Email :</label>
-                                                <label for="">{{ $viewadmission[0]->Student->email }}</label>
-                                            </div>
-                                            <div class="col-12 col-md-6 mb-3">
-                                                <label for="">Mobile :</label>
-                                                <label for="">{{ $viewadmission[0]->Student->mobile }}</label>
-                                            </div>
-                                            <div class="col-12 col-md-6 mb-3">
-                                                <label for="">Date Of Birth :</label>
-                                                <label for="">{{ $viewadmission[0]->Student->dob }}</label>
-                                            </div>
-                                            <div class="col-12 col-md-6 mb-3">
-                                                <label for="">Gender :</label>
-                                                <label for="">{{ $viewadmission[0]->Student->gender==1?'Female':'Male'; }}</label>
-                                            </div>
-                                            <div class="col-12 col-md-6 mb-3">
-                                                <label for="">Cast :</label>
-                                                <label for="">{{ $viewadmission[0]->Student->Cast->name }}</label>
-                                            </div>
-                                            <div class="col-12 col-md-6 mb-3">
-                                                <label for="">Category :</label>
-                                                <label for="">{{ $viewadmission[0]->Student->Cast->Category->name}}</label>
-                                            </div>
-                                            <div class="col-12 col-md-6 mb-3">
-                                                <label for="">Blood Group :</label>
-                                                <label for="">{{ $viewadmission[0]->Student->blood_group }}</label>
-                                            </div>
-                                            <div class="col-12 col-md-6 mb-3">
-                                                <label for="">Are you involved in ragging? :</label>
-                                                <label for="">{{ $viewadmission[0]->Student->is_ragging==0?'No':'Yes'; }}</label>
-                                            </div>
-                                            <div class="col-12 col-md-12 mb-3">
-                                                <label for="">Illness / Allergy :</label>
-                                                <label for="">{{ $viewadmission[0]->Student->is_allergy==null?'No':$viewadmission[0]->Student->is_allergy; }}</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-12 text-center mb-3">
-                                    <hr>
-                                        <h3 for="">Academic Information</h3>
-                                    <hr>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 col-md-3 mb-4">
-                                        <label for="">Academic Year :</label>
-                                        <label for="">{{ $viewadmission[0]->AcademicYear->year.' - '.$viewadmission[0]->AcademicYear->year+1 }}</label>
-                                    </div>
-                                    <div class="col-12 col-md-3 mb-4">
-                                        <label for="">Stream :</label>
-                                        <label for="">{{ $viewadmission[0]->Class->stream }}</label>
-                                    </div>
-                                    <div class="col-12 col-md-3 mb-4">
-                                        <label for="">Student Level :</label>
-                                        <label for="">{{ $viewadmission[0]->Class->type }}</label>
-                                    </div>
-                                    <div class="col-12 col-md-3 mb-4">
-                                        <label for="">Class :</label>
-                                        <label for="">{{ $viewadmission[0]->Class->name }}</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-12 text-center mb-3">
-                                    <hr>
-                                        <h3 for="">Previous Qualification Information</h3>
-                                    <hr>
-                                </div>
-                                <div class="row">
-                                    @if (isset($lastclass->sgpa))
-                                        <div class="col-12 col-md-3 mb-4">
-                                            <label for="">Academic Year :</label>
-                                            <label for="">{{ $lastclass->AcademicYear->year}} - {{ $lastclass->AcademicYear->year+1}}</label>
-                                        </div>
-                                        <div class="col-12 col-md-3 mb-4">
-                                            <label for="">Class :</label>
-                                            <label for="">{{ $lastclass->Class->name }}</label>
-                                        </div>
-                                        <div class="col-12 col-md-3 mb-3">
-                                            <label for="">SGPA :</label>
-                                            <label for="">{{ $lastclass->sgpa}}</label>
-                                        </div>
-                                        <div class="col-12 col-md-3 mb-3">
-                                            <label for="">Percentage :</label>
-                                            <label for="">&nbsp;{{ $lastclass->percentage }} %</label>
-                                        </div>
-                                    @else
-                                        <div class="col-12 col-md-4 mb-4">
-                                            <label for="">Academic Year :</label>
-                                            <label for="">{{ $lastclass->AcademicYear->year}} - {{ $lastclass->AcademicYear->year+1}}</label>
-                                        </div>
-                                        <div class="col-12 col-md-4 mb-4">
-                                            <label for="">Class :</label>
-                                            <label for="">{{ $lastclass->Class->name }}</label>
-                                        </div>
-                                        <div class="col-12 col-md-4 mb-3">
-                                            <label for="">Percentage :</label>
-                                            <label for="">&nbsp;{{ $lastclass->percentage }} %</label>
-                                        </div>
-                                    @endif
-                                </div>
-                                <div class="col-12 col-md-12 text-center mb-3">
-                                    <hr>
-                                        <h3 for="">Parent Information</h3>
-                                    <hr>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 col-md-4 mb-4">
-                                        <label for="">Parents Name :</label>
-                                        <label for="">{{ $viewadmission[0]->Student->parent_name }}</label>
-                                    </div>
-                                    <div class="col-12 col-md-4 mb-3">
-                                        <label for="">Parent Mobile :</label>
-                                        <label for="">{{ $viewadmission[0]->Student->parent_mobile }}</label>
-                                    </div>
-                                    <div class="col-12 col-md-4 mb-3">
-                                        <label for="">Mother Name :</label>
-                                        <label for="">{{ $viewadmission[0]->Student->mother_name }}</label>
-                                    </div>
-                                    <div class="col-12 col-md-4 mb-3">
-                                        <label for="">Address Type :</label>
-                                        <label for="">{{ $viewadmission[0]->Student->adress_type==0?'Rural':'Urbon'; }}</label>
-                                    </div>
-                                    <div class="col-12 col-md-8 mb-3">
-                                        <label for="">Parent Address :</label>
-                                        <label for="">{{ $viewadmission[0]->Student->parent_address }}</label>
-                                    </div>
-                                </div>
-                                @if ($viewadmission[0]->Student->local_parent_name || $viewadmission[0]->Student->local_parent_mobile || $viewadmission[0]->Student->local_parent_address)
-                                    <div class="col-12 col-md-12 text-center mb-3">
-                                        <hr>
-                                            <h3 for="">Parent Live In Sangamner Information</h3>
-                                        <hr>
-                                    </div>
-                                    <div class="row">
-                                        @if ($viewadmission[0]->Student->local_parent_name)
-                                            <div class="col-12 col-md-4 mb-4">
-                                                <label for="">Parent Name :</label>
-                                                <label for="">{{ $viewadmission[0]->Student->local_parent_name }}</label>
-                                            </div>
-                                        @endif
-                                        @if ($viewadmission[0]->Student->local_parent_mobile)
-                                            <div class="col-12 col-md-3 mb-3">
-                                                <label for="">Parent Mobile :</label>
-                                                <label for="">{{ $viewadmission[0]->Student->local_parent_mobile }}</label>
-                                            </div>
-                                        @endif
-                                        @if ($viewadmission[0]->Student->local_parent_address)
-                                            <div class="col-12 col-md-5 mb-3">
-                                                <label for="">Parent Address :</label>
-                                                <label for="">{{ $viewadmission[0]->Student->local_parent_address }}</label>
-                                            </div>
-                                        @endif
-                                    </div>
-                                @endif
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -1190,10 +967,9 @@
                             </div>
                             <div class="float-end">
                                 @if ($hasAdmission)
-                                <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
-                                    New Admission<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
-                                </a>
-                                    
+                                    <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
+                                        New Admission<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
+                                    </a>
                                 @endif
                             </div>
                         </div>
@@ -1233,9 +1009,8 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    @if ( $item->status!=2) 
-                                                    <a wire:loading.attr="disabled"  wire:click="view({{ $item->id }})" class="btn btn-info waves-effect waves-light"><i class="mdi mdi-eye"></i></a>
-                                                    @endif
+                                                    <a   target="_blank"  class="btn btn-warning " href="{{ route('student_view_admission_form', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
+                                                    <a   target="_blank"  class="btn btn-warning " href="{{ route('student_download_admission_form', $item->id) }}"> <i class="mdi mdi-download"></i></a>
                                                     @if ( $item->status==0) 
                                                         <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
                                                     @endif

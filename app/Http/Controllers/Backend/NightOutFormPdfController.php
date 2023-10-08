@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Common;
+namespace App\Http\Controllers\Backend;
 
 use Mpdf\Mpdf;
 use App\Models\NightOut;

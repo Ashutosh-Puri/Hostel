@@ -9,7 +9,7 @@ Student Register
             <div class="col-lg-4 mx-auto">
                 <div class="modal-bg  p-5">
                     <div>
-                        <h1 class="text-center fw-bold fs-1 mb-3"> Student Register</h1>
+                        <h1 class="text-center fw-bold fs-1 mb-3 text-primary"> Student Register</h1>
                     </div>
                     <div>
                         @if (session('status'))

@@ -24,74 +24,80 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ url('contact') }}">Contact</a>
             </li>
-            <li class="nav-item dropdown">
-                
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="team.html" class="dropdown-item">Our Team</a>
-                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                        <a href="404.html" class="dropdown-item">404 Page</a>
-                    </div>
-               
+
+            <li class="nav-item ">
+                <a class="nav-link " href="#" id="navbarDarkDropdownMenuLink" >
+                  More <i class=" fw-bold mdi mdi-menu-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
+                    @auth
+                        
+                    @endauth
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
             </li>
+            
         </ul>
         <!-- Right Side Of Navbar -->
         <ul class="navbar-nav ms-auto">
             <!-- Authentication Links -->
             @auth('admin')
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.dashboard') }}">{{ __('Admin Dashboard') }}</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::guard('admin')->user()->name }}
+                <li class="nav-item dropdown ">
+                    <a class="nav-link " href="#" id="navbarDarkDropdownMenuLink" >
+                        {{ Auth::guard('admin')->user()->name }} <i class=" fw-bold mdi mdi-menu-down"></i>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-end my-2" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('admin.logout') }}"
-                        onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();">
-                            {{ __('Admin Logout') }}
-                        </a>
-                        <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    </div>
+                    <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
+                        <li>
+                            <a data-turbolinks="false" class="dropdown-item" href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('admin.logout') }}" onclick="event.preventDefault();  document.getElementById('logout-form').submit();">
+                               Admin Logout
+                            </a>
+                            <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </li>
+                    </ul>
                 </li>
             @else
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.login') }}">{{ __('Admin Login') }}</a>
+                    <a class="nav-link" href="{{ route('admin.login') }}" >Admin Login</a>
                 </li>
             @endauth
             @auth('student')
-                <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->username }}
+                <li class="nav-item dropdown ">
+                    <a class="nav-link " href="#" id="navbarDarkDropdownMenuLink" >
+                        {{ Auth::user()->username }} <i class=" fw-bold mdi mdi-menu-down"></i>
                     </a>
-
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('student.logout') }}"
-                        onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
-                        </a>
-
-                        <form id="logout-form" action="{{ route('student.logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    </div>
+                    <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
+                        <li>
+                            <a data-turbolinks="false" class="dropdown-item" href="{{ route('student.dashboard') }}">Dashboard</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('student.logout') }}" onclick="event.preventDefault();  document.getElementById('logout-form').submit();">
+                                Logout
+                            </a>
+                            <form id="logout-form" action="{{ route('student.logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </li>
+                    </ul>
                 </li>
             @else
                 @if (Route::has('student.login'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('student.login') }}">{{ __('Login') }}</a>
-                        </li>
-                    @endif
-                    @if (Route::has('student.register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('student.register') }}">{{ __('Register') }}</a>
-                        </li>
-                    @endif
-                @endauth
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('student.login') }}">{{ __('Login') }}</a>
+                    </li>
+                @endif
+                @if (Route::has('student.register'))
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('student.register') }}">{{ __('Register') }}</a>
+                    </li>
+                @endif
+            @endauth
         </ul>
     </div>
 </nav>

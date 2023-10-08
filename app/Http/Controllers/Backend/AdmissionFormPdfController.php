@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Common;
+namespace App\Http\Controllers\Backend;
 
 use Mpdf\Mpdf;
 use App\Models\Fee;
@@ -18,8 +18,6 @@ class AdmissionFormPdfController extends Controller
 
         $admission=Admission::find($id);
         $fee=Fee::where('academic_year_id', $admission->academic_year_id)->orderBy('seated_id','ASC')->get();
-
-       
         $education=StudentEducation::where('admission_id', $admission->id)->first();
         $rules=Rule::where('status',0)->get();
         $section1Html = view('pdf.admission_form_p1', compact('admission','fee','education'));
@@ -56,10 +54,10 @@ class AdmissionFormPdfController extends Controller
     public function download_pdf($id)
     {
         $admission=Admission::find($id);
-        $allocation=Allocation::where('admission_id', $admission->id)->first();
+        $fee=Fee::where('academic_year_id', $admission->academic_year_id)->orderBy('seated_id','ASC')->get();
         $education=StudentEducation::where('admission_id', $admission->id)->first();
         $rules=Rule::where('status',0)->get();
-        $section1Html = view('pdf.admission_form_p1', compact('admission','allocation','education'));
+        $section1Html = view('pdf.admission_form_p1', compact('admission','fee','education'));
         $section2Html = view('pdf.admission_form_p2', compact('admission','rules'));
         $section3Html = view('pdf.admission_form_p3', compact('admission'));
         $pdf=new Mpdf;
