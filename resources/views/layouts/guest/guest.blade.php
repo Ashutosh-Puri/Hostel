@@ -12,14 +12,19 @@
             flex-grow: 1;
         }
 
-        .form-control 
+        .form-control
             {
                 font-family: "nunito-regular", sans-serif;
                 font-size: 12px;
                 height: 45px;
-                
-            }
 
+            }
+            .page-header {
+                background: linear-gradient(rgba(24, 29, 56, .2), rgba(24, 29, 56, .2)), url('{{ asset('assets/images/bg.png') }}');
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
             .bg-img {
 
                 margin: 0;
@@ -60,7 +65,6 @@
     <!-- Template Stylesheet -->
     <link href="{{ asset('assets/guest_template/css/style.css') }}" rel="stylesheet">
 @endsection
- 
 <body>  
     @section('scripts')
         <!-- JavaScript Libraries -->
