@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Backend\Bed\AllBed;
 use App\Http\Livewire\Backend\Fee\AllFee;
 use App\Http\Livewire\Guestend\Home\Home;
+use App\Http\Livewire\Guestend\Team\Team;
 use App\Http\Controllers\ProfileController;
 use App\Http\Livewire\Backend\Cast\AllCast;
 use App\Http\Livewire\Backend\Fine\AllFine;
@@ -22,12 +23,12 @@ use App\Http\Livewire\Backend\Admin\AdminLogin;
 use App\Http\Livewire\Backend\Hostel\AllHostel;
 use App\Http\Livewire\Backend\Notice\AllNotice;
 use App\Http\Livewire\Backend\Seated\AllSeated;
-use App\Http\Livewire\Guestend\Contact\Contact;
 use App\Http\Livewire\Guestend\Gallery\Gallery;
 use App\Http\Livewire\Frontend\StudentDashboard;
 use App\Http\Livewire\Backend\College\AllCollege;
 use App\Http\Livewire\Backend\Enquiry\AllEnquiry;
 use App\Http\Livewire\Backend\Student\AllStudent;
+use App\Http\Livewire\Guestend\Contact\Contactus;
 use App\Http\Livewire\Guestend\Notice\ShowNotice;
 use App\Http\Livewire\Backend\Admin\AdminDashboard;
 use App\Http\Livewire\Backend\Building\AllBuilding;
@@ -44,17 +45,17 @@ use App\Http\Livewire\Backend\Allocation\AllAllocation;
 use App\Http\Livewire\Backend\Permission\AllPermission;
 use App\Http\Livewire\Backend\Razorpay\RazorpayPayment;
 use App\Http\Livewire\Backend\Razorpay\RazorpayRefunds;
-use App\Http\Controllers\Backend\FeeRecipetPdfController;
 use App\Http\Livewire\Backend\Razorpay\RazorpayPayments;
-use App\Http\Controllers\Backend\FineRecipetPdfController;
+use App\Http\Controllers\Backend\FeeRecipetPdfController;
 use App\Http\Livewire\Backend\Report\AllAllocationReport;
 use App\Http\Livewire\Backend\StudentFine\AllStudentFine;
 use App\Http\Livewire\Backend\Transaction\AllTransaction;
-use App\Http\Controllers\Backend\NightOutFormPdfController;
+use App\Http\Controllers\Backend\FineRecipetPdfController;
 use App\Http\Livewire\Frontend\Admission\StudentAdmission;
-use App\Http\Controllers\Backend\AdmissionFormPdfController;
+use App\Http\Controllers\Backend\NightOutFormPdfController;
 use App\Http\Livewire\Backend\AcademicYear\AllAcademicYear;
 use App\Http\Livewire\Backend\PhotoGallery\AllPhotoGallery;
+use App\Http\Controllers\Backend\AdmissionFormPdfController;
 use App\Http\Controllers\Backend\Razorpay\RazorpayController;
 use App\Http\Livewire\Backend\RolePermission\AllRolePermission;
 use App\Http\Livewire\Backend\StudentPayment\AllStudentPayment;
@@ -94,16 +95,16 @@ Route::middleware(['guest'])->group(function () {
     Route::get('about', About::class)->name('about');
 
     // Contact
-    Route::get('contact', Contact::class)->name('contact');
+    Route::get('contact', Contactus::class)->name('contact');
 
     // Rules
     Route::get('view-rules', ViewRules::class)->name('rules');
 
-    // Rules
+    // Notice
     Route::get('show-notice', ShowNotice::class)->name('notice');
 
-    // Rules
-    Route::get('all-notice', ShowNotice::class)->name('team');
+    // Team
+    Route::get('team', Team::class)->name('team');
 
 
 });
@@ -370,9 +371,9 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
     Route::get('view/admission_form/{id}',[AdmissionFormPdfController::class,'view_pdf'])->name('view_admission_form');
     // Download Admission Form
     Route::get('download/admission_form/{id}',[AdmissionFormPdfController::class,'download_pdf'])->name('download_admission_form');
-    
-    
-    
+
+
+
 
 });
 

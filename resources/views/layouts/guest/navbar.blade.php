@@ -13,10 +13,7 @@
                 <a class="nav-link" href="{{route('home') }}">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('gallery') }}">Gallery</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('enquiry') }}">Enquiry</a>
+                <a class="nav-link" href="{{ route('notice') }}">Notice</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('about') }}">About</a>
@@ -30,12 +27,10 @@
                   More <i class=" fw-bold mdi mdi-menu-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
-                    @auth
-
-                    @endauth
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  <li><a class="dropdown-item" href="{{ route('rules') }}">Rules</a></li>
+                  <li><a class="dropdown-item" href="{{ route('team') }}">Team</a></li>
+                  <li><a class="dropdown-item" href="{{ route('enquiry') }}">Enquiry</a></li>
+                  <li><a class="dropdown-item" href="{{ route('gallery') }}">Gallery</a></li>
                 </ul>
             </li>
         </ul>

@@ -10,8 +10,7 @@
                         <h1 class="display-3 text-white animated slideInDown">About Us</h1>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb justify-content-center">
-                                <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
-                                <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
+                                <li class="breadcrumb-item"><a class="text-white" href="{{ route('home') }}">Home</a></li>
                                 <li class="breadcrumb-item text-white active" aria-current="page">About</li>
                             </ol>
                         </nav>
