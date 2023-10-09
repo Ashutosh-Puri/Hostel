@@ -18,32 +18,32 @@
       </li>
       <li class="nav-item nav-category">Forms</li>
       <li class="nav-item">
-        <a class="nav-link" href="" >
+        <a class="nav-link" href="{{ route('student.come_from_home') }}" >
           <span class="icon-bg"><i class="mdi mdi-account-key menu-icon"></i></span>
           <span class="menu-title">Come From Home</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="" >
+        <a class="nav-link" href="{{ route('student.local_register') }}" >
           <span class="icon-bg"><i class="mdi mdi-account-key menu-icon"></i></span>
           <span class="menu-title">Local Register</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="" >
+        <a class="nav-link" href="{{ route('student.night_out') }}" >
           <span class="icon-bg"><i class="mdi mdi-account-key menu-icon"></i></span>
           <span class="menu-title">Night Out</span>
         </a>
       </li>
       <li class="nav-item nav-category">Payment</li>
       <li class="nav-item">
-        <a class="nav-link" href="" >
+        <a class="nav-link" href="{{ route('student.student_fee') }}" >
           <span class="icon-bg"><i class="mdi mdi-account-key menu-icon"></i></span>
           <span class="menu-title">Pay Fee</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="" >
+        <a class="nav-link" href="{{ route('student.student_fine') }}" >
           <span class="icon-bg"><i class="mdi mdi-account-key menu-icon"></i></span>
           <span class="menu-title">Pay Fine</span>
         </a>

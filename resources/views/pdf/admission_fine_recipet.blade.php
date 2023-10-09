@@ -165,7 +165,7 @@
                         <strong>{{ $studentfine->student->member_id }}</strong>
                     </td>
                     <td colspan="70" style="text-align: right; ">
-                        Regular Admission Fee Reciept ( Confirmed Admission - {{ $studentfine->academicYear->year }} - {{ $studentfine->academicYear->year+1 }} )
+                        Student Fine Reciept ( Confirmed Admission - {{ $studentfine->academicYear->year }} - {{ $studentfine->academicYear->year+1 }} )
                     </td>
                 </tr>
                 <tr>
@@ -233,18 +233,18 @@
                 </tr>
                 <tr>
                     <td colspan="34" style="text-align: left; border: 1px solid #000;">
-                        Total Fee : <strong>{{ $studentfine->amount  }}/-</strong>
+                        Total Fine : <strong>{{ $studentfine->amount  }}/-</strong>
                     </td>
                     
                     <td colspan="33" style="text-align: left; border: 1px solid #000;">
-                        Total Pending Fee :  <strong>@if (isset($transaction))
+                        Total Pending Fine :  <strong>@if (isset($transaction))
                             @if (null!==($transaction->status==2)) {{ $studentfine->amount -$transaction->amount }}  @endif
                         @else 
                         {{ $studentfine->amount }}
                         @endif/-</strong>
                     </td>
                     <td colspan="33" style="text-align: left; border: 1px solid #000;">
-                        Paid Fee :  <strong>
+                        Paid Fine :  <strong>
                             @if (isset($transaction))
                             @if (null!==($transaction->status==2)) {{ $transaction->amount }}  @endif
                         @else 
