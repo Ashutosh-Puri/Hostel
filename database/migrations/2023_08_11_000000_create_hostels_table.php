@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('hostels', function (Blueprint $table) {
             $table->id()->index();
             $table->unsignedBigInteger('college_id');
-            $table->string('name')->unique()->index();
+            $table->string('name');
             $table->tinyInteger('gender')->default('0')->comment('0-Boys ,1-Girls');
             $table->tinyInteger('status')->default('0')->comment('0-active ,1-inactive');
             $table->timestamps();

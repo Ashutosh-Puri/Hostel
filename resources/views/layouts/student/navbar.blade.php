@@ -67,7 +67,7 @@
             </div>
           </div>
         </li>
-        <li class="nav-item dropdown">
+        {{-- <li class="nav-item dropdown">
           <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
             <i class="mdi mdi-bell-outline"></i>
             <span class="count-symbol bg-danger"></span>
@@ -89,7 +89,7 @@
             <div class="dropdown-divider"></div>
             <h6 class="p-3 mb-0 text-center">See all notifications</h6>
           </div>
-        </li>
+        </li> --}}
       </ul>
       <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
         <span class="mdi mdi-menu"></span>
