@@ -24,6 +24,11 @@ class Admin  extends Authenticatable
 
     protected $guard="admin";
 
+    public function getIsAdminAttribute()
+    {
+        return true;
+    }
+
     protected $fillable = [
         'name',
         'email',

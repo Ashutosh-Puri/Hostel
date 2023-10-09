@@ -4,7 +4,7 @@
         Student Dashboard {{ auth()->user()->username }}
     </h6>
 
-
+{{-- 
     <section>
         <div class="content">
             <div class="container-fluid">
@@ -373,5 +373,5 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 </div>
