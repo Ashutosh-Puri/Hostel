@@ -10,7 +10,8 @@
                         <h1 class="display-3 text-white animated slideInDown">Enquiry</h1>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb justify-content-center">
-                                <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
+                                <li class="breadcrumb-item"><a class="text-white" href="{{ route('home') }}">Home</a></li>
+                                <li class="breadcrumb-item"><a class="text-white" href="{{ route('enquiry') }}">More</a></li>
                                 <li class="breadcrumb-item text-white active" aria-current="page">Enquiry</li>
                             </ol>
                         </nav>
@@ -26,7 +27,6 @@
                     <div class="col-lg-12 col-sm-12 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="service-item text-center pt-3">
                             <div class="p-4">
-                               
                                         <form wire:submit.prevent="save" method="post" action="" id="myForm">
                                             @csrf
                                             <div class="row text-start">
