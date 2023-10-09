@@ -28,8 +28,10 @@ class AllHostel extends Component
     protected function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255','unique:hostels,name,'.($this->mode=='edit'? $this->current_id :'')],
             'college_id'=>['required','integer'],
+            'name' => ['required', 'string', 'max:255',Rule::unique('hostels', 'name')->ignore($this->current_id)->where(function ($query) {
+                return $query->where('college_id', $this->college_id);
+            })],
             'gender'=>['required','integer','in:0,1'],
         ];
     }

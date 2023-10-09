@@ -54,4 +54,10 @@ class Admission extends Model
     {
         return $this->hasMany(Allocation::class);
     }
+
+    public function allocation()
+    {
+        return $this->hasOne(Allocation::class);
+    }
+
 }

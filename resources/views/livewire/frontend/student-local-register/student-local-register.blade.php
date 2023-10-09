@@ -1,13 +1,13 @@
 <div class="content">
     <div class="container-fluid">
         @if ($mode == 'add') @section('title')
-        Add Come From Home Entry
+        Add Local Register Entry
         @endsection
         <div class="row">
             <div class="col-12">
                 <div class="bg-success">
                     <div class="float-start pt-2 px-2">
-                        <h2>Add Come From Home Entry</h2>
+                        <h2>Add Local Register Entry</h2>
                     </div>
                     <div class="float-end">
                         <a wire:loading.attr="disabled" wire:click="setmode('all')"
@@ -27,11 +27,41 @@
                             <div class="row">
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3 form-group">
-                                        <label for="come_time" class="form-label">Come Time</label>
-                                        <input type="time" wire:model="come_time"
-                                            class="form-control @error('come_time') is-invalid @enderror " id="time"
-                                            placeholder="Enter Come Time" />
-                                        @error('come_time')
+                                        <label for="entry_time" class="form-label">Entry Time</label>
+                                        <input type="time"
+                                            class="form-control @error('entry_time') is-invalid @enderror"
+                                            wire:model.debounce.1000ms="entry_time" value="{{ old('entry_time') }}"
+                                            id="entry_time" placeholder="Enter entry time" />
+                                        @error('entry_time')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3 form-group">
+                                        <label for="exit_time" class="form-label">Exit Time</label>
+                                        <input type="time" class="form-control @error('exit_time') is-invalid @enderror"
+                                            wire:model.debounce.1000ms="exit_time" value="{{ old('exit_time') }}"
+                                            id="exit_time" placeholder="Enter exit time" />
+                                        @error('exit_time')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-12">
+                                    <div class="mb-3 form-group">
+                                        <label for="reason" class="form-label">Hostel Leaving Reasone</label>
+                                        <textarea class="w-100 @error('reason') is-invalid @enderror"
+                                            wire:model.debounce.1000ms="reason" id="reason"
+                                            placeholder="Enter Reasone To Leave Hostel" cols="30" rows="4">
+                                            {{ old('reason') }}</textarea>
+                                        @error('reason')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -49,13 +79,13 @@
         </div>
         @elseif($mode == 'edit')
         @section('title')
-        Edit Come From Home Entry
+        Edit Local Register Entry
         @endsection
         <div class="row">
             <div class="col-12">
                 <div class="bg-success">
                     <div class="float-start pt-2 px-2">
-                        <h2> Edit Come From Home Entry</h2>
+                        <h2> Edit Local Register Entry</h2>
                     </div>
                     <div class="float-end">
                         <a wire:loading.attr="disabled" wire:click="setmode('all')"
@@ -76,11 +106,41 @@
                             <div class="row">
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3 form-group">
-                                        <label for="come_time" class="form-label">Come Time</label>
-                                        <input type="time" wire:model="come_time"
-                                            class="form-control @error('come_time') is-invalid @enderror " id="time"
-                                            placeholder="Enter Come Time" />
-                                        @error('come_time')
+                                        <label for="entry_time" class="form-label">Entry Time</label>
+                                        <input type="time"
+                                            class="form-control @error('entry_time') is-invalid @enderror"
+                                            wire:model.debounce.1000ms="entry_time" value="{{ old('entry_time') }}"
+                                            id="entry_time" placeholder="Enter entry time" />
+                                        @error('entry_time')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3 form-group">
+                                        <label for="exit_time" class="form-label">Exit Time</label>
+                                        <input type="time" class="form-control @error('exit_time') is-invalid @enderror"
+                                            wire:model.debounce.1000ms="exit_time" value="{{ old('exit_time') }}"
+                                            id="exit_time" placeholder="Enter exit time" />
+                                        @error('exit_time')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-12">
+                                    <div class="mb-3 form-group">
+                                        <label for="reason" class="form-label">Hostel Leaving Reasone</label>
+                                        <textarea class="w-100 @error('reason') is-invalid @enderror"
+                                            wire:model.debounce.1000ms="reason" id="reason"
+                                            placeholder="Enter Reasone To Leave Hostel" cols="30" rows="4">
+                                            {{ old('reason') }}</textarea>
+                                        @error('reason')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -99,13 +159,13 @@
         @elseif($mode = 'all')
         <div>
             @section('title')
-            All Student Come From Home
+            All Student Local Register
             @endsection
             <div class="row">
                 <div class="col-12">
                     <div class="bg-success">
                         <div class="float-start pt-2 px-2">
-                            <h2>Data Student Come From Home</h2>
+                            <h2>Data Student Local Register</h2>
                             <div wire:loading wire:target="per_page" class="loading-overlay">
                                 <div class="loading-spinner">
                                     <div class="spinner-border spinner-border-lg text-primary" role="status">
@@ -115,13 +175,9 @@
                             </div>
                         </div>
                         <div class="float-end">
-                            @can('Add Student Come From Home')
-                            <a wire:loading.attr="disabled" wire:click="setmode('add')"
-                                class="btn btn-success waves-effect waves-light">
-                                Add Come From Home Entry<span class="btn-label-right mx-2"><i
-                                        class="mdi mdi-plus-circle fw-bold"></i></span>
-                            </a>
-                            @endcan
+                           @if (auth()->user()->getBedId())
+                                <a wire:loading.attr="disabled" wire:click="setmode('add')" class="btn btn-success waves-effect waves-light">  Add Local Register Entry<span class="btn-label-right mx-2"><i class="mdi mdi-plus-circle fw-bold"></i></span></a>
+                           @endif
                         </div>
                     </div>
                 </div>
@@ -140,25 +196,6 @@
                                     <option value="1000">1000</option>
                                 </select>
                                 <label class="col-4 col-md-1 py-1">Records</label>
-                                <span class="col-12 col-md-9 p-0">
-                                    <div class="row">
-                                        <div class="col-12 col-md-3">
-                                            <label class="w-100 p-1 text-md-end">Search</label>
-                                        </div>
-                                        <div class="col-12 col-md-3">
-                                            <input class="w-100" wire:model.debounce.1000ms="year" type="search"
-                                                placeholder="Academic Year" />
-                                        </div>
-                                        <div class="col-12 col-md-3">
-                                            <input class="w-100" wire:model.debounce.1000ms="class_name" type="search"
-                                                placeholder="Class Name" />
-                                        </div>
-                                        <div class="col-12 col-md-3">
-                                            <input class="w-100" wire:model.debounce.1000ms="student_name" type="search"
-                                                placeholder="Student Name" />
-                                        </div>
-                                    </div>
-                                </span>
                             </div>
                         </div>
                         <div class="card-body table-responsive">
@@ -169,17 +206,17 @@
                                         <th>Year</th>
                                         <th>Class</th>
                                         <th>Student</th>
-                                        <th>Mobile</th>
-                                        <th>Address</th>
-                                        <th>Come Date</th>
-                                        <th>Come Time</th>
+                                        <th>Reason</th>
+                                        <th>Date</th>
+                                        <th>Exit Time</th>
+                                        <th>Entry Time</th>
                                         <th>Room</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($come_from_home as $key => $item)
+                                    @foreach ($local_registers as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>
@@ -191,22 +228,24 @@
                                         <td>
                                             {{ $item->allocation->admission->Student->name }}
                                         </td>
-                                        <td>
-                                            {{ $item->allocation->admission->Student->mobile }}
-                                        </td>
                                         <td class="text-wrap lh-lg">
-                                            {{ $item->allocation->admission->Student->parent_address }}
-                                        </td>
-                                        <td>{{ date('d / m / Y', strtotime($item->come_time)) }}
+                                            {{ $item->reason }}
                                         </td>
                                         <td>
-                                            {{ date('h:i A', strtotime($item->come_time)) }}
+                                            {{ $item->created_at->format('d / m / Y') }}
+                                        </td>
+                                        <td>
+                                            {{ date('h:i A', strtotime($item->exit_time)) }}
+                                        </td>
+                                        <td>
+                                            {{ date('h:i A', strtotime($item->entry_time)) }}
                                         </td>
                                         <td>
                                             @if (isset($item->allocation->bed_id))
-                                                {{  $item->allocation->Bed->Room->id }} - (  {{  $item->allocation->Bed->Room->label }} )
+                                                {{ $item->allocation->Bed->Room->id }} - (
+                                                {{ $item->allocation->Bed->Room->label }} )
                                             @else
-                                                N.A
+                                                N.A  
                                             @endif
                                         </td>
                                         <td>
@@ -216,61 +255,18 @@
                                             <span class="badge bg-success text-white">Approved</span>
                                             @endif
                                         </td>
-                                        @can('Edit Student Come From Home')
                                         <td>
-                                            @can('Edit Student Come From Home')
-                                            <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})"
-                                                class="btn btn-success waves-effect waves-light"><i
-                                                    class="mdi mdi-lead-pencil"></i></a>
-                                            @if ($item->status == 1)
-                                            <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
-                                                class="btn btn-danger waves-effect waves-light">
-                                                <i class="mdi mdi-thumb-down"></i>
-                                            </a>
-                                            @elseif ($item->status == 0)
-                                            <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
-                                                class="btn btn-success waves-effect waves-light">
-                                                <i class="mdi mdi-thumb-up"></i>
-                                            </a>
+                                            @if ($item->status !==1)
+                                                <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                <a wire:loading.attr="disabled"wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i  class="mdi mdi-delete"></i></a>
                                             @endif
-                                            @endcan @can('Delete Student Come From Home')
-                                            <a wire:loading.attr="disabled"
-                                                wire:click.prevent="deleteconfirmation({{ $item->id }})"
-                                                class="btn btn-danger waves-effect waves-light"><i
-                                                    class="mdi mdi-delete"></i></a>
-                                            @endcan
                                         </td>
-                                        @elsecan('Delete Student Local Register')
-                                        <td>
-                                            @can('Edit Student Come From Home')
-                                            <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})"
-                                                class="btn btn-success waves-effect waves-light"><i
-                                                    class="mdi mdi-lead-pencil"></i></a>
-                                            @if ($item->status == 1)
-                                            <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
-                                                class="btn btn-danger waves-effect waves-light">
-                                                <i class="mdi mdi-thumb-down"></i>
-                                            </a>
-                                            @elseif ($item->status == 0)
-                                            <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
-                                                class="btn btn-success waves-effect waves-light">
-                                                <i class="mdi mdi-thumb-up"></i>
-                                            </a>
-                                            @endif
-                                            @endcan @can('Delete Student Come From Home')
-                                            <a wire:loading.attr="disabled"
-                                                wire:click.prevent="deleteconfirmation({{ $item->id }})"
-                                                class="btn btn-danger waves-effect waves-light"><i
-                                                    class="mdi mdi-delete"></i></a>
-                                            @endcan
-                                        </td>
-                                        @endcan
                                     </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                             <div class="mt-4">
-                                {{ $come_from_home->links('pagination::bootstrap-5') }}
+                                {{ $local_registers->links('pagination::bootstrap-5') }}
                             </div>
                         </div>
                     </div>
@@ -279,6 +275,4 @@
         </div>
         @endif
     </div>
-    @section('scripts')
-    @endsection
 </div>

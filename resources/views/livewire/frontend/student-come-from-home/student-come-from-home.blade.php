@@ -99,7 +99,7 @@
         @elseif($mode = 'all')
         <div>
             @section('title')
-            All Student Come From Home
+            Student Come From Home
             @endsection
             <div class="row">
                 <div class="col-12">
@@ -115,13 +115,11 @@
                             </div>
                         </div>
                         <div class="float-end">
-                            @can('Add Student Come From Home')
-                            <a wire:loading.attr="disabled" wire:click="setmode('add')"
-                                class="btn btn-success waves-effect waves-light">
-                                Add Come From Home Entry<span class="btn-label-right mx-2"><i
-                                        class="mdi mdi-plus-circle fw-bold"></i></span>
-                            </a>
-                            @endcan
+                            @if (auth()->user()->getBedId())
+                                <a wire:loading.attr="disabled" wire:click="setmode('add')" class="btn btn-success waves-effect waves-light">
+                                    Add Come From Home Entry<span class="btn-label-right mx-2"><i class="mdi mdi-plus-circle fw-bold"></i></span>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -140,25 +138,6 @@
                                     <option value="1000">1000</option>
                                 </select>
                                 <label class="col-4 col-md-1 py-1">Records</label>
-                                <span class="col-12 col-md-9 p-0">
-                                    <div class="row">
-                                        <div class="col-12 col-md-3">
-                                            <label class="w-100 p-1 text-md-end">Search</label>
-                                        </div>
-                                        <div class="col-12 col-md-3">
-                                            <input class="w-100" wire:model.debounce.1000ms="year" type="search"
-                                                placeholder="Academic Year" />
-                                        </div>
-                                        <div class="col-12 col-md-3">
-                                            <input class="w-100" wire:model.debounce.1000ms="class_name" type="search"
-                                                placeholder="Class Name" />
-                                        </div>
-                                        <div class="col-12 col-md-3">
-                                            <input class="w-100" wire:model.debounce.1000ms="student_name" type="search"
-                                                placeholder="Student Name" />
-                                        </div>
-                                    </div>
-                                </span>
                             </div>
                         </div>
                         <div class="card-body table-responsive">
@@ -169,8 +148,6 @@
                                         <th>Year</th>
                                         <th>Class</th>
                                         <th>Student</th>
-                                        <th>Mobile</th>
-                                        <th>Address</th>
                                         <th>Come Date</th>
                                         <th>Come Time</th>
                                         <th>Room</th>
@@ -191,22 +168,17 @@
                                         <td>
                                             {{ $item->allocation->admission->Student->name }}
                                         </td>
-                                        <td>
-                                            {{ $item->allocation->admission->Student->mobile }}
-                                        </td>
-                                        <td class="text-wrap lh-lg">
-                                            {{ $item->allocation->admission->Student->parent_address }}
-                                        </td>
                                         <td>{{ date('d / m / Y', strtotime($item->come_time)) }}
                                         </td>
                                         <td>
                                             {{ date('h:i A', strtotime($item->come_time)) }}
                                         </td>
                                         <td>
-                                            @if (isset($item->allocation->bed_id))
-                                                {{  $item->allocation->Bed->Room->id }} - (  {{  $item->allocation->Bed->Room->label }} )
+                                            @if ( $item->allocation->bed_id)
+                                                
+                                            {{  $item->allocation->Bed->Room->id }} - (  {{  $item->allocation->Bed->Room->label }} )
                                             @else
-                                                N.A
+                                             N.A
                                             @endif
                                         </td>
                                         <td>
@@ -216,55 +188,14 @@
                                             <span class="badge bg-success text-white">Approved</span>
                                             @endif
                                         </td>
-                                        @can('Edit Student Come From Home')
                                         <td>
-                                            @can('Edit Student Come From Home')
-                                            <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})"
-                                                class="btn btn-success waves-effect waves-light"><i
-                                                    class="mdi mdi-lead-pencil"></i></a>
-                                            @if ($item->status == 1)
-                                            <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
-                                                class="btn btn-danger waves-effect waves-light">
-                                                <i class="mdi mdi-thumb-down"></i>
-                                            </a>
-                                            @elseif ($item->status == 0)
-                                            <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
-                                                class="btn btn-success waves-effect waves-light">
-                                                <i class="mdi mdi-thumb-up"></i>
-                                            </a>
+                                            @if ($item->status !== 1)
+                                            <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i  class="mdi mdi-lead-pencil"></i></a>
                                             @endif
-                                            @endcan @can('Delete Student Come From Home')
-                                            <a wire:loading.attr="disabled"
-                                                wire:click.prevent="deleteconfirmation({{ $item->id }})"
-                                                class="btn btn-danger waves-effect waves-light"><i
-                                                    class="mdi mdi-delete"></i></a>
-                                            @endcan
-                                        </td>
-                                        @elsecan('Delete Student Local Register')
-                                        <td>
-                                            @can('Edit Student Come From Home')
-                                            <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})"
-                                                class="btn btn-success waves-effect waves-light"><i
-                                                    class="mdi mdi-lead-pencil"></i></a>
-                                            @if ($item->status == 1)
-                                            <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
-                                                class="btn btn-danger waves-effect waves-light">
-                                                <i class="mdi mdi-thumb-down"></i>
-                                            </a>
-                                            @elseif ($item->status == 0)
-                                            <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
-                                                class="btn btn-success waves-effect waves-light">
-                                                <i class="mdi mdi-thumb-up"></i>
-                                            </a>
+                                            @if ($item->status !== 1)
+                                                <a wire:loading.attr="disabled"   wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i    class="mdi mdi-delete"></i></a>
                                             @endif
-                                            @endcan @can('Delete Student Come From Home')
-                                            <a wire:loading.attr="disabled"
-                                                wire:click.prevent="deleteconfirmation({{ $item->id }})"
-                                                class="btn btn-danger waves-effect waves-light"><i
-                                                    class="mdi mdi-delete"></i></a>
-                                            @endcan
                                         </td>
-                                        @endcan
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -279,6 +210,4 @@
         </div>
         @endif
     </div>
-    @section('scripts')
-    @endsection
 </div>

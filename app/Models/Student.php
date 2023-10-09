@@ -53,6 +53,11 @@ class Student extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
+    public function getIsStudentAttribute()
+    {
+        return true;
+    }
+
     public function studentfines()
     {
         return $this->hasMany(StudentFine::class);
@@ -82,4 +87,19 @@ class Student extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsTo(Cast::class);
     }
+
+
+    public function getBedId()
+    {
+        $academicYear = AcademicYear::where('year', now()->format('Y'))->first();
+        if ($academicYear) {
+            $admission = Admission::where('academic_year_id', $academicYear->id)->where('student_id', $this->id)->first();
+            if ($admission) {
+                $allocation = $admission->allocation;
+                return $allocation ? $allocation->bed_id : 0;
+            }
+        }
+        return 0;
+    }
+
 }
