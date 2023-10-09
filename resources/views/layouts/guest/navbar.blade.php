@@ -28,9 +28,11 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
                   <li><a class="dropdown-item" href="{{ route('rules') }}">Rules</a></li>
-                  <li><a class="dropdown-item" href="{{ route('team') }}">Team</a></li>
                   <li><a class="dropdown-item" href="{{ route('enquiry') }}">Enquiry</a></li>
                   <li><a class="dropdown-item" href="{{ route('gallery') }}">Gallery</a></li>
+                  <li><a class="dropdown-item" href="{{ route('meritlist') }}">Merit Form</a></li>
+                  <li><a class="dropdown-item" href="{{ route('viewmeritlist') }}">Merit List</a></li>
+                  <li><a class="dropdown-item" href="{{ route('team') }}">Team</a></li>
                 </ul>
             </li>
         </ul>
