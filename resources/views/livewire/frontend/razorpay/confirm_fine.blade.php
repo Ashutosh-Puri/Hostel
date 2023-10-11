@@ -44,7 +44,7 @@
                                     <a href="{{ route('student.student_fine') }}" class="btn btn-lg w-100 btn-danger" > Cancel </a>
                                 </div>
                                 <div class="col-8">
-                                    <button type="submit" class="btn btn-lg w-100 btn-success" id="rzp-button1"> Pay  With Razorpay ( {{ $order->amount / 100  }} Rs. )</button>
+                                    <button type="submit" class="btn btn-lg w-100 btn-success" id="rzp-button1"> Pay  With Razorpay</button>
                                 </div>
                             </div>
                             @section('scripts')
