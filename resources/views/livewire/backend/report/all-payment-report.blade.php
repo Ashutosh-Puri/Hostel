@@ -15,8 +15,12 @@
                         </div>
                     </div>
                 </div>
-                @can('Download Payment Report')
-                    <div class="float-end">
+                <div class="float-end">
+                        @can('Download Payment Report')
+                        <a wire:loading class="btn btn-primary btn-sm " style="padding:10px; ">
+                            <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
+                            <span class="visually-hidden">Loading...</span>
+                        </a>
                         <a wire:loading.attr="disabled" wire:loading.remove wire:click="generatePDF()"
                             class="btn btn-success ">
                             PDF<span class="btn-label-right"><i class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
@@ -33,8 +37,8 @@
                             Processing..<span class="btn-label-right"><i
                                     class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
                         </a>
+                        @endcan
                     </div>
-                @endcan
             </div>
         </div>
     </div>

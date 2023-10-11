@@ -16,6 +16,10 @@
                     </div>
                 </div>
                 <div class="float-end">
+                    <a wire:loading class="btn btn-primary btn-sm " style="padding:10px; ">
+                        <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
+                        <span class="visually-hidden">Loading...</span>
+                    </a>
                     @can('Download Room Report')
                         <a wire:loading.attr="disabled" wire:loading.remove wire:click="generatePDF()"
                             class="btn btn-success ">

@@ -1,13 +1,13 @@
 <div>
     @section('title')
-    About Us
+    About
     @endsection
          <!-- Header Start -->
          <div class="container-fluid bg-primary py-5 mb-5 page-header">
             <div class="container py-5">
                 <div class="row justify-content-center">
                     <div class="col-lg-10 text-center">
-                        <h1 class="display-3 text-white animated slideInDown">About Us</h1>
+                        <h1 class="display-3 text-white animated slideInDown">About</h1>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb justify-content-center">
                                 <li class="breadcrumb-item"><a class="text-white" href="{{ route('home') }}">Home</a></li>
@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
-                <h6 class="section-title bg-white text-start text-primary pe-3">About Us</h6>
+                <h6 class="section-title bg-white text-start text-primary pe-3">About</h6>
                 <h1 class="mb-4">Welcome to Scoler Stay</h1>
                 <p class="mb-4">The hostel at our college is more than just a place to reside; it's a vibrant hub of student life. Nestled on the campus grounds, it provides students with comfortable rooms and inviting shared spaces where lasting friendships are forged over late-night study sessions and laughter-filled evenings.</p>
                         <p class="mb-4">Our college hostel is more than just a place to sleep; it's a second home, offering the necessary support for academic and personal growth. It fosters a strong sense of community, creating memories and bonds among its students.</p>
