@@ -38,6 +38,7 @@ use App\Http\Livewire\Backend\Report\AllRoomReport;
 use App\Http\Livewire\Guestend\Enquiry\ShowEnquiry;
 use App\Http\Livewire\Guestend\ViewRules\ViewRules;
 use App\Http\Livewire\Backend\Admission\AllAdmission;
+use App\Http\Livewire\Backend\MeritList\AllMeritList;
 use App\Http\Livewire\Frontend\StudentFee\StudentFee;
 use App\Http\Livewire\Backend\Razorpay\RazorpayOrders;
 use App\Http\Livewire\Backend\Report\AllPaymentReport;
@@ -109,19 +110,19 @@ Route::middleware(['guest'])->group(function () {
     Route::get('contact', Contactus::class)->name('contact');
 
     // Rules
-    Route::get('view-rules', ViewRules::class)->name('rules');
+    Route::get('rules', ViewRules::class)->name('rules');
 
     // Notice
-    Route::get('show-notice', ShowNotice::class)->name('notice');
+    Route::get('notice', ShowNotice::class)->name('notice');
 
     // Team
     Route::get('team', Team::class)->name('team');
 
     // Merit List
-    Route::get('meritlist', AdmissionMeritList::class)->name('meritlist');
+    Route::get('meritform', AdmissionMeritList::class)->name('meritform');
 
     //View Merit List
-    Route::get('viewmeritlist', ViewMeritList::class)->name('viewmeritlist');
+    Route::get('meritlist', ViewMeritList::class)->name('meritlist');
 
 
 });
@@ -199,6 +200,8 @@ Route::middleware(['auth:student','is_student','verified'])->group(function () {
 
     // Student download Fine reciept
     Route::get('student/download/fine_recipet/{id}',[StudentFineRecipetPdfController::class,'download_pdf'])->name('student.download_fine_recipet');
+
+    
 
 
 });
@@ -450,16 +453,16 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
     Route::get('download/admission_form/{id}',[AdmissionFormPdfController::class,'download_pdf'])->name('download_admission_form');
 
 
-
-
+    
     Route::get('view/fee_recipet/{id}',[FeeRecipetPdfController::class,'view_pdf'])->name('view_fee_recipet');
     Route::get('download/fee_recipet/{id}',[FeeRecipetPdfController::class,'download_pdf'])->name('download_fee_recipet');
 
     Route::get('view/fine_recipet/{id}',[FineRecipetPdfController::class,'view_pdf'])->name('view_fine_recipet');
     Route::get('download/fine_recipet/{id}',[FineRecipetPdfController::class,'download_pdf'])->name('download_fine_recipet');
-
+    
     Route::get('view/night_out_form/{id}',[NightOutFormPdfController::class,'view_pdf'])->name('view_night_out_form');
     Route::get('download/night_out_form/{id}',[NightOutFormPdfController::class,'download_pdf'])->name('download_night_out_form');
+    Route::get('all/miritlist',AllMeritList::class)->name('all_miritlist');
 });
 
 

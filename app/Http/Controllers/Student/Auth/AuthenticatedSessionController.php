@@ -29,8 +29,8 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
-        return redirect()->intended(RouteServiceProvider::HOME);
+        Auth::user()->update(['last_login' => now()]);
+        return redirect()->intended(RouteServiceProvider::HOME)->with('alert', ['type' => 'info', 'message' => 'Welcome To Student Dashboard.']);;
     }
 
     /**
@@ -44,6 +44,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/')->with('alert', ['type' => 'info', 'message' => 'Student Logout Successfully !!']);
     }
 }

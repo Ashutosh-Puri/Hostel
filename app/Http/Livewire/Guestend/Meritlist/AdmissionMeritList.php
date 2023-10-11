@@ -10,6 +10,7 @@ class AdmissionMeritList extends Component
     public $name;
     public $mobile;
     public $email;
+    public $class;
     public $gender;
     public $sgpa;
     public $percentage;
@@ -18,6 +19,7 @@ class AdmissionMeritList extends Component
     {
         return [
             'name' => ['required', 'string', 'max:255'],
+            'class' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email'],
             'mobile' => ['required', 'integer', 'digits:10'],
             'gender' => ['required', 'integer', 'in:0,1'],
@@ -35,8 +37,9 @@ class AdmissionMeritList extends Component
     {
         $this->name=null;
         $this->gender=null;
-        $this->email=null;
         $this->mobile=null;
+        $this->email=null; 
+        $this->class=null; 
         $this->percentage=null;
         $this->sgpa=null;
     }
@@ -48,6 +51,7 @@ class AdmissionMeritList extends Component
         if($merit){
             $merit->name = $validatedData['name'];
             $merit->email = $validatedData['email'];
+            $merit->class = $validatedData['class'];
             $merit->mobile = $validatedData['mobile'];
             $merit->sgpa = $validatedData['sgpa'];
             $merit->percentage = $validatedData['percentage'];

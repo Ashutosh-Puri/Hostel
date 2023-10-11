@@ -175,6 +175,10 @@
                             </div>
                         </div>
                         <div class="float-end">
+                            <a wire:loading class="btn btn-primary btn-sm " style="padding:10px; ">
+                                <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
+                                <span class="visually-hidden">Loading...</span>
+                            </a>
                             @can('Add Student Local Register')
                             <a wire:loading.attr="disabled" wire:click="setmode('add')"
                                 class="btn btn-success waves-effect waves-light">

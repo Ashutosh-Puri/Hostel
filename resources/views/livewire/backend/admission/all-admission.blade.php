@@ -11,6 +11,10 @@
                             <h2>Admission Form</h2>
                         </div>
                         <div class="float-end">
+                            <a wire:loading class="btn btn-primary btn-sm " style="padding:10px; ">
+                                <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
+                                <span class="visually-hidden">Loading...</span>
+                            </a>
                             <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
                                 Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
@@ -1258,6 +1262,10 @@
                                 </div>
                             </div>
                             <div class="float-end">
+                                <a wire:loading class="btn btn-primary btn-sm " style="padding:10px; ">
+                                    <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Loading...</span>
+                                </a>
                                 @can('Add Admission')
                                     <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
                                         Add Admission Form<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>

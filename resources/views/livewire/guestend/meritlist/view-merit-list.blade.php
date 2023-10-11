@@ -7,12 +7,12 @@
             <div class="container py-5">
                 <div class="row justify-content-center">
                     <div class="col-lg-10 text-center">
-                        <h1 class="display-3 text-white animated slideInDown">Selected Student Merit List</h1>
+                        <h1 class="display-3 text-white animated slideInDown">Merit List {{ now()->format('Y') }}-{{ now()->format('y')+1 }}</h1>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb justify-content-center">
                                 <li class="breadcrumb-item"><a class="text-white" href="{{ route('home') }}">Home</a></li>
                                 <li class="breadcrumb-item"><a class="text-white" href="{{ route('enquiry') }}">More</a></li>
-                                <li class="breadcrumb-item text-white active" aria-current="page">Student Merit List</li>
+                                <li class="breadcrumb-item text-white active" aria-current="page">Merit List</li>
                             </ol>
                         </nav>
                     </div>
@@ -34,9 +34,9 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th>Student Name</th>
-                                                <th>Gender</th>
                                                 <th>Class Name</th>
                                                 <th>Percentage</th>
+                                                <th>Gender</th>
                                             </tr>
                                             </thead>
                                             <tbody class="table-group-divider">
@@ -44,9 +44,9 @@
                                                 <tr class="table-primary" >
                                                     <td scope="row">{{ $key+1 }}</td>
                                                     <td>{{ $item->name }}</td>
-                                                    <td>{{ $item->gender==0?'Male':'Female'; }}</td>
                                                     <td>{{ $item->class }}</td>
                                                     <td>{{ $item->percentage }}</td>
+                                                    <td>{{ $item->gender==0?'Male':'Female'; }}</td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>

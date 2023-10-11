@@ -129,6 +129,10 @@
                                 </div>
                             </div>
                             <div class="float-end">
+                                <a wire:loading class="btn btn-primary btn-sm " style="padding:10px; ">
+                                    <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Loading...</span>
+                                </a>
                                 @can('Add College')
                                     <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
                                         Add College<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
