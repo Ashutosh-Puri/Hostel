@@ -75,7 +75,7 @@ class AllRole extends Component
         $this->current_id=$id;
         $name = Role::find($id);
         if($name){
-            $this->C_id=$name->id;
+            $this->c_id=$name->id;
             $this->name = $name->name;
             $this->status = $name->status;
             $this->setmode('edit');

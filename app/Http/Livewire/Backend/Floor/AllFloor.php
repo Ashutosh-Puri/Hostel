@@ -87,7 +87,7 @@ class AllFloor extends Component
         $this->current_id=$id;
         $floor = Floor::find($id);
         if($floor){
-            $this->C_id=$floor->id;
+            $this->c_id=$floor->id;
             $this->hostel_id=$floor->Building->Hostel->id;
             $this->building_id=$floor->Building->id;
             $this->status = $floor->status;

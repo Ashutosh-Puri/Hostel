@@ -73,7 +73,7 @@ class AllSeated extends Component
         $this->current_id=$id;
         $seated = Seated::find($id);
         if($seated){
-            $this->C_id=$seated->id;
+            $this->c_id=$seated->id;
             $this->status = $seated->status;
             $this->seated = $seated->seated;
             $this->setmode('edit');

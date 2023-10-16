@@ -95,7 +95,7 @@ class AllStudentFine extends Component
         $this->current_id=$id;
         $studentfine = StudentFine::find($id);
         if($studentfine){
-            $this->C_id=$studentfine->id;
+            $this->c_id=$studentfine->id;
             $this->academic_year_id=$studentfine->academic_year_id;
             $this->student_id = $studentfine->student_id;
             $this->fine_id = $studentfine->fine_id;

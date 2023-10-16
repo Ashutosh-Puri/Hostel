@@ -78,7 +78,7 @@ class AllRule extends Component
         $this->current_id=$id;
         $rule = Rule::find($id);
         if($rule){
-            $this->C_id=$rule->id;
+            $this->c_id=$rule->id;
             $this->name = $rule->name;
             $this->description = $rule->description;
             $this->status = $rule->status;

@@ -112,7 +112,7 @@ class AllStudentPayment extends Component
                     $this->totalamount=$fee->amount;
                 }
             }
-            $this->C_id=$studentpayment->id;
+            $this->c_id=$studentpayment->id;
             $this->academic_year_id=$studentpayment->academic_year_id;
             $this->student_id = $studentpayment->student_id;
             $this->deposite = $studentpayment->deposite;

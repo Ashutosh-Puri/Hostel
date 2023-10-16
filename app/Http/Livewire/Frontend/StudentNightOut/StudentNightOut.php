@@ -94,7 +94,7 @@ class StudentNightOut extends Component
         $this->current_id=$id;
         $studentlocalregister = NightOut::find($id);
         if($studentlocalregister){
-            $this->C_id=$studentlocalregister->id;
+            $this->c_id=$studentlocalregister->id;
             $this->allocation_id=$studentlocalregister->allocation_id;
             $this->reason = $studentlocalregister->reason;
             $this->going_date = date('Y-m-d', strtotime($studentlocalregister->going_date));

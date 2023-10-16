@@ -94,7 +94,7 @@ class StudentLocalRegister extends Component
         $this->current_id=$id;
         $studentlocalregister = LocalRegister::find($id);
         if($studentlocalregister){
-            $this->C_id=$studentlocalregister->id;
+            $this->c_id=$studentlocalregister->id;
             $this->allocation_id=$studentlocalregister->allocation_id;
             $this->reason = $studentlocalregister->reason;
             $this->entry_time =date('H:i', strtotime($studentlocalregister->entry_time)) ;

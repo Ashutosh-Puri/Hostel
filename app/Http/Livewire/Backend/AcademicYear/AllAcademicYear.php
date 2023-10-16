@@ -77,7 +77,7 @@ class AllAcademicYear extends Component
         $academicyear = AcademicYear::find($id);
         if($academicyear)
         {
-            $this->C_id=$academicyear->id;
+            $this->c_id=$academicyear->id;
             $this->year = $academicyear->year;
             $this->status = $academicyear->status;
             $this->setmode('edit');

@@ -79,7 +79,7 @@ class AllQuota extends Component
     {
         $quota = Quota::find($id);
         if($quota){
-            $this->C_id=$quota->id;
+            $this->c_id=$quota->id;
             $this->academic_year_id=$quota->academic_year_id;
             $this->class_id=$quota->class_id;
             $this->max_capacity = $quota->max_capacity;

@@ -2,9 +2,12 @@
 
 namespace App\Http\Livewire\Backend\MeritList;
 
+use Mpdf\Mpdf;
 use Livewire\Component;
 use App\Models\MeritList;
 use Livewire\WithPagination;
+use App\Exports\MeritListExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AllMeritList extends Component
 {   
@@ -25,6 +28,8 @@ class AllMeritList extends Component
     public $gender;
     public $sgpa;
     public $percentage;
+    public $meritlistArray=[];
+
 
     protected function rules()
     {
@@ -98,7 +103,7 @@ class AllMeritList extends Component
         $this->current_id=$id;
         $meritlist = MeritList::find($id);
         if($meritlist){
-            $this->C_id=$meritlist->id;
+            $this->c_id=$meritlist->id;
             $this->name=$meritlist->name;
             $this->email=$meritlist->email;
             $this->class=$meritlist->class;
@@ -196,7 +201,7 @@ class AllMeritList extends Component
         }
         $meritlist = $meritlistQuery->paginate($this->per_page);
  
-       
+        $this->meritlistArray['id']=  $meritlistQuery->pluck('id')->all();
         return view('livewire.backend.merit-list.all-merit-list',compact('meritlist'))->extends('layouts.admin.admin')->section('admin');
     }
 }

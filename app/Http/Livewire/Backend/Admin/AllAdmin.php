@@ -125,7 +125,7 @@ class AllAdmin extends Component
         {   
             $role=$admin->roles->pluck('name');
             $this->role=$role[0];
-            $this->C_id=$admin->id;
+            $this->c_id=$admin->id;
             $this->name=$admin->name;
             $this->email=$admin->email;
             $this->mobile=$admin->mobile;

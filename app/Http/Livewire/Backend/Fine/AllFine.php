@@ -88,7 +88,7 @@ class AllFine extends Component
         $this->current_id=$id;
         $fine = Fine::find($id);
         if($fine){
-            $this->C_id=$fine->id;
+            $this->c_id=$fine->id;
             $this->academic_year_id=$fine->academic_year_id;
             $this->name = $fine->name;
             $this->amount = $fine->amount;

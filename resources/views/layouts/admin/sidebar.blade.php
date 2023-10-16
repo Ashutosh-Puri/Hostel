@@ -229,7 +229,7 @@
       @endcanany
 
       {{-- Other --}}
-      @canany(['Access Cast', 'Access Category', 'Access Facility','Access Quota','Access Notice','Access Photo Gallery','Access Rule','Access Student','Access Student Education'])
+      @canany(['Access Cast', 'Access Category', 'Access Facility','Access Quota','Access Notice','Access Photo Gallery','Access Rule','Access Student','Access Student Education','Access Merit List','Access Attendance'])
         <li class="nav-item nav-category">Other</li>
         @can('Access Cast')
           <li class="nav-item">
@@ -300,6 +300,22 @@
             <a class="nav-link" href="{{ route('all_student_education') }}">
               <span class="icon-bg"><i class="mdi mdi mdi-certificate menu-icon"></i></span>
               <span class="menu-title">Student Education's</span>
+            </a>
+          </li>
+        @endcan
+        @can('Access Merit List')
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('all_merit_list') }}">
+              <span class="icon-bg"><i class="mdi mdi mdi-certificate menu-icon"></i></span>
+              <span class="menu-title">Merit List's</span>
+            </a>
+          </li>
+        @endcan
+        @can('Access Attendance')
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('all_attendance') }}">
+              <span class="icon-bg"><i class="mdi mdi mdi-certificate menu-icon"></i></span>
+              <span class="menu-title">Attendance's</span>
             </a>
           </li>
         @endcan

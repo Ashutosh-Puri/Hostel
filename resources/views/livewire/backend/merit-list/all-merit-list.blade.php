@@ -142,7 +142,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="update({{ isset($C_id)?$C_id:''; }})" method="post" action="" id="myForm">
+                            <form  wire:submit.prevent="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row text-start">
                                     <div class="col-12 col-md-6">
@@ -256,9 +256,15 @@
                                     <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
                                     <span class="visually-hidden">Loading...</span>
                                 </a>
+                                @can('View Merit List')
+                                <a   target="_blank"  class="btn btn-warning " href="{{ route('admin_view_merit_list',['array' => json_encode($meritlistArray['id'])]) }}"> <i class="mdi mdi-eye"></i></a>
+                                @endcan
+                                @can('Download Merit List')
+                                    <a   target="_blank"  class="btn btn-warning " href="{{ route('admin_download_merit_list',['array' => json_encode($meritlistArray['id'])]) }}"> <i class="mdi mdi-download"></i></a>
+                                @endcan
                                 @can('Add Merit List')
                                     <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
-                                        Add Merit List<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
+                                        Add Student<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
                                     </a>
                                 @endcan
                             </div>
@@ -383,6 +389,7 @@
                                             </tr>
                                         @endforeach
                                     </tbody>
+                                    
                                 </table>
                                 <div class="mt-4">
                                     {{ $meritlist->links('pagination::bootstrap-5') }}

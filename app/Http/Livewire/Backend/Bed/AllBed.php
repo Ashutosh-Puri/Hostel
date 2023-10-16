@@ -105,7 +105,7 @@ class AllBed extends Component
     {
         $bed = Bed::find($id);
         if($bed){
-            $this->C_id=$bed->id;
+            $this->c_id=$bed->id;
             $this->hostel_id=$bed->Room->Floor->Building->Hostel->id;
             $this->building_id=$bed->Room->Floor->Building->id;
             $this->floor_id=$bed->Room->Floor->id;

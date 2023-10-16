@@ -44,11 +44,14 @@ use App\Http\Livewire\Backend\Razorpay\RazorpayOrders;
 use App\Http\Livewire\Backend\Report\AllPaymentReport;
 use App\Http\Livewire\Backend\Report\AllStudentReport;
 use App\Http\Livewire\Backend\Allocation\AllAllocation;
+use App\Http\Livewire\Backend\Attendance\AllAttendance;
 use App\Http\Livewire\Backend\Permission\AllPermission;
 use App\Http\Livewire\Backend\Razorpay\RazorpayPayment;
 use App\Http\Livewire\Backend\Razorpay\RazorpayRefunds;
 use App\Http\Livewire\Guestend\Meritlist\ViewMeritList;
+use App\Http\Controllers\Backend\MeritListPdfController;
 use App\Http\Livewire\Backend\Razorpay\RazorpayPayments;
+use App\Http\Controllers\Backend\AttendancePdfController;
 use App\Http\Controllers\Backend\FeeRecipetPdfController;
 use App\Http\Livewire\Backend\Report\AllAllocationReport;
 use App\Http\Livewire\Backend\StudentFine\AllStudentFine;
@@ -123,6 +126,8 @@ Route::middleware(['guest'])->group(function () {
 
     //View Merit List
     Route::get('meritlist', ViewMeritList::class)->name('meritlist');
+
+    Route::post('getrfid', [AttendanceController::class,'recordAttendance'])->name('getrfid');
 
 
 });
@@ -252,10 +257,19 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
 
     });
 
-
     Route::group(['middleware' => ['permission:Access Admission']], function () {
         // All Admission
         Route::get('all/admissions',AllAdmission::class)->name('all_admission');
+    });
+
+    Route::group(['middleware' => ['permission:View Admission Form']], function () {
+        // view Admission Form
+        Route::get('view/admission_form/{id}',[AdmissionFormPdfController::class,'view_pdf'])->name('view_admission_form');
+    });
+
+    Route::group(['middleware' => ['permission:Download Admission Form']], function () {
+        // Download Admission Form
+        Route::get('download/admission_form/{id}',[AdmissionFormPdfController::class,'download_pdf'])->name('download_admission_form');
     });
 
     Route::group(['middleware' => ['permission:Access Dashboard']], function () {
@@ -446,30 +460,74 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
         Route::post('fee/payment/verify',[RazorpayController::class,'fee_payment_verify'])->name('fee_payment_verify');
         Route::post('fee/payment/fail',[RazorpayController::class,'fee_payment_fail'])->name('fee_payment_fail');
     });
-
-    // view Admission Form
-    Route::get('view/admission_form/{id}',[AdmissionFormPdfController::class,'view_pdf'])->name('view_admission_form');
-    // Download Admission Form
-    Route::get('download/admission_form/{id}',[AdmissionFormPdfController::class,'download_pdf'])->name('download_admission_form');
-
-
     
-    Route::get('view/fee_recipet/{id}',[FeeRecipetPdfController::class,'view_pdf'])->name('view_fee_recipet');
-    Route::get('download/fee_recipet/{id}',[FeeRecipetPdfController::class,'download_pdf'])->name('download_fee_recipet');
-
-    Route::get('view/fine_recipet/{id}',[FineRecipetPdfController::class,'view_pdf'])->name('view_fine_recipet');
-    Route::get('download/fine_recipet/{id}',[FineRecipetPdfController::class,'download_pdf'])->name('download_fine_recipet');
+    Route::group(['middleware' => ['permission:Access Merit List']], function () {
+        // All Merit List
+        Route::get('all/merit_list',AllMeritList::class)->name('all_merit_list');
+    });
     
-    Route::get('view/night_out_form/{id}',[NightOutFormPdfController::class,'view_pdf'])->name('view_night_out_form');
-    Route::get('download/night_out_form/{id}',[NightOutFormPdfController::class,'download_pdf'])->name('download_night_out_form');
-    Route::get('all/miritlist',AllMeritList::class)->name('all_miritlist');
+    Route::group(['middleware' => ['permission:View Merit List']], function () {
+        // View Merit List
+        Route::get('admin/view/merit_list/{array}',[MeritListPdfController::class,'view_pdf'])->name('admin_view_merit_list');
+    });
+    
+    Route::group(['middleware' => ['permission:Download Merit List']], function () {
+        // Download Merit List
+        Route::get('admin/download/merit_list/{array}',[MeritListPdfController::class,'download_pdf'])->name('admin_download_merit_list');
+    });
+    
+    Route::group(['middleware' => ['permission:View Fee Recipet']], function () {
+        // View Fee Recipet
+        Route::get('view/fee_recipet/{id}',[FeeRecipetPdfController::class,'view_pdf'])->name('view_fee_recipet');
+    });
+
+    Route::group(['middleware' => ['permission:Download Fee Recipet']], function () {
+        // Download Fee Recipet
+        Route::get('download/fee_recipet/{id}',[FeeRecipetPdfController::class,'download_pdf'])->name('download_fee_recipet');
+    });
+
+    Route::group(['middleware' => ['permission:View Fine Recipet']], function () {
+        // View Fine Recipet
+        Route::get('view/fine_recipet/{id}',[FineRecipetPdfController::class,'view_pdf'])->name('view_fine_recipet');
+    });
+
+    Route::group(['middleware' => ['permission:Download Fine Recipet']], function () {
+        // Download Fine Recipet
+        Route::get('download/fine_recipet/{id}',[FineRecipetPdfController::class,'download_pdf'])->name('download_fine_recipet');
+    });
+
+    Route::group(['middleware' => ['permission:View Night Out Form']], function () {
+        // View Night Out Form
+        Route::get('view/night_out_form/{id}',[NightOutFormPdfController::class,'view_pdf'])->name('view_night_out_form');
+    });
+
+    Route::group(['middleware' => ['permission:Download Night Out Form']], function () {
+        // Download Night Out Form
+        Route::get('download/night_out_form/{id}',[NightOutFormPdfController::class,'download_pdf'])->name('download_night_out_form');
+    });
+
+    Route::group(['middleware' => ['permission:Access Attendance']], function () {
+        // All Attendance
+        Route::get('all/attendance',AllAttendance::class)->name('all_attendance');
+    });
+    
+    Route::group(['middleware' => ['permission:View Attendance']], function () {
+        // View Attendance
+        Route::get('admin/view/attendance/{array}',[AttendancePdfController::class,'view_pdf'])->name('admin_view_attendance');
+    });
+    
+    Route::group(['middleware' => ['permission:Download Attendance']], function () {
+        // Download Attendance
+        Route::get('admin/download/attendance{array}',[AttendancePdfController::class,'download_pdf'])->name('admin_download_attendance');
+    });
+
 });
 
 
 
 Route::get('form',[temp::class,'view_pdf']);
 
-Route::post('scan', [AttendanceController::class,'recordAttendance'])->name('attendance.scan');
+
 
 require __DIR__.'/student_auth.php';
 require __DIR__.'/admin_auth.php';

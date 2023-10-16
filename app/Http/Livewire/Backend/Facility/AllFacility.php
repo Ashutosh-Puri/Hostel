@@ -88,7 +88,7 @@ class AllFacility extends Component
         $this->current_id=$id;
         $facility = Facility::find($id);
         if($facility){
-            $this->C_id=$facility->id;
+            $this->c_id=$facility->id;
             $this->hostel_id=$facility->Room->Floor->Building->Hostel->id;
             $this->building_id=$facility->Room->Floor->Building->id;
             $this->floor_id=$facility->Room->Floor->id;

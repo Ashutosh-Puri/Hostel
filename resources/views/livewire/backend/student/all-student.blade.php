@@ -1,6 +1,55 @@
 <div class="content">
     <div class="container-fluid">
-        @if ($mode=='add')
+        @if ($mode=='rfid')
+            @section('title')
+                Assign RFID
+            @endsection
+            <div class="row">
+                <div class="col-12">
+                    <div class="bg-success">
+                        <div class="float-start pt-2 px-2">
+                            <h2>Assign RFID</h2>
+                        </div>
+                        <div class="float-end">
+                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
+                                Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                                <form  wire:submit.prevent="save_rfid({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
+                                 @csrf
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="username" class="form-label">Student Name</label>
+                                            <label for="username" class="form-control">{{ isset($s_name->name)?$s_name->name:$s_name->username; }}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-3 form-group">
+                                            <label for="rfid" class="form-label">RFID</label>
+                                            <input type="rfid"   class="form-control @error('rfid') is-invalid @enderror" wire:model.debounce.1000ms="rfid" value="{{ old('rfid') }}" id="rfid" placeholder="Enter RFID">
+                                            @error('rfid')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit"  class="btn btn-primary waves-effect waves-light">Assign RFID</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @elseif($mode=='add')
             @section('title')
                 Add Student
             @endsection
@@ -116,7 +165,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="update({{ isset($C_id)?$C_id:''; }})" method="post" action="" id="myForm">
+                            <form  wire:submit.prevent="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 col-md-6">
@@ -212,10 +261,13 @@
                                     <label class=" col-4 col-md-1  py-1 ">Records</label>
                                     <span class="col-12 col-md-9 p-0">
                                             <div class="row ">
-                                                <div class="col-12 col-md-6 ">
+                                                <div class="col-12 col-md-2 ">
                                                 </div>
                                                 <div class="col-12 col-md-3 ">
                                                     <label class="w-100 p-1  text-md-end">Search</label>
+                                                </div>
+                                                <div class="col-12 col-md-4">
+                                                    <input class="w-100" wire:model="name_search" type="search" placeholder="Student Name">
                                                 </div>
                                                 <div class="col-12 col-md-3">
                                                     <input class="w-100" wire:model="search" type="search" placeholder="Student Username">
@@ -230,8 +282,11 @@
                                         <tr>
                                             <th>No</th>
                                             {{-- <th>Image</th> --}}
-                                            <th>Student Username</th>
+                                            <th>Username</th>
+                                            <th>Name</th>
                                             <th>Email</th>
+                                            <th>RFID</th>
+                                            <th>Gender</th>
                                             <th>Status</th>
                                             @can('Edit Student')
                                                 <th>Action</th>
@@ -248,7 +303,10 @@
                                                     <img id="showImage" src="{{ (!empty($item->photo)) ? asset($item->photo) : asset('assets/images/no_image.jpg') }}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image" style="height: 45px; width:45px;">
                                                 </td>                                    --}}
                                                 <td>{{ $item->username }}</td>
+                                                <td>{{ $item->name }}</td>
                                                 <td>{{ $item->email }}</td>
+                                                <td>{{ $item->rfid }}</td>
+                                                <td>{{ $item->gender==0?"Male":"Female"; }}</td>
                                                 {{-- <td>{{ $item->mobile }}</td> --}}
                                                 <td>
                                                     @if ( $item->status == '0')
@@ -260,6 +318,7 @@
                                                 @can('Edit Student')
                                                     <td>
                                                         @can('Edit Student')
+                                                        <a wire:loading.attr="disabled"  wire:click="assign_rfid({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-credit-card-plus"></i></a>
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
                                                             @if ($item->status==1)
                                                                 <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
@@ -274,6 +333,7 @@
                                                 @elsecan('Delete Student')
                                                     <td>
                                                         @can('Edit Student')
+                                                        <a wire:loading.attr="disabled"  wire:click="assign_rfid({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-credit-card-plus"></i></a>
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
                                                             @if ($item->status==1)
                                                                 <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>

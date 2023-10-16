@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('colleges', function (Blueprint $table) {
             $table->id()->index();
+            $table->string('heading_1');
+            $table->string('heading_1_mr');
             $table->string('name')->unique()->index();
-            $table->string('heading_1')->nullable();
-            $table->string('heading_2')->nullable();
-            $table->string('heading_3')->nullable();
-            $table->string('email')->nullable();
-            $table->string('mobile')->nullable();
-            $table->text('address')->nullable();
+            $table->string('name_mr')->unique();
+            $table->string('email');
+            $table->string('mobile');
+            $table->text('address');
             $table->tinyInteger('status')->default('0')->comment('0-active ,1-inactive');
             $table->timestamps();
         });

@@ -17,6 +17,12 @@ class AllCollege extends Component
     public $per_page = 10;
     public $mode='all';
     public $name;
+    public $name_mr;
+    public $heading_1;
+    public $heading_1_mr;
+    public $email;
+    public $mobile;
+    public $address;
     public $status;
     public $c_id;
     public $current_id;
@@ -25,6 +31,12 @@ class AllCollege extends Component
     {
         return [
             'name' => ['required', 'string', 'max:255','unique:colleges,name,'.($this->mode=='edit'? $this->current_id :'')],
+            'name_mr' => ['required', 'string', 'max:255',],
+            'heading_1' => ['required', 'string', 'max:255'],
+            'heading_1_mr' => ['required', 'string', 'max:255'],
+            'mobile' => ['required', 'numeric', ],
+            'email' => ['required', 'email', 'max:255'],
+            'address' => ['required', 'string', 'max:255'],
         ];
     }
 
@@ -36,6 +48,12 @@ class AllCollege extends Component
     public function resetinput()
     {
         $this->name=null;
+        $this->name_mr=null;
+        $this->heading_1=null;
+        $this->heading_1_mr=null;
+        $this->email=null;
+        $this->mobile=null;
+        $this->address=null;
         $this->status=null;
         $this->c_id=null;
         $this->earch =null;
@@ -53,6 +71,12 @@ class AllCollege extends Component
         $college= new College;
         if($college){
             $college->name = $validatedData['name'];
+            $college->name_mr = $validatedData['name_mr'];
+            $college->heading_1 = $validatedData['heading_1'];
+            $college->heading_1_mr = $validatedData['heading_1_mr'];
+            $college->mobile = $validatedData['mobile'];
+            $college->email = $validatedData['email'];
+            $college->address = $validatedData['address'];
             $college->status = $this->status==1?1:0;
             $college->save();
             $this->resetinput();
@@ -74,9 +98,15 @@ class AllCollege extends Component
         $this->current_id=$id;
         $college = College::find($id);
         if($college){
-            $this->C_id=$college->id;
+            $this->c_id=$college->id;
             $this->status = $college->status;
             $this->name = $college->name;
+            $this->name_mr = $college->name_mr;
+            $this->heading_1 = $college->heading_1;
+            $this->heading_1_mr = $college->heading_1_mr;
+            $this->email = $college->email;
+            $this->mobile = $college->mobile;
+            $this->address = $college->address;
             $this->setmode('edit');
         }else{
             $this->dispatchBrowserEvent('alert',[
@@ -92,6 +122,12 @@ class AllCollege extends Component
         $college = College::find($id);
         if($college){
             $college->name = $validatedData['name'];
+            $college->name_mr = $validatedData['name_mr'];
+            $college->heading_1 = $validatedData['heading_1'];
+            $college->heading_1_mr = $validatedData['heading_1_mr'];
+            $college->mobile = $validatedData['mobile'];
+            $college->email = $validatedData['email'];
+            $college->address = $validatedData['address'];
             $college->status = $this->status==1?1:0;
             $college->update();
             $this->resetinput();
