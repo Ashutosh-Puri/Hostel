@@ -28,7 +28,13 @@ class CollegeSeeder extends Seeder
         $records = [
             [   
                 'id'=>1,
-                'name' => "S. N. Arts, D. J. Malpani Commerce and B. N. Sarda Science College Sangamner",
+                'heading_1'=>"Shikshan Prasark Sanstha's",
+                'heading_1_mr'=>"शिक्षण प्रसारक संस्थाचे",
+                'name' => "Sangamner Nagarpalika Arts, D. J. Malpani Commerce and B. N. Sarda Science College ( Autonomous ) Sangamner",
+                'name_mr'=>"संगमनेर नगरपालिका कला , दा.ज. मालपाणी वाणिज्य आणि ब.ना. सारडा विज्ञान महाविद्यालय ( स्वायत्त ) संगमनेर",
+                'email'=>'info@sangamnercollege.edu.in',
+                'mobile'=>' 02425-225893',
+                'address'=>'Sangamner 422605, Ahmednagar, MH, IN',
                 'status' => 0,
             ],
         ];

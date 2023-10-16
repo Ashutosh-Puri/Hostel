@@ -46,17 +46,17 @@
                 </tr>
                 <tr>
                     <td colspan="10" style="justify-content: center;">
-                        <h6 style="margin-top: 0px; text-align: center; margin-bottom:3px;">Shikshan Prasark Sanstha's</h6>
+                        <h6 style="margin-top: 0px; text-align: center; margin-bottom:3px;">{{ $nightout->allocation->Bed->Room->Floor->Building->Hostel->College->heading_1 }}</h6>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="10">
-                        <h4 style="margin-top: 0px; text-align: center; margin-bottom:3px;">S.N. Arts, D.J. Malpani Commerce & B.N. Sarda Science College(Autonomous), Sangamner</h4>
+                        <h4 style="margin-top: 0px; text-align: center; margin-bottom:3px;">{{ $nightout->allocation->Bed->Room->Floor->Building->Hostel->College->name }}</h4>
                     </td>
-                </tr>
+                </tr>`
                 <tr>
                     <td colspan="10">
-                        <h4 style="margin-top: 0px; text-align: center; margin-bottom:3px;">Tal-Sangamner, Dist-Ahmednagar-422605</h4>
+                        <h4 style="margin-top: 0px; text-align: center; margin-bottom:3px;">{{ $nightout->allocation->Bed->Room->Floor->Building->Hostel->College->address }}</h4>
                     </td>
                 </tr>
                 <br>

@@ -101,7 +101,7 @@ class AllEnquiry extends Component
         $this->current_id=$id;
         $enquiry = Enquiry::find($id);
         if($enquiry){
-            $this->C_id=$enquiry->id;
+            $this->c_id=$enquiry->id;
             $this->name = $enquiry->name;
             $this->email = $enquiry->email;
             $this->mobile = $enquiry->mobile;

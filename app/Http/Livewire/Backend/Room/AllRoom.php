@@ -113,7 +113,7 @@ class AllRoom extends Component
                 $this->building_id=$floor->Building->id;
                 $this->floor_id =  $floor->id;
             }
-            $this->C_id=$room->id;
+            $this->c_id=$room->id;
             $this->label = $room->label;
             $this->capacity =  $room->capacity;
             $this->status = $room->status;

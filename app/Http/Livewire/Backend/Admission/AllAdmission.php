@@ -73,6 +73,7 @@ class AllAdmission extends Component
     public $current_id;
     public $mindate;
     public $gender;
+    public $status;
 
     public function resetinput()
     {
@@ -327,7 +328,7 @@ class AllAdmission extends Component
         $admission = Admission::find($id);
         if ($admission)
         {
-            $this->C_id = $admission->id;
+            $this->c_id = $admission->id;
             $this->academic_year_id = $admission->academic_year_id;
             $this->student_id = $admission->student_id;
             $this->class_id = $admission->class_id;

@@ -87,7 +87,7 @@ class AllFee extends Component
         $this->current_id=$id;
         $fee = Fee::find($id);
         if($fee){
-            $this->C_id=$fee->id;
+            $this->c_id=$fee->id;
             $this->academic_year_id=$fee->academic_year_id;
             $this->seated_id = $fee->seated_id;
             $this->status = $fee->status;

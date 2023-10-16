@@ -81,7 +81,7 @@ class AllBuilding extends Component
         $this->current_id=$id;
         $building = Building::find($id);
         if($building){
-            $this->C_id=$building->id;
+            $this->c_id=$building->id;
             $this->status = $building->status;
             $this->name = $building->name;
             $this->hostel_id = $building->hostel_id;

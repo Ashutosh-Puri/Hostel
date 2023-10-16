@@ -63,6 +63,7 @@ class StudentAdmission extends Component
     public $current_id;
     public $mindate;
     public $gender;
+    public $status;
 
     public function resetinput()
     {
@@ -281,7 +282,7 @@ class StudentAdmission extends Component
         $admission = Admission::find($id);
         if ($admission)
         {
-            $this->C_id = $admission->id;
+            $this->c_id = $admission->id;
             $this->academic_year_id = $admission->academic_year_id;
             $this->student_id = $admission->student_id;
             $this->class_id = $admission->class_id;
@@ -391,10 +392,14 @@ class StudentAdmission extends Component
             $education->percentage = $validatedData['percentage'];
             $education->update();
         }else{
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"Student Education Not Found !!"
-            ]);
+            $education =new StudentEducation;
+            $education->student_id=$this->student_id;
+            $education->admission_id=$id;
+            $education->academic_year_id=$validatedData['last_academic_year_id'];
+            $education->last_class_id = $validatedData['last_class_id'];
+            $education->sgpa = $validatedData['sgpa'];
+            $education->percentage = $validatedData['percentage'];
+            $education->save();
         }
         $student= Student::find($this->student_id);
         if($student)

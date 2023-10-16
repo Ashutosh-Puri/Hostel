@@ -92,7 +92,7 @@ class AllPhotoGallery extends Component
         $this->current_id=$id;
         $photogallery = PhotoGallery::find($id);
         if($photogallery){
-            $this->C_id=$photogallery->id;
+            $this->c_id=$photogallery->id;
             $this->photoold = $photogallery->photo;
             $this->title = $photogallery->title;
             $this->status = $photogallery->status;

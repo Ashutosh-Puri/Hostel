@@ -74,7 +74,7 @@ class AllPermission extends Component
         $this->current_id=$id;
         $permission = Permission::find($id);
         if($permission){
-            $this->C_id=$permission->id;
+            $this->c_id=$permission->id;
             $this->name = $permission->name;
             $this->group_name = $permission->group_name;
             $this->setmode('edit');

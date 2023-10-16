@@ -83,7 +83,7 @@ class AllClass extends Component
         $this->current_id=$id;
         $class = Classes::find($id);
         if($class){
-            $this->C_id=$class->id;
+            $this->c_id=$class->id;
             $this->name = $class->name;
             $this->stream =$class->stream;
             $this->type = $class->type ;

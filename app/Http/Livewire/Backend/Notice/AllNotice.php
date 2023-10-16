@@ -78,7 +78,7 @@ class AllNotice extends Component
         $this->current_id=$id;
         $notice = Notice::find($id);
         if($notice){
-            $this->C_id=$notice->id;
+            $this->c_id=$notice->id;
             $this->name = $notice->name;
             $this->description = $notice->description;
             $this->status = $notice->status;

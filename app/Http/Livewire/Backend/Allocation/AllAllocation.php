@@ -137,7 +137,7 @@ class AllAllocation extends Component
         if( $allocation)
         {   
             $admission = Admission::find($allocation->admission_id);
-            $this->C_id=$allocation->id;
+            $this->c_id=$allocation->id;
             $this->academic_year_id=$admission->AcademicYear->id;
             $this->admission_id=$admission->id;
             $this->setmode('edit');

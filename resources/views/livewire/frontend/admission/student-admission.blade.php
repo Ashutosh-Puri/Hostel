@@ -11,6 +11,10 @@
                             <h2>Admission Form</h2>
                         </div>
                         <div class="float-end">
+                            <a wire:loading class="btn btn-primary btn-sm " style="padding:10px; ">
+                                <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
+                                <span class="visually-hidden">Loading...</span>
+                            </a>
                             <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
                                 Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
@@ -489,6 +493,10 @@
                             <h2>Edit Admission Form</h2>
                         </div>
                         <div class="float-end">
+                            <a wire:loading class="btn btn-primary btn-sm " style="padding:10px; ">
+                                <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
+                                <span class="visually-hidden">Loading...</span>
+                            </a>
                             <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
                                 Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
@@ -500,7 +508,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="update({{ isset($C_id)?$C_id:''; }})" method="post" action="" id="myForm">
+                            <form  wire:submit.prevent="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 mb-3 h3">

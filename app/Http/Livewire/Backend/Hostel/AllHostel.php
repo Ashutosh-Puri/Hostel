@@ -87,7 +87,7 @@ class AllHostel extends Component
         $this->current_id=$id;
         $hostel = Hostel::find($id);
         if($hostel){
-            $this->C_id=$hostel->id;
+            $this->c_id=$hostel->id;
             $this->college_id=$hostel->college_id;
             $this->status = $hostel->status;
             $this->gender = $hostel->gender;

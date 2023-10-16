@@ -116,7 +116,7 @@ class AllRolePermission extends Component
         if($id)
         {   
             $this->current_id=$id;
-            $this->C_id=$id;
+            $this->c_id=$id;
             $this->role= Role::findOrFail($id);
            foreach($this->role->permissions->pluck('id') as $data){
             $this->permission[$data]=$data;

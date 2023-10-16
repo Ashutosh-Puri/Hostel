@@ -70,7 +70,7 @@ class AllCategory extends Component
         $this->current_id=$id;
         $category = Category::find($id);
         if($category){
-            $this->C_id=$category->id;
+            $this->c_id=$category->id;
             $this->name = $category->name;
             $this->setmode('edit');
         }else{

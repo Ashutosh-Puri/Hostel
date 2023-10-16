@@ -14,9 +14,8 @@ return new class extends Migration
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_id'); 
-            $table->string('rfid')->nullable()->unique();
+            $table->string('rfid')->nullable();
             $table->timestamp('entry_time')->nullable();
-            $table->timestamp('exit_time')->nullable();
             $table->timestamps();
             $table->foreign('student_id')->references('id')->on('students'); 
         });

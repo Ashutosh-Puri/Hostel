@@ -86,7 +86,7 @@ class AllStudentComeFromHome extends Component
         $this->current_id=$id;
         $studentlocalregister = ComeFromHome::find($id);
         if($studentlocalregister){
-            $this->C_id=$studentlocalregister->id;
+            $this->c_id=$studentlocalregister->id;
             $this->allocation_id=$studentlocalregister->allocation_id;
             $this->come_time =date('H:i', strtotime($studentlocalregister->come_time)) ;
             $this->setmode('edit');

@@ -77,7 +77,7 @@ class AllCast extends Component
         $this->current_id=$id;
         $cast = Cast::find($id);
         if($cast){
-            $this->C_id=$cast->id;
+            $this->c_id=$cast->id;
             $this->name = $cast->name;
             $this->category_id =$cast->category_id;
             $this->status = $cast->status;

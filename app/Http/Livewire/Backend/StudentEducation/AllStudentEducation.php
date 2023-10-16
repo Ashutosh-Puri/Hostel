@@ -95,7 +95,7 @@ class AllStudentEducation extends Component
     {
         $student_education = StudentEducation::find($id);
         if($student_education){
-            $this->C_id=$student_education->id;
+            $this->c_id=$student_education->id;
             $this->academic_year_id = $student_education->academic_year_id;
             $this->admission_id = $student_education->admission_id;
             $this->last_class_id =  $student_education->last_class_id;

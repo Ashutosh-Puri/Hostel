@@ -100,7 +100,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form wire:submit.prevent="update({{ isset($C_id) ? $C_id : '' }})" method="post" action=""
+                        <form wire:submit.prevent="update({{ isset($c_id) ? $c_id : '' }})" method="post" action=""
                             id="myForm">
                             @csrf
                             <div class="row">
