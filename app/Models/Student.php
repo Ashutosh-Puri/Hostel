@@ -21,12 +21,23 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Student extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
+    protected $guard="student";
+
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new StudentResetPasswordNotification($token));
     }
 
-    protected $guard="student";
+    public function routeNotificationForMail()
+    {
+        return $this->email;
+    }
+
+    public function routeNotificationForSms()
+    {
+        return[ $this->mobile,$this->parent_mobile];
+    }
+
 
     protected $fillable = [
         'username',

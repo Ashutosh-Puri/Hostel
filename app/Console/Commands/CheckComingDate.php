@@ -6,6 +6,7 @@ use Vonage\Client;
 use App\Models\Student;
 use App\Models\NightOut;
 use Vonage\SMS\Message\SMS;
+use App\Events\SendSMSEvent;
 use Illuminate\Console\Command;
 use Vonage\Client\Credentials\Basic;
 
@@ -29,7 +30,8 @@ class CheckComingDate extends Command
             $currentDate = now()->format('Y-m-d');
 
             if ($currentDate > $comingDate) {
-                $this->sendSms('Your coming date has passed. Please check in!', $nightout->allocation->admission->student_id);
+                $student = Student::find($nightout->allocation->admission->student_id);
+                event(new SendSMSEvent($student, 'Your coming date has passed. Please check in!'));
             }
         } 
     }
