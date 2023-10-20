@@ -14,7 +14,9 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
 
-        $schedule->command('check-coming-date')->daily();
+        $schedule->command('check-night-out')->hourly();
+        $schedule->command('check-local-registe')->hourly();
+        $schedule->command('check-come-from-home')->hourly();
     }
 
     /**

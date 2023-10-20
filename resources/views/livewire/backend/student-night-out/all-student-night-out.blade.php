@@ -273,8 +273,10 @@
                                             <td>
                                                 @if ($item->status == '0')
                                                     <span class="badge bg-warning text-white">Pending</span>
-                                                @else
+                                                @elseif ($item->status == '1')
                                                     <span class="badge bg-success text-white">Approved</span>
+                                                @else
+                                                    <span class="badge bg-danger text-white">Done</span>
                                                 @endif
                                             </td>
                                             @can('View Student Night Out Form')

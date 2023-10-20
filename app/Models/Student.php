@@ -13,6 +13,7 @@ use App\Models\StudentProfile;
 use App\Models\StudentEducation;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Notifications\StudentResetPasswordNotification;
@@ -33,9 +34,9 @@ class Student extends Authenticatable implements MustVerifyEmail
         return $this->email;
     }
 
-    public function routeNotificationForSms()
+    public function routeNotificationForVonage(Notification $notification): string
     {
-        return[ $this->mobile,$this->parent_mobile];
+        return $this->mobile;
     }
 
 

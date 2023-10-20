@@ -31,9 +31,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-    'nexmo' => [
-        'api_key' => env('VONAGE_API_KEY'),
-        'api_secret' => env('VONAGE_API_SECRET'),
+    'vonage' => [
+        'key' => env('VONAGE_API_KEY'),
+        'secret' => env('VONAGE_API_SECRET'),
         'sms_from' => env('VONAGE_SMS_FROM'),
     ],
 

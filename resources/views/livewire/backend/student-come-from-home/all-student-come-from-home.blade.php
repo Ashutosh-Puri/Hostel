@@ -215,10 +215,12 @@
                                         </td>
                                         <td>
                                             @if ($item->status == '0')
-                                            <span class="badge bg-warning text-white">Pending</span>
-                                            @else
-                                            <span class="badge bg-success text-white">Approved</span>
-                                            @endif
+                                                    <span class="badge bg-warning text-white">Pending</span>
+                                                @elseif ($item->status == '1')
+                                                    <span class="badge bg-success text-white">Approved</span>
+                                                @else
+                                                    <span class="badge bg-danger text-white">Done</span>
+                                                @endif
                                         </td>
                                         @can('Edit Student Come From Home')
                                         <td>

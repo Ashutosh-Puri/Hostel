@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 
 use Mpdf\Mpdf;
 
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
-
+use Vonage\Client;
+use Vonage\SMS\Message\SMS;
 
 
 
@@ -16,61 +16,18 @@ class temp extends Controller
 {
    
 
-    public function view_pdf()
-    {   
-
-       
-  
-          $data = [
-        'admission_id'=>5555566,
-        'title' => 'शिक्षण',
-        'subtitle' => 'संगमनेर नगरपालिका कला, वाणिज्य, दा.ज.मालपाणी वाणिज्य आणि ब.ना. सारडा विज्ञान महाविद्यालय ( स्वायत्त ) संगमनेर',
-        'heading' => 'विद्यार्थी वसतिगृह प्रवेश अर्ज ( २०२३-२४ )',
-        ];
-
-
-        $html = view('fee', compact('data'));
-        $pdf=new Mpdf;
-    
-        $pdf->autoScriptToLang=true;
-        $pdf->autoLangToFont=true;
-        $pdf->WriteHTML($html);
-        $pdf->Output();
-       
-       
-
-
-       
-
-    }
-
-
-
-    public function download_pdf()
+    public function sms()
     {
-       
-       
-        $data = [
-            'admission_id' => 5555566,
-            'title' => 'शिक्षण',
-            'subtitle' => 'संगमनेर नगरपालिका कला, वाणिज्य, दा.ज.मालपाणी वाणिज्य आणि ब.ना. सारडा विज्ञान महाविद्यालय ( स्वायत्त ) संगमनेर',
-            'heading' => 'विद्यार्थी वसतिगृह प्रवेश अर्ज ( २०२३-२४ )',
-        ];
-    
-        $pdf = new Mpdf();
-        $pdf->autoScriptToLang = true;
-        $pdf->autoLangToFont = true;
-        $html = view('form_a', compact('data'));
-        $pdf->WriteHTML($html);
-        $filename = 'Admission_Form_'.now().'.pdf';
-        $pdfContent = $pdf->Output('', \Mpdf\Output\Destination::STRING_RETURN);
-        header('Content-Type: application/pdf');
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        header('Content-Length: ' . strlen($pdfContent));
-        echo $pdfContent;
-        exit();
-       
+        $vonage = new Client(new \Vonage\Client\Credentials\Basic(
+            env('VONAGE_API_KEY'),
+            env('VONAGE_API_SECRET')
+        ));
 
+        $message = new SMS(env('VONAGE_SMS_FROM'), '1234567890', 'test');
+
+        $vonage->sms()->send($message);
+
+        return "SMS sent successfully!";
     }
 
 

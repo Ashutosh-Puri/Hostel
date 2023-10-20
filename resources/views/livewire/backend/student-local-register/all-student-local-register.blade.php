@@ -27,12 +27,11 @@
                             <div class="row">
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3 form-group">
-                                        <label for="entry_time" class="form-label">Entry Time</label>
-                                        <input type="time"
-                                            class="form-control @error('entry_time') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="entry_time" value="{{ old('entry_time') }}"
-                                            id="entry_time" placeholder="Enter entry time" />
-                                        @error('entry_time')
+                                        <label for="exit_time" class="form-label">Exit Time</label>
+                                        <input type="time" class="form-control @error('exit_time') is-invalid @enderror"
+                                            wire:model.debounce.1000ms="exit_time" value="{{ old('exit_time') }}"
+                                            id="exit_time" placeholder="Enter exit time" />
+                                        @error('exit_time')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -41,11 +40,12 @@
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3 form-group">
-                                        <label for="exit_time" class="form-label">Exit Time</label>
-                                        <input type="time" class="form-control @error('exit_time') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="exit_time" value="{{ old('exit_time') }}"
-                                            id="exit_time" placeholder="Enter exit time" />
-                                        @error('exit_time')
+                                        <label for="entry_time" class="form-label">Entry Time</label>
+                                        <input type="time"
+                                            class="form-control @error('entry_time') is-invalid @enderror"
+                                            wire:model.debounce.1000ms="entry_time" value="{{ old('entry_time') }}"
+                                            id="entry_time" placeholder="Enter entry time" />
+                                        @error('entry_time')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -106,12 +106,11 @@
                             <div class="row">
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3 form-group">
-                                        <label for="entry_time" class="form-label">Entry Time</label>
-                                        <input type="time"
-                                            class="form-control @error('entry_time') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="entry_time" value="{{ old('entry_time') }}"
-                                            id="entry_time" placeholder="Enter entry time" />
-                                        @error('entry_time')
+                                        <label for="exit_time" class="form-label">Exit Time</label>
+                                        <input type="time" class="form-control @error('exit_time') is-invalid @enderror"
+                                        wire:model.debounce.1000ms="exit_time" value="{{ old('exit_time') }}"
+                                        id="exit_time" placeholder="Enter exit time" />
+                                        @error('exit_time')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -120,11 +119,12 @@
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3 form-group">
-                                        <label for="exit_time" class="form-label">Exit Time</label>
-                                        <input type="time" class="form-control @error('exit_time') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="exit_time" value="{{ old('exit_time') }}"
-                                            id="exit_time" placeholder="Enter exit time" />
-                                        @error('exit_time')
+                                        <label for="entry_time" class="form-label">Entry Time</label>
+                                        <input type="time"
+                                            class="form-control @error('entry_time') is-invalid @enderror"
+                                            wire:model.debounce.1000ms="entry_time" value="{{ old('entry_time') }}"
+                                            id="entry_time" placeholder="Enter entry time" />
+                                        @error('entry_time')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -274,8 +274,10 @@
                                         <td>
                                             @if ($item->status == '0')
                                             <span class="badge bg-warning text-white">Pending</span>
-                                            @else
+                                            @elseif ($item->status == '1')
                                             <span class="badge bg-success text-white">Approved</span>
+                                            @else
+                                            <span class="badge bg-danger text-white">Done</span>
                                             @endif
                                         </td>
                                         @can('Edit Student Local Register')

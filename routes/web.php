@@ -525,7 +525,7 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
 
 
 
-Route::get('form',[temp::class,'view_pdf']);
+Route::get('sms',[temp::class,'sms']);
 
 
 
