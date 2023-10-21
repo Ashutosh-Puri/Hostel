@@ -89,7 +89,7 @@ class AllAdmin extends Component
             $admin->status = $this->status==1?'1':'0';
             if($this->photo)
             {   $path='uploads/profile/admin/photo/';
-                $FileName = 'user-'.now()->format('Y-m-d').'.'.$this->photo->getClientOriginalExtension();
+                $FileName = 'admin-'.now()->format('Y-m-d-H-m-s').'.'.$this->photo->getClientOriginalExtension();
                 $this->photo->storeAs($path,$FileName,'public');
                 $admin->photo='storage/'.$path.$FileName ;
                 $this->reset('photo');
@@ -151,8 +151,13 @@ class AllAdmin extends Component
             $admin->mobile= $validatedData['mobile'];
             $admin->status = $this->status==1?'1':'0';
             if($this->photo)
-            {   $path='uploads/profile/admin/photo/';
-                $FileName = 'user-'.now()->format('Y-m-d').'.'.$this->photo->getClientOriginalExtension();
+            {   
+                if($admin->photo)
+                {
+                    File::delete($admin->photo);
+                }
+                $path='uploads/profile/admin/photo/';
+                $FileName = 'admin-'.now()->format('Y-m-d-H-m-s').'.'.$this->photo->getClientOriginalExtension();
                 $this->photo->storeAs($path,$FileName,'public');
                 $admin->photo='storage/'.$path.$FileName ;
                 $this->reset('photo');

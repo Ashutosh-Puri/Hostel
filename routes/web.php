@@ -26,6 +26,7 @@ use App\Http\Livewire\Backend\Seated\AllSeated;
 use App\Http\Livewire\Guestend\Gallery\Gallery;
 use App\Http\Livewire\Frontend\StudentDashboard;
 use App\Http\Livewire\Backend\College\AllCollege;
+use App\Http\Livewire\Backend\Contact\AllContact;
 use App\Http\Livewire\Backend\Enquiry\AllEnquiry;
 use App\Http\Livewire\Backend\Student\AllStudent;
 use App\Http\Livewire\Guestend\Contact\Contactus;
@@ -427,6 +428,11 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
     Route::group(['middleware' => ['permission:Access Transaction']], function () {
         // All Transaction
         Route::get('all/transactions',AllTransaction::class)->name('all_transaction');
+    });
+
+    Route::group(['middleware' => ['permission:Access Contact']], function () {
+        // All Contact
+        Route::get('all/contacts',AllContact::class)->name('all_contact');
     });
 
     // Razorpay

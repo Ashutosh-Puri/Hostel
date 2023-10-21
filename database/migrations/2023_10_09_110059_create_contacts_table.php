@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email');
+            $table->string('mobile');
             $table->string('subject');
             $table->text('message');
-            $table->string('mobile');
+            $table->tinyInteger('status')->nullable()->default(0)->comment('0-not read, 1-read');
             $table->timestamps();
         });
     }
