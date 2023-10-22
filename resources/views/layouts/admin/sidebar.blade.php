@@ -327,6 +327,14 @@
             </a>
           </li>
         @endcan
+        @can('Access Assgin RFID')
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin_assgin_rfid') }}">
+              <span class="icon-bg"><i class="mdi mdi-credit-card-plus menu-icon"></i></span>
+              <span class="menu-title">Assign RFID's</span>
+            </a>
+          </li>
+        @endcan
       @endcanany
 
       {{-- Setting --}}

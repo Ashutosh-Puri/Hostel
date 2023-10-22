@@ -11,7 +11,7 @@
                             <h2>Add Attendance</h2>
                         </div>
                         <div class="float-end">
-                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
+                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success ">
                                 Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
                         </div>
@@ -77,7 +77,7 @@
                             </div>
                         </div>
                         <div class="float-end">
-                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
+                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success ">
                                 Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
                         </div>
@@ -119,7 +119,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit"  class="btn btn-primary waves-effect waves-light">Update Data</button>
+                                <button type="submit"  class="btn btn-primary ">Update Data</button>
                             </form>
                         </div>
                     </div>
@@ -155,7 +155,7 @@
                                     <a   target="_blank"  class="btn btn-warning " href="{{ route('admin_download_attendance',['array' => json_encode($attendanceArray['id'])]) }}"> <i class="mdi mdi-download"></i></a>
                                 @endcan
                                 @can('Add Attendance')
-                                    <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
+                                    <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success ">
                                         Add Attendance<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
                                     </a>
                                 @endcan
@@ -233,19 +233,19 @@
                                                 @can('Edit Attendance')
                                                 <td>
                                                     @can('Edit Attendance')
-                                                        <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                        <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
                                                     @endcan
                                                     @can('Delete Attendance')
-                                                        <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                        <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete"></i></a>
                                                     @endcan
                                                 </td>
                                             @elsecan('Delete Attendance')
                                                 <td>
                                                     @can('Edit Attendance')
-                                                        <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                        <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
                                                     @endcan
                                                     @can('Delete Attendance')
-                                                        <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                        <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete"></i></a>
                                                     @endcan
                                                 </td>
                                             @endcan

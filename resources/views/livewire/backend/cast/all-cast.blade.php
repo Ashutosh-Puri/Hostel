@@ -11,7 +11,7 @@
                             <h2>Add Cast</h2>
                         </div>
                         <div class="float-end">
-                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
+                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success ">
                                 Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
                         </div>
@@ -65,7 +65,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit"  class="btn btn-primary waves-effect waves-light">Save Data</button>
+                                <button type="submit"  class="btn btn-primary ">Save Data</button>
                             </form>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                             <h2>Edit Cast</h2>
                         </div>
                         <div class="float-end">
-                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
+                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success ">
                                 Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
                         </div>
@@ -136,7 +136,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit"  class="btn btn-primary waves-effect waves-light">Update Data</button>
+                                <button type="submit"  class="btn btn-primary ">Update Data</button>
                             </form>
                         </div>
                     </div>
@@ -166,7 +166,7 @@
                                     <span class="visually-hidden">Loading...</span>
                                 </a>
                                 @can('Add Cast')
-                                    <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
+                                    <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success ">
                                         Add Cast<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
                                     </a>
                                 @endcan
@@ -233,29 +233,29 @@
                                                 @can('Edit Cast')
                                                     <td>
                                                         @can('Edit Cast')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
                                                             @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
                                                             @else
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
                                                             @endif
                                                         @endcan
                                                         @can('Delete Cast')
-                                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete"></i></a>
                                                         @endcan
                                                     </td>
                                                 @elsecan('Delete Cast')
                                                     <td>
                                                         @can('Edit Cast')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
                                                             @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success waves-effect waves-light"> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
                                                             @else
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger waves-effect waves-light"> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
                                                             @endif
                                                         @endcan
                                                         @can('Delete Cast')
-                                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-delete"></i></a>
+                                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete"></i></a>
                                                         @endcan
                                                     </td>
                                                 @endcan
