@@ -44,6 +44,7 @@ return new class extends Migration
             $table->string('rfid')->nullable()->unique();
             $table->rememberToken();
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
             $table->foreign('cast_id')->references('id')->on('casts')->onDelete('cascade');
         });
     }

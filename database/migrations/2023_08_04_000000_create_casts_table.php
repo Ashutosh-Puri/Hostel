@@ -17,7 +17,9 @@ return new class extends Migration
             $table->string('name');
             $table->tinyInteger('status')->nullable()->default('0')->comment('0-Active ,1-In Active');
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+
         });
     }
 

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('message');
             $table->tinyInteger('status')->nullable()->default(0)->comment('0-not read, 1-read');
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('capacity');
             $table->tinyInteger('status')->nullable()->default('0')->comment('0-available ,1-unavailable');
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
             $table->foreign('floor_id')->references('id')->on('floors')->onDelete('cascade');
             $table->foreign('seated_id')->references('id')->on('seateds')->onDelete('cascade');
         });

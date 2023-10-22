@@ -45,18 +45,18 @@
           </a>
           <div class="dropdown-menu navbar-dropdown dropdown-menu-right p-0 border-0 font-size-sm" aria-labelledby="profileDropdown" data-x-placement="bottom-end">
             <div class="p-2">
-              <h5 class="dropdown-header text-uppercase ps-2 text-dark">User Options</h5>
-              <a class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="#">
+              {{-- <h5 class="dropdown-header text-uppercase ps-2 text-dark">User Options</h5> --}}
+              {{-- <div role="separator" class="dropdown-divider"></div> --}}
+              <h5 class="dropdown-header text-uppercase  ps-2 text-dark mt-2">Actions</h5>
+              {{-- <a class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="">
+                <span>Password Change</span>
+                <i class="mdi mdi-lock ms-1"></i>
+              </a> --}}
+              <a class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="{{ route('student.profile.edit') }}">
                 <span>Profile</span>
                 <span class="p-0">
                   <i class="mdi mdi-account-outline ms-1"></i>
                 </span>
-              </a>
-              <div role="separator" class="dropdown-divider"></div>
-              <h5 class="dropdown-header text-uppercase  ps-2 text-dark mt-2">Actions</h5>
-              <a class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="#">
-                <span>Password Change</span>
-                <i class="mdi mdi-lock ms-1"></i>
               </a>
               <form method="POST" action="{{ route('student.logout') }}" class="d-inline">
                 @csrf

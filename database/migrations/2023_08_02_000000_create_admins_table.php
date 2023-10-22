@@ -22,6 +22,7 @@ return new class extends Migration
             $table->tinyInteger('status')->nullable()->default('0')->comment('0-Active ,1-In-Active');
             $table->rememberToken();
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 

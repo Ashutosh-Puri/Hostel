@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('max_capacity');
             $table->tinyInteger('status')->nullable()->default('0')->comment('0-Active ,1-In Active');
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
             $table->foreign('academic_year_id')->references('id')->on('academic_years')->onDelete('cascade');
             $table->foreign('class_id')->references('id')->on('classes')->onDelete('cascade');
         });

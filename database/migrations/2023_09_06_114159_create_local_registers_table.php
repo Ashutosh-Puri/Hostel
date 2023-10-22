@@ -19,6 +19,7 @@ return new class extends Migration
             $table->timestamp('exit_time')->nullable();
             $table->tinyInteger('status')->nullable()->default('0');
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
             $table->foreign('allocation_id')->references('id')->on('allocations')->onDelete('cascade');
         });
     }

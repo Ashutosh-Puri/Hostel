@@ -22,6 +22,7 @@ return new class extends Migration
             $table->decimal('percentage',5,2);
             $table->tinyInteger('status')->nullable()->default(0)->comment('0-not selected, 1-selected');
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 

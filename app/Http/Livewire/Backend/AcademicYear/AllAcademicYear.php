@@ -120,12 +120,54 @@ class AllAcademicYear extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+
+    public function softdelete($id)
     { 
-        $academicyear = AcademicYear::find($this->delete_id);
+        $academicyear = AcademicYear::find($id);
         if($academicyear)
         {
             $academicyear->delete();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Academic Year Deleted Successfully !!"
+            ]);  
+        }else{
+
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+
+    public function restore($id)
+    { 
+        $academicyear = AcademicYear::withTrashed()->find($id);
+        if($academicyear)
+        {
+            $academicyear->restore();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Academic Year Restored Successfully !!"
+            ]);  
+        }else{
+
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    { 
+        $academicyear = AcademicYear::withTrashed()->find($this->delete_id);
+        if($academicyear)
+        {
+            $academicyear->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
@@ -156,9 +198,9 @@ class AllAcademicYear extends Component
 
     public function render()
     {   
-        $academicyear = AcademicYear::query()->select('id','year', 'status')->when($this->search, function ($query) {
+        $academicyear = AcademicYear::query()->select('id','year', 'status','deleted_at')->when($this->search, function ($query) {
             return $query->where('year', 'like', '%' . $this->search . '%');
-        })->orderByDesc('year')->paginate($this->per_page);
+        })->orderByDesc('year')->withTrashed()->paginate($this->per_page);
 
         return view('livewire.backend.academic-year.all-academic-year',compact('academicyear'))->extends('layouts.admin.admin')->section('admin');
     }
