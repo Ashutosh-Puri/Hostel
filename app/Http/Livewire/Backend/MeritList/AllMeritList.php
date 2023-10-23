@@ -10,7 +10,7 @@ use App\Exports\MeritListExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class AllMeritList extends Component
-{   
+{
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
@@ -64,8 +64,8 @@ class AllMeritList extends Component
         $this->name=null;
         $this->gender=null;
         $this->mobile=null;
-        $this->email=null; 
-        $this->class=null; 
+        $this->email=null;
+        $this->class=null;
         $this->percentage=null;
         $this->sgpa=null;
     }
@@ -153,11 +153,47 @@ class AllMeritList extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $meritlist = MeritList::find($this->delete_id);
+        $meritlist = MeritList::find($id);
         if($meritlist){
             $meritlist->delete();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Merit List Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function restore($id)
+    {
+        $meritlist = MeritList::withTrashed()->find($id);
+        if($meritlist){
+            $meritlist->restore();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Merit List Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $meritlist = MeritList::withTrashed()->find($this->delete_id);
+        if($meritlist){
+            $meritlist->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
@@ -176,7 +212,7 @@ class AllMeritList extends Component
     {
         $status = MeritList::find($id);
         if($status->status==1)
-        {   
+        {
             $status->status=0;
         }else
         {
@@ -186,21 +222,21 @@ class AllMeritList extends Component
     }
 
     public function render()
-    {   
+    {
         if (is_numeric($this->sgpa) && $this->sgpa >=1) {
             $this->percentage = (($this->sgpa * 10) - 7.5);
         }
-    
+
         $meritlistQuery = MeritList::orderBy($this->sortby_feild, $this->sortby_order);
         if ($this->m_name) {
-            $meritlistQuery->where('name', 'like', '%' . $this->m_name . '%'); 
+            $meritlistQuery->where('name', 'like', '%' . $this->m_name . '%');
         }
 
         if ($this->m_class) {
-            $meritlistQuery->where('class', 'like', '%' . $this->m_class . '%'); 
+            $meritlistQuery->where('class', 'like', '%' . $this->m_class . '%');
         }
-        $meritlist = $meritlistQuery->paginate($this->per_page);
- 
+        $meritlist = $meritlistQuery->withTrashed()->paginate($this->per_page);
+
         $this->meritlistArray['id']=  $meritlistQuery->pluck('id')->all();
         return view('livewire.backend.merit-list.all-merit-list',compact('meritlist'))->extends('layouts.admin.admin')->section('admin');
     }

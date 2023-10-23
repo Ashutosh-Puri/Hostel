@@ -131,11 +131,47 @@ class AllHostel extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $hostel = Hostel::find($this->delete_id);
+        $hostel = Hostel::find($id);
         if($hostel){
             $hostel->delete();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Hostel Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function restore($id)
+    {
+        $hostel = Hostel::withTrashed()->find($id);
+        if($hostel){
+            $hostel->restore();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Hostel Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $hostel = Hostel::withTrashed()->find($this->delete_id);
+        if($hostel){
+            $hostel->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
@@ -154,7 +190,7 @@ class AllHostel extends Component
     {
         $status = Hostel::find($id);
         if($status->status==1)
-        {   
+        {
             $status->status=0;
         }else
         {
@@ -165,7 +201,7 @@ class AllHostel extends Component
 
     public function render()
     {
-        $colleges=College::select('id','name')->where('status',0)->orderBy('name',"ASC")->get();
+        $colleges=College::select('id','name','deleted_at')->where('status',0)->orderBy('name',"ASC")->get();
         $query = Hostel::orderBy('name', 'ASC');
         if ($this->college_name || $this->hostel_name) {
             $query->when($this->college_name, function ($query) {
@@ -176,7 +212,7 @@ class AllHostel extends Component
                 $query->where('name', 'like', '%' . $this->hostel_name . '%');
             });
         }
-        $hostels = $query->paginate($this->per_page);
+        $hostels = $query->withTrashed()->paginate($this->per_page);
         return view('livewire.backend.Hostel.all-Hostel',compact('hostels','colleges'))->extends('layouts.admin.admin')->section('admin');
     }
 }

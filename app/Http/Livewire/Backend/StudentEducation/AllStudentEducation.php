@@ -136,18 +136,56 @@ class AllStudentEducation extends Component
             ]);
         }
     }
-    
+
     public function deleteconfirmation($id)
     {
         $this->delete_id=$id;
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $student_education = StudentEducation::find($this->delete_id);
+        $student_education = StudentEducation::find($id);
         if($student_education){
             $student_education->delete();
+            $this->delete_id=null;
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Student Education Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function restore($id)
+    {
+        $student_education = StudentEducation::withTrashed()->find($id);
+        if($student_education){
+            $student_education->restore();
+            $this->delete_id=null;
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Student Education Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $student_education = StudentEducation::withTrashed()->find($this->delete_id);
+        if($student_education){
+            $student_education->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
@@ -175,11 +213,11 @@ class AllStudentEducation extends Component
 
 
         $classes=Classes::select('id','name')->where('status',0)->orderBy('name', 'ASC')->get();
-        
-        
-        
-        
-        
+
+
+
+
+
         $query = StudentEducation::orderBy('student_id', 'ASC')->when($this->ad, function ($query) {
             $query->whereIn('admission_id', function ($subQuery) {
                 $subQuery->select('id')->from('admissions')->where('id', 'like', '%' . $this->ad . '%');
@@ -197,7 +235,7 @@ class AllStudentEducation extends Component
                 $subQuery->select('id')->from('classes')->where('status', 0)->where('name', 'like', '%' . $this->c . '%');
             });
         });
-        $student_educations = $query->paginate($this->per_page);
+        $student_educations = $query->withTrashed()->paginate($this->per_page);
         return view('livewire.backend.student-education.all-student-education',compact('admissions','classes','academicyears','student_educations'))->extends('layouts.admin.admin')->section('admin');
     }
 

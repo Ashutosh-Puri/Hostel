@@ -131,11 +131,49 @@ class AllFee extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $fee = Fee::find($this->delete_id);
+        $fee = Fee::find($id);
         if($fee){
             $fee->delete();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Fee Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function restore($id)
+    {
+        $fee = Fee::withTrashed()->find($id);
+        if($fee){
+            $fee->restore();
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Fee Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $fee = Fee::withTrashed()->find($this->delete_id);
+        if($fee){
+            $fee->forceDelete();
             $this->delete_id=null;
             $this->resetinput();
             $this->setmode('all');
@@ -155,7 +193,7 @@ class AllFee extends Component
     {
         $status = Fee::find($id);
         if($status->status==1)
-        {   
+        {
             $status->status=0;
         }else
         {
@@ -165,7 +203,7 @@ class AllFee extends Component
     }
 
     public function render()
-    {   
+    {
         $seateds=Seated::select('id','seated')->where('status',0)->orderBy('seated', 'ASC')->get();
         $academic_years=AcademicYear::select('id','year')->where('status',0)->orderBy('year', 'DESC')->get();
         $feesQuery = Fee::with('AcademicYear')->orderBy('academic_year_id', 'ASC');
@@ -174,7 +212,7 @@ class AllFee extends Component
                 $query->where('year', 'like', '%' . $this->search . '%');
             });
         }
-        $fees = $feesQuery->paginate($this->per_page);
+        $fees = $feesQuery->withTrashed()->paginate($this->per_page);
         return view('livewire.backend.fee.all-fee',compact('academic_years','fees','seateds'))->extends('layouts.admin.admin')->section('admin');
     }
 }

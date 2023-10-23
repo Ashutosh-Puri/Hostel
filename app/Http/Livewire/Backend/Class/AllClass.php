@@ -127,11 +127,47 @@ class AllClass extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $class = Classes::find($this->delete_id);
+        $class = Classes::find($id);
         if($class){
             $class->delete();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Class Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function restore($id)
+    {
+        $class = Classes::withTrashed()->find($id);
+        if($class){
+            $class->restore();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Class Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $class = Classes::withTrashed()->find($this->delete_id);
+        if($class){
+            $class->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
@@ -150,7 +186,7 @@ class AllClass extends Component
     {
         $status = Classes::find($id);
         if($status->status==1)
-        {   
+        {
             $status->status=0;
         }else
         {
@@ -161,9 +197,9 @@ class AllClass extends Component
 
     public function render()
     {
-        $class=Classes::query()->select('id','name','stream','type','status')->when($this->search, function ($query) {
+        $class=Classes::query()->select('id','name','stream','type','status','deleted_at')->when($this->search, function ($query) {
             return $query->where('name', 'like', '%' . $this->search . '%');
-        })->orderBy('name', 'ASC')->paginate($this->per_page);
+        })->orderBy('name', 'ASC')->withTrashed()->paginate($this->per_page);
 
         return view('livewire.backend.class.all-class',compact('class'))->extends('layouts.admin.admin')->section('admin');
     }

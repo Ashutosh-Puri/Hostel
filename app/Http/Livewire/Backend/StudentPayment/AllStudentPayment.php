@@ -158,11 +158,47 @@ class AllStudentPayment extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $studentpayment = StudentPayment::find($this->delete_id);
+        $studentpayment = StudentPayment::find($id);
         if($studentpayment){
             $studentpayment->delete();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Student Payment Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function restore($id)
+    {
+        $studentpayment = StudentPayment::withTrashed()->find($id);
+        if($studentpayment){
+            $studentpayment->restore();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Student Payment Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $studentpayment = StudentPayment::withTrashed()->find($this->delete_id);
+        if($studentpayment){
+            $studentpayment->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
@@ -181,7 +217,7 @@ class AllStudentPayment extends Component
     {
         $status = StudentPayment::find($id);
         if($status->status==1)
-        {   
+        {
             $status->status=2;
         }elseif($status->status==2)
         {
@@ -201,7 +237,7 @@ class AllStudentPayment extends Component
         $seateds=Seated::select('id','seated')->where('status',0)->orderBy('seated', 'ASC')->get();
         $fees=Fee::where('status',0)->where('academic_year_id',$this->academic_year_id)->where('seated_id',$this->seated_id)->first();
         if($fees)
-        {   
+        {
             $this->totalamount=$fees->amount;
         }else
         {
@@ -220,7 +256,7 @@ class AllStudentPayment extends Component
                 $subQuery->select('id')->from('admissions')->where('id', 'like', '%' . $this->admission_name . '%');
             });
         });
-        $student_payments = $query->paginate($this->per_page);
+        $student_payments = $query->withTrashed()->paginate($this->per_page);
         return view('livewire.backend.student-payment.all-student-payment',compact('seateds','academic_years','students','admissions','student_payments'))->extends('layouts.admin.admin')->section('admin');
     }
 }

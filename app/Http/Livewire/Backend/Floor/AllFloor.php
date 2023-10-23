@@ -10,7 +10,7 @@ use Livewire\WithPagination;
 use Illuminate\Validation\Rule;
 
 class AllFloor extends Component
-{   
+{
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
@@ -130,11 +130,47 @@ class AllFloor extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $floor = Floor::find($this->delete_id);
+        $floor = Floor::find($id);
         if($floor){
             $floor->delete();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Floor Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function restore($id)
+    {
+        $floor = Floor::withTrashed()->find($id);
+        if($floor){
+            $floor->restore();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Floor Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $floor = Floor::withTrashed()->find($this->delete_id);
+        if($floor){
+            $floor->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
@@ -153,7 +189,7 @@ class AllFloor extends Component
     {
         $status = Floor::find($id);
         if($status->status==1)
-        {   
+        {
             $status->status=0;
         }else
         {
@@ -163,11 +199,11 @@ class AllFloor extends Component
     }
 
     public function render()
-    {   
+    {
         $hostels=Hostel::select('id','name')->where('status',0)->get();
         $buildings=Building::select('id','name')->where('status',0)->where('hostel_id',$this->hostel_id)->get();
 
-        $query = Floor::with('Building')->select('id','floor','building_id')->where('status',0)->orderBy('floor', 'ASC');
+        $query = Floor::with('Building')->select('id','floor','building_id','deleted_at')->where('status',0)->orderBy('floor', 'ASC');
         if ($this->building_name) {
             $query->whereHas('Building', function ($query) {
                 $query->where('name', 'like', '%' . $this->building_name . '%');
@@ -176,7 +212,7 @@ class AllFloor extends Component
 
         $floors = $query->when($this->floor_number, function ($query) {
             return $query->where('floor', 'like', $this->floor_number . '%');
-        })->paginate($this->per_page);
+        })->withTrashed()->paginate($this->per_page);
 
         return view('livewire.backend.floor.all-floor',compact('floors','buildings','hostels'))->extends('layouts.admin.admin')->section('admin');
     }

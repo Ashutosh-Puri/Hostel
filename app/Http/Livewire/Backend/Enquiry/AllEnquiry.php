@@ -9,7 +9,7 @@ use Livewire\WithPagination;
 use Illuminate\Support\Facades\Mail;
 
 class AllEnquiry extends Component
-{   
+{
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
@@ -33,7 +33,7 @@ class AllEnquiry extends Component
     protected function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255'], 
+            'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email'],
             'mobile' => ['required', 'integer', 'digits:10'],
             'gender' => ['required', 'integer', 'in:0,1'],
@@ -146,7 +146,7 @@ class AllEnquiry extends Component
     }
 
      public function mail($id)
-    {   
+    {
         $enquiry = Enquiry::find($id);
         $this->m_id=$id;
         $this->name=$enquiry->name;
@@ -158,13 +158,13 @@ class AllEnquiry extends Component
     }
 
     public function sendmail($id)
-    {  
+    {
         $this->validate([ 'reply' => ['required','string']]);
         $this->setmode('all');
         $enquiry = Enquiry::find($id);
         $mail=Mail::to($enquiry->email)->send(new EnquiryReply($this->reply ,$enquiry->name));
         if($mail)
-        {   
+        {
             $this->resetinput();
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'success',
@@ -177,7 +177,7 @@ class AllEnquiry extends Component
                 'message'=>"Email Not Send !!"
             ]);
         }
-       
+
     }
 
     public function deleteconfirmation($id)
@@ -186,11 +186,47 @@ class AllEnquiry extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $enquiry = Enquiry::find($this->delete_id);
+        $enquiry = Enquiry::find($id);
         if($enquiry){
             $enquiry->delete();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Enquiry Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function restore($id)
+    {
+        $enquiry = Enquiry::withTrashed()->find($id);
+        if($enquiry){
+            $enquiry->restore();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Enquiry Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $enquiry = Enquiry::withTrashed()->find($this->delete_id);
+        if($enquiry){
+            $enquiry->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
@@ -209,7 +245,7 @@ class AllEnquiry extends Component
     {
         $status = Enquiry::find($id);
         if($status->status==1)
-        {   
+        {
             $status->status=0;
         }else
         {
@@ -222,7 +258,7 @@ class AllEnquiry extends Component
     {
         $enquiries = Enquiry::query()->when($this->search, function ($query) {
              return $query->where('name', 'like', '%' . $this->search . '%');
-        })->orderBy('created_at', 'DESC')->paginate($this->per_page);
+        })->withTrashed()->orderBy('created_at', 'DESC')->paginate($this->per_page);
 
         return view('livewire.backend.enquiry.all-enquiry',compact('enquiries'))->extends('layouts.admin.admin')->section('admin');
     }
