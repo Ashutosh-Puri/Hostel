@@ -13,6 +13,8 @@ use App\Models\StudentProfile;
 use App\Models\StudentEducation;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Notification;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Notifications\StudentResetPasswordNotification;
@@ -20,13 +22,26 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Student extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    
+    protected $dates=['deleted_at'];
+
+    protected $guard="student";
+
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new StudentResetPasswordNotification($token));
     }
 
-    protected $guard="student";
+    public function routeNotificationForMail()
+    {
+        return $this->email;
+    }
+
+    public function routeNotificationForVonage(Notification $notification): string
+    {
+        return $this->mobile;
+    }
 
     protected $fillable = [
         'username',

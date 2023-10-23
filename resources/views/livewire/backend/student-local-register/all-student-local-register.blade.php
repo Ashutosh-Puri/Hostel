@@ -11,7 +11,7 @@
                     </div>
                     <div class="float-end">
                         <a wire:loading.attr="disabled" wire:click="setmode('all')"
-                            class="btn btn-success waves-effect waves-light">
+                            class="btn btn-success ">
                             Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
                         </a>
                     </div>
@@ -27,12 +27,11 @@
                             <div class="row">
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3 form-group">
-                                        <label for="entry_time" class="form-label">Entry Time</label>
-                                        <input type="time"
-                                            class="form-control @error('entry_time') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="entry_time" value="{{ old('entry_time') }}"
-                                            id="entry_time" placeholder="Enter entry time" />
-                                        @error('entry_time')
+                                        <label for="exit_time" class="form-label">Exit Time</label>
+                                        <input type="time" class="form-control @error('exit_time') is-invalid @enderror"
+                                            wire:model.debounce.1000ms="exit_time" value="{{ old('exit_time') }}"
+                                            id="exit_time" placeholder="Enter exit time" />
+                                        @error('exit_time')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -41,11 +40,12 @@
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3 form-group">
-                                        <label for="exit_time" class="form-label">Exit Time</label>
-                                        <input type="time" class="form-control @error('exit_time') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="exit_time" value="{{ old('exit_time') }}"
-                                            id="exit_time" placeholder="Enter exit time" />
-                                        @error('exit_time')
+                                        <label for="entry_time" class="form-label">Entry Time</label>
+                                        <input type="time"
+                                            class="form-control @error('entry_time') is-invalid @enderror"
+                                            wire:model.debounce.1000ms="entry_time" value="{{ old('entry_time') }}"
+                                            id="entry_time" placeholder="Enter entry time" />
+                                        @error('entry_time')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -69,7 +69,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                            <button type="submit" class="btn btn-primary ">
                                 Submit
                             </button>
                         </form>
@@ -89,7 +89,7 @@
                     </div>
                     <div class="float-end">
                         <a wire:loading.attr="disabled" wire:click="setmode('all')"
-                            class="btn btn-success waves-effect waves-light">
+                            class="btn btn-success ">
                             Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
                         </a>
                     </div>
@@ -106,12 +106,11 @@
                             <div class="row">
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3 form-group">
-                                        <label for="entry_time" class="form-label">Entry Time</label>
-                                        <input type="time"
-                                            class="form-control @error('entry_time') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="entry_time" value="{{ old('entry_time') }}"
-                                            id="entry_time" placeholder="Enter entry time" />
-                                        @error('entry_time')
+                                        <label for="exit_time" class="form-label">Exit Time</label>
+                                        <input type="time" class="form-control @error('exit_time') is-invalid @enderror"
+                                        wire:model.debounce.1000ms="exit_time" value="{{ old('exit_time') }}"
+                                        id="exit_time" placeholder="Enter exit time" />
+                                        @error('exit_time')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -120,11 +119,12 @@
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3 form-group">
-                                        <label for="exit_time" class="form-label">Exit Time</label>
-                                        <input type="time" class="form-control @error('exit_time') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="exit_time" value="{{ old('exit_time') }}"
-                                            id="exit_time" placeholder="Enter exit time" />
-                                        @error('exit_time')
+                                        <label for="entry_time" class="form-label">Entry Time</label>
+                                        <input type="time"
+                                            class="form-control @error('entry_time') is-invalid @enderror"
+                                            wire:model.debounce.1000ms="entry_time" value="{{ old('entry_time') }}"
+                                            id="entry_time" placeholder="Enter entry time" />
+                                        @error('entry_time')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -148,7 +148,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                            <button type="submit" class="btn btn-primary ">
                                 Update Data
                             </button>
                         </form>
@@ -181,7 +181,7 @@
                             </a>
                             @can('Add Student Local Register')
                             <a wire:loading.attr="disabled" wire:click="setmode('add')"
-                                class="btn btn-success waves-effect waves-light">
+                                class="btn btn-success ">
                                 Add Local Register Entry<span class="btn-label-right mx-2"><i
                                         class="mdi mdi-plus-circle fw-bold"></i></span>
                             </a>
@@ -274,24 +274,26 @@
                                         <td>
                                             @if ($item->status == '0')
                                             <span class="badge bg-warning text-white">Pending</span>
-                                            @else
+                                            @elseif ($item->status == '1')
                                             <span class="badge bg-success text-white">Approved</span>
+                                            @else
+                                            <span class="badge bg-danger text-white">Done</span>
                                             @endif
                                         </td>
                                         @can('Edit Student Local Register')
                                         <td>
                                             @can('Edit Student Local Register')
                                             <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})"
-                                                class="btn btn-success waves-effect waves-light"><i
+                                                class="btn btn-success "><i
                                                     class="mdi mdi-lead-pencil"></i></a>
                                             @if ($item->status == 1)
                                             <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
-                                                class="btn btn-danger waves-effect waves-light">
+                                                class="btn btn-danger ">
                                                 <i class="mdi mdi-thumb-down"></i>
                                             </a>
                                             @elseif ($item->status == 0)
                                             <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
-                                                class="btn btn-success waves-effect waves-light">
+                                                class="btn btn-success ">
                                                 <i class="mdi mdi-thumb-up"></i>
                                             </a>
                                             @endif
@@ -299,7 +301,7 @@
                                             Local Register')
                                             <a wire:loading.attr="disabled"
                                                 wire:click.prevent="deleteconfirmation({{ $item->id }})"
-                                                class="btn btn-danger waves-effect waves-light"><i
+                                                class="btn btn-danger "><i
                                                     class="mdi mdi-delete"></i></a>
                                             @endcan
                                         </td>
@@ -308,16 +310,16 @@
                                         <td>
                                             @can('Edit Student Local Register')
                                             <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})"
-                                                class="btn btn-success waves-effect waves-light"><i
+                                                class="btn btn-success "><i
                                                     class="mdi mdi-lead-pencil"></i></a>
                                             @if ($item->status == 1)
                                             <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
-                                                class="btn btn-danger waves-effect waves-light">
+                                                class="btn btn-danger ">
                                                 <i class="mdi mdi-thumb-down"></i>
                                             </a>
                                             @elseif ($item->status == 0)
                                             <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
-                                                class="btn btn-success waves-effect waves-light">
+                                                class="btn btn-success ">
                                                 <i class="mdi mdi-thumb-up"></i>
                                             </a>
                                             @endif
@@ -325,7 +327,7 @@
                                             Local Register')
                                             <a wire:loading.attr="disabled"
                                                 wire:click.prevent="deleteconfirmation({{ $item->id }})"
-                                                class="btn btn-danger waves-effect waves-light"><i
+                                                class="btn btn-danger "><i
                                                     class="mdi mdi-delete"></i></a>
                                             @endcan
                                         </td>

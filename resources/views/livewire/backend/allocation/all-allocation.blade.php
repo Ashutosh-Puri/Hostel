@@ -15,7 +15,7 @@
                                 <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
                                 <span class="visually-hidden">Loading...</span>
                             </a>
-                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
+                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success ">
                                 Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
                         </div>
@@ -62,7 +62,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit"  class="btn btn-primary waves-effect waves-light">Save Data</button>
+                                <button type="submit"  class="btn btn-primary ">Save Data</button>
                             </form>
                         </div>
                     </div>
@@ -83,7 +83,7 @@
                                 <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
                                 <span class="visually-hidden">Loading...</span>
                             </a>
-                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
+                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success ">
                                 Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
                         </div>
@@ -130,7 +130,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit"  class="btn btn-primary waves-effect waves-light">Save Data</button>
+                                <button type="submit"  class="btn btn-primary ">Save Data</button>
                             </form>
                         </div>
                     </div>
@@ -151,7 +151,7 @@
                                 <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
                                 <span class="visually-hidden">Loading...</span>
                             </a>
-                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
+                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success ">
                                 Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
                         </div>
@@ -352,7 +352,7 @@
                                     </div>
 
                                 </div>
-                                <button type="submit"  class="btn btn-primary waves-effect waves-light">Allocate Bed</button>
+                                <button type="submit"  class="btn btn-primary ">Allocate Bed</button>
                             </form>
                         </div>
                     </div>
@@ -373,7 +373,7 @@
                                 <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
                                 <span class="visually-hidden">Loading...</span>
                             </a>
-                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
+                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success ">
                                 Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
                         </div>
@@ -611,7 +611,7 @@
                                     <div class="col-12 col-md-12">
                                         <hr>
                                             <div class="text-center h3">
-                                                <button type="submit"  class="btn btn-primary waves-effect waves-light text-center ">Exchange Bed</button>
+                                                <button type="submit"  class="btn btn-primary  text-center ">Exchange Bed</button>
                                             </div>
                                         <hr>
                                     </div>
@@ -645,7 +645,7 @@
                                     <span class="visually-hidden">Loading...</span>
                                 </a>
                                 @can('Add Allocation')
-                                    <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
+                                    <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success ">
                                         Add Allocation<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
                                     </a>
                                 @endcan
@@ -766,91 +766,91 @@
                                                 @can('Allocate Bed')
                                                     <td>
                                                         @can('Allocate Bed')
-                                                            <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success waves-effect waves-light"> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
+                                                            <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success "> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
                                                         @endcan
                                                         @can('Exchange Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning waves-effect waves-light"><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning "><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
                                                         @endcan
                                                         @can('De Allocate Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger "><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
                                                         @endcan
                                                         @can('Edit Allocation')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-pencil"></i></a>
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
                                                         @endcan
                                                         @can('Delete Allocation')
-                                                            <a wire:loading.attr="disabled" wire:click="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-trash-can"></i></a>
+                                                            <a wire:loading.attr="disabled" wire:click="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-trash-can"></i></a>
                                                         @endcan
                                                     </td>
                                                 @elsecan('Exchange Bed')
                                                     <td>
                                                         @can('Allocate Bed')
-                                                            <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success waves-effect waves-light"> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
+                                                            <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success "> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
                                                         @endcan
                                                         @can('Exchange Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning waves-effect waves-light"><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning "><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
                                                         @endcan
                                                         @can('De Allocate Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger "><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
                                                         @endcan
                                                         @can('Edit Allocation')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-pencil"></i></a>
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
                                                         @endcan
                                                         @can('Delete Allocation')
-                                                            <a wire:loading.attr="disabled" wire:click="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-trash-can"></i></a>
+                                                            <a wire:loading.attr="disabled" wire:click="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-trash-can"></i></a>
                                                         @endcan
                                                     </td>
                                                 @elsecan('De Allocate Bed')
                                                     <td>
                                                         @can('Allocate Bed')
-                                                            <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success waves-effect waves-light"> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
+                                                            <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success "> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
                                                         @endcan
                                                         @can('Exchange Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning waves-effect waves-light"><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning "><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
                                                         @endcan
                                                         @can('De Allocate Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger "><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
                                                         @endcan
                                                         @can('Edit Allocation')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-pencil"></i></a>
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
                                                         @endcan
                                                         @can('Delete Allocation')
-                                                            <a wire:loading.attr="disabled" wire:click="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-trash-can"></i></a>
+                                                            <a wire:loading.attr="disabled" wire:click="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-trash-can"></i></a>
                                                         @endcan
                                                     </td>
                                                 @elsecan('Edit Allocation')
                                                     <td>
                                                         @can('Allocate Bed')
-                                                            <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success waves-effect waves-light"> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
+                                                            <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success "> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
                                                         @endcan
                                                         @can('Exchange Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning waves-effect waves-light"><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning "><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
                                                         @endcan
                                                         @can('De Allocate Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger "><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
                                                         @endcan
                                                         @can('Edit Allocation')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-pencil"></i></a>
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
                                                         @endcan
                                                         @can('Delete Allocation')
-                                                            <a wire:loading.attr="disabled" wire:click="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-trash-can"></i></a>
+                                                            <a wire:loading.attr="disabled" wire:click="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-trash-can"></i></a>
                                                         @endcan
                                                     </td>
                                                 @elsecan('Delete Allocation')
                                                     <td>
                                                         @can('Allocate Bed')
-                                                            <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success waves-effect waves-light"> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
+                                                            <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success "> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
                                                         @endcan
                                                         @can('Exchange Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning waves-effect waves-light"><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning "><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
                                                         @endcan
                                                         @can('De Allocate Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger "><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
                                                         @endcan
                                                         @can('Edit Allocation')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-pencil"></i></a>
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
                                                         @endcan
                                                         @can('Delete Allocation')
-                                                            <a wire:loading.attr="disabled" wire:click="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-trash-can"></i></a>
+                                                            <a wire:loading.attr="disabled" wire:click="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-trash-can"></i></a>
                                                         @endcan
                                                     </td>
                                                 @endcan

@@ -26,7 +26,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-4">
                                         <form method="POST" action="{{ route('student.logout') }}">
                                             @csrf
                                             <button type="submit" class="btn bg-danger btn-danger">
@@ -34,7 +34,7 @@
                                             </button>
                                         </form>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-8">
                                         <form method="POST" action="{{ route('student.verification.send') }}">
                                             @csrf
                                 

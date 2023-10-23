@@ -15,7 +15,7 @@
                                 <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
                                 <span class="visually-hidden">Loading...</span>
                             </a>
-                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
+                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success ">
                                 Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
                         </div>
@@ -476,7 +476,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit"  class="btn btn-primary waves-effect waves-light">Save Data</button>
+                                <button type="submit"  class="btn btn-primary ">Save Data</button>
                             </form>
                         </div>
                     </div>
@@ -497,7 +497,7 @@
                                 <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
                                 <span class="visually-hidden">Loading...</span>
                             </a>
-                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success waves-effect waves-light">
+                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success ">
                                 Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
                             </a>
                         </div>
@@ -956,7 +956,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit"  class="btn btn-primary waves-effect waves-light">Update Data</button>
+                                <button type="submit"  class="btn btn-primary ">Update Data</button>
                             </form>
                         </div>
                     </div>
@@ -975,7 +975,7 @@
                             </div>
                             <div class="float-end">
                                 @if ($hasAdmission)
-                                    <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success waves-effect waves-light">
+                                    <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success ">
                                         New Admission<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
                                     </a>
                                 @endif
@@ -1020,7 +1020,7 @@
                                                     <a   target="_blank"  class="btn btn-warning " href="{{ route('student_view_admission_form', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
                                                     <a   target="_blank"  class="btn btn-warning " href="{{ route('student_download_admission_form', $item->id) }}"> <i class="mdi mdi-download"></i></a>
                                                     @if ( $item->status==0) 
-                                                        <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
+                                                        <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-lead-pencil"></i></a>
                                                     @endif
                                                 </td>
                                             </tr>

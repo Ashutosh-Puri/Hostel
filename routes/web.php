@@ -1,12 +1,11 @@
 <?php
 
-use App\Http\Controllers\temp;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Backend\Bed\AllBed;
 use App\Http\Livewire\Backend\Fee\AllFee;
 use App\Http\Livewire\Guestend\Home\Home;
 use App\Http\Livewire\Guestend\Team\Team;
-use App\Http\Controllers\ProfileController;
 use App\Http\Livewire\Backend\Cast\AllCast;
 use App\Http\Livewire\Backend\Fine\AllFine;
 use App\Http\Livewire\Backend\Role\AllRole;
@@ -16,8 +15,8 @@ use App\Http\Livewire\Guestend\About\About;
 use App\Http\Livewire\Backend\Admin\AllAdmin;
 use App\Http\Livewire\Backend\Class\AllClass;
 use App\Http\Livewire\Backend\Floor\AllFloor;
-use App\Http\Controllers\AttendanceController;
 use App\Http\Livewire\Backend\Qutota\AllQuota;
+use App\Http\Livewire\Backend\RFID\AssignRFID;
 use App\Http\Livewire\Backend\Setting\Setting;
 use App\Http\Livewire\Backend\Admin\AdminLogin;
 use App\Http\Livewire\Backend\Hostel\AllHostel;
@@ -26,6 +25,7 @@ use App\Http\Livewire\Backend\Seated\AllSeated;
 use App\Http\Livewire\Guestend\Gallery\Gallery;
 use App\Http\Livewire\Frontend\StudentDashboard;
 use App\Http\Livewire\Backend\College\AllCollege;
+use App\Http\Livewire\Backend\Contact\AllContact;
 use App\Http\Livewire\Backend\Enquiry\AllEnquiry;
 use App\Http\Livewire\Backend\Student\AllStudent;
 use App\Http\Livewire\Guestend\Contact\Contactus;
@@ -40,6 +40,7 @@ use App\Http\Livewire\Guestend\ViewRules\ViewRules;
 use App\Http\Livewire\Backend\Admission\AllAdmission;
 use App\Http\Livewire\Backend\MeritList\AllMeritList;
 use App\Http\Livewire\Frontend\StudentFee\StudentFee;
+use App\Http\Controllers\Backend\AttendanceController;
 use App\Http\Livewire\Backend\Razorpay\RazorpayOrders;
 use App\Http\Livewire\Backend\Report\AllPaymentReport;
 use App\Http\Livewire\Backend\Report\AllStudentReport;
@@ -429,6 +430,11 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
         Route::get('all/transactions',AllTransaction::class)->name('all_transaction');
     });
 
+    Route::group(['middleware' => ['permission:Access Contact']], function () {
+        // All Contact
+        Route::get('all/contacts',AllContact::class)->name('all_contact');
+    });
+
     // Razorpay
     Route::group(['middleware' => ['permission:Access Razorpay Payments']], function () {
         // Razorpay Payments
@@ -521,11 +527,13 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
         Route::get('admin/download/attendance{array}',[AttendancePdfController::class,'download_pdf'])->name('admin_download_attendance');
     });
 
+    Route::group(['middleware' => ['permission:Access AssignRFID']], function () {
+        // Assgin RFID
+        Route::get('admin/assgin/rfid',AssignRFID::class )->name('admin_assgin_rfid');
+    });
+
 });
 
-
-
-Route::get('form',[temp::class,'view_pdf']);
 
 
 

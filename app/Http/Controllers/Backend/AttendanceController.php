@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
 use App\Models\Student;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class AttendanceController extends Controller
 {
@@ -23,7 +25,9 @@ class AttendanceController extends Controller
                     $attendance->entry_time = now();
                     $attendance->save();
                     return response("Attendance Recoreded Successfully.",200)->header('Content-Type', 'text/plain');
+    
                 } else {
+                    DB::table('assign_rfid')->updateOrInsert( ['id' =>1], ['rfid' => $rfid,'created_at'=>now(),'updated_at'=>now()]);
                     return response("INVALID RFID",404)->header('Content-Type', 'text/plain');
                 }
             } 

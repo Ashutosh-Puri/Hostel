@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('description');
             $table->tinyInteger('status')->nullable()->default('0')->comment('0-Unread,1-Read');
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 

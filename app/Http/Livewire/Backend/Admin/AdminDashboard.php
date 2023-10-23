@@ -2,13 +2,18 @@
 
 namespace App\Http\Livewire\Backend\Admin;
 
+use Carbon\Carbon;
 use App\Models\Bed;
 use App\Models\Room;
 use App\Models\Hostel;
 use App\Models\Seated;
 use App\Models\College;
+use App\Models\Student;
 use Livewire\Component;
 use App\Models\Building;
+use App\Models\Admission;
+use App\Models\Allocation;
+
 
 class AdminDashboard extends Component
 {   
@@ -45,6 +50,18 @@ class AdminDashboard extends Component
 
     public $boys_hostels;
     public $girls_hostels;
+
+    public $students;
+    public $students_a;
+
+    public $rooms;
+    public $rooms_f;
+
+    public $admissions;
+    public $admissions_c;
+    
+    public $allocations;
+    public $allocations_c;
     
     public function render()
     {   
@@ -102,12 +119,19 @@ class AdminDashboard extends Component
         $this->girls_hostels =Hostel::where('gender',1)->get();
 
 
-        
-       
-   
-                           
+        $currentYear = Carbon::now()->year;
 
+        $this->students = Student::whereYear('created_at', $currentYear)->count();
+        $this->students_a = Student::where('status', 0)->whereYear('created_at', $currentYear)->count();
 
+        $this->rooms = Room::whereYear('created_at', $currentYear)->count();
+        $this->rooms_f = Room::where('status', 1)->whereYear('created_at', $currentYear)->count();
+
+        $this->admissions = Admission::whereYear('created_at', $currentYear)->count();
+        $this->admissions_c = Admission::where('status', 1)->whereYear('created_at', $currentYear)->count();
+
+        $this->allocations = Allocation::whereYear('created_at', $currentYear)->count();
+        $this->allocations_c = Allocation::whereNotNull('bed_id')->whereYear('created_at', $currentYear)->count();
 
 
         // $this->b_room=Room::where('type',2)->count();

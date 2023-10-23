@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name')->index();
             $table->tinyInteger('status')->nullable()->default('0')->comment('0-active ,1-inactive');
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
             $table->foreign('hostel_id')->references('id')->on('hostels')->onDelete('cascade');
         });
     }

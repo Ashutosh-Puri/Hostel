@@ -11,7 +11,7 @@
                     </div>
                     <div class="float-end">
                         <a wire:loading.attr="disabled" wire:click="setmode('all')"
-                            class="btn btn-success waves-effect waves-light">
+                            class="btn btn-success ">
                             Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
                         </a>
                     </div>
@@ -69,7 +69,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                            <button type="submit" class="btn btn-primary ">
                                 Submit
                             </button>
                         </form>
@@ -89,7 +89,7 @@
                     </div>
                     <div class="float-end">
                         <a wire:loading.attr="disabled" wire:click="setmode('all')"
-                            class="btn btn-success waves-effect waves-light">
+                            class="btn btn-success ">
                             Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
                         </a>
                     </div>
@@ -148,7 +148,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                            <button type="submit" class="btn btn-primary ">
                                 Update Data
                             </button>
                         </form>
@@ -176,7 +176,7 @@
                         </div>
                         <div class="float-end">
                            @if (auth()->user()->getBedId())
-                                <a wire:loading.attr="disabled" wire:click="setmode('add')" class="btn btn-success waves-effect waves-light">  Add Local Register Entry<span class="btn-label-right mx-2"><i class="mdi mdi-plus-circle fw-bold"></i></span></a>
+                                <a wire:loading.attr="disabled" wire:click="setmode('add')" class="btn btn-success ">  Add Local Register Entry<span class="btn-label-right mx-2"><i class="mdi mdi-plus-circle fw-bold"></i></span></a>
                            @endif
                         </div>
                     </div>
@@ -257,8 +257,8 @@
                                         </td>
                                         <td>
                                             @if ($item->status !==1)
-                                                <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-lead-pencil"></i></a>
-                                                <a wire:loading.attr="disabled"wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger waves-effect waves-light"><i  class="mdi mdi-delete"></i></a>
+                                                <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                <a wire:loading.attr="disabled"wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i  class="mdi mdi-delete"></i></a>
                                             @endif
                                         </td>
                                     </tr>

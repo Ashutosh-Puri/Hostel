@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreign('admission_id')->references('id')->on('admissions')->onDelete('cascade');
             $table->foreign('bed_id')->references('id')->on('beds')->onDelete('cascade');
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 

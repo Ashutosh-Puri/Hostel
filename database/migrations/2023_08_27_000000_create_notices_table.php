@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->tinyInteger('status')->nullable()->default('0')->comment('0-Active ,1-In Active');
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 

@@ -6,13 +6,16 @@ use App\Models\Student;
 use App\Models\StudentFine;
 use App\Models\StudentPayment;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Transaction extends Model
 {
-    use HasFactory;
-    protected $guarded=[];
+    use HasFactory, SoftDeletes;
+    
+    protected $dates=['deleted_at'];
 
+    protected $guarded=[];
 
     public function studentpayment()
     {

@@ -7,11 +7,14 @@ use App\Models\Admission;
 use App\Models\Transaction;
 use App\Models\AcademicYear;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class StudentPayment extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+    
+    protected $dates=['deleted_at'];
 
     protected $guarded=[];
 
@@ -27,7 +30,6 @@ class StudentPayment extends Model
     {
         return $this->belongsTo(AcademicYear::class);
     }
-
 
     public function transaction()
     {

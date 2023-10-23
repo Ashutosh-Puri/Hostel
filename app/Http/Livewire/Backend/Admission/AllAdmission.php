@@ -592,7 +592,7 @@ class AllAdmission extends Component
 
         $query =Admission::select('id','academic_year_id','student_id','class_id','seated_id', 'status')->orderBy('academic_year_id', 'DESC'); 
         if ($this->ad) {
-            $admissionIds = Admission::where('id', 'like',$this->ad. '%')->pluck('id');
+            $admissionIds = Admission::where('id', 'like','%'.$this->ad. '%')->pluck('id');
             $query->whereIn('id', $admissionIds);
         }
         if ($this->a) {
@@ -600,7 +600,7 @@ class AllAdmission extends Component
             $query->whereIn('academic_year_id', $academicyearIds);
         }
         if ($this->s) {
-            $studentIds = Student::where('name', 'like', $this->s. '%')->pluck('id');
+            $studentIds = Student::where('name', 'like','%'. $this->s. '%')->pluck('id');
             $query->whereIn('student_id', $studentIds);
         }
         if ($this->c) {

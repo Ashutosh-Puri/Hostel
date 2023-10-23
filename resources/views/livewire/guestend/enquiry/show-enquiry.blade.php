@@ -66,7 +66,7 @@
                                                 <div class="col-12 col-md-4">
                                                     <div class="mb-3 form-group">
                                                         <label for="gender" class="form-label">Select Gender</label>
-                                                        <select class="form-control bg-white @error('gender') is-invalid @enderror" id="gender" wire:model.debounce.500ms="gender">
+                                                        <select class="form-select form-control bg-white @error('gender') is-invalid @enderror" id="gender" wire:model.debounce.500ms="gender">
                                                             <option hidden value="">Select </option>
                                                             <option value="0">Male</option>
                                                             <option value="1">Female</option>

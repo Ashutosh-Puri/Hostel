@@ -11,13 +11,16 @@ use App\Models\AcademicYear;
 use App\Models\StudentPayment;
 use App\Models\StudentEducation;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Admission extends Model
 {
-    use HasFactory;
-    protected $guarded = [];
+    use HasFactory, SoftDeletes;
+    
+    protected $dates=['deleted_at'];
 
+    protected $guarded = [];
 
     public function StudentPayments()
     {
@@ -33,7 +36,6 @@ class Admission extends Model
     {
         return $this->belongsTo(Classes::class);
     }
-
 
     public function AcademicYear()
     {

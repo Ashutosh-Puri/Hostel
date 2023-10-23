@@ -78,7 +78,7 @@
         @can('Access Floor')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('all_floor') }}">
-              <span class="icon-bg"><i class="mdi mdi-office-building menu-icon"></i></span>
+              <span class="icon-bg"><i class="mdi mdi-image-broken menu-icon"></i></span>
               <span class="menu-title">Floor's</span>
             </a>
           </li>
@@ -86,7 +86,7 @@
         @can('Access Seated')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('all_seated') }}">
-              <span class="icon-bg"><i class="mdi mdi-office-building menu-icon"></i></span>
+              <span class="icon-bg"><i class="mdi mdi-seat-flat menu-icon"></i></span>
               <span class="menu-title">Seated's</span>
             </a>
           </li>
@@ -147,7 +147,7 @@
         @can('Access Transaction')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('all_transaction') }}">
-              <span class="icon-bg"><i class="mdi mdi-cash-multiple menu-icon"></i></span>
+              <span class="icon-bg"><i class="mdi mdi-swap-horizontal   menu-icon"></i></span>
               <span class="menu-title">Transaction's</span>
             </a>
           </li>
@@ -160,7 +160,7 @@
         @can('Access Student Report')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('all_student_report') }}">
-              <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
+              <span class="icon-bg"><i class="mdi mdi-file-chart menu-icon"></i></span>
               <span class="menu-title">Student Report's</span>
             </a>
           </li>
@@ -168,7 +168,7 @@
         @can('Access Allocation Report')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('all_allocation_report') }}">
-              <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
+              <span class="icon-bg"><i class="mdi mdi-file-chart menu-icon"></i></span>
               <span class="menu-title">Allocation Report's</span>
             </a>
           </li>
@@ -176,7 +176,7 @@
         @can('Access Room Report')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('all_room_report') }}">
-              <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
+              <span class="icon-bg"><i class="mdi mdi-file-chart menu-icon"></i></span>
               <span class="menu-title">Room Report's</span>
             </a>
           </li>
@@ -184,7 +184,7 @@
         @can('Access Payment Report')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('all_payment_report') }}">
-              <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
+              <span class="icon-bg"><i class="mdi mdi-file-chart menu-icon"></i></span>
               <span class="menu-title">Payment Report's</span>
             </a>
           </li>
@@ -229,7 +229,7 @@
       @endcanany
 
       {{-- Other --}}
-      @canany(['Access Cast', 'Access Category', 'Access Facility','Access Quota','Access Notice','Access Photo Gallery','Access Rule','Access Student','Access Student Education','Access Merit List','Access Attendance'])
+      @canany(['Access Contact','Access Cast', 'Access Category', 'Access Facility','Access Quota','Access Notice','Access Photo Gallery','Access Rule','Access Student','Access Student Education','Access Merit List','Access Attendance'])
         <li class="nav-item nav-category">Other</li>
         @can('Access Cast')
           <li class="nav-item">
@@ -298,7 +298,7 @@
         @can('Access Student Education')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('all_student_education') }}">
-              <span class="icon-bg"><i class="mdi mdi mdi-certificate menu-icon"></i></span>
+              <span class="icon-bg"><i class="mdi  mdi-certificate menu-icon"></i></span>
               <span class="menu-title">Student Education's</span>
             </a>
           </li>
@@ -306,7 +306,7 @@
         @can('Access Merit List')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('all_merit_list') }}">
-              <span class="icon-bg"><i class="mdi mdi mdi-certificate menu-icon"></i></span>
+              <span class="icon-bg"><i class="mdi mdi-format-list-bulleted menu-icon"></i></span>
               <span class="menu-title">Merit List's</span>
             </a>
           </li>
@@ -314,8 +314,24 @@
         @can('Access Attendance')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('all_attendance') }}">
-              <span class="icon-bg"><i class="mdi mdi mdi-certificate menu-icon"></i></span>
+              <span class="icon-bg"><i class="mdi  mdi-format-list-checks menu-icon"></i></span>
               <span class="menu-title">Attendance's</span>
+            </a>
+          </li>
+        @endcan
+        @can('Access Contact')
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('all_contact') }}">
+              <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+              <span class="menu-title">Contact's</span>
+            </a>
+          </li>
+        @endcan
+        @can('Access Assgin RFID')
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin_assgin_rfid') }}">
+              <span class="icon-bg"><i class="mdi mdi-credit-card-plus menu-icon"></i></span>
+              <span class="menu-title">Assign RFID's</span>
             </a>
           </li>
         @endcan
@@ -327,7 +343,7 @@
         @can('Access Site Setting')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('site_setting') }}">
-              <span class="icon-bg"><i class="mdi mdi-format-list-bulleted-type menu-icon"></i></span>
+              <span class="icon-bg"><i class="mdi mdi-settings menu-icon"></i></span>
               <span class="menu-title">Site Setting's</span>
             </a>
           </li>
@@ -340,7 +356,7 @@
         @can('Access Enquiry Form')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('all_enquiry') }}">
-              <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
+              <span class="icon-bg"><i class="mdi mdi-message-bulleted menu-icon"></i></span>
               <span class="menu-title">Enquiry</span>
             </a>
           </li>
@@ -348,7 +364,7 @@
         @can('Access Nightout Form')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('all_student_night_out') }}">
-              <span class="icon-bg"><i class="mdi mdi-format-list-bulleted-type menu-icon"></i></span>
+              <span class="icon-bg"><i class="mdi mdi-message-alert menu-icon"></i></span>
               <span class="menu-title">Night Out</span>
             </a>
           </li>
@@ -356,7 +372,7 @@
         @can('Access Local Register Form')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('all_student_local_register') }}">
-              <span class="icon-bg"><i class="mdi mdi-format-list-bulleted-type menu-icon"></i></span>
+              <span class="icon-bg"><i class="mdi mdi-message-processing menu-icon"></i></span>
               <span class="menu-title">Local Register</span>
             </a>
           </li>
@@ -364,7 +380,7 @@
         @can('Access Student Come From Home Form')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('all_student_come_from_home') }}">
-              <span class="icon-bg"><i class="mdi mdi-format-list-bulleted-type menu-icon"></i></span>
+              <span class="icon-bg"><i class="mdi mdi-message-image menu-icon"></i></span>
               <span class="menu-title">Come From Home</span>
             </a>
           </li>
@@ -377,7 +393,7 @@
         @can('Access Razorpay Orders')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('razorpay_orders') }}">
-              <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
+              <span class="icon-bg"><i class="mdi mdi-library-books menu-icon"></i></span>
               <span class="menu-title">Order's</span>
             </a>
           </li>
@@ -385,7 +401,7 @@
         @can('Access Razorpay Payments')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('razorpay_payments') }}">
-              <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
+              <span class="icon-bg"><i class="mdi mdi-transit-transfer menu-icon"></i></span>
               <span class="menu-title">Payment's</span>
             </a>
           </li>
@@ -393,7 +409,7 @@
         @can('Access Razorpay Refunds')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('razorpay_refunds') }}">
-              <span class="icon-bg"><i class="mdi mdi-sitemap menu-icon"></i></span>
+              <span class="icon-bg"><i class="mdi mdi-restore menu-icon"></i></span>
               <span class="menu-title">Refund's</span>
             </a>
           </li>

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('seated')->index();
             $table->tinyInteger('status')->nullable()->default('0')->comment('0-active ,1-inactive');
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 
