@@ -20,16 +20,16 @@ class Seated extends Model
 
     public function rooms()
     {
-        return $this->hasMany(Room::class);
+        return $this->hasMany(Room::class)->withTrashed();
     }
 
     public function fees()
     {
-        return $this->hasMany(Fee::class);
+        return $this->hasMany(Fee::class)->withTrashed();
     }
 
     public function admisstions()
     {
-        return $this->hasMany(Admission::class);
+        return $this->hasMany(Admission::class)->withTrashed();
     }
 }

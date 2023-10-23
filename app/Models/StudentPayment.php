@@ -20,19 +20,21 @@ class StudentPayment extends Model
 
     public function admission()
     {
-        return $this->belongsTo(Admission::class);
+        return $this->belongsTo(Admission::class)->withTrashed();
     }
+
     public function student()
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(Student::class)->withTrashed();
     }
+    
     public function AcademicYear()
     {
-        return $this->belongsTo(AcademicYear::class);
+        return $this->belongsTo(AcademicYear::class)->withTrashed();
     }
 
     public function transaction()
     {
-        return $this->hasOne(Transaction::class);
+        return $this->hasOne(Transaction::class)->withTrashed();
     }
 }

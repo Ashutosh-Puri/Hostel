@@ -76,40 +76,38 @@ class Student extends Authenticatable implements MustVerifyEmail
 
     public function studentfines()
     {
-        return $this->hasMany(StudentFine::class);
+        return $this->hasMany(StudentFine::class)->withTrashed();
     }
 
     public function studentpayments()
     {
-        return $this->hasMany(StudentPayment::class);
+        return $this->hasMany(StudentPayment::class)->withTrashed();
     }
 
     public function studenteducations()
     {
-        return $this->hasMany(StudentEducation::class);
+        return $this->hasMany(StudentEducation::class)->withTrashed();
     }
 
     public function admissions()
     {
-        return $this->hasMany(Admission::class);
+        return $this->hasMany(Admission::class)->withTrashed();
     }
 
     public function transactions()
     {
-        return $this->hasMany(Transaction::class);
+        return $this->hasMany(Transaction::class)->withTrashed();
     }
 
     public function cast()
     {
-        return $this->belongsTo(Cast::class);
+        return $this->belongsTo(Cast::class)->withTrashed();
     }
-
 
     public function attendances()
     {
-        return $this->hasMany(Attendance::class);
+        return $this->hasMany(Attendance::class)->withTrashed();
     }
-
 
     public function getBedId()
     {

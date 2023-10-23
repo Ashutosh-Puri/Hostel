@@ -19,14 +19,11 @@ class Bed extends Model
 
     public function room()
     {
-        return $this->belongsTo(Room::class);
+        return $this->belongsTo(Room::class)->withTrashed();
     }
 
     public function allocations()
     {
-        return $this->hasMany(Allocation::class);
+        return $this->hasMany(Allocation::class)->withTrashed();
     }
-
-
-
 }

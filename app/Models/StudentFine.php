@@ -19,19 +19,21 @@ class StudentFine extends Model
 
     public function fine()
     {
-        return $this->belongsTo(Fine::class);
+        return $this->belongsTo(Fine::class)->withTrashed();
     }
+    
     public function student()
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(Student::class)->withTrashed();
     }
+
     public function AcademicYear()
     {
-        return $this->belongsTo(AcademicYear::class);
+        return $this->belongsTo(AcademicYear::class)->withTrashed();
     }
 
     public function transaction()
     {
-        return $this->hasOne(Transaction::class);
+        return $this->hasOne(Transaction::class)->withTrashed();
     }
 }

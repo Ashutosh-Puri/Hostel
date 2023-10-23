@@ -21,21 +21,21 @@ class Room extends Model
 
     public function beds()
     {
-        return $this->hasMany(Bed::class);
+        return $this->hasMany(Bed::class)->withTrashed();
     }
 
     public function facilities()
     {
-        return $this->hasMany(Facility::class);
+        return $this->hasMany(Facility::class)->withTrashed();
     }
     
     public function seated()
     {
-        return $this->belongsTo(Seated::class);
+        return $this->belongsTo(Seated::class)->withTrashed();
     }
     
     public function floor()
     {
-        return $this->belongsTo(Floor::class);
+        return $this->belongsTo(Floor::class)->withTrashed();
     }
 }

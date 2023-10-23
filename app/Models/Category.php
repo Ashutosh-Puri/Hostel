@@ -17,6 +17,6 @@ class Category extends Model
 
     public function casts()
     {
-        return $this->hasMany(Cast::class);
+        return $this->hasMany(Cast::class)->withTrashed();
     }
 }

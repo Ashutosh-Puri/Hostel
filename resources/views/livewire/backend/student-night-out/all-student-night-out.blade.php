@@ -10,8 +10,7 @@
                         <h2>Add Night Out Entry</h2>
                     </div>
                     <div class="float-end">
-                        <a wire:loading.attr="disabled" wire:click="setmode('all')"
-                            class="btn btn-success ">
+                        <a wire:loading.attr="disabled" wire:click="setmode('all')" class="btn btn-success ">
                             Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
                         </a>
                     </div>
@@ -89,8 +88,7 @@
                         <h2> Edit Night Out Entry</h2>
                     </div>
                     <div class="float-end">
-                        <a wire:loading.attr="disabled" wire:click="setmode('all')"
-                            class="btn btn-success ">
+                        <a wire:loading.attr="disabled" wire:click="setmode('all')" class="btn btn-success ">
                             Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
                         </a>
                     </div>
@@ -178,12 +176,12 @@
                         </div>
                         <div class="float-end">
                             <a wire:loading class="btn btn-primary btn-sm " style="padding:10px; ">
-                                <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
+                                <span class="spinner-border spinner-border-sm " role="status"
+                                    aria-hidden="true"></span>
                                 <span class="visually-hidden">Loading...</span>
                             </a>
                             @can('Add Student Night Out Register')
-                                <a wire:loading.attr="disabled" wire:click="setmode('add')"
-                                    class="btn btn-success ">
+                                <a wire:loading.attr="disabled" wire:click="setmode('add')" class="btn btn-success ">
                                     Add Night Out Entry<span class="btn-label-right mx-2"><i
                                             class="mdi mdi-plus-circle fw-bold"></i></span>
                                 </a>
@@ -258,8 +256,8 @@
                                                 {{ $item->allocation->admission->Student->name }}
                                             </td>
                                             {{-- <td class="text-wrap lh-lg">
-                                                {{ $item->reason }}
-                                            </td> --}}
+                                            {{ $item->reason }}
+                                        </td> --}}
                                             <td>
                                                 {{ date('d / m / Y', strtotime($item->going_date)) }}
                                             </td>
@@ -282,73 +280,14 @@
                                             @can('View Student Night Out Form')
                                                 <td>
                                                     @can('View Student Night Out Form')
-                                                        <a   target="_blank"  class="btn btn-warning " href="{{ route('view_night_out_form', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
+                                                        <a target="_blank" class="btn btn-warning "
+                                                            href="{{ route('view_night_out_form', $item->id) }}"> <i
+                                                                class="mdi mdi-eye"></i></a>
                                                     @endcan
                                                     @can('Download Student Night Out Form')
-                                                        <a   target="_blank"  class="btn btn-warning " href="{{ route('download_night_out_form', $item->id) }}"> <i class="mdi mdi-download"></i></a>
-                                                    @endcan
-                                                    @can('Edit Student Night Out Register')
-                                                        <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                        @if ($item->status == 1)
-                                                            <a wire:loading.attr="disabled"
-                                                                wire:click="status({{ $item->id }})"
-                                                                class="btn btn-danger ">
-                                                                <i class="mdi mdi-thumb-down"></i>
-                                                            </a>
-                                                        @elseif ($item->status == 0)
-                                                            <a wire:loading.attr="disabled"
-                                                                wire:click="status({{ $item->id }})"
-                                                                class="btn btn-success ">
-                                                                <i class="mdi mdi-thumb-up"></i>
-                                                            </a>
-                                                        @endif
-                                                        @endcan @can('Delete Student
-                                                        Night Out Register')
-                                                        <a wire:loading.attr="disabled"
-                                                            wire:click.prevent="deleteconfirmation({{ $item->id }})"
-                                                            class="btn btn-danger "><i
-                                                                class="mdi mdi-delete"></i></a>
-                                                    @endcan
-                                                </td>
-                                            @elsecan('Edit Student Night Out Register')
-                                                <td>
-                                                    @can('View Student Night Out Form')
-                                                        <a   target="_blank"  class="btn btn-warning " href="{{ route('view_night_out_form', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
-                                                    @endcan
-                                                    @can('Download Student Night Out Form')
-                                                        <a   target="_blank"  class="btn btn-warning " href="{{ route('download_night_out_form', $item->id) }}"> <i class="mdi mdi-download"></i></a>
-                                                    @endcan
-                                                    @can('Edit Student Night Out Register')
-                                                        <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                        @if ($item->status == 1)
-                                                            <a wire:loading.attr="disabled"
-                                                                wire:click="status({{ $item->id }})"
-                                                                class="btn btn-danger ">
-                                                                <i class="mdi mdi-thumb-down"></i>
-                                                            </a>
-                                                        @elseif ($item->status == 0)
-                                                            <a wire:loading.attr="disabled"
-                                                                wire:click="status({{ $item->id }})"
-                                                                class="btn btn-success ">
-                                                                <i class="mdi mdi-thumb-up"></i>
-                                                            </a>
-                                                        @endif
-                                                        @endcan @can('Delete Student
-                                                        Night Out Register')
-                                                        <a wire:loading.attr="disabled"
-                                                            wire:click.prevent="deleteconfirmation({{ $item->id }})"
-                                                            class="btn btn-danger "><i
-                                                                class="mdi mdi-delete"></i></a>
-                                                    @endcan
-                                                </td>
-                                            @elsecan('Delete Student Night Out
-                                                Register')
-                                                <td>
-                                                    @can('View Student Night Out Form')
-                                                        <a   target="_blank"  class="btn btn-warning " href="{{ route('view_night_out_form', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
-                                                    @endcan
-                                                    @can('Download Student Night Out Form')
-                                                        <a   target="_blank"  class="btn btn-warning " href="{{ route('download_night_out_form', $item->id) }}"> <i class="mdi mdi-download"></i></a>
+                                                        <a target="_blank" class="btn btn-warning "
+                                                            href="{{ route('download_night_out_form', $item->id) }}"> <i
+                                                                class="mdi mdi-download"></i></a>
                                                     @endcan
                                                     @can('Edit Student Night Out Register')
                                                         <a wire:loading.attr="disabled"
@@ -368,12 +307,92 @@
                                                                 <i class="mdi mdi-thumb-up"></i>
                                                             </a>
                                                         @endif
-                                                        @endcan @can('Delete Student
-                                                        Night Out Register')
+                                                        @endcan @can('Delete Student Night Out Register')
+                                                        @if ($item->deleted_at)
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
+                                                            @else
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
+                                                            @endif
+                                                    @endcan
+                                                </td>
+                                            @elsecan('Edit Student Night Out Register')
+                                                <td>
+                                                    @can('View Student Night Out Form')
+                                                        <a target="_blank" class="btn btn-warning "
+                                                            href="{{ route('view_night_out_form', $item->id) }}"> <i
+                                                                class="mdi mdi-eye"></i></a>
+                                                    @endcan
+                                                    @can('Download Student Night Out Form')
+                                                        <a target="_blank" class="btn btn-warning "
+                                                            href="{{ route('download_night_out_form', $item->id) }}"> <i
+                                                                class="mdi mdi-download"></i></a>
+                                                    @endcan
+                                                    @can('Edit Student Night Out Register')
                                                         <a wire:loading.attr="disabled"
-                                                            wire:click.prevent="deleteconfirmation({{ $item->id }})"
-                                                            class="btn btn-danger "><i
-                                                                class="mdi mdi-delete"></i></a>
+                                                            wire:click="edit({{ $item->id }})"
+                                                            class="btn btn-success "><i
+                                                                class="mdi mdi-lead-pencil"></i></a>
+                                                        @if ($item->status == 1)
+                                                            <a wire:loading.attr="disabled"
+                                                                wire:click="status({{ $item->id }})"
+                                                                class="btn btn-danger ">
+                                                                <i class="mdi mdi-thumb-down"></i>
+                                                            </a>
+                                                        @elseif ($item->status == 0)
+                                                            <a wire:loading.attr="disabled"
+                                                                wire:click="status({{ $item->id }})"
+                                                                class="btn btn-success ">
+                                                                <i class="mdi mdi-thumb-up"></i>
+                                                            </a>
+                                                        @endif
+                                                        @endcan @can('Delete Student Night Out Register')
+                                                        @if ($item->deleted_at)
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
+                                                            @else
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
+                                                            @endif
+                                                    @endcan
+                                                </td>
+                                            @elsecan('Delete Student Night Out
+                                                Register')
+                                                <td>
+                                                    @can('View Student Night Out Form')
+                                                        <a target="_blank" class="btn btn-warning "
+                                                            href="{{ route('view_night_out_form', $item->id) }}"> <i
+                                                                class="mdi mdi-eye"></i></a>
+                                                    @endcan
+                                                    @can('Download Student Night Out Form')
+                                                        <a target="_blank" class="btn btn-warning "
+                                                            href="{{ route('download_night_out_form', $item->id) }}"> <i
+                                                                class="mdi mdi-download"></i></a>
+                                                    @endcan
+                                                    @can('Edit Student Night Out Register')
+                                                        <a wire:loading.attr="disabled"
+                                                            wire:click="edit({{ $item->id }})"
+                                                            class="btn btn-success "><i
+                                                                class="mdi mdi-lead-pencil"></i></a>
+                                                        @if ($item->status == 1)
+                                                            <a wire:loading.attr="disabled"
+                                                                wire:click="status({{ $item->id }})"
+                                                                class="btn btn-danger ">
+                                                                <i class="mdi mdi-thumb-down"></i>
+                                                            </a>
+                                                        @elseif ($item->status == 0)
+                                                            <a wire:loading.attr="disabled"
+                                                                wire:click="status({{ $item->id }})"
+                                                                class="btn btn-success ">
+                                                                <i class="mdi mdi-thumb-up"></i>
+                                                            </a>
+                                                        @endif
+                                                        @endcan @can('Delete Student Night Out Register')
+                                                        @if ($item->deleted_at)
+                                                        <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
+                                                        <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
+                                                    @else
+                                                        <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
+                                                    @endif
                                                     @endcan
                                                 </td>
                                             @endcan
