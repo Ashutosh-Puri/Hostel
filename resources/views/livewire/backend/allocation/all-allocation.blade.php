@@ -733,14 +733,14 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                   
+
                                                     @if (isset($item->Admission->Seated->Fees))
                                                         @foreach ($item->Admission->Seated->Fees as $fee)
                                                             @if ($fee->academic_year_id==$item->Admission->academic_year_id)
                                                                 @if ($fee->amount)
-                                                                    {{ $fee->amount }} 
+                                                                    {{ $fee->amount }}
                                                                 @endif
-                                                                
+
                                                             @endif
                                                         @endforeach
                                                     @else
@@ -778,7 +778,12 @@
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
                                                         @endcan
                                                         @can('Delete Allocation')
-                                                            <a wire:loading.attr="disabled" wire:click="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-trash-can"></i></a>
+                                                            @if ($item->deleted_at)
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
+                                                            @else
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
+                                                            @endif
                                                         @endcan
                                                     </td>
                                                 @elsecan('Exchange Bed')
@@ -796,7 +801,12 @@
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
                                                         @endcan
                                                         @can('Delete Allocation')
-                                                            <a wire:loading.attr="disabled" wire:click="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-trash-can"></i></a>
+                                                            @if ($item->deleted_at)
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
+                                                            @else
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
+                                                            @endif
                                                         @endcan
                                                     </td>
                                                 @elsecan('De Allocate Bed')
@@ -814,7 +824,12 @@
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
                                                         @endcan
                                                         @can('Delete Allocation')
-                                                            <a wire:loading.attr="disabled" wire:click="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-trash-can"></i></a>
+                                                            @if ($item->deleted_at)
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
+                                                            @else
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
+                                                            @endif
                                                         @endcan
                                                     </td>
                                                 @elsecan('Edit Allocation')
@@ -832,7 +847,12 @@
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
                                                         @endcan
                                                         @can('Delete Allocation')
-                                                            <a wire:loading.attr="disabled" wire:click="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-trash-can"></i></a>
+                                                            @if ($item->deleted_at)
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
+                                                            @else
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
+                                                            @endif
                                                         @endcan
                                                     </td>
                                                 @elsecan('Delete Allocation')
@@ -850,7 +870,12 @@
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
                                                         @endcan
                                                         @can('Delete Allocation')
-                                                            <a wire:loading.attr="disabled" wire:click="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-trash-can"></i></a>
+                                                            @if ($item->deleted_at)
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
+                                                            @else
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
+                                                            @endif
                                                         @endcan
                                                     </td>
                                                 @endcan

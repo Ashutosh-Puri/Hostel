@@ -18,11 +18,11 @@ class Building extends Model
 
     public function floors()
     {
-        return $this->hasMany(Floor::class);
+        return $this->hasMany(Floor::class)->withTrashed();
     }
 
     public function hostel()
     {
-        return $this->belongsTo(Hostel::class);
+        return $this->belongsTo(Hostel::class)->withTrashed();
     }
 }

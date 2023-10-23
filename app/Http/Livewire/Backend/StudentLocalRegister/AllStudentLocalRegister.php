@@ -141,16 +141,50 @@ class AllStudentLocalRegister extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $studentlocalregister = LocalRegister::find($this->delete_id);
+        $studentlocalregister = LocalRegister::find($id);
         if($studentlocalregister){
             $studentlocalregister->delete();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Student Local Register Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+    public function restore($id)
+    {
+        $studentlocalregister = LocalRegister::withTrashed()->find($id);
+        if($studentlocalregister){
+            $studentlocalregister->restore();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Student Local Register Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+    public function delete()
+    {
+        $studentlocalregister = LocalRegister::withTrashed()->find($this->delete_id);
+        if($studentlocalregister){
+            $studentlocalregister->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'success',
-                'message'=>"Studen tLocal Register Deleted Successfully !!"
+                'message'=>"Student Local Register Deleted Successfully !!"
             ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
@@ -190,7 +224,7 @@ class AllStudentLocalRegister extends Component
             $query->whereHas('allocation.admission.student', function ($subQuery) {
                 $subQuery->where('name', 'like', '%' . $this->student_name . '%');
             });
-        })->paginate($this->per_page);
+        })->withTrashed()->paginate($this->per_page);
     
 
         return view('livewire.backend.student-local-register.all-student-local-register',compact('local_registers'))->extends('layouts.admin.admin')->section('admin');

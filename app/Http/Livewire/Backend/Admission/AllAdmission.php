@@ -122,7 +122,7 @@ class AllAdmission extends Component
     }
 
     protected function rules()
-    {   
+    {
         return [
             'student_id'=>['required','integer', Rule::exists(Student::class, 'id')],
             'gender'=>['required','integer','in:0,1' ],
@@ -134,7 +134,7 @@ class AllAdmission extends Component
             'dob'=>['required','date','before_or_equal:15 years ago'],
             'cast_id'=>['required','integer', Rule::exists(Cast::class, 'id')],
             'category_id'=>['required','integer', Rule::exists(Category::class, 'id')],
-            'blood_group'=>['required','string','max:255'],    
+            'blood_group'=>['required','string','max:255'],
             'stream'=>['required','string','max:255'],
             'stream_type'=>['required','string','max:255'],
             'class_id'=>['required','integer', Rule::exists(Classes::class, 'id')],
@@ -179,7 +179,7 @@ class AllAdmission extends Component
             } else {
                 $this->admissionfull=0;
             }
-        } 
+        }
     }
 
     public function setmode($mode)
@@ -224,7 +224,7 @@ class AllAdmission extends Component
     }
 
     public function save()
-    {   
+    {
         if( $this->admissionfull==1)
         {
             $this->dispatchBrowserEvent('alert',[
@@ -274,7 +274,7 @@ class AllAdmission extends Component
                     'message'=>"Student Not Found !!"
                 ]);
             }
-    
+
             $admission = new Admission;
             if($admission){
                 $admission->academic_year_id =$validatedData['academic_year_id'];
@@ -345,7 +345,7 @@ class AllAdmission extends Component
                     'message'=>"Stream And Stream Type Not Found !!"
                 ]);
             }
-            
+
             $student = Student::find($this->student_id);
             if ($student)
             {
@@ -392,7 +392,7 @@ class AllAdmission extends Component
 
             $education = StudentEducation::where('admission_id',$admission->id)->latest()->first();
             if ($education)
-            {   
+            {
                 $this->last_academic_year_id = $education->academic_year_id;
                 $this->last_class_id = $education->last_class_id;
                 $this->sgpa = $education->sgpa;
@@ -405,7 +405,7 @@ class AllAdmission extends Component
             }
             $this->setmode('edit');
         }
-       
+
     }
 
     public function update($id)
@@ -498,7 +498,7 @@ class AllAdmission extends Component
     {
         $status = Admission::find($id);
         if($status->status==1)
-        {   
+        {
             $status->status=0;
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'success',
@@ -522,9 +522,9 @@ class AllAdmission extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $admission = Admission::find($this->delete_id);
+        $admission = Admission::find($id);
         if ($admission)
         {
             $stdedu= StudentEducation::where('student_id', $admission->student_id)->where('academic_year_id', $admission->academic_year_id)->first();
@@ -552,8 +552,68 @@ class AllAdmission extends Component
         }
     }
 
+    public function restore($id)
+    {
+        $admission = Admission::withTrashed()->find($id);
+        if ($admission)
+        {
+            $stdedu= StudentEducation::where('student_id', $admission->student_id)->where('academic_year_id', $admission->academic_year_id)->first();
+            if($stdedu){
+                $stdedu->delete();
+            }else{
+                $this->dispatchBrowserEvent('alert',[
+                    'type'=>'error',
+                    'message'=>"Something Went Wrong !!"
+                ]);
+            }
+            $admission->restore();
+            $this->delete_id=null;
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Admission Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $admission = Admission::withTrashed()->find($this->delete_id);
+        if ($admission)
+        {
+            $stdedu= StudentEducation::where('student_id', $admission->student_id)->where('academic_year_id', $admission->academic_year_id)->first();
+            if($stdedu){
+                $stdedu->delete();
+            }else{
+                $this->dispatchBrowserEvent('alert',[
+                    'type'=>'error',
+                    'message'=>"Something Went Wrong !!"
+                ]);
+            }
+            $admission->forceDelete();
+            $this->delete_id=null;
+            $this->resetinput();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Admission Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
     public function render()
-    {   
+    {
 
         $today = Carbon::today();
         $this->mindate=$minus15Years = $today->copy()->subYears(15)->format('Y-m-d');
@@ -563,7 +623,7 @@ class AllAdmission extends Component
         }
 
         $academicyears = AcademicYear::select('id','year')->where('status', 0)->orderBy('year', 'DESC')->get();
-        $lastacademicyears = AcademicYear::select('id','year')->where('year', '<', function ($query) { 
+        $lastacademicyears = AcademicYear::select('id','year')->where('year', '<', function ($query) {
             $query->selectRaw('MAX(year)')->from('academic_years');
         })->orderBy('year', 'DESC')->get();
 
@@ -571,13 +631,13 @@ class AllAdmission extends Component
 
         if ($this->stream) {
             $types=Classes::select('type')->select('type')->where('status',0)->where('stream',$this->stream)->distinct('type')->get();
-        } else { 
+        } else {
             $types = [];
         }
 
         if ($this->stream_type) {
             $classes=Classes::select('id','name')->where('status',0)->where('type',$this->stream_type)->orderBy('name',"ASC")->get();
-        } else { 
+        } else {
             $classes = [];
         }
 
@@ -586,11 +646,11 @@ class AllAdmission extends Component
 
         if ($this->cast_id) {
             $categories =Cast::find($this->cast_id)->category()->orderBy('name', 'ASC')->get();
-        } else { 
+        } else {
             $categories = [];
         }
 
-        $query =Admission::select('id','academic_year_id','student_id','class_id','seated_id', 'status')->orderBy('academic_year_id', 'DESC'); 
+        $query =Admission::select('id','academic_year_id','student_id','class_id','seated_id', 'status','deleted_at')->orderBy('academic_year_id', 'DESC');
         if ($this->ad) {
             $admissionIds = Admission::where('id', 'like','%'.$this->ad. '%')->pluck('id');
             $query->whereIn('id', $admissionIds);
@@ -608,7 +668,7 @@ class AllAdmission extends Component
             $query->whereIn('class_id', $classIds);
         }
 
-        $admissions = $query->paginate($this->per_page);
+        $admissions = $query->withTrashed()->paginate($this->per_page);
 
         if($this->viewid!=null)
         {

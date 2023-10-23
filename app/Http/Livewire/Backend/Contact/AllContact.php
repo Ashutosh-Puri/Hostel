@@ -7,7 +7,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 
 class AllContact extends Component
-{   
+{
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
@@ -133,11 +133,47 @@ class AllContact extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $contact = Contact::find($this->delete_id);
+        $contact = Contact::find($id);
         if($contact){
             $contact->delete();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Contact Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function restore($id)
+    {
+        $contact = Contact::withTrashed()->find($id);
+        if($contact){
+            $contact->restore();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Contact Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $contact = Contact::withTrashed()->find($this->delete_id);
+        if($contact){
+            $contact->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
@@ -156,7 +192,7 @@ class AllContact extends Component
     {
         $status = Contact::find($id);
         if($status->status==1)
-        {   
+        {
             $status->status=0;
         }else
         {
@@ -169,8 +205,8 @@ class AllContact extends Component
     {
         $contact = Contact::query()->when($this->search, function ($query) {
             return $query->where('name', 'like', '%' . $this->search . '%');
-        })->orderBy('name', 'ASC')->paginate($this->per_page);
-        
+        })->withTrashed()->orderBy('name', 'ASC')->paginate($this->per_page);
+
         return view('livewire.backend.contact.all-contact',compact('contact'))->extends('layouts.admin.admin')->section('admin');
     }
 }

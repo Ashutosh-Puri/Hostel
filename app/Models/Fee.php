@@ -18,12 +18,12 @@ class Fee extends Model
 
     public function AcademicYear()
     {
-        return $this->belongsTo(AcademicYear::class);
+        return $this->belongsTo(AcademicYear::class)->withTrashed();
     }
 
     public function Seated()
     {
-        return $this->belongsTo(Seated::class);
+        return $this->belongsTo(Seated::class)->withTrashed();
     }
 
 }

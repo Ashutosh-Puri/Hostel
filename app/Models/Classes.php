@@ -20,18 +20,16 @@ class Classes extends Model
 
     public function quotas()
     {
-        return $this->hasMany(Quota::class);
+        return $this->hasMany(Quota::class)->withTrashed();
     }
 
     public function studenteducations()
     {
-        return $this->hasMany(StudentEducation::class);
+        return $this->hasMany(StudentEducation::class)->withTrashed();
     }
 
     public function admissions()
     {
-        return $this->hasMany(Admission::class);
+        return $this->hasMany(Admission::class)->withTrashed();
     }
-
-
 }

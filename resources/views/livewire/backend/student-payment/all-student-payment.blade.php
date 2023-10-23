@@ -352,12 +352,12 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    @if ($item->status==0)                    
+                                                    @if ($item->status==0)
                                                         @if ($item->total_amount >0)
                                                             <a class="btn btn-sm btn-success" data-turbolinks="false" href="{{ route('pay_fee',$item->id) }}" >Pay</a>
                                                         @endif
                                                     @endif
-                                                    @if ($item->status==2)                    
+                                                    @if ($item->status==2)
                                                         @if ($item->total_amount >=0)
                                                             @if (isset($item->transaction->status))
                                                                 @if ($item->transaction->status==2)
@@ -368,7 +368,7 @@
                                                     @endif
                                                 </td>
                                                 @can('view Student Payment')
-                                                    <td> 
+                                                    <td>
                                                         @can('View Student Payment Reciept')
                                                             <a   target="_blank"  class="btn btn-warning " href="{{ route('view_fee_recipet', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
                                                         @endcan
@@ -386,11 +386,16 @@
                                                             @endif
                                                         @endcan
                                                         @can('Delete Student Payment')
-                                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete"></i></a>
+                                                            @if ($item->deleted_at)
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
+                                                            @else
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
+                                                            @endif
                                                         @endcan
                                                     </td>
                                                 @elsecan('Edit Student Payment')
-                                                    <td> 
+                                                    <td>
                                                         @can('View Student Payment Reciept')
                                                             <a   target="_blank"  class="btn btn-warning " href="{{ route('view_fee_recipet', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
                                                         @endcan
@@ -408,7 +413,12 @@
                                                             @endif
                                                         @endcan
                                                         @can('Delete Student Payment')
-                                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete"></i></a>
+                                                            @if ($item->deleted_at)
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
+                                                            @else
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
+                                                            @endif
                                                         @endcan
                                                     </td>
                                                 @elsecan('Delete Student Payment')
@@ -430,11 +440,16 @@
                                                             @endif
                                                         @endcan
                                                         @can('Delete Student Payment')
-                                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete"></i></a>
+                                                            @if ($item->deleted_at)
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
+                                                            @else
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
+                                                            @endif
                                                         @endcan
                                                     </td>
                                                 @endcan
-                                                
+
                                             </tr>
                                         @endforeach
                                     </tbody>

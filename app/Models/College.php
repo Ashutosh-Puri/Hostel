@@ -17,6 +17,6 @@ class College extends Model
 
     public function hostels()
     {
-        return $this->hasMany(Hostel::class);
+        return $this->hasMany(Hostel::class)->withTrashed();
     }
 }

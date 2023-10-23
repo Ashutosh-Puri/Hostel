@@ -7,7 +7,7 @@ use App\Models\Category;
 use Livewire\WithPagination;
 
 class AllCategory extends Component
-{   
+{
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
@@ -108,11 +108,47 @@ class AllCategory extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $category = Category::find($this->delete_id);
+        $category = Category::find($id);
         if($category){
             $category->delete();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Category Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function restore($id)
+    {
+        $category = Category::withTrashed()->find($id);
+        if($category){
+            $category->restore();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Category Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $category = Category::withTrashed()->find($this->delete_id);
+        if($category){
+            $category->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
@@ -129,10 +165,10 @@ class AllCategory extends Component
 
     public function render()
     {
-        $category= Category::query()->select('id','name') ->when($this->search, function ($query) {
+        $category= Category::query()->select('id','name','deleted_at') ->when($this->search, function ($query) {
             return $query->where('name', 'like', '%' . $this->search . '%');
-        })->orderBy('name', 'ASC')->paginate($this->per_page);
-        
+        })->withTrashed()->orderBy('name', 'ASC')->paginate($this->per_page);
+
         return view('livewire.backend.category.all-category',compact('category'))->extends('layouts.admin.admin')->section('admin');
     }
 }

@@ -149,11 +149,47 @@ class AllBed extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $bed = Bed::find($this->delete_id);
+        $bed = Bed::find($id);
         if($bed){
             $bed->delete();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Bed Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function restore($id)
+    {
+        $bed = Bed::withTrashed()->find($id);
+        if($bed){
+            $bed->restore();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Bed Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $bed = Bed::withTrashed()->find($this->delete_id);
+        if($bed){
+            $bed->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
@@ -172,7 +208,7 @@ class AllBed extends Component
     {
         $status = Bed::find($id);
         if($status->status==1)
-        {   
+        {
             $status->status=0;
         }else
         {
@@ -182,17 +218,17 @@ class AllBed extends Component
     }
 
     public function render()
-    {   
+    {
         $hostels = Hostel::select('id','name')->where('status', 0)->get();
         $buildings = Building::select('id','name')->where('status', 0)->where('hostel_id', $this->hostel_id)->get();
         $floors = Floor::select('id','floor')->where('status', 0)->where('building_id', $this->building_id)->get();
         $seateds=Seated::select('id','seated')->where('status',0)->orderBy('seated', 'ASC')->get();
         $rooms=Room::select('id','label')->where('status', 0)->where('floor_id', $this->floor_id)->where('seated_id', $this->seated_id)->get();
-        $beds= Bed::select('id','room_id','status')->with('room:id,label')->orderBy('room_id', 'ASC')->when($this->search, function ($query) {
+        $beds= Bed::select('id','room_id','status','deleted_at')->with('room:id,label')->orderBy('room_id', 'ASC')->when($this->search, function ($query) {
             $query->whereHas('room', function ($query) {
                 $query->where('label', 'like', '%' . $this->search . '%');
             });
-        })->paginate($this->per_page);
+        })->withTrashed()->paginate($this->per_page);
         return view('livewire.backend.bed.all-bed',compact('beds','rooms','floors','buildings','hostels','seateds'))->extends('layouts.admin.admin')->section('admin');
     }
 }

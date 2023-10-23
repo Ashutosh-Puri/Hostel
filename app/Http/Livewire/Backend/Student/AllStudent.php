@@ -136,11 +136,47 @@ class AllStudent extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $student = Student::find($this->delete_id);
+        $student = Student::find($id);
         if($student){
             $student->delete();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Student Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function restore($id)
+    {
+        $student = Student::withTrashed()->find($id);
+        if($student){
+            $student->restore();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Student Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $student = Student::withTrashed()->find($this->delete_id);
+        if($student){
+            $student->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
@@ -159,7 +195,7 @@ class AllStudent extends Component
     {
         $status = Student::find($id);
         if($status->status==1)
-        {   
+        {
             $status->status=0;
         }else
         {
@@ -168,7 +204,7 @@ class AllStudent extends Component
         $status->update();
     }
     public function assign_rfid($id)
-    {   
+    {
         $this->c_id=$id;
         $this->s_name = Student::find($id);
         $this->setmode('rfid');
@@ -176,7 +212,7 @@ class AllStudent extends Component
 
 
     public function save_rfid($id)
-    {   
+    {
         $this->validate();
         $student = Student::find($id);
         if($student)
@@ -203,8 +239,8 @@ class AllStudent extends Component
             return $query->where('username', 'like', '%' . $this->search . '%');
         })->when($this->name_search, function ($query) {
             return $query->where('name', 'like', '%' . $this->name_search . '%');
-        }) ->orderBy('username', 'ASC')->paginate($this->per_page);
-        
+        })->withTrashed()->orderBy('username', 'ASC')->paginate($this->per_page);
+
         return view('livewire.backend.student.all-student',compact('students'))->extends('layouts.admin.admin')->section('admin');
     }
 

@@ -19,19 +19,16 @@ class Transaction extends Model
 
     public function studentpayment()
     {
-        return $this->belongsTo(StudentPayment::class);
+        return $this->belongsTo(StudentPayment::class)->withTrashed();
     }
 
     public function studentfine()
     {
-        return $this->belongsTo(StudentFine::class);
+        return $this->belongsTo(StudentFine::class)->withTrashed();
     }
 
     public function student()
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(Student::class)->withTrashed();
     }
-
-
-
 }

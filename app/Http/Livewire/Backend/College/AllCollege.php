@@ -150,11 +150,47 @@ class AllCollege extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $college = College::find($this->delete_id);
+        $college = College::find($id);
         if($college){
             $college->delete();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"College Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function restore($id)
+    {
+        $college = College::withTrashed()->find($id);
+        if($college){
+            $college->restore();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"College Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $college = College::withTrashed()->find($this->delete_id);
+        if($college){
+            $college->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
@@ -173,7 +209,7 @@ class AllCollege extends Component
     {
         $status = College::find($id);
         if($status->status==1)
-        {   
+        {
             $status->status=0;
         }else
         {
@@ -186,7 +222,7 @@ class AllCollege extends Component
     {
         $colleges = College::query()->when($this->search, function ($query) {
             return $query->where('name', 'like', '%' . $this->search . '%');
-        })->orderBy('name', 'ASC')->paginate($this->per_page);
+        })->orderBy('name', 'ASC')->withTrashed()->paginate($this->per_page);
 
         return view('livewire.backend.College.all-College',compact('colleges'))->extends('layouts.admin.admin')->section('admin');
     }

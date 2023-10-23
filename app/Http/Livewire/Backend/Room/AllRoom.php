@@ -158,11 +158,48 @@ class AllRoom extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $room = Room::find($this->delete_id);
+        $room = Room::find($id);
         if($room){
             $room->delete();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Room Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+
+    public function restore($id)
+    {
+        $room = Room::withTrashed()->find($id);
+        if($room){
+            $room->restore();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Room Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $room = Room::withTrashed()->find($this->delete_id);
+        if($room){
+            $room->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
@@ -181,7 +218,7 @@ class AllRoom extends Component
     {
         $status = Room::find($id);
         if($status->status==1)
-        {   
+        {
             $status->status=0;
         }else
         {
@@ -191,7 +228,7 @@ class AllRoom extends Component
     }
 
     public function render()
-    {   
+    {
         $hostels = Hostel::select('id','name')->where('status',0)->where('status', 0)->get();
         $buildings = Building::select('id','name')->where('status',0)->where('hostel_id', $this->hostel_id)->get();
         $floors = Floor::select('id','floor')->where('status',0)->where('building_id', $this->building_id)->get();
@@ -203,11 +240,11 @@ class AllRoom extends Component
                 $query->where('floor', 'like', '%' . $this->f. '%');
             });
         }
-        
+
         $rooms = $query->when($this->r, function ($query) {
             return $query->where('label', 'like', '%' . $this->r . '%');
-        })->paginate($this->per_page);
-        
+        })->withTrashed()->paginate($this->per_page);
+
         return view('livewire.backend.room.all-room',compact('rooms','seateds','floors','hostels','buildings'))->extends('layouts.admin.admin')->section('admin');
     }
 }
