@@ -56,8 +56,8 @@
     <!-- admin template 1-->    <script src="{{ asset('assets/admin_template/js/jquery.cookie.js') }}" type="text/javascript"></script>                                            <!-- admin template -->
     <!-- admin template -->     <script src="{{ asset('assets/admin_template/js/off-canvas.js') }}" ></script>                                                        <!-- admin template -->
     <!-- admin template 1-->    <script src="{{ asset('assets/admin_template/js/hoverable-collapse.js') }}" ></script>                                      <!-- admin template -->
-    <!-- admin template -->     <script src="{{ asset('assets/admin_template/js/misc.js') }}" ></script>                                                              <!-- admin template -->
-    <!-- admin template 1-->     <script src="{{ asset('assets/admin_template/js/dashboard.js') }}" ></script>                                                 <!-- admin template -->
+    <!-- admin template -->     <script src="{{ asset('assets/admin_template/js/misc.js') }}" ></script>   @yield('dashboard')                                                           <!-- admin template -->
+    {{-- <!-- admin template 1-->     <script src="{{ asset('assets/admin_template/js/dashboard.js') }}" ></script>                                                 <!-- admin template --> --}}
     <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --><!-- admin template -->
         
     <!-- data Table-->
