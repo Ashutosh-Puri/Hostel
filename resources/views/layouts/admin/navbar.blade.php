@@ -49,7 +49,7 @@
                 <div class="dropdown-menu navbar-dropdown dropdown-menu-right p-0 border-0 font-size-sm"
                     aria-labelledby="profileDropdown" data-x-placement="bottom-end">
                     <div class="p-2">
-                        <h5 class="dropdown-header  ps-2 text-dark">
+                        {{-- <h5 class="dropdown-header  ps-2 text-dark">
                             @foreach (auth()->guard('admin')->user()->getRoleNames() as $item)
                                 {{ $item }}
                             @endforeach Options
@@ -59,13 +59,13 @@
                             <span class="p-0">
                                 <i class="mdi mdi-account-outline ms-1"></i>
                             </span>
-                        </a>
-                        <div role="separator" class="dropdown-divider"></div>
+                        </a> --}}
+                        {{-- <div role="separator" class="dropdown-divider"></div> --}}
                         <h5 class="dropdown-header   ps-2 text-dark mt-2">Actions</h5>
-                        <a class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="#">
+                        {{-- <a class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="#">
                             <span>Password Change</span>
                             <i class="mdi mdi-lock ms-1"></i>
-                        </a>
+                        </a> --}}
                         <form method="POST" action="{{ route('admin.logout') }}" class="d-inline">
                             @csrf
                             <button class="dropdown-item py-1 d-flex align-items-center justify-content-between"

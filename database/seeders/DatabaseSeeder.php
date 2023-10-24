@@ -25,6 +25,7 @@ use Database\Seeders\BuildingSeeder;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\FacilitySeeder;
 use Database\Seeders\AdmissionSeeder;
+use Database\Seeders\AtendanceSeeder;
 use Database\Seeders\AllocationSeeder;
 use Database\Seeders\PermissionSeeder;
 use Database\Seeders\StudentFineSeeder;
@@ -42,6 +43,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {   
         
+        $this->call(AtendanceSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(PermissionSeeder::class);
         $this->call(AdminSeeder::class);               //  Role ,

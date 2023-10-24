@@ -13,6 +13,8 @@ use Livewire\Component;
 use App\Models\Building;
 use App\Models\Admission;
 use App\Models\Allocation;
+use App\Models\Attendance;
+use App\Models\AcademicYear;
 
 
 class AdminDashboard extends Component
@@ -62,6 +64,19 @@ class AdminDashboard extends Component
     
     public $allocations;
     public $allocations_c;
+
+
+    public $academicYears = [];
+    public  $year_wise_total_admission = [];
+    public  $year_wise_confirm_admission = [];
+    public  $totalGrowth;
+
+    public $currentMonthDateCounts;
+    public $days;
+    public $lastMonthDateCounts;
+
+    public $currentMonthDateRange;
+    public $lastMonthDateRange;
     
     public function render()
     {   
@@ -147,7 +162,63 @@ class AdminDashboard extends Component
         // $this->a_building=Building::where('status',0)->count();
         // $this->i_building=Building::where('status',1)->count();
 
+
+        // Bar Grapth Data
+        $last10AcademicYears = AcademicYear::orderBy('year', 'desc')->take(10)->get();
+        foreach ($last10AcademicYears as $key => $academicYear) {
+            $academicYears[$key] = $academicYear->year;
+        }
+        $this->academicYears=json_encode(array_values($academicYears));
         
+        foreach ($last10AcademicYears as $key => $academicYear) {
+            $admissionCount = $academicYear->admissions()->count();
+            $year_wise_total_admission[$key] = $admissionCount;
+        }
+        $this->year_wise_total_admission=json_encode(array_values($year_wise_total_admission));
+       
+        foreach ($last10AcademicYears as $key => $academicYear) {
+            $admissionCountStatus1 = $academicYear->admissions()->where('status', 1)->count();
+            $year_wise_confirm_admission[$key] = $admissionCountStatus1;
+        }
+        $this->year_wise_confirm_admission= json_encode(array_values($year_wise_confirm_admission));
+
+        $data=$year_wise_confirm_admission;
+        $growthRates = [];
+        for ($i = 1; $i < count($data); $i++) {
+            $oldValue = $data[$i - 1];
+            $newValue = $data[$i];
+            $growthRate = (($newValue - $oldValue) / $oldValue) * 100;
+            $growthRates[] = $growthRate;
+        }
+        $this->totalGrowth = array_sum($growthRates) / count($growthRates);
+
+        // attendance analysis
+        // $currentDate = now();
+        // $year = $currentDate->year;
+        // $month = $currentDate->month;
+        // $lastDayCurrentMonth = $currentDate->endOfMonth()->day;
+        // $lastDayLastMonth = $currentDate->subMonth()->endOfMonth()->day;
+        // $this->currentMonthDateRange = json_encode("{$year}-{$month}-01-{$lastDayCurrentMonth}");
+        // $currentDate = now();
+        // $year = $currentDate->year;
+        // $previousMonth = $currentDate->subMonth();
+        // $month = $previousMonth->month;
+        // $lastDayLastMonth = $previousMonth->endOfMonth()->day;
+        // $this->lastMonthDateRange = json_encode("{$year}-{$month}-01-{$lastDayLastMonth}");
+
+
+        $currentMonthStart = now()->startOfMonth();
+        $currentMonthEnd = now()->endOfMonth();
+        $lastMonthStart = now()->subMonth()->startOfMonth();
+        $lastMonthEnd = now()->subMonth()->endOfMonth();
+        $currentMonthData = Attendance::whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])->selectRaw('DATE(created_at) as date, count(*) as count')->groupBy('date')->get();
+        $lastMonthData = Attendance::whereBetween('created_at', [$lastMonthStart, $lastMonthEnd])->selectRaw('DATE(created_at) as date, count(*) as count')->groupBy('date')->get();
+        $this->currentMonthDateCounts = json_encode($currentMonthData->pluck('count'));
+        $this->lastMonthDateCounts = json_encode($lastMonthData->pluck('count'));
+// dd($this->days ,$this->currentMonthDateCounts ,$this->lastMonthDateCounts);
+// dd($days ,json_encode($currentMonthDateCounts), json_encode($lastMonthDateCounts));
+
+
         return view('livewire.backend.admin.admin-dashboard')->extends('layouts.admin.admin')->section('admin');
     }
 }
