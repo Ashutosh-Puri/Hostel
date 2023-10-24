@@ -128,11 +128,47 @@ class AllStudentComeFromHome extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $studentlocalregister = ComeFromHome::find($this->delete_id);
+        $studentlocalregister = ComeFromHome::find($id);
         if($studentlocalregister){
             $studentlocalregister->delete();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Come From Home Entry Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function restore($id)
+    {
+        $studentlocalregister = ComeFromHome::withTrashed()->find($id);
+        if($studentlocalregister){
+            $studentlocalregister->restore();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Come From Home Entry Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $studentlocalregister = ComeFromHome::withTrashed()->find($this->delete_id);
+        if($studentlocalregister){
+            $studentlocalregister->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
@@ -177,7 +213,7 @@ class AllStudentComeFromHome extends Component
             $query->whereHas('allocation.admission.student', function ($subQuery) {
                 $subQuery->where('name', 'like', '%' . $this->student_name . '%');
             });
-        })->paginate($this->per_page);
+        })->withTrashed()->paginate($this->per_page);
     
 
         return view('livewire.backend.student-come-from-home.all-student-come-from-home',compact('come_from_home'))->extends('layouts.admin.admin')->section('admin');

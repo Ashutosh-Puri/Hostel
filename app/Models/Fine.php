@@ -18,11 +18,11 @@ class Fine extends Model
 
     public function AcademicYear()
     {
-        return $this->belongsTo(AcademicYear::class);
+        return $this->belongsTo(AcademicYear::class)->withTrashed();
     }
 
     public function studentfines()
     {
-        return $this->hasMany(StudentFine::class);
+        return $this->hasMany(StudentFine::class)->withTrashed();
     }
 }

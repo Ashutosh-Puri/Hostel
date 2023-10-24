@@ -24,36 +24,36 @@ class AcademicYear extends Model
 
     public function Fines()
     {
-        return $this->hasMany(Fine::class);
+        return $this->hasMany(Fine::class)->withTrashed();
     }
 
     public function Fees()
     {
-        return $this->hasMany(Fee::class);
+        return $this->hasMany(Fee::class)->withTrashed();
     }
 
     public function StudentFines()
     {
-        return $this->hasMany(StudentFine::class);
+        return $this->hasMany(StudentFine::class)->withTrashed();
     }
 
     public function StudentPaymets()
     {
-        return $this->hasMany(StudentPayment::class);
+        return $this->hasMany(StudentPayment::class)->withTrashed();
     }
 
     public function Quotas()
     {
-        return $this->hasMany(Quota::class);
+        return $this->hasMany(Quota::class)->withTrashed();
     }
 
     public function StudentEducations()
     {
-        return $this->hasMany(AcademicYear::class);
+        return $this->hasMany(AcademicYear::class)->withTrashed();
     }
 
     public function Admissions()
     {
-        return $this->hasMany(Admission::class);
+        return $this->hasMany(Admission::class)->withTrashed();
     }
 }

@@ -53,7 +53,7 @@
                                         <div class="mb-3 form-group">
                                             <label for="reply"  class="form-labell">Description</label>
                                             <textarea for="reply" class="pe-none w-100"    cols="30" rows="7" >{{ $this->description }}</textarea>
-                                           
+
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-12">
@@ -419,7 +419,12 @@
                                                             @endif
                                                         @endcan
                                                         @can('Delete Enquiry Form')
-                                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete"></i></a>
+                                                            @if ($item->deleted_at)
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
+                                                            @else
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
+                                                            @endif
                                                         @endcan
                                                     </td>
                                                 @elsecan('Send Enquiry Reply')
@@ -436,7 +441,12 @@
                                                             @endif
                                                         @endcan
                                                         @can('Delete Enquiry Form')
-                                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete"></i></a>
+                                                            @if ($item->deleted_at)
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
+                                                            @else
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
+                                                            @endif
                                                         @endcan
                                                     </td>
                                                 @elsecan('Delete Enquiry Form')
@@ -453,7 +463,12 @@
                                                             @endif
                                                         @endcan
                                                         @can('Delete Enquiry Form')
-                                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete"></i></a>
+                                                            @if ($item->deleted_at)
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
+                                                            @else
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
+                                                            @endif
                                                         @endcan
                                                     </td>
                                                 @endcan

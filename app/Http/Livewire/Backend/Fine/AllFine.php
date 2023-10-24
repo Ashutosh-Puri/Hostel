@@ -132,11 +132,47 @@ class AllFine extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $fine = Fine::find($this->delete_id);
+        $fine = Fine::find($id);
         if($fine){
             $fine->delete();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Fine Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function restore($id)
+    {
+        $fine = Fine::withTrashed()->find($id);
+        if($fine){
+            $fine->restore();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Fine Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $fine = Fine::withTrashed()->find($this->delete_id);
+        if($fine){
+            $fine->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
@@ -155,7 +191,7 @@ class AllFine extends Component
     {
         $status = Fine::find($id);
         if($status->status==1)
-        {   
+        {
             $status->status=0;
         }else
         {
@@ -176,7 +212,7 @@ class AllFine extends Component
 
         $fines = $query->when($this->fine_name, function ($query) {
             return $query->where('name', 'like', '%' . $this->fine_name . '%');
-        })->orderBy('academic_year_id', 'ASC')->paginate($this->per_page);
+        })->orderBy('academic_year_id', 'ASC')->withTrashed()->paginate($this->per_page);
 
         return view('livewire.backend.fine.all-fine',compact('academic_years','fines'))->extends('layouts.admin.admin')->section('admin');
     }

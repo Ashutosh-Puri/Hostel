@@ -133,11 +133,47 @@ class AllFacility extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $facility = Facility::find($this->delete_id);
+        $facility = Facility::find($id);
         if($facility){
             $facility->delete();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Facility Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function restore($id)
+    {
+        $facility = Facility::withTrashed()->find($id);
+        if($facility){
+            $facility->restore();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Facility Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $facility = Facility::withTrashed()->find($this->delete_id);
+        if($facility){
+            $facility->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
@@ -156,7 +192,7 @@ class AllFacility extends Component
     {
         $status = Facility::find($id);
         if($status->status==1)
-        {   
+        {
             $status->status=0;
         }else
         {
@@ -171,13 +207,13 @@ class AllFacility extends Component
         $buildings = Building::select('id','name')->where('hostel_id', $this->hostel_id)->get();
         $floors = Floor::select('id','floor')->where('building_id', $this->building_id)->get();
         $rooms=Room::select('id','label')->where('floor_id', $this->floor_id)->get();
-        $facilityQuery = Facility::select('id','name','status','room_id')->with('room')->orderBy('room_id', 'ASC');
+        $facilityQuery = Facility::select('id','name','status','room_id','deleted_at')->with('room')->orderBy('room_id', 'ASC');
         if ($this->search) {
             $facilityQuery->whereHas('room', function ($query) {
                 $query->where('label', 'like', '%' . $this->search . '%');
             });
         }
-        $facility = $facilityQuery->paginate($this->per_page);
+        $facility = $facilityQuery->withTrashed()->paginate($this->per_page);
         return view('livewire.backend.facility.all-facility',compact('facility','rooms','floors','buildings','hostels'))->extends('layouts.admin.admin')->section('admin');
     }
 }

@@ -7,7 +7,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 
 class AllSeated extends Component
-{   
+{
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
@@ -113,11 +113,47 @@ class AllSeated extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $seated = Seated::find($this->delete_id);
+        $seated = Seated::find($id);
         if($seated){
             $seated->delete();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Seated Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function restore($id)
+    {
+        $seated = Seated::withTrashed()->find($id);
+        if($seated){
+            $seated->restore();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Seated Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $seated = Seated::withTrashed()->find($this->delete_id);
+        if($seated){
+            $seated->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
@@ -136,7 +172,7 @@ class AllSeated extends Component
     {
         $status = Seated::find($id);
         if($status->status==1)
-        {   
+        {
             $status->status=0;
         }else
         {
@@ -146,10 +182,10 @@ class AllSeated extends Component
     }
 
     public function render()
-    {   
+    {
         $seateds = Seated::query()->when($this->seated_number, function ($query) {
             return $query->where('seated', 'like', $this->seated_number . '%');
-        })->paginate($this->per_page);
+        })->withTrashed()->paginate($this->per_page);
 
         return view('livewire.backend.seated.all-seated',compact('seateds'))->extends('layouts.admin.admin')->section('admin');
     }

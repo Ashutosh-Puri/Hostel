@@ -9,7 +9,7 @@ use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\File;
 
 class AllPhotoGallery extends Component
-{   
+{
     use WithPagination;
     use WithFileUploads;
     protected $paginationTheme = 'bootstrap';
@@ -144,9 +144,9 @@ class AllPhotoGallery extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $photogallery = PhotoGallery::find($this->delete_id);
+        $photogallery = PhotoGallery::find($id);
         if($photogallery){
             if($photogallery->photo)
             {
@@ -167,11 +167,57 @@ class AllPhotoGallery extends Component
         }
     }
 
+    public function restore($id)
+    {
+        $photogallery = PhotoGallery::withTrashed()->find($id);
+        if($photogallery){
+            if($photogallery->photo)
+            {
+                File::delete($photogallery->photo);
+            }
+            $photogallery->restore();
+            $this->delete_id=null;
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Photo Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $photogallery = PhotoGallery::withTrashed()->find($this->delete_id);
+        if($photogallery){
+            if($photogallery->photo)
+            {
+                File::delete($photogallery->photo);
+            }
+            $photogallery->forceDelete();
+            $this->delete_id=null;
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Photo Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
     public function status($id)
     {
         $status = PhotoGallery::find($id);
         if($status->status==1)
-        {   
+        {
             $status->status=0;
         }else
         {
@@ -182,9 +228,9 @@ class AllPhotoGallery extends Component
 
     public function render()
     {
-        $photogalleries=PhotoGallery::select('id','photo','title','status')->when($this->search, function ($query) {
+        $photogalleries=PhotoGallery::select('id','photo','title','status','deleted_at')->when($this->search, function ($query) {
             return $query->where('title', 'like', '%' . $this->search . '%');
-        })->orderBy('title', 'ASC')->paginate($this->per_page);
+        })->withTrashed()->orderBy('title', 'ASC')->paginate($this->per_page);
 
         return view('livewire.backend.photo-gallery.all-photo-gallery',compact('photogalleries'))->extends('layouts.admin.admin')->section('admin');
     }

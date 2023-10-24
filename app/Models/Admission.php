@@ -24,42 +24,42 @@ class Admission extends Model
 
     public function StudentPayments()
     {
-        return $this->hasMany(StudentPayment::class);
+        return $this->hasMany(StudentPayment::class)->withTrashed();
     }
 
     public function Student()
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(Student::class)->withTrashed();
     }
 
     public function Class()
     {
-        return $this->belongsTo(Classes::class);
+        return $this->belongsTo(Classes::class)->withTrashed();
     }
 
     public function AcademicYear()
     {
-        return $this->belongsTo(AcademicYear::class);
+        return $this->belongsTo(AcademicYear::class)->withTrashed();
     }
 
     public function Seated()
     {
-        return $this->belongsTo(Seated::class);
+        return $this->belongsTo(Seated::class)->withTrashed();
     }
 
     public function StudentEducations()
     {
-        return $this->hasMany(StudentEducation::class ,'last_class_id','id');
+        return $this->hasMany(StudentEducation::class ,'last_class_id','id')->withTrashed();
     }
 
     public function Allocations()
     {
-        return $this->hasMany(Allocation::class);
+        return $this->hasMany(Allocation::class)->withTrashed();
     }
 
     public function allocation()
     {
-        return $this->hasOne(Allocation::class);
+        return $this->hasOne(Allocation::class)->withTrashed();
     }
 
 }

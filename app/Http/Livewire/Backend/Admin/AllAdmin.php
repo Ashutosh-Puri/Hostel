@@ -101,7 +101,7 @@ class AllAdmin extends Component
             }
             $admin->save();
 
-            
+
 
             $this->resetinput();
             $this->setmode('all');
@@ -122,7 +122,7 @@ class AllAdmin extends Component
         $this->current_id=$id;
         $admin = Admin::find($id);
         if($admin)
-        {   
+        {
             $role=$admin->roles->pluck('name');
             $this->role=$role[0];
             $this->c_id=$admin->id;
@@ -151,7 +151,7 @@ class AllAdmin extends Component
             $admin->mobile= $validatedData['mobile'];
             $admin->status = $this->status==1?'1':'0';
             if($this->photo)
-            {   
+            {
                 if($admin->photo)
                 {
                     File::delete($admin->photo);
@@ -188,9 +188,9 @@ class AllAdmin extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $admin = Admin::find($this->delete_id);
+        $admin = Admin::find($id);
         if($admin)
         {
             if($admin->photo)
@@ -212,11 +212,59 @@ class AllAdmin extends Component
         }
     }
 
+    public function restore($id)
+    {
+        $admin = Admin::withTrashed()->find($id);
+        if($admin)
+        {
+            if($admin->photo)
+            {
+                File::delete($admin->photo);
+            }
+            $admin->restore();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Admin Restored Successfully !!"
+            ]);
+            $this->delete_id=null;
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $admin = Admin::withTrashed()->find($this->delete_id);
+        if($admin)
+        {
+            if($admin->photo)
+            {
+                File::delete($admin->photo);
+            }
+            $admin->forceDelete();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Admin Deleted Successfully !!"
+            ]);
+            $this->delete_id=null;
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
     public function status($id)
     {
         $status = Admin::find($id);
         if($status->status==1)
-        {   
+        {
             $status->status=0;
         }else
         {
@@ -230,7 +278,7 @@ class AllAdmin extends Component
         $roles=Role::select('id','name')->where('status',0)->get();
         $admins = Admin::query()->when($this->search, function ($query) {
             return $query->where('name', 'like', '%' . $this->search . '%');
-        })->orderBy('name', 'ASC')->paginate($this->per_page);
+        })->withTrashed()->orderBy('name', 'ASC')->paginate($this->per_page);
 
         return view('livewire.backend.admin.all-admin',compact('admins','roles'))->extends('layouts.admin.admin')->section('admin');
     }

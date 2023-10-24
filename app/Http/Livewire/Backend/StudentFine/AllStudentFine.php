@@ -142,11 +142,47 @@ class AllStudentFine extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $studentfine = StudentFine::find($this->delete_id);
+        $studentfine = StudentFine::find($id);
         if($studentfine){
             $studentfine->delete();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Student Fine Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function restore($id)
+    {
+        $studentfine = StudentFine::withTrashed()->find($id);
+        if($studentfine){
+            $studentfine->restore();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Student Fine Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $studentfine = StudentFine::withTrashed()->find($this->delete_id);
+        if($studentfine){
+            $studentfine->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
@@ -204,7 +240,7 @@ class AllStudentFine extends Component
                 $subQuery->select('id')->from('fines')->where('name', 'like', '%' . $this->fine_name . '%');
             });
         });
-        $student_fines = $query->paginate($this->per_page);
+        $student_fines = $query->withTrashed()->paginate($this->per_page);
         return view('livewire.backend.student-fine.all-student-fine',compact('academic_years','students','fines','student_fines'))->extends('layouts.admin.admin')->section('admin');
     }
 }

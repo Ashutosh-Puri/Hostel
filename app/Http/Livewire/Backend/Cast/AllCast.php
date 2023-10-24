@@ -7,7 +7,7 @@ use App\Models\Category;
 use Livewire\WithPagination;
 
 class AllCast extends Component
-{   
+{
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
@@ -119,17 +119,53 @@ class AllCast extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $cast = Cast::find($this->delete_id);
+        $cast = Cast::find($id);
         if($cast){
             $cast->delete();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Cast Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function restore($id)
+    {
+        $cast = Cast::withTrashed()->find($id);
+        if($cast){
+            $cast->restore();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Cast Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $cast = Cast::withTrashed()->find($this->delete_id);
+        if($cast){
+            $cast->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'success',
                 'message'=>"Cast Deleted Successfully !!"
-            ]);           
+            ]);
         }else{
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
@@ -142,7 +178,7 @@ class AllCast extends Component
     {
         $status = Cast::find($id);
         if($status->status==1)
-        {   
+        {
             $status->status=0;
         }else
         {
@@ -152,12 +188,12 @@ class AllCast extends Component
     }
 
     public function render()
-    {   
+    {
         $categories=Category::select('id','name')->get();
 
-        $cast = Cast::query()->select('id','category_id','name','status')->when($this->search, function ($query) {
+        $cast = Cast::query()->select('id','category_id','name','status','deleted_at')->when($this->search, function ($query) {
             return $query->where('name', 'like', '%' . $this->search . '%');
-        })->orderBy('name', 'ASC')->paginate($this->per_page);
+        })->withTrashed()->orderBy('name', 'ASC')->paginate($this->per_page);
 
         return view('livewire.backend.cast.all-cast',compact('cast','categories'))->extends('layouts.admin.admin')->section('admin');
     }

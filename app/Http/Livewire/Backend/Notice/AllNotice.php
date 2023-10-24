@@ -7,7 +7,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 
 class AllNotice extends Component
-{   
+{
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
@@ -120,11 +120,47 @@ class AllNotice extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $notice = Notice::find($this->delete_id);
+        $notice = Notice::find($id);
         if($notice){
             $notice->delete();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Notice Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function restore($id)
+    {
+        $notice = Notice::withTrashed()->find($id);
+        if($notice){
+            $notice->restore();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Notice Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $notice = Notice::withTrashed()->find($this->delete_id);
+        if($notice){
+            $notice->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
@@ -143,7 +179,7 @@ class AllNotice extends Component
     {
         $status = Notice::find($id);
         if($status->status==1)
-        {   
+        {
             $status->status=0;
         }else
         {
@@ -156,8 +192,8 @@ class AllNotice extends Component
     {
         $notice = Notice::query()->when($this->search, function ($query) {
             return $query->where('description', 'like', '%' . $this->search . '%');
-        })->orderBy('description', 'ASC')->paginate($this->per_page);
-        
+        })->withTrashed()->orderBy('description', 'ASC')->paginate($this->per_page);
+
         return view('livewire.backend.notice.all-notice',compact('notice'))->extends('layouts.admin.admin')->section('admin');
     }
 

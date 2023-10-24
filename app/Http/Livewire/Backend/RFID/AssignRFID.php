@@ -90,8 +90,11 @@ class AssignRFID extends Component
         if($this->rfid){
             $this->status=0;
         }else
-        {
-            $this->rfid=DB::table('assign_rfid')->where('id', 1)->first()->rfid;  
+        {   
+            if($rfid=DB::table('assign_rfid')->find(1))
+            {
+                $this->rfid=$rfid->rfid;  
+            }
         }
     }
 

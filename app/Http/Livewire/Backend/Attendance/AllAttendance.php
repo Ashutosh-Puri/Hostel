@@ -9,7 +9,7 @@ use Livewire\WithPagination;
 use Illuminate\Validation\Rule;
 
 class AllAttendance extends Component
-{   
+{
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     protected $listeners = ['delete-confirmed'=>'delete'];
@@ -51,7 +51,7 @@ class AllAttendance extends Component
     }
 
     public function resetinput()
-    {   
+    {
         $this->c_id=null;
         $this->Student_id=null;
         $this->rfid=null;
@@ -128,9 +128,9 @@ class AllAttendance extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $attendance = Attendance::find($this->delete_id);
+        $attendance = Attendance::find($id);
         if($attendance){
             $attendance->delete();
             $this->delete_id=null;
@@ -147,14 +147,52 @@ class AllAttendance extends Component
         }
     }
 
+    public function restore($id)
+    {
+        $attendance = Attendance::withTrashed()->find($id);
+        if($attendance){
+            $attendance->restore();
+            $this->delete_id=null;
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Attendance Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $attendance = Attendance::withTrashed()->find($this->delete_id);
+        if($attendance){
+            $attendance->forceDelete();
+            $this->delete_id=null;
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Attendance Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
 
     public function render()
-    {   
+    {
         $students=Student::where('status',0)->get();
-        
+
 
         $attendanceQuery = Attendance::orderBy($this->sortby_feild, $this->sortby_order);
-        
+
         if ($this->s_name) {
             $attendanceQuery->whereHas('Student', function ($q) {
                 $q->where('status', 0)->where('name', 'like', '%' . $this->s_name . '%');
@@ -162,12 +200,12 @@ class AllAttendance extends Component
         }
 
         if ($this->s_rfid) {
-            $attendanceQuery->where('rfid', 'like', '%' . $this->s_rfid . '%'); 
+            $attendanceQuery->where('rfid', 'like', '%' . $this->s_rfid . '%');
         }
-        $attendance = $attendanceQuery->paginate($this->per_page);
- 
+        $attendance = $attendanceQuery->withTrashed()->paginate($this->per_page);
+
         $this->attendanceArray['id']=  $attendanceQuery->pluck('id')->all();
-  
+
         return view('livewire.backend.attendance.all-attendance',compact('attendance','students'))->extends('layouts.admin.admin')->section('admin');
     }
 }

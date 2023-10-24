@@ -123,11 +123,47 @@ class AllQuota extends Component
         $this->dispatchBrowserEvent('delete-confirmation');
     }
 
-    public function delete()
+    public function softdelete($id)
     {
-        $quota = Quota::find($this->delete_id);
+        $quota = Quota::find($id);
         if($quota){
             $quota->delete();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Quota Deleted Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function restore($id)
+    {
+        $quota = Quota::withTrashed()->find($id);
+        if($quota){
+            $quota->restore();
+            $this->setmode('all');
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Quota Restored Successfully !!"
+            ]);
+        }else{
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something Went Wrong !!"
+            ]);
+        }
+    }
+
+    public function delete()
+    {
+        $quota = Quota::withTrashed()->find($this->delete_id);
+        if($quota){
+            $quota->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[
@@ -146,7 +182,7 @@ class AllQuota extends Component
     {
         $status = Quota::find($id);
         if($status->status==1)
-        {   
+        {
             $status->status=0;
         }else
         {
@@ -170,7 +206,7 @@ class AllQuota extends Component
                 $query->where('name', 'like', '%' . $this->class_name . '%');
             });
         }
-        $quotas = $query->paginate($this->per_page);
+        $quotas = $query->withTrashed()->paginate($this->per_page);
         return view('livewire.backend.qutota.all-quota',compact('quotas','classes','academic_years'))->extends('layouts.admin.admin')->section('admin');
     }
 

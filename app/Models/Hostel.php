@@ -18,11 +18,11 @@ class Hostel extends Model
 
     public function buildings()
     {
-        return $this->hasMany(Building::class);
+        return $this->hasMany(Building::class)->withTrashed();
     }
 
     public function college()
     {
-        return $this->belongsTo(College::class);
+        return $this->belongsTo(College::class)->withTrashed();
     }
 }
