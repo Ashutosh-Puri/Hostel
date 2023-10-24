@@ -10,8 +10,8 @@ class StudentDashboard extends Component
 {
     public function render()
     {
-        // $student = auth()->user();
-        $student = Student::find(65);
+        $student = auth()->user();
+        // $student = Student::find(65);
         if($student->getBedId())
         {
             $bed = Bed::find($student->getBedId());
