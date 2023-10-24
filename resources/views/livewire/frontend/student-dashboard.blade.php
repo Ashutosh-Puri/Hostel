@@ -61,7 +61,7 @@
                     <div class="card mb-4">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-12">
                                     <h5 class="mb-0 text-center">Student Details</h5>
                                 </div>
                             </div>
@@ -69,10 +69,10 @@
                                 <div class="col-md-6">
                                     <hr>
                                     <div class="row">
-                                        <div class="col-6">
+                                        <div class="col-5">
                                             <p class="mb-0">Student ID</p>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-7">
                                             <p class="text-muted mb-0">{{ $student->id }}</p>
                                         </div>
                                     </div>
@@ -81,10 +81,10 @@
                                 <div class="col-md-6">
                                     <hr>
                                     <div class="row">
-                                        <div class="col-6">
+                                        <div class="col-5">
                                             <p class="mb-0">Member ID</p>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-7">
                                             <p class="text-muted mb-0">{{ $student->member_id }}</p>
                                         </div>
                                     </div>
@@ -94,10 +94,10 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="row">
-                                        <div class="col-6">
+                                        <div class="col-5">
                                             <p class="mb-0">RFID</p>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-7">
                                             <p class="text-muted mb-0">{{ $student->rfid }}</p>
                                         </div>
                                     </div>
@@ -105,10 +105,10 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="row">
-                                        <div class="col-6">
+                                        <div class="col-5">
                                             <p class="mb-0">Blood Group</p>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-7">
                                             <p class="text-muted mb-0">{{ $student->blood_group }}</p>
                                         </div>
                                     </div>
@@ -118,10 +118,10 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="row">
-                                        <div class="col-6">
+                                        <div class="col-5">
                                             <p class="mb-0">Gender</p>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-7">
                                             <p class="text-muted mb-0">
                                                 @if ($student->gender!==null)
                                                 {{ $student->gender == 0 ? 'Male' : 'Female' }}
