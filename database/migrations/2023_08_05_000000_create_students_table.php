@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('local_parent_mobile')->nullable();
             $table->string('local_parent_address')->nullable();
             $table->string('blood_group')->nullable();
-            $table->tinyInteger('gender')->nullable()->default(0)->comment('0-Male ,1-Female');
+            $table->tinyInteger('gender')->nullable()->comment('0-Male ,1-Female');
             $table->string('is_allergy')->nullable();
             $table->tinyInteger('is_ragging')->nullable()->default(0);
             $table->unsignedBigInteger('member_id')->nullable()->unique();
