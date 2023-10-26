@@ -255,7 +255,7 @@
                                         @foreach ($hostels as $key => $item)
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
-                                                <td>{{ $item->College->name }}</td>
+                                                <td class="text-wrap lh-lg">{{ $item->College->name }}</td>
                                                 <td>{{ $item->name }}</td>
                                                 <td>{{ $item->gender==0?"Boy's":"Girl's"; }}</td>
                                                 <td>

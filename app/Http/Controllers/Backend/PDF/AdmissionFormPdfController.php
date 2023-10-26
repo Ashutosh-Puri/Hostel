@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers\Backend\PDF;
 
 use Mpdf\Mpdf;
 use App\Models\Fee;

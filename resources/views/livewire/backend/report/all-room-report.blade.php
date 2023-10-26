@@ -20,15 +20,11 @@
                         <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
                         <span class="visually-hidden">Loading...</span>
                     </a>
+                    @can('View Room Report')
+                        <a target="_blank"  class="btn btn-warning " href="{{ route('admin_view_room_report',['array' => json_encode($bedArray['id'])]) }}"> <i class="mdi mdi-eye"></i></a>
+                    @endcan
                     @can('Download Room Report')
-                        <a wire:loading.attr="disabled" wire:loading.remove wire:click="generatePDF()"
-                            class="btn btn-success ">
-                            PDF<span class="btn-label-right"><i class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
-                        </a>
-                        <a wire:loading wire:target="generatePDF" class="btn btn-success ">
-                            Processing..<span class="btn-label-right"><i
-                                    class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
-                        </a>
+                        <a target="_blank"  class="btn btn-warning " href="{{ route('admin_download_room_report',['array' => json_encode($bedArray['id'])]) }}"> <i class="mdi mdi-download"></i></a>
                         <a wire:loading.attr="disabled" wire:loading.remove wire:click="generateEXCEL()"
                             class="btn btn-success ">
                             EXCEL<span class="btn-label-right"><i class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
@@ -145,7 +141,7 @@
                             @foreach ($beds as $b)
                                 <tr>
                                     <td>{{ $key++ }}</td>
-                                    <td>{{ $b->Room->Floor->building->Hostel->College->name }}</td>
+                                    <td class="text-wrap lh-lg">{{ $b->Room->Floor->building->Hostel->College->name }}</td>
                                     <td>{{ $b->Room->Floor->building->Hostel->name }}</td>
                                     <td>{{ $b->Room->Floor->building->name }}</td>
                                     <td>

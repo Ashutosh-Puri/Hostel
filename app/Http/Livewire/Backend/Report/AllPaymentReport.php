@@ -34,36 +34,13 @@ class AllPaymentReport extends Component
         $this->paymentArray=null;
     }
 
-    public function generatePDF()
-    {   
-        try 
-        {
-            $payment = StudentPayment::whereIn('id', $this->paymentArray)->get();
-            $excel = view('livewire.backend.report.pdf-payment-report', [
-                'payments' => $payment,
-            ])->extends('layouts.app')->section('content');
-
-            return Excel::download(new PaymentReportExport($excel), 'payment_report.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'success',
-                'message'=>"PDF File Downloding..!"
-            ]);
-        } 
-        catch (\Exception $e) {
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"PDF File Generation Error !!"
-            ]);
-        }
-    }
-
     public function generateEXCEL()
     {
         try 
         {
-            $payment = StudentPayment::whereIn('id', $this->paymentArray)->get();
-            $excel = view('livewire.backend.report.pdf-payment-report', [
-                'payments' => $payment,
+            $payment = StudentPayment::whereIn('id', $this->paymentArray['id'])->get();
+            $excel = view('pdf.payment_report', [
+                'payment' => $payment,
             ])->extends('layouts.app')->section('content');
 
             return Excel::download(new PaymentReportExport($excel), 'payment_report.xlsx');
@@ -143,7 +120,7 @@ class AllPaymentReport extends Component
 
         $payments = $query->paginate($this->per_page);
 
-        $this->paymentArray= $payments->pluck('id')->all();
+        $this->paymentArray['id']= $query->pluck('id')->all();
 
         return view('livewire.backend.report.all-payment-report',compact('payments','class','years'))->extends('layouts.admin.admin')->section('admin');
     }

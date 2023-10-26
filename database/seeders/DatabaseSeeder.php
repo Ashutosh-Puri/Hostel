@@ -43,26 +43,26 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {   
         
-        $this->call(AtendanceSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(PermissionSeeder::class);
         $this->call(AdminSeeder::class);               //  Role ,
         $this->call(CategorySeeder::class);
         $this->call(CastSeeder::class);                //  Category ,
         $this->call(RuleSeeder::class);
-
+        
         $this->call(CollegeSeeder::class);
         $this->call(HostelSeeder::class);           //  College ,
         $this->call(BuildingSeeder::class);         //  Hostel ,
         $this->call(FloorSeeder::class);         //  Building ,
         $this->call(SeatedSeeder::class);
-
+        
         //  Sometime Run
-
+        
         $this->call(AcademicYearSeeder::class);
         $this->call(ClassesSeeder::class);
         $this->call(StudentSeeder::class);          //  Cast ,
-      
+        
+        // $this->call(AtendanceSeeder::class);
         $this->call(FineSeeder::class);             //  Acadmic Year ,
         $this->call(FeeSeeder::class);              //  Acadmic Year , Setaed
         $this->call(QuotaSeeder::class);            //  Acadmic Year , Class ,

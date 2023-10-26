@@ -5,7 +5,7 @@
       @can('Access Dashboard')
       <li class="nav-item nav-category">Navigation</li>
       <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.dashboard') }}">
+        <a class="nav-link" data-turbolinks="false" href="{{ route('admin.dashboard') }}">
           <span class="icon-bg"><i class="mdi mdi-view-dashboard-outline menu-icon"></i></span>
           <span class="menu-title">Dashboard</span>
         </a>
@@ -155,13 +155,21 @@
       @endcanany
 
       {{-- Reports --}}
-      @canany(['Access Student Report', 'Access Allocation Report', 'Access Room Report','Access Payment Report'])
+      @canany(['Access Student Report', 'Access Allocation Report', 'Access Room Report','Access Payment Report','Access Attendance Report'])
         <li class="nav-item nav-category">Reports</li>
         @can('Access Student Report')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('all_student_report') }}">
               <span class="icon-bg"><i class="mdi mdi-file-chart menu-icon"></i></span>
               <span class="menu-title">Student Report's</span>
+            </a>
+          </li>
+        @endcan
+        @can('Access Attendance Report')
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('all_attendance_report') }}">
+              <span class="icon-bg"><i class="mdi mdi-file-chart menu-icon"></i></span>
+              <span class="menu-title">Attendance Report's</span>
             </a>
           </li>
         @endcan

@@ -15,7 +15,7 @@ class Attendance extends Model
 
     protected $guarded=[];
 
-    public function student()
+    public function Student()
     {   
 
         return $this->belongsTo(Student::class)->withTrashed();

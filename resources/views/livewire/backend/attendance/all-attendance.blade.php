@@ -1,4 +1,4 @@
-<div class="content">
+<div class="content" >
     <div class="container-fluid">
         @if ($mode=='add')
             @section('title')
@@ -130,7 +130,7 @@
                 @section('title')
                     All Attendance
                 @endsection
-                <div class="row">
+                <div class="row" wire:poll.2000ms>
                     <div class="col-12">
                         <div class="bg-success">
                             <div class="float-start pt-2 px-2">
@@ -216,6 +216,7 @@
                                             <th>Student Name</th>
                                             <th>RFID</th>
                                             <th>Entry Time</th>
+                                            <th>Exit Time</th>
                                             @can('Edit Attendance')
                                                 <th>Action</th>
                                             @elsecan('Delete Attendance')
@@ -227,9 +228,10 @@
                                         @foreach ($attendance as $key => $item)
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
-                                                <td>{{ $item->Student->name}}</td>
+                                                <td>{{ $item->Student->name!==null?$item->Student->name:$item->Student->username;}}</td>
                                                 <td>{{ $item->rfid}}</td>
-                                                <td>{{ $item->entry_time}}</td>
+                                                <td>{{ date('d / m / Y - h : m : s - A',strtotime($item->entry_time))}}</td>
+                                                <td> @if ($item->exit_time) {{ date('d / m / Y - h : m : s - A',strtotime($item->exit_time)) }} @endif</td>
                                                 @can('Edit Attendance')
                                                 <td>
                                                     @can('Edit Attendance')

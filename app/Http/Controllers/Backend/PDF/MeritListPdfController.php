@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers\Backend\PDF;
 
 use Mpdf\Mpdf;
-use App\Models\NightOut;
+use App\Models\MeritList;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class NightOutFormPdfController extends Controller
+class MeritListPdfController extends Controller
 {
-    public function view_pdf($id)
+    public function view_pdf($array)
     {   
-        $nightout=NightOut::find($id);
-        $html = view('pdf.nightout_form', compact('nightout'));
+
+        $meritlist=MeritList::WhereIn('id',json_decode($array))->get();
+        $html = view('pdf.merit_list', compact('meritlist'));
         $pdf=new Mpdf;
         $pdf->autoScriptToLang=true;
         $pdf->autoLangToFont=true;
@@ -20,15 +21,15 @@ class NightOutFormPdfController extends Controller
         $pdf->Output();
     }
     
-    public function download_pdf($id)
+    public function download_pdf($array)
     {
-        $nightout=NightOut::find($id);
-        $html = view('pdf.nightout_form', compact('nightout'));
+        $meritlist=MeritList::WhereIn('id',json_decode($array))->get();
+        $html = view('pdf.merit_list', compact('meritlist'));
         $pdf=new Mpdf;
         $pdf->autoScriptToLang=true;
         $pdf->autoLangToFont=true;
         $pdf->WriteHTML($html);
-        $filename = 'Night_Out_Form_'.now().'.pdf';
+        $filename = 'Merit_List_'.now().'.pdf';
         $pdfContent = $pdf->Output('', \Mpdf\Output\Destination::STRING_RETURN);
         header('Content-Type: application/pdf');
         header('Content-Disposition: attachment; filename="' . $filename . '"');

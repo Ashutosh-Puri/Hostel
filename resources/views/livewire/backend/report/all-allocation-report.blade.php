@@ -20,13 +20,12 @@
                         <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
                         <span class="visually-hidden">Loading...</span>
                     </a>
+                    @can('View Allocation Report')
+                        <a   target="_blank"  class="btn btn-warning " href="{{ route('admin_view_allocation_report',['array' => json_encode($admissionArray['id']),'bed_status'=>$bed_status]) }}"> <i class="mdi mdi-eye"></i></a>
+                    @endcan
                     @can('Download Allocation Report')
-                        <a wire:loading.attr="disabled"wire:loading.remove wire:click="generatePDF()"class="btn btn-success ">
-                            PDF<span class="btn-label-right mx-2"><i class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
-                        </a>
-                        <a  wire:loading wire:target="generatePDF" class="btn btn-success ">
-                            Processing..<span class="btn-label-right mx-2"><i class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
-                        </a>
+                    
+                        <a   target="_blank"  class="btn btn-warning " href="{{ route('admin_download_allocation_report',['array' => json_encode($admissionArray['id']),'bed_status'=>$bed_status]) }}"> <i class="mdi mdi-download"></i></a>
                         <a wire:loading.attr="disabled"wire:loading.remove wire:click="generateEXCEL()"class="btn btn-success ">
                             EXCEL<span class="btn-label-right mx-2"><i class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
                         </a>

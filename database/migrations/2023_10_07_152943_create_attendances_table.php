@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('student_id'); 
             $table->string('rfid')->nullable();
             $table->timestamp('entry_time')->nullable();
+            $table->timestamp('exit_time')->nullable();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
             $table->foreign('student_id')->references('id')->on('students'); 

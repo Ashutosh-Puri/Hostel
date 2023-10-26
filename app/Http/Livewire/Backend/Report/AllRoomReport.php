@@ -41,35 +41,13 @@ class AllRoomReport extends Component
         $this->bedArray=null;
     }
 
-    public function generatePDF()
-    {   
-        try 
-        {
-            $bedRecords = Bed::whereIn('id', $this->bedArray)->get();
-            $excel = view('livewire.backend.report.pdf-room-report', [
-                'beds' => $bedRecords,
-            ])->extends('layouts.app')->section('content');
-
-            return Excel::download(new RoomReportExport($excel), 'room_report.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'success',
-                'message'=>"PDF File Downloding..!"
-            ]);
-        } 
-        catch (\Exception $e) {
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"PDF File Generation Error !!"
-            ]);
-        }
-    }
 
     public function generateEXCEL()
     {
         try 
         {
-            $bedRecords = Bed::whereIn('id', $this->bedArray)->get();
-            $excel = view('livewire.backend.report.pdf-room-report', [
+            $bedRecords = Bed::whereIn('id', $this->bedArray['id'])->get();
+            $excel = view('pdf.room_report', [
                 'beds' => $bedRecords,
             ])->extends('layouts.app')->section('content');
 
@@ -168,7 +146,7 @@ class AllRoomReport extends Component
 
         $beds = $query->paginate($this->per_page);
 
-        $this->bedArray= $beds->pluck('id')->all();
+        $this->bedArray['id']=  $query->pluck('id')->all();
 
         return view('livewire.backend.report.all-room-report',compact('beds','rooms','colleges','hostels','buildings','floors'))->extends('layouts.admin.admin')->section('admin');
     }

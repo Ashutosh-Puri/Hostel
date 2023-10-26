@@ -16,19 +16,11 @@
                     </div>
                 </div>
                 <div class="float-end">
-                        @can('Download Payment Report')
-                        <a wire:loading class="btn btn-primary btn-sm " style="padding:10px; ">
-                            <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
-                            <span class="visually-hidden">Loading...</span>
-                        </a>
-                        <a wire:loading.attr="disabled" wire:loading.remove wire:click="generatePDF()"
-                            class="btn btn-success ">
-                            PDF<span class="btn-label-right"><i class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
-                        </a>
-                        <a wire:loading wire:target="generatePDF" class="btn btn-success ">
-                            Processing..<span class="btn-label-right"><i
-                                    class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
-                        </a>
+                    @can('View Payment Report')
+                        <a target="_blank"  class="btn btn-warning " href="{{ route('admin_view_payment_report',['array' => json_encode($paymentArray['id'])]) }}"> <i class="mdi mdi-eye"></i></a>
+                    @endcan
+                    @can('Download Payment Report')
+                        <a target="_blank"  class="btn btn-warning " href="{{ route('admin_download_payment_report',['array' => json_encode($paymentArray['id'])]) }}"> <i class="mdi mdi-download"></i></a>
                         <a wire:loading.attr="disabled" wire:loading.remove wire:click="generateEXCEL()"
                             class="btn btn-success ">
                             EXCEL<span class="btn-label-right"><i class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
@@ -37,8 +29,8 @@
                             Processing..<span class="btn-label-right"><i
                                     class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
                         </a>
-                        @endcan
-                    </div>
+                    @endcan
+                </div>
             </div>
         </div>
     </div>

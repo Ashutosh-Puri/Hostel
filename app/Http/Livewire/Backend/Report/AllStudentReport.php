@@ -31,39 +31,13 @@ class AllStudentReport extends Component
         $this->admissionArray=null;
     }
 
-    public function generatePDF()
-    {   
-        try {
-
-            $allAdmissionRecords = Admission::whereIn('id', $this->admissionArray)->get();
-             
-            $pdf = view('livewire.backend.report.pdf-student-report', [
-                'admission' => $allAdmissionRecords,
-            ]);
-
-            return Excel::download(new StudentReportExport($pdf), 'student_report.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
-
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'success',
-                'message'=>"PDF File Downloding...!!"
-            ]);
-
-        } catch (\Exception $e) {
-
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"PDF File Generation Error !!"
-            ]);
-        }
-    }
-
     public function generateEXCEL()
     {
         try 
         {
-            $allAdmissionRecords = Admission::whereIn('id', $this->admissionArray)->get();
+            $allAdmissionRecords = Admission::whereIn('id', $this->admissionArray['id'])->get();
 
-            $excel = view('livewire.backend.report.pdf-student-report', [
+            $excel = view('pdf.student_report', [
                 'admission' => $allAdmissionRecords,
             ]);
 
@@ -108,8 +82,7 @@ class AllStudentReport extends Component
         });
 
         $admission = $query->paginate($this->per_page);
-
-        $this->admissionArray = $admission->pluck('id')->all();
+        $this->admissionArray['id']=  $query->pluck('id')->all();
 
         return view('livewire.backend.report.all-student-report',compact('class','years','admission'))->extends('layouts.admin.admin')->section('admin');
     }

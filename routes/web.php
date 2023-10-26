@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Models\Allocation;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Backend\Bed\AllBed;
 use App\Http\Livewire\Backend\Fee\AllFee;
@@ -40,7 +41,6 @@ use App\Http\Livewire\Guestend\ViewRules\ViewRules;
 use App\Http\Livewire\Backend\Admission\AllAdmission;
 use App\Http\Livewire\Backend\MeritList\AllMeritList;
 use App\Http\Livewire\Frontend\StudentFee\StudentFee;
-use App\Http\Controllers\Backend\AttendanceController;
 use App\Http\Livewire\Backend\Razorpay\RazorpayOrders;
 use App\Http\Livewire\Backend\Report\AllPaymentReport;
 use App\Http\Livewire\Backend\Report\AllStudentReport;
@@ -50,29 +50,37 @@ use App\Http\Livewire\Backend\Permission\AllPermission;
 use App\Http\Livewire\Backend\Razorpay\RazorpayPayment;
 use App\Http\Livewire\Backend\Razorpay\RazorpayRefunds;
 use App\Http\Livewire\Guestend\Meritlist\ViewMeritList;
-use App\Http\Controllers\Backend\MeritListPdfController;
 use App\Http\Livewire\Backend\Razorpay\RazorpayPayments;
-use App\Http\Controllers\Backend\AttendancePdfController;
-use App\Http\Controllers\Backend\FeeRecipetPdfController;
 use App\Http\Livewire\Backend\Report\AllAllocationReport;
+use App\Http\Livewire\Backend\Report\AllAttendanceReport;
 use App\Http\Livewire\Backend\StudentFine\AllStudentFine;
 use App\Http\Livewire\Backend\Transaction\AllTransaction;
-use App\Http\Controllers\Backend\FineRecipetPdfController;
 use App\Http\Livewire\Frontend\Admission\StudentAdmission;
-use App\Http\Controllers\Backend\NightOutFormPdfController;
 use App\Http\Livewire\Backend\AcademicYear\AllAcademicYear;
 use App\Http\Livewire\Backend\PhotoGallery\AllPhotoGallery;
-use App\Http\Controllers\Backend\AdmissionFormPdfController;
+use App\Http\Livewire\Guestend\RecentStudent\RecentStudent;
+use App\Http\Controllers\Backend\PDF\MeritListPdfController;
 use App\Http\Controllers\Frontend\StudentRazorpayController;
 use App\Http\Livewire\Guestend\Meritlist\AdmissionMeritList;
+use App\Http\Controllers\Backend\PDF\AttendancePdfController;
+use App\Http\Controllers\Backend\PDF\FeeRecipetPdfController;
+use App\Http\Controllers\Backend\PDF\RoomReportPdfController;
 use App\Http\Controllers\Backend\Razorpay\RazorpayController;
 use App\Http\Livewire\Frontend\StudentPayFine\StudentPayFine;
+use App\Http\Controllers\Backend\PDF\FineRecipetPdfController;
+use App\Http\Controllers\Backend\PDF\NightOutFormPdfController;
 use App\Http\Livewire\Backend\RolePermission\AllRolePermission;
 use App\Http\Livewire\Backend\StudentPayment\AllStudentPayment;
 use App\Http\Livewire\Frontend\StudentNightOut\StudentNightOut;
+use App\Http\Controllers\Backend\PDF\AdmissionFormPdfController;
+use App\Http\Controllers\Backend\PDF\PaymentReportPdfController;
+use App\Http\Controllers\Backend\PDF\StudentReportPdfController;
+use App\Http\Controllers\Backend\Attendance\AttendanceController;
 use App\Http\Controllers\Frontend\StudentFeeRecipetPdfController;
 use App\Http\Livewire\Backend\StudentNightOut\AllStudentNightOut;
 use App\Http\Controllers\Frontend\StudentFineRecipetPdfController;
+use App\Http\Controllers\Backend\PDF\AllocationReportPdfController;
+use App\Http\Controllers\Backend\PDF\AttendanceReportPdfController;
 use App\Http\Controllers\Frontend\StudentNightOutFormPdfController;
 use App\Http\Livewire\Backend\StudentEducation\AllStudentEducation;
 use App\Http\Controllers\Frontend\StudentAdmissionFormPdfController;
@@ -81,22 +89,9 @@ use App\Http\Livewire\Backend\StudentComeFromHome\AllStudentComeFromHome;
 use App\Http\Livewire\Frontend\StudentLocalRegister\StudentLocalRegister;
 use App\Http\Livewire\Backend\StudentLocalRegister\AllStudentLocalRegister;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 // Guest Routes
 Route::middleware(['guest'])->group(function () {
-
-    // Admin Login Route
-    // Route::get('admin/login', AdminLogin::class)->name('admin.login');
 
     // Home
     Route::get('/', Home::class)->name('home');
@@ -125,15 +120,16 @@ Route::middleware(['guest'])->group(function () {
     // Merit List
     Route::get('meritform', AdmissionMeritList::class)->name('meritform');
 
-    //View Merit List
+    // View Merit List
     Route::get('meritlist', ViewMeritList::class)->name('meritlist');
-
+    
+    // Record Attendance
     Route::post('getrfid', [AttendanceController::class,'recordAttendance'])->name('getrfid');
 
+    // View Scan RFID
+    Route::get('scan', RecentStudent::class)->name('scan');
 
 });
-
-
 
 // Student Routes With student Guard And  is_student middeleware
 Route::middleware(['auth:student','is_student','verified'])->group(function () {
@@ -207,12 +203,7 @@ Route::middleware(['auth:student','is_student','verified'])->group(function () {
     // Student download Fine reciept
     Route::get('student/download/fine_recipet/{id}',[StudentFineRecipetPdfController::class,'download_pdf'])->name('student.download_fine_recipet');
 
-    
-
-
 });
-
-
 
 
 //  Routes With admin Guard is_admin middleware
@@ -383,11 +374,14 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
         Route::get('all/notices',AllNotice::class)->name('all_notice');
     });
 
-
-
     Route::group(['middleware' => ['permission:Access Student Report']], function () {
         // All Student Report
         Route::get('all/studreports',AllStudentReport::class)->name('all_student_report');
+    });
+
+    Route::group(['middleware' => ['permission:Access Student Report']], function () {
+        // All Attendance Report
+        Route::get('all/attenreport',AllAttendanceReport::class)->name('all_attendance_report');
     });
 
     Route::group(['middleware' => ['permission:Access Room Report']], function () {
@@ -525,6 +519,56 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
     Route::group(['middleware' => ['permission:Download Attendance']], function () {
         // Download Attendance
         Route::get('admin/download/attendance{array}',[AttendancePdfController::class,'download_pdf'])->name('admin_download_attendance');
+    });
+    
+    Route::group(['middleware' => ['permission:View Attendance Report']], function () {
+        // View Attendance Report
+        Route::get('admin/view/attendance/report/{array}',[AttendanceReportPdfController::class,'view_pdf'])->name('admin_view_attendance_report');
+    });
+    
+    Route::group(['middleware' => ['permission:Download Attendance']], function () {
+        // Download Attendance Report
+        Route::get('admin/download/report/attendance{array}',[AttendanceReportPdfController::class,'download_pdf'])->name('admin_download_attendance_report');
+    });
+    
+    Route::group(['middleware' => ['permission:View Student Report']], function () {
+        // View Student Report
+        Route::get('admin/view/student/report/{array}',[StudentReportPdfController::class,'view_pdf'])->name('admin_view_student_report');
+    });
+    
+    Route::group(['middleware' => ['permission:Download Student Report']], function () {
+        // Download Student Report
+        Route::get('admin/download/report/student/{array}',[StudentReportPdfController::class,'download_pdf'])->name('admin_download_student_report');
+    });
+
+    Route::group(['middleware' => ['permission:View Room Report']], function () {
+        // View Room Report
+        Route::get('admin/view/room/report/{array}',[RoomReportPdfController::class,'view_pdf'])->name('admin_view_room_report');
+    });
+    
+    Route::group(['middleware' => ['permission:Download Room Report']], function () {
+        // Download Room Report
+        Route::get('admin/download/report/room/{array}',[RoomReportPdfController::class,'download_pdf'])->name('admin_download_room_report');
+    });
+    
+    Route::group(['middleware' => ['permission:View Payment Report']], function () {
+        // View Payment Report
+        Route::get('admin/view/payment/report/{array}',[PaymentReportPdfController::class,'view_pdf'])->name('admin_view_payment_report');
+    });
+    
+    Route::group(['middleware' => ['permission:Download Payment Report']], function () {
+        // Download Payment Report
+        Route::get('admin/download/report/payment/{array}',[PaymentReportPdfController::class,'download_pdf'])->name('admin_download_payment_report');
+    });
+    
+    Route::group(['middleware' => ['permission:View Allocation Report']], function () {
+        // View Allocation Report
+        Route::get('admin/view/allocation/report/{array}/{bed_status?}',[AllocationReportPdfController::class,'view_pdf'])->name('admin_view_allocation_report');
+    });
+    
+    Route::group(['middleware' => ['permission:Download Allocation Report']], function () {
+        // Download Allocation Report
+        Route::get('admin/download/report/allocation/{array}/{bed_status?}',[AllocationReportPdfController::class,'download_pdf'])->name('admin_download_allocation_report');
     });
 
     Route::group(['middleware' => ['permission:Access AssignRFID']], function () {

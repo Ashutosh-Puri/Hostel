@@ -5,8 +5,7 @@ namespace App\Exports;
 use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
 
-
-class StudentReportExport implements FromView 
+class AttendanceReportExport implements FromView
 {
     protected $view;
 
