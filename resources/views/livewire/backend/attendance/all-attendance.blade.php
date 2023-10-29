@@ -230,8 +230,8 @@
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->Student->name!==null?$item->Student->name:$item->Student->username;}}</td>
                                                 <td>{{ $item->rfid}}</td>
-                                                <td>{{ date('d / m / Y - h : m : s - A',strtotime($item->entry_time))}}</td>
-                                                <td> @if ($item->exit_time) {{ date('d / m / Y - h : m : s - A',strtotime($item->exit_time)) }} @endif</td>
+                                                <td>{{ date('d / m / Y - h : i : s - A',strtotime($item->entry_time))}}</td>
+                                                <td> @if ($item->exit_time) {{ date('d / m / Y - h : i : s - A',strtotime($item->exit_time)) }} @endif</td>
                                                 @can('Edit Attendance')
                                                 <td>
                                                     @can('Edit Attendance')

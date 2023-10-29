@@ -187,7 +187,13 @@ class AdminDashboard extends Component
         for ($i = 1; $i < count($data); $i++) {
             $oldValue = $data[$i - 1];
             $newValue = $data[$i];
-            $growthRate = (($newValue - $oldValue) / $oldValue) * 100;
+            if($oldValue)
+            {
+                $growthRate = (($newValue - $oldValue) / $oldValue) * 100;
+            }else
+            {
+                $growthRate=0;
+            }
             $growthRates[] = $growthRate;
         }
         $this->totalGrowth = array_sum($growthRates) / count($growthRates);

@@ -16,11 +16,13 @@ class AcademicYearSeeder extends Seeder
     {
         $faker = Faker::create();
         $year=2023;
-        for ($i = 0; $i < 10; $i++) {
+        $status=0;
+        for ($i = 0; $i < 5; $i++) {
             AcademicYear::create([
                 'year' => $year--,
-                'status' => $faker->numberBetween(0, 1),
+                'status' => $status,
             ]);
+            $status=1;
         }
     }
 }
