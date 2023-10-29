@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Backend\Room;
 
+use App\Models\Bed;
 use App\Models\Room;
 use App\Models\Floor;
 use App\Models\Hostel;
@@ -87,6 +88,13 @@ class AllRoom extends Component
             $room->seated_id = $validatedData['seated_id'];
             $room->status = $this->status==1?'1':'0';
             $room->save();
+            while($validatedData['capacity']!==0)
+            {
+                $bed= new Bed;
+                $bed->room_id= $room->id;
+                $bed->save();
+                $validatedData['capacity']--;
+            }
             $this->resetinput();
             $this->setmode('all');
             $this->dispatchBrowserEvent('alert',[

@@ -47,13 +47,6 @@ void setup() {
 
     WiFi.begin(ssid, password);
 
-    while (WiFi.status() != WL_CONNECTED) {
-        Serial.println("Connecting to WiFi...");
-        digitalWrite(BLUE_LED_PIN, HIGH);
-        delay(1000);
-        digitalWrite(BLUE_LED_PIN, LOW);
-        delay(1000);
-    }
 
     Serial.println("Connected to WiFi");
     digitalWrite(BLUE_LED_PIN, HIGH);
@@ -63,12 +56,15 @@ void setup() {
 
 void loop() {
 
-    delay(500);
-     digitalWrite(RED_LED_PIN, HIGH);
-     delay(500);
-     digitalWrite(RED_LED_PIN, LOW);
-      
-        
+    while (WiFi.status() != WL_CONNECTED) {
+        Serial.println("Connecting to WiFi...");
+        digitalWrite(BLUE_LED_PIN, HIGH);
+        delay(1000);
+        digitalWrite(BLUE_LED_PIN, LOW);
+        delay(1000);
+    }
+    digitalWrite(RED_LED_PIN, HIGH);
+  
     if (! rfid.PICC_IsNewCardPresent()){
         return;
     }
@@ -120,9 +116,13 @@ void sendRFIDDataToServer(String rfid_tag) {
                 delay(2000);
                 digitalWrite(GREEN_LED_PIN, LOW);
             } else if (httpCode == 404) {
-                digitalWrite(RED_LED_PIN, HIGH);
-                delay(2000);
-                digitalWrite(RED_LED_PIN, LOW);
+                digitalWrite(GREEN_LED_PIN, HIGH);
+                delay(200);
+                digitalWrite(GREEN_LED_PIN, LOW);
+                delay(200);
+                digitalWrite(GREEN_LED_PIN, HIGH);
+                delay(200);
+                digitalWrite(GREEN_LED_PIN, LOW);
             } 
         } 
         else {

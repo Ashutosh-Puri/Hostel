@@ -30,11 +30,6 @@ class SeatedSeeder extends Seeder
                 'seated' => 3,
                 'status' => 0,
             ],
-            [   
-                'id'=>4,
-                'seated' => 4,
-                'status' => 1,
-            ],
         ];
 
         foreach ($records as $record) {

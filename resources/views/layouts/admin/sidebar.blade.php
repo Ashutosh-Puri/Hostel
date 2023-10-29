@@ -12,7 +12,7 @@
       </li>
       @endcan
       {{-- Main --}}
-      @canany(['Access Academic Year', 'Access Class', 'Access Admission','Access Allocation'])
+      @canany(['Access Academic Year', 'Access Class', 'Access Admission','Access Allocation','Access Attendance', 'Access Assgin RFID','Access Merit List'])
         <li class="nav-item nav-category">Main</li>
         @can('Access Academic Year')
           <li class="nav-item">
@@ -46,69 +46,33 @@
             </a>
           </li>
         @endcan
+        @can('Access Attendance')
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_attendance') }}">
+            <span class="icon-bg"><i class="mdi  mdi-format-list-checks menu-icon"></i></span>
+            <span class="menu-title">Attendance's</span>
+          </a>
+        </li>
+        @endcan
+        @can('Access Assgin RFID')
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin_assgin_rfid') }}">
+              <span class="icon-bg"><i class="mdi mdi-credit-card-plus menu-icon"></i></span>
+              <span class="menu-title">Assign RFID's</span>
+            </a>
+          </li>
+        @endcan
+        @can('Access Merit List')
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_merit_list') }}">
+            <span class="icon-bg"><i class="mdi mdi-format-list-bulleted menu-icon"></i></span>
+            <span class="menu-title">Merit List's</span>
+          </a>
+        </li>
+      @endcan
       @endcanany
 
-      {{-- College & Other  --}}
-      @canany(['Access College', 'Access Hostel', 'delete','Access Building','Access Floor','Access Seated','Access Room','Access Bed']) 
-        <li class="nav-item nav-category">College & Other</li>
-        @can('Access College')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('all_college') }}">
-              <span class="icon-bg"><i class="mdi mdi mdi-city menu-icon"></i></span>
-              <span class="menu-title">College's</span>
-            </a>
-          </li>
-        @endcan
-        @can('Access Hostel')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('all_hostel') }}">
-              <span class="icon-bg"><i class="mdi mdi-hospital-building menu-icon"></i></span>
-              <span class="menu-title">Hostel's</span>
-            </a>
-          </li>
-        @endcan
-        @can('Access Building')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('all_building') }}">
-              <span class="icon-bg"><i class="mdi mdi-office-building menu-icon"></i></span>
-              <span class="menu-title">Building's</span>
-            </a>
-          </li>
-        @endcan
-        @can('Access Floor')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('all_floor') }}">
-              <span class="icon-bg"><i class="mdi mdi-image-broken menu-icon"></i></span>
-              <span class="menu-title">Floor's</span>
-            </a>
-          </li>
-        @endcan
-        @can('Access Seated')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('all_seated') }}">
-              <span class="icon-bg"><i class="mdi mdi-seat-flat menu-icon"></i></span>
-              <span class="menu-title">Seated's</span>
-            </a>
-          </li>
-        @endcan
-        @can('Access Room')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('all_room') }}">
-              <span class="icon-bg"><i class="mdi  mdi mdi-domain menu-icon"></i></span>
-              <span class="menu-title">Room's</span>
-            </a>
-          </li>
-        @endcan
-        @can('Access Bed')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('all_bed') }}">
-              <span class="icon-bg"><i class="mdi mdi-hotel menu-icon"></i></span>
-              <span class="menu-title">Bed's</span>
-            </a>
-          </li>
-        @endcan
-      @endcanany
-    
+      
       {{-- Fee & Fines --}}
       @canany(['Access Fee', 'Access Fine', 'Access Student Payment','Access Student Fine','Access Transaction'])
         <li class="nav-item nav-category">Fee & Fines</li>
@@ -153,7 +117,105 @@
           </li>
         @endcan
       @endcanany
+      
+      {{-- Forms --}}
+      @canany(['Access Enquiry Form', 'Access Nightout Form', 'Access Local Register Form','Access Student Come From Home Form'])
+        <li class="nav-item nav-category">Forms</li>
+        @can('Access Enquiry Form')
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('all_enquiry') }}">
+              <span class="icon-bg"><i class="mdi mdi-message-bulleted menu-icon"></i></span>
+              <span class="menu-title">Enquiry</span>
+            </a>
+          </li>
+        @endcan
+        @can('Access Nightout Form')
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('all_student_night_out') }}">
+              <span class="icon-bg"><i class="mdi mdi-message-alert menu-icon"></i></span>
+              <span class="menu-title">Night Out</span>
+            </a>
+          </li>
+        @endcan
+        @can('Access Local Register Form')
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('all_student_local_register') }}">
+              <span class="icon-bg"><i class="mdi mdi-message-processing menu-icon"></i></span>
+              <span class="menu-title">Local Register</span>
+            </a>
+          </li>
+        @endcan
+        @can('Access Student Come From Home Form')
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('all_student_come_from_home') }}">
+              <span class="icon-bg"><i class="mdi mdi-message-image menu-icon"></i></span>
+              <span class="menu-title">Come From Home</span>
+            </a>
+          </li>
+        @endcan
+      @endcanany
 
+          {{-- College & Other  --}}
+      @canany(['Access College', 'Access Hostel', 'delete','Access Building','Access Floor','Access Seated','Access Room','Access Bed']) 
+      <li class="nav-item nav-category">College & Other</li>
+      @can('Access College')
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_college') }}">
+            <span class="icon-bg"><i class="mdi mdi mdi-city menu-icon"></i></span>
+            <span class="menu-title">College's</span>
+          </a>
+        </li>
+      @endcan
+      @can('Access Hostel')
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_hostel') }}">
+            <span class="icon-bg"><i class="mdi mdi-hospital-building menu-icon"></i></span>
+            <span class="menu-title">Hostel's</span>
+          </a>
+        </li>
+      @endcan
+      @can('Access Building')
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_building') }}">
+            <span class="icon-bg"><i class="mdi mdi-office-building menu-icon"></i></span>
+            <span class="menu-title">Building's</span>
+          </a>
+        </li>
+      @endcan
+      @can('Access Floor')
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_floor') }}">
+            <span class="icon-bg"><i class="mdi mdi-image-broken menu-icon"></i></span>
+            <span class="menu-title">Floor's</span>
+          </a>
+        </li>
+      @endcan
+      @can('Access Seated')
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_seated') }}">
+            <span class="icon-bg"><i class="mdi mdi-seat-flat menu-icon"></i></span>
+            <span class="menu-title">Seated's</span>
+          </a>
+        </li>
+      @endcan
+      @can('Access Room')
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_room') }}">
+            <span class="icon-bg"><i class="mdi  mdi mdi-domain menu-icon"></i></span>
+            <span class="menu-title">Room's</span>
+          </a>
+        </li>
+      @endcan
+      @can('Access Bed')
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('all_bed') }}">
+            <span class="icon-bg"><i class="mdi mdi-hotel menu-icon"></i></span>
+            <span class="menu-title">Bed's</span>
+          </a>
+        </li>
+      @endcan
+    @endcanany
+  
       {{-- Reports --}}
       @canany(['Access Student Report', 'Access Allocation Report', 'Access Room Report','Access Payment Report','Access Attendance Report'])
         <li class="nav-item nav-category">Reports</li>
@@ -237,8 +299,16 @@
       @endcanany
 
       {{-- Other --}}
-      @canany(['Access Contact','Access Cast', 'Access Category', 'Access Facility','Access Quota','Access Notice','Access Photo Gallery','Access Rule','Access Student','Access Student Education','Access Merit List','Access Attendance'])
-        <li class="nav-item nav-category">Other</li>
+      @canany(['Access Contact','Access Cast', 'Access Category', 'Access Facility','Access Quota','Access Notice','Access Photo Gallery','Access Rule','Access Student','Access Student Education','Access Merit List'])
+      <li class="nav-item nav-category">Other</li>
+        @can('Access Student')
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('all_student') }}">
+              <span class="icon-bg"><i class="mdi mdi-account-plus menu-icon"></i></span>
+              <span class="menu-title">Student's</span>
+            </a>
+          </li>
+        @endcan
         @can('Access Cast')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('all_cast') }}">
@@ -295,35 +365,11 @@
             </a>
           </li>
         @endcan
-        @can('Access Student')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('all_student') }}">
-              <span class="icon-bg"><i class="mdi mdi-account-plus menu-icon"></i></span>
-              <span class="menu-title">Student's</span>
-            </a>
-          </li>
-        @endcan
         @can('Access Student Education')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('all_student_education') }}">
               <span class="icon-bg"><i class="mdi  mdi-certificate menu-icon"></i></span>
               <span class="menu-title">Student Education's</span>
-            </a>
-          </li>
-        @endcan
-        @can('Access Merit List')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('all_merit_list') }}">
-              <span class="icon-bg"><i class="mdi mdi-format-list-bulleted menu-icon"></i></span>
-              <span class="menu-title">Merit List's</span>
-            </a>
-          </li>
-        @endcan
-        @can('Access Attendance')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('all_attendance') }}">
-              <span class="icon-bg"><i class="mdi  mdi-format-list-checks menu-icon"></i></span>
-              <span class="menu-title">Attendance's</span>
             </a>
           </li>
         @endcan
@@ -335,14 +381,7 @@
             </a>
           </li>
         @endcan
-        @can('Access Assgin RFID')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin_assgin_rfid') }}">
-              <span class="icon-bg"><i class="mdi mdi-credit-card-plus menu-icon"></i></span>
-              <span class="menu-title">Assign RFID's</span>
-            </a>
-          </li>
-        @endcan
+
       @endcanany
 
       {{-- Setting --}}
@@ -358,42 +397,6 @@
         @endcan
       @endcanany
 
-      {{-- Forms --}}
-      @canany(['Access Enquiry Form', 'Access Nightout Form', 'Access Local Register Form','Access Student Come From Home Form'])
-        <li class="nav-item nav-category">Forms</li>
-        @can('Access Enquiry Form')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('all_enquiry') }}">
-              <span class="icon-bg"><i class="mdi mdi-message-bulleted menu-icon"></i></span>
-              <span class="menu-title">Enquiry</span>
-            </a>
-          </li>
-        @endcan
-        @can('Access Nightout Form')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('all_student_night_out') }}">
-              <span class="icon-bg"><i class="mdi mdi-message-alert menu-icon"></i></span>
-              <span class="menu-title">Night Out</span>
-            </a>
-          </li>
-        @endcan
-        @can('Access Local Register Form')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('all_student_local_register') }}">
-              <span class="icon-bg"><i class="mdi mdi-message-processing menu-icon"></i></span>
-              <span class="menu-title">Local Register</span>
-            </a>
-          </li>
-        @endcan
-        @can('Access Student Come From Home Form')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('all_student_come_from_home') }}">
-              <span class="icon-bg"><i class="mdi mdi-message-image menu-icon"></i></span>
-              <span class="menu-title">Come From Home</span>
-            </a>
-          </li>
-        @endcan
-      @endcanany
 
       {{-- Razorpay --}}
       @canany(['Access Razorpay Orders', 'Access Razorpay Payments', 'Access Razorpay Refunds'])
