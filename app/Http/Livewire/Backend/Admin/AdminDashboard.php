@@ -11,6 +11,7 @@ use App\Models\College;
 use App\Models\Student;
 use Livewire\Component;
 use App\Models\Building;
+use Carbon\CarbonPeriod;
 use App\Models\Admission;
 use App\Models\Allocation;
 use App\Models\Attendance;
@@ -198,32 +199,41 @@ class AdminDashboard extends Component
         }
         $this->totalGrowth = array_sum($growthRates) / count($growthRates);
 
-        // attendance analysis
-        // $currentDate = now();
-        // $year = $currentDate->year;
-        // $month = $currentDate->month;
-        // $lastDayCurrentMonth = $currentDate->endOfMonth()->day;
-        // $lastDayLastMonth = $currentDate->subMonth()->endOfMonth()->day;
-        // $this->currentMonthDateRange = json_encode("{$year}-{$month}-01-{$lastDayCurrentMonth}");
-        // $currentDate = now();
-        // $year = $currentDate->year;
-        // $previousMonth = $currentDate->subMonth();
-        // $month = $previousMonth->month;
-        // $lastDayLastMonth = $previousMonth->endOfMonth()->day;
-        // $this->lastMonthDateRange = json_encode("{$year}-{$month}-01-{$lastDayLastMonth}");
-
-
         $currentMonthStart = now()->startOfMonth();
         $currentMonthEnd = now()->endOfMonth();
         $lastMonthStart = now()->subMonth()->startOfMonth();
         $lastMonthEnd = now()->subMonth()->endOfMonth();
-        $currentMonthData = Attendance::whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])->selectRaw('DATE(created_at) as date, count(*) as count')->groupBy('date')->get();
-        $lastMonthData = Attendance::whereBetween('created_at', [$lastMonthStart, $lastMonthEnd])->selectRaw('DATE(created_at) as date, count(*) as count')->groupBy('date')->get();
-        $this->currentMonthDateCounts = json_encode($currentMonthData->pluck('count'));
-        $this->lastMonthDateCounts = json_encode($lastMonthData->pluck('count'));
-// dd($this->days ,$this->currentMonthDateCounts ,$this->lastMonthDateCounts);
-// dd($days ,json_encode($currentMonthDateCounts), json_encode($lastMonthDateCounts));
 
+        $currentMonthData = Attendance::whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])
+            ->selectRaw('DATE(created_at) as date, COUNT(DISTINCT student_id) as count')
+            ->groupBy('date')
+            ->pluck('count', 'date')
+            ->toArray();
+
+        $lastMonthData = Attendance::whereBetween('created_at', [$lastMonthStart, $lastMonthEnd])
+            ->selectRaw('DATE(created_at) as date, COUNT(DISTINCT student_id) as count')
+            ->groupBy('date')
+            ->pluck('count', 'date')
+            ->toArray();
+
+        $currentMonthDays = CarbonPeriod::create($currentMonthStart, $currentMonthEnd)->toArray();
+        $lastMonthDays = CarbonPeriod::create($lastMonthStart, $lastMonthEnd)->toArray();
+
+        $currentMonthCounts = [];
+        $lastMonthCounts = [];
+
+        foreach ($currentMonthDays as $day) {
+            $date = $day->format('Y-m-d');
+            $currentMonthCounts[$date] = $currentMonthData[$date] ?? 0;
+        }
+
+        foreach ($lastMonthDays as $day) {
+            $date = $day->format('Y-m-d');
+            $lastMonthCounts[$date] = $lastMonthData[$date] ?? 0;
+        }
+
+        $this->currentMonthDateCounts = json_encode(array_values($currentMonthCounts));
+        $this->lastMonthDateCounts = json_encode(array_values($lastMonthCounts));
 
         return view('livewire.backend.admin.admin-dashboard')->extends('layouts.admin.admin')->section('admin');
     }

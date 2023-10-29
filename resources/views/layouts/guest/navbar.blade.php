@@ -33,6 +33,7 @@
                   <li><a class="dropdown-item {{ (request()->is('meritform')) ? 'active' : '' }}" href="{{ route('meritform') }}">Merit Form</a></li>
                   <li><a class="dropdown-item {{ (request()->is('meritlist')) ? 'active' : '' }}" href="{{ route('meritlist') }}">Merit List</a></li>
                   <li><a class="dropdown-item {{ (request()->is('team')) ? 'active' : '' }}" href="{{ route('team') }}">Team</a></li>
+                  <li><a class="dropdown-item {{ (request()->is('scan')) ? 'active' : '' }}" href="{{ route('scan') }}">Scan</a></li>
                 </ul>
             </li>
         </ul>

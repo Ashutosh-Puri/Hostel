@@ -81,9 +81,8 @@
                                         <option value="5">This Year</option>
                                     </select>
                                 </div>
-                                <div class="col-6 col-md-1  ">
-                                    <button wire:click='clear' class="  btn btn-sm btn-danger "><i
-                                            class="mdi  mdi-close"></i></button>
+                                <div class="col-6 col-md-1">
+                                    <button wire:click='clear' class="btn btn-sm btn-danger"><i class="mdi  mdi-close"></i></button>
                                 </div>
                             </div>
                         </span>
@@ -106,7 +105,11 @@
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $a->Student->name!=null?$a->Student->name:$a->Student->username; }}</td>
                                     <th>{{ $a->Student->gender===1?'Female':'Male'; }}</th>
-                                    <td>{{ date('d / m / Y - h : m : s - A',strtotime($a->entry_time)) }}</td>
+                                    <td>
+                                        @if ($a->entry_time)
+                                            {{ date('d / m / Y - h : m : s - A',strtotime($a->entry_time)) }}
+                                        @endif
+                                    </td>
                                     <td>
                                         @if ($a->exit_time)
                                             {{ date('d / m / Y - h : m : s - A',strtotime($a->exit_time)) }}
@@ -118,6 +121,77 @@
                     </table>
                     <div class="mt-4">
                         {{ $attendance->links('pagination::bootstrap-5') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card my-3">
+                    <div class="card-header">
+                        <h3>Total Admitted Students In {{  now()->year }}  ( {{ $total_admission }} ) 
+                            <span  class="float-end">Attendance  @if ($filter=='1') Today @elseif ($filter=='2') Yesterday @elseif ($filter=='3') This Week @elseif ($filter=='4')  This Month @elseif ($filter=='5') This Year @endif</span>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="card my-3">
+                    <div class="card-header">
+                        <h3>Absent Students ( {{ count($absent_students) }} )</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table  dt-responsive nowrap w-100">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Gender</th>
+                                    </tr>
+                                </thead>
+                                    <tbody>
+                                        @foreach ($absent_students as $as)  
+                                            <tr>
+                                                <td scope="row">{{ $as->id }}</td>
+                                                <td>{{ $as->name }}</td>
+                                                <td>{{ $as->gender==1?'Female':'Male'; }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="card  my-3">
+                    <div class="card-header">
+                        <h3>Present Students ( {{ count($present_students) }} )</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table  dt-responsive nowrap w-100">
+                                <thead >
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Gender</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($present_students as $as)  
+                                            <tr>
+                                                <td scope="row">{{ $as->id }}</td>
+                                                <td>{{ $as->name }}</td>
+                                                <td>{{ $as->gender==1?'Female':'Male'; }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

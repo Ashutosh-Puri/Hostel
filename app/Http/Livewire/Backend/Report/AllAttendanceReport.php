@@ -2,8 +2,11 @@
 
 namespace App\Http\Livewire\Backend\Report;
 
+use App\Models\Student;
 use Livewire\Component;
+use App\Models\Admission;
 use App\Models\Attendance;
+use App\Models\AcademicYear;
 use Livewire\WithPagination;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\AttendanceReportExport;
@@ -18,10 +21,11 @@ class AllAttendanceReport extends Component
     public $gender;
     public $year;
     public $month;
-    public $filter;
+    public $filter=1;
     public $date;
     public $student_name;
     public $attendanceArray;
+    public $students;
 
     public function clear()
     {
@@ -55,10 +59,9 @@ class AllAttendanceReport extends Component
             ]);
         }
     }
-
+  
     public function render()
     {   
-
         $query = Attendance::orderBy('created_at', 'DESC');
 
         if ($this->gender!==null) {
@@ -97,8 +100,21 @@ class AllAttendanceReport extends Component
             }
         } 
 
+        $presentStudentIds = $query->pluck('student_id')->unique()->all();
+
         $attendance = $query->paginate($this->per_page);
         $this->attendanceArray['id']=  $query->pluck('id')->all();
-        return view('livewire.backend.report.all-attendance-report',compact('attendance'))->extends('layouts.admin.admin')->section('admin');
+
+        $a_id = AcademicYear::where('year', now()->year)->value('id');
+
+        $admitted_student_ids = Admission::where('academic_year_id', $a_id)->pluck('student_id')->unique()->all();
+        $present_students = Student::whereIn('id', array_intersect($presentStudentIds, $admitted_student_ids))->get();
+
+        $total_admission = count($admitted_student_ids);
+
+        $absent_student_ids = array_diff($admitted_student_ids, $presentStudentIds);
+        $absent_students = Student::whereIn('id', $absent_student_ids)->get();
+
+        return view('livewire.backend.report.all-attendance-report',compact('attendance','absent_students','present_students','total_admission'))->extends('layouts.admin.admin')->section('admin');
     }
 }
