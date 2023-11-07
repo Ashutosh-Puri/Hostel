@@ -374,8 +374,6 @@
                                             <th>No</th>
                                             <th>Name</th>
                                             <th>Gender</th>
-                                            <th>Mobile</th>
-                                            <th>Email</th>
                                             <th>Subject</th>
                                             <th>Description</th>
                                             <th>Status</th>
@@ -394,9 +392,7 @@
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->name }}</td>
                                                 <td>{{ $item->gender==1?"Female":"Male"; }}</td>
-                                                <td>{{ $item->mobile }}</td>
-                                                <td>{{ $item->email }}</td>
-                                                <td>{{ $item->subject }}</td>
+                                                <td class="text-wrap lh-lg">{{ $item->subject }}</td>
                                                 <td class="text-wrap lh-lg">{{ $item->description }}</td>
                                                 <td>
                                                     @if ( $item->status == '0')

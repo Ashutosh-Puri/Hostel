@@ -12,7 +12,7 @@
                 <div class="container">
                     <div class="row justify-content-start">
                         <div class="col-sm-10 col-lg-8">
-                            <h2 class="display-3 text-white animated slideInDown">Your Home Away from Home: Where College Life Thrives!</h2>
+                            <h2 class="text-primary text-uppercase mb-3 animated slideInDown">Your Home Away from Home: Where College Life Thrives!</h2>
                         </div>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                         <div class="p-4">
                             <i class="mdi mdi-picture-in-picture-bottom-right text-primary mb-4" style="font-size: 3em;"></i>
                             <h5 class="mb-3">Photo Gallery</h5>
-                            <p>Hostel gallery showcases memorable moments within our hostel community.</p>
+                            <p>Hostel gallery showcases memorable moments within our vibrant hostel community.</p>
                         </div>
                     </a>
                 </div>
@@ -193,12 +193,12 @@
                 continue;
             @endphp
            <div class="col-lg-3 mx-auto col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-            <div class="team-item bg-light">
+            <div class="team-item bg-light ">
                 <div class="overflow-hidden text-center">
                     @if (isset($data->photo))
-                    <img class="img-fluid" style="height:224px; width:224px; border:1px solid #000;" src={{asset($data->photo)}} alt="">
+                    <img class="img-fluid  mt-5" style="height:224px; width:224px; border:1px solid #000;" src={{asset($data->photo)}} alt="">
                     @else
-                    <img class="img-fluid" style="height:224px; width:224px; border:1px solid #000;" src={{asset('assets/images/no_image.jpg')}} alt="">
+                    <img class="img-fluid mt-5" style="height:224px; width:224px; border:1px solid #000;" src={{asset('assets/images/no_image.jpg')}} alt="">
                     @endif
                 </div>
                 <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">

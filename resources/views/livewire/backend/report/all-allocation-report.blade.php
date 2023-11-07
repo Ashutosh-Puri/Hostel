@@ -132,31 +132,47 @@
                                         @endif
                                     @else
                                     @foreach ($item->allocations as $aIndex => $a)
-                                    @if ($aIndex === 0)
-                                        <td>
-                                            {{ $a->Bed->Room->Floor->Building->Hostel->name }}
-                                        </td>
-                                    @endif
-                                    @if ($aIndex === 0)
-                                        <td>
-                                            {{ $a->Bed->Room->Floor->Building->name }}
-                                        </td>
-                                    @endif
-                                    @if ($aIndex === 0)
-                                        <td>
-                                            {{ in_array( $a->Bed->Room->Floor->floor, range(0, 10)) ? ['Ground', 'First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh', 'Eighth', 'Ninth', 'Tenth'][ $a->Bed->Room->Floor->floor] :  $a->Bed->Room->Floor->floor }}
-                                        </td>
-                                    @endif
-                                    @if ($aIndex === 0)
-                                        <td>
-                                            {{ $a->Bed->Room->id }}-({{ $a->Bed->Room->label }})
-                                        </td>
-                                    @endif
-                                    @if ($aIndex === 0)
-                                        <td>
-                                            {{ $a->Bed->id }}
-                                        </td>
-                                    @endif
+                                        @if ($a->bed_id)
+                                            @if ($aIndex === 0)
+                                                <td>
+                                                    {{ $a->Bed->Room->Floor->Building->Hostel->name }}
+                                                </td>
+                                            @endif
+                                            @if ($aIndex === 0)
+                                                <td>
+                                                    {{ $a->Bed->Room->Floor->Building->name }}
+                                                </td>
+                                            @endif
+                                            @if ($aIndex === 0)
+                                                <td>
+                                                    {{ in_array( $a->Bed->Room->Floor->floor, range(0, 10)) ? ['Ground', 'First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh', 'Eighth', 'Ninth', 'Tenth'][ $a->Bed->Room->Floor->floor] :  $a->Bed->Room->Floor->floor }}
+                                                </td>
+                                            @endif
+                                            @if ($aIndex === 0)
+                                                <td>
+                                                    {{ $a->Bed->Room->id }}-({{ $a->Bed->Room->label }})
+                                                </td>
+                                            @endif
+                                            @if ($aIndex === 0)
+                                                <td>
+                                                    {{ $a->Bed->id }}
+                                                </td>
+                                            @endif
+                                        @else  
+                                        @if ($bed_status==null)
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        @elseif ($bed_status==1)
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        @endif
+                                        @endif
                                 @endforeach 
                                     @endif
                                     

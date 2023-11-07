@@ -164,7 +164,9 @@ class AllEnquiry extends Component
         $enquiry = Enquiry::find($id);
         $mail=Mail::to($enquiry->email)->send(new EnquiryReply($this->reply ,$enquiry->name));
         if($mail)
-        {
+        {   
+            $enquiry->status=1;
+            $enquiry->update();
             $this->resetinput();
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'success',
@@ -258,7 +260,7 @@ class AllEnquiry extends Component
     {
         $enquiries = Enquiry::query()->when($this->search, function ($query) {
              return $query->where('name', 'like', '%' . $this->search . '%');
-        })->withTrashed()->orderBy('created_at', 'DESC')->paginate($this->per_page);
+        })->withTrashed()->orderBy('status', 'ASC')->paginate($this->per_page);
 
         return view('livewire.backend.enquiry.all-enquiry',compact('enquiries'))->extends('layouts.admin.admin')->section('admin');
     }

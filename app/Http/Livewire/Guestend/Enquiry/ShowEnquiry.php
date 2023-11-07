@@ -38,7 +38,6 @@ class ShowEnquiry extends Component
         $this->email=null;
         $this->mobile=null;
         $this->subject=null;
-        $this->status=null;
         $this->description=null;
     }
 

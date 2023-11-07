@@ -79,9 +79,9 @@
             <div class="team-item bg-light">
                 <div class="overflow-hidden text-center">
                     @if (isset($data->photo))
-                    <img class="img-fluid" style="height:224px; width:224px; border:1px solid #000;" src={{asset($data->photo)}} alt="">
+                    <img class="img-fluid mt-5" style="height:224px; width:224px; border:1px solid #000;" src={{asset($data->photo)}} alt="">
                     @else
-                    <img class="img-fluid" style="height:224px; width:224px; border:1px solid #000;" src={{asset('assets/images/no_image.jpg')}} alt="">
+                    <img class="img-fluid mt-5" style="height:224px; width:224px; border:1px solid #000;" src={{asset('assets/images/no_image.jpg')}} alt="">
                     @endif
                 </div>
                 <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">

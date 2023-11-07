@@ -55,7 +55,7 @@
                                                 <div class="col-12 col-md-4">
                                                     <div class="mb-3 form-group">
                                                         <label for="mobile" class="form-label">Student Mobile</label>
-                                                        <input type="number"  class="form-control @error('mobile') is-invalid @enderror"  wire:model="mobile" value="{{ old('mobile') }}" id="mobile" placeholder="Enter Student Mobile">
+                                                        <input type="text"  class="form-control @error('mobile') is-invalid @enderror"  wire:model="mobile" value="{{ old('mobile') }}" id="mobile" placeholder="Enter Student Mobile">
                                                         @error('mobile')
                                                         <div class="invalid-feedback">
                                                             {{ $message }}

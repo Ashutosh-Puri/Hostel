@@ -29,7 +29,11 @@ class AssignRFID extends Component
     }
 
     public function remove()
-    {
+    {   
+        $this->validate([
+            's_id'=>['required'],
+            'student_id'=>['required'],
+        ]);
         $student=Student::find($this->student_id);
         if($student){
             $student->rfid=null;
@@ -122,6 +126,7 @@ class AssignRFID extends Component
                 $student=Student::find($admission->student_id);
                 if($student)
                 {
+                    $this->s_id= $student->id;
                     $this->student_id= $student->id;
                     $this->name= $student->name==null?$student->username:$student->name;
                 }else
