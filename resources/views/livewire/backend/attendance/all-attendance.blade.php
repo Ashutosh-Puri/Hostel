@@ -130,7 +130,7 @@
                 @section('title')
                     All Attendance
                 @endsection
-                <div class="row" wire:poll.2000ms>
+                <div class="row" wire:poll.15s>
                     <div class="col-12">
                         <div class="bg-success">
                             <div class="float-start pt-2 px-2">

@@ -28,13 +28,13 @@
                     <div class="row wow fadeInUp" data-wow-delay="0.1s">
                         <div class="col-12">
                             <div class="row  py-3 px-3">
-                                <div class="col-12 col-md-12 mb-2">
-                                   <div class="card p-1 rounderd">
-                                        <span class="card-title text-center mb-3 h2 ">Notices</span>
+                                <div class="col-12 col-md-12 mb-2 ">
+                                   <div class="card p-1 rounderd bg-primary">
+                                        <span class="card-title text-center mb-3 fs-3 ">Notices</span>
                                         <div class="card-body px-2 py-0">
                                             <div class="list-group p-0 m-0 ">
                                                 @foreach ($notice as $item)
-                                                    <a href="#" class="list-group-item list-group-item-action">{{ $item->description }}</a>
+                                                    <a href="#" class="list-group-item list-group-item-action my-1"><i class="mdi mdi-circle mx-2"></i> {{ $item->description }}</a>
                                                 @endforeach
                                             </div>
                                         </div>

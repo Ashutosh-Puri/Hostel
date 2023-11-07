@@ -34,19 +34,27 @@
             </thead>
             <tbody>
                 <tr >
-                    <td style="text-align: center; text-decoration:bold;" colspan="1">No</td>
-                    <td colspan="4">Student Name</td>
-                    <td colspan="2">RFID</td>
-                    <td colspan="2">Date</td>
-                    <td colspan="2">Time</td>
+                    <td colspan="1">No</td>
+                    <td colspan="3">Student Name</td>
+                    <td colspan="1">RFID</td>
+                    <td colspan="3">Entry Time</td>
+                    <td colspan="3">Exit Time</td>
                 </tr>
                 @foreach ($attendance as $key => $item) 
                     <tr>
                         <td colspan="1">{{ $key+1 }}</td>
-                        <td colspan="4">{{ $item->student->name }}</td>
-                        <td colspan="2">{{ $item->rfid }}</td>
-                        <td colspan="2">{{ date('d / m / Y', strtotime($item->entry_time)) }}</td>
-                        <td colspan="2">{{ date('h:m:s - a', strtotime($item->entry_time)) }}</td>
+                        <td colspan="3">{{ $item->student->name }}</td>
+                        <td colspan="1">{{ $item->rfid }}</td>
+                        <td colspan="3"> 
+                            @if ($item->entry_time)
+                                {{ date('d-m-Y h:i:s A', strtotime($item->entry_time)) }}
+                            @endif
+                        </td>
+                        <td colspan="3">
+                            @if ($item->exit_time)
+                                {{ date('d-m-Y h:i:s A', strtotime($item->exit_time)) }}
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
              
