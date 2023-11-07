@@ -19,8 +19,8 @@ return new class extends Migration
             $table->tinyInteger('status')->nullable()->default('0')->comment('0-Active ,1-In Active');
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
-            $table->foreign('academic_year_id')->references('id')->on('academic_years')->onDelete('cascade');
-            $table->foreign('seated_id')->references('id')->on('seateds')->onDelete('cascade');
+            $table->foreign('academic_year_id')->references('id')->on('academic_years')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('seated_id')->references('id')->on('seateds')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

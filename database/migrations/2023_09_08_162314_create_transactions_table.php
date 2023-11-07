@@ -24,9 +24,9 @@ return new class extends Migration
             $table->tinyInteger('status')->nullable()->comment('-1-order created,0-Authorized ,2-Captured ,3-Refundeed ,4-Failed');
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
-            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
-            $table->foreign('student_payment_id')->references('id')->on('student_payments')->onDelete('cascade');
-            $table->foreign('student_fine_id')->references('id')->on('student_fines')->onDelete('cascade');
+            $table->foreign('student_id')->references('id')->on('students')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('student_payment_id')->references('id')->on('student_payments')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('student_fine_id')->references('id')->on('student_fines')->onUpdate('cascade')->onDelete('cascade');
           
         });
     }

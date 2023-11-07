@@ -45,7 +45,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
-            $table->foreign('cast_id')->references('id')->on('casts')->onDelete('cascade');
+            $table->foreign('cast_id')->references('id')->on('casts')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->tinyInteger('status')->nullable()->default('0')->comment('0-available ,1-unavailable');
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
-            $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
+            $table->foreign('room_id')->references('id')->on('rooms')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

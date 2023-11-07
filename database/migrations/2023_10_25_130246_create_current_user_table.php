@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('student_id')->nullable();
             $table->tinyInteger('status')->nullable()->comment('0-valid, 1-invalid');
             $table->timestamps();
-            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
+            $table->foreign('student_id')->references('id')->on('students')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Frontend\StudentComeFromHome;
 
+use App\Models\Student;
 use Livewire\Component;
 use App\Models\Admission;
 use App\Models\Allocation;
@@ -152,31 +153,20 @@ class StudentComeFromHome extends Component
 
     public function render()
     {   
-        $this->student_id=Auth::user()->id;
-        
 
-    
+        $student = Student::find($this->student_id=Auth::user()->id);
 
-        $come_from_home = ComeFromHome::query()->with('allocation.admission.class', 'allocation.admission.student', 'allocation.admission.academicyear')
-        ->when($this->year, function ($query) {
-            $query->whereHas('allocation.admission.academicyear', function ($subQuery) {
-                $subQuery->where('year', 'like', '%' . $this->year . '%');
-            });
-        })->when($this->class_name, function ($query) {
-            $query->whereHas('allocation.admission.class', function ($subQuery) {
-                $subQuery->where('name', 'like', '%' . $this->class_name . '%');
-            });
-        })->when($this->student_name, function ($query) {
-            $query->whereHas('allocation.admission.student', function ($subQuery) {
-                $subQuery->where('name', 'like', '%' . $this->student_name . '%');
-            });
-        })->orderBy('created_at','DESC')->paginate($this->per_page);
+        $allocation_ids = [];
 
+        foreach ($student->admissions as $key => $admission) 
+        {   
+            if(isset($admission->allocation->id))
+            {
+                $allocation_ids[$key] = $admission->allocation->id; 
+            } 
+        }
 
-
-        
-       
-    
+        $come_from_home = ComeFromHome::whereIn('allocation_id',$allocation_ids)->orderBy('created_at','DESC')->paginate($this->per_page);
         return view('livewire.frontend.student-come-from-home.student-come-from-home',compact('come_from_home'))->extends('layouts.student.student')->section('student');
     }
 }

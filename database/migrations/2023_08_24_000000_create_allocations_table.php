@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id()->index();
             $table->unsignedBigInteger('admission_id');
             $table->unsignedBigInteger('bed_id')->nullable();
-            $table->foreign('admission_id')->references('id')->on('admissions')->onDelete('cascade');
-            $table->foreign('bed_id')->references('id')->on('beds')->onDelete('cascade');
+            $table->foreign('admission_id')->references('id')->on('admissions')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('bed_id')->references('id')->on('beds')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
         });

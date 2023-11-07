@@ -20,7 +20,7 @@ return new class extends Migration
             $table->tinyInteger('status')->nullable()->default('0');
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
-            $table->foreign('allocation_id')->references('id')->on('allocations')->onDelete('cascade');
+            $table->foreign('allocation_id')->references('id')->on('allocations')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
