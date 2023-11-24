@@ -373,6 +373,14 @@ class PermissionSeeder extends Seeder
                 'name' => "Delete Student Fine",
                 'group_name' => 'Student Fine',
                 'guard_name' => 'admin',
+            ],[   
+                'name' => "View Student Fine Reciept",
+                'group_name' => 'Student Fine',
+                'guard_name' => 'admin',
+            ],[   
+                'name' => "Download Student Fine Reciept",
+                'group_name' => 'Student Fine',
+                'guard_name' => 'admin',
             ],
             //Fine
             [   
@@ -505,6 +513,15 @@ class PermissionSeeder extends Seeder
                 'group_name' => 'Student Payment',
                 'guard_name' => 'admin',
             ],
+            [   
+                'name' => "View Student Payment Reciept",
+                'group_name' => 'Student Payment',
+                'guard_name' => 'admin',
+            ],[   
+                'name' => "Download Student Payment Reciept",
+                'group_name' => 'Student Payment',
+                'guard_name' => 'admin',
+            ],
             //Student Education
             [   
                 'name' => "Access Student Education",
@@ -620,43 +637,53 @@ class PermissionSeeder extends Seeder
 
             // Nightout Form
             [   
-                'name' => "Access Nightout Form",
+                'name' => "Access Student Night Out Form",
                 'group_name' => 'Forms',
                 'guard_name' => 'admin',
             ],
             [   
-                'name' => "Add Nightout Form",
+                'name' => "Add Student Night Out Form",
                 'group_name' => 'Forms',
                 'guard_name' => 'admin',
             ],
             [   
-                'name' => "Edit Nightout Form",
+                'name' => "Edit Student Night Out Form",
                 'group_name' => 'Forms',
                 'guard_name' => 'admin',
             ],
             [   
-                'name' => "Delete Nightout Form",
+                'name' => "Delete Student Night Out Form",
+                'group_name' => 'Forms',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "View Student Night Out Form",
+                'group_name' => 'Forms',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Download Student Night Out Form",
                 'group_name' => 'Forms',
                 'guard_name' => 'admin',
             ],
             // Local Register Form
             [   
-                'name' => "Access Local Register Form",
+                'name' => "Access Student Local Register Form",
                 'group_name' => 'Forms',
                 'guard_name' => 'admin',
             ],
             [   
-                'name' => "Add Local Register Form",
+                'name' => "Add Student Local Register Form",
                 'group_name' => 'Forms',
                 'guard_name' => 'admin',
             ],
             [   
-                'name' => "Edit Local Register Form",
+                'name' => "Edit Student Local Register Form",
                 'group_name' => 'Forms',
                 'guard_name' => 'admin',
             ],
             [   
-                'name' => "Delete Local Register Form",
+                'name' => "Delete Student Local Register Form",
                 'group_name' => 'Forms',
                 'guard_name' => 'admin',
             ],
@@ -692,6 +719,11 @@ class PermissionSeeder extends Seeder
                 'group_name' => 'Report',
                 'guard_name' => 'admin',
             ],
+            [   
+                'name' => "View Student Report",
+                'group_name' => 'Report',
+                'guard_name' => 'admin',
+            ],
 
             // Payment Report
             [   
@@ -701,6 +733,11 @@ class PermissionSeeder extends Seeder
             ],
             [   
                 'name' => "Download Payment Report",
+                'group_name' => 'Report',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "View Payment Report",
                 'group_name' => 'Report',
                 'guard_name' => 'admin',
             ],
@@ -716,6 +753,11 @@ class PermissionSeeder extends Seeder
                 'group_name' => 'Report',
                 'guard_name' => 'admin',
             ],
+            [   
+                'name' => "View Allocation Report",
+                'group_name' => 'Report',
+                'guard_name' => 'admin',
+            ],
 
             // Room Report
             [   
@@ -725,6 +767,28 @@ class PermissionSeeder extends Seeder
             ],
             [   
                 'name' => "Download Room Report",
+                'group_name' => 'Report',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "View Room Report",
+                'group_name' => 'Report',
+                'guard_name' => 'admin',
+            ],
+
+            // Attendance Report
+            [   
+                'name' => "Access Attendance Report",
+                'group_name' => 'Report',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Download Attendance Report",
+                'group_name' => 'Report',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "View Attendance Report",
                 'group_name' => 'Report',
                 'guard_name' => 'admin',
             ],
@@ -813,6 +877,105 @@ class PermissionSeeder extends Seeder
             [   
                 'name' => "Access Razorpay Refunds",
                 'group_name' => 'Razorpay',
+                'guard_name' => 'admin',
+            ],
+            // RFID
+            [   
+                'name' => "Access RFID",
+                'group_name' => 'RFID',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Remove RFID",
+                'group_name' => 'RFID',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Assgin RFID",
+                'group_name' => 'RFID',
+                'guard_name' => 'admin',
+            ],
+            // Merit List
+            [   
+                'name' => "Access Merit List",
+                'group_name' => 'Merit List',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Add Merit List",
+                'group_name' => 'Merit List',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Edit Merit List",
+                'group_name' => 'Merit List',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Delete Merit List",
+                'group_name' => 'Merit List',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "View Merit List",
+                'group_name' => 'Merit List',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Download Merit List",
+                'group_name' => 'Merit List',
+                'guard_name' => 'admin',
+            ],
+            // Contact
+            [   
+                'name' => "Access Contact",
+                'group_name' => 'Contact',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Add Contact",
+                'group_name' => 'Contact',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Edit Contact",
+                'group_name' => 'Contact',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Delete Contact",
+                'group_name' => 'Contact',
+                'guard_name' => 'admin',
+            ],
+            // Attendance
+            [   
+                'name' => "Access Attendance",
+                'group_name' => 'Attendance',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Add Attendance",
+                'group_name' => 'Attendance',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Edit Attendance",
+                'group_name' => 'Attendance',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Delete Attendance",
+                'group_name' => 'Attendance',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "View Attendance",
+                'group_name' => 'Attendance',
+                'guard_name' => 'admin',
+            ],
+            [   
+                'name' => "Download Attendance",
+                'group_name' => 'Attendance',
                 'guard_name' => 'admin',
             ],
 

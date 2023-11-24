@@ -76,9 +76,7 @@
                                 </div>
                                 <div class="col-12 col-md-4">
                                     @if ($status)
-                                        <div wire:poll.5000ms>
-                                            <div wire:poll="fetch"></div>
-                                        </div> 
+                                        <div wire:poll.5s="fetch"></div>   
                                     @endif
                                     <div class="mb-3 form-group" >
                                         <label  for="student_rfid" class="form-label">New RFID</label>
@@ -92,10 +90,14 @@
                                 </div>
                             </div>
                             <div>
-                                <a wire:loading.attr="disabled"  wire:click="remove()"class=" btn btn-danger ">
-                                    Remove RFID
-                                </a>
-                                <button type="submit" class=" float-end btn btn-success ">Assign RFID</button>
+                                @can('Remove RFID')
+                                    <a wire:loading.attr="disabled"  wire:click="remove()"class=" btn btn-danger ">
+                                        Remove RFID
+                                    </a>
+                                @endcan
+                                @can('Assgin RFID')
+                                    <button type="submit" class=" float-end btn btn-success ">Assign RFID</button>
+                                @endcan
                             </div>
                         </form>
                     </div>

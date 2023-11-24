@@ -1321,7 +1321,7 @@
                                             <th>Class Name</th>
                                             <th>seated</th>
                                             <th>Status</th>
-                                            @can('View Admission')
+                                            @can('View Admission Form')
                                                 <th>Action</th>
                                             @elsecan('Edit Admission')
                                                 <th>Action</th>

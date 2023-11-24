@@ -330,7 +330,7 @@
                                     <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
                                     <span class="visually-hidden">Loading...</span>
                                 </a>
-                                @can('Add Enquiry')
+                                @can('Add Enquiry Form')
                                     <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success ">
                                         Add Enquiry<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
                                     </a>
@@ -377,9 +377,9 @@
                                             <th>Subject</th>
                                             <th>Description</th>
                                             <th>Status</th>
-                                            @can('Edit Enquiry')
+                                            @can('Edit Enquiry Form')
                                                 <th>Action</th>
-                                            @elsecan('Delete Enquiry')
+                                            @elsecan('Delete Enquiry Form')
                                              <th>Action</th>
                                             @elsecan('Send Enquiry Reply')
                                                 <th>Action</th>

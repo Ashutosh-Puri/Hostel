@@ -404,12 +404,12 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
         Route::get('all/enquires',AllEnquiry::class)->name('all_enquiry');
     });
 
-    Route::group(['middleware' => ['permission:Access Nightout Form']], function () {
+    Route::group(['middleware' => ['permission:Access Student Night Out Form']], function () {
         // All Student Night Out
         Route::get('all/student/night/out',AllStudentNightOut::class)->name('all_student_night_out');
     });
 
-    Route::group(['middleware' => ['permission:Access Local Register Form']], function () {
+    Route::group(['middleware' => ['permission:Access Student Local Register Form']], function () {
         // All Student local Register
         Route::get('all/local/register',AllStudentLocalRegister::class)->name('all_student_local_register');
     });
@@ -476,32 +476,32 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
         Route::get('admin/download/merit_list/{array}',[MeritListPdfController::class,'download_pdf'])->name('admin_download_merit_list');
     });
     
-    Route::group(['middleware' => ['permission:View Fee Recipet']], function () {
+    Route::group(['middleware' => ['permission:View Student Payment Reciept']], function () {
         // View Fee Recipet
         Route::get('view/fee_recipet/{id}',[FeeRecipetPdfController::class,'view_pdf'])->name('view_fee_recipet');
     });
 
-    Route::group(['middleware' => ['permission:Download Fee Recipet']], function () {
+    Route::group(['middleware' => ['permission:Download Student Payment Reciept']], function () {
         // Download Fee Recipet
         Route::get('download/fee_recipet/{id}',[FeeRecipetPdfController::class,'download_pdf'])->name('download_fee_recipet');
     });
 
-    Route::group(['middleware' => ['permission:View Fine Recipet']], function () {
+    Route::group(['middleware' => ['permission:View Student Fine Reciept']], function () {
         // View Fine Recipet
         Route::get('view/fine_recipet/{id}',[FineRecipetPdfController::class,'view_pdf'])->name('view_fine_recipet');
     });
 
-    Route::group(['middleware' => ['permission:Download Fine Recipet']], function () {
+    Route::group(['middleware' => ['permission:Download Student Fine Reciept']], function () {
         // Download Fine Recipet
         Route::get('download/fine_recipet/{id}',[FineRecipetPdfController::class,'download_pdf'])->name('download_fine_recipet');
     });
 
-    Route::group(['middleware' => ['permission:View Night Out Form']], function () {
+    Route::group(['middleware' => ['permission:View Student Night Out Form']], function () {
         // View Night Out Form
         Route::get('view/night_out_form/{id}',[NightOutFormPdfController::class,'view_pdf'])->name('view_night_out_form');
     });
 
-    Route::group(['middleware' => ['permission:Download Night Out Form']], function () {
+    Route::group(['middleware' => ['permission:Download Student Night Out Form']], function () {
         // Download Night Out Form
         Route::get('download/night_out_form/{id}',[NightOutFormPdfController::class,'download_pdf'])->name('download_night_out_form');
     });
@@ -526,7 +526,7 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
         Route::get('admin/view/attendance/report/{array}',[AttendanceReportPdfController::class,'view_pdf'])->name('admin_view_attendance_report');
     });
     
-    Route::group(['middleware' => ['permission:Download Attendance']], function () {
+    Route::group(['middleware' => ['permission:Download Attendance Report']], function () {
         // Download Attendance Report
         Route::get('admin/download/report/attendance{array}',[AttendanceReportPdfController::class,'download_pdf'])->name('admin_download_attendance_report');
     });
@@ -571,7 +571,7 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
         Route::get('admin/download/report/allocation/{array}/{bed_status?}',[AllocationReportPdfController::class,'download_pdf'])->name('admin_download_allocation_report');
     });
 
-    Route::group(['middleware' => ['permission:Access AssignRFID']], function () {
+    Route::group(['middleware' => ['permission:Access RFID']], function () {
         // Assgin RFID
         Route::get('admin/assgin/rfid',AssignRFID::class )->name('admin_assgin_rfid');
     });

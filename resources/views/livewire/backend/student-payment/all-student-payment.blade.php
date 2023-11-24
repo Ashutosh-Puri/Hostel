@@ -314,7 +314,9 @@
                                             <th>Deposite</th>
                                             <th>Total Amount</th>
                                             <th>Status</th>
+                                            @can('Pay Student Payment')
                                             <th>Paymet</th>
+                                            @endcan
                                             @can('Edit Student Payment')
                                                 <th>Action</th>
                                             @elsecan('Delete Student Payment')
@@ -351,6 +353,7 @@
                                                         <span class="badge bg-info text-white">Refunded</span>
                                                     @endif
                                                 </td>
+                                                @can('Pay Student Payment')
                                                 <td>
                                                     @if ($item->status==0)
                                                         @if ($item->total_amount >0)
@@ -367,7 +370,9 @@
                                                         @endif
                                                     @endif
                                                 </td>
-                                                @can('view Student Payment')
+                                                @endcan
+                                                
+                                                @can('View Student Payment Reciept')
                                                     <td>
                                                         @can('View Student Payment Reciept')
                                                             <a   target="_blank"  class="btn btn-warning " href="{{ route('view_fee_recipet', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
