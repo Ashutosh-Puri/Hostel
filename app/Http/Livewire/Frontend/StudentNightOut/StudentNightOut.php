@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Frontend\StudentNightOut;
 
+use App\Models\Student;
 use Livewire\Component;
 use App\Models\NightOut;
 use App\Models\Admission;
@@ -159,25 +160,21 @@ class StudentNightOut extends Component
         }
     }
 
-
-
     public function render()
     {   
-        $this->student_id=Auth::guard('student')->user()->id;
-        $night_out = NightOut::query()->with('allocation.admission.class', 'allocation.admission.student', 'allocation.admission.academicyear')
-        ->when($this->year, function ($query) {
-            $query->whereHas('allocation.admission.academicyear', function ($subQuery) {
-                $subQuery->where('year', 'like', '%' . $this->year . '%');
-            });
-        })->when($this->class_name, function ($query) {
-            $query->whereHas('allocation.admission.class', function ($subQuery) {
-                $subQuery->where('name', 'like', '%' . $this->class_name . '%');
-            });
-        })->when($this->student_name, function ($query) {
-            $query->whereHas('allocation.admission.student', function ($subQuery) {
-                $subQuery->where('name', 'like', '%' . $this->student_name . '%');
-            });
-        })->paginate($this->per_page);
+        $student = Student::find($this->student_id=Auth::user()->id);
+
+        $allocation_ids = [];
+
+        foreach ($student->admissions as $key => $admission) 
+        {
+            if(isset($admission->allocation->id))
+            {
+                $allocation_ids[$key] = $admission->allocation->id; 
+            } 
+        }
+        
+        $night_out = NightOut::query()->whereIn('allocation_id',$allocation_ids)->paginate($this->per_page);
     
         return view('livewire.frontend.student-night-out.student-night-out',compact('night_out'))->extends('layouts.student.student')->section('student');
     }

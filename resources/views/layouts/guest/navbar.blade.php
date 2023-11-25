@@ -4,7 +4,7 @@
     <a href="{{ route('home') }}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
         <h2 class="m-0 text-primary"> {{ preg_replace('/(?<!\ )[A-Z]/', ' $0', config('app.name', 'Laravel'))  }}</h2>
     </a>
-    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+    <button type="button" class="navbar-toggler me-4" data-toggle="collapse" data-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -23,7 +23,7 @@
             </li>
 
             <li class="nav-item ">
-                <a class="nav-link {{ (request()->is('rules') || request()->is('enquiry') || request()->is('gallery') || request()->is('meritform') || request()->is('meritlist') || request()->is('team')) ? 'active' : '' }}" href="#" id="navbarDarkDropdownMenuLink" >
+                <a class="nav-link {{ (request()->is('rules') || request()->is('enquiry') || request()->is('gallery') || request()->is('meritform') || request()->is('meritlist') || request()->is('team')) ? 'active' : '' }}"  data-toggle="dropdown" href="#" id="navbarDarkDropdownMenuLink" >
                   More <i class=" fw-bold mdi mdi-menu-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
@@ -42,7 +42,7 @@
             <!-- Authentication Links -->
             @auth('admin')
                 <li class="nav-item dropdown ">
-                    <a class="nav-link " href="#" id="navbarDarkDropdownMenuLink" >
+                    <a class="nav-link " href="#" id="navbarDarkDropdownMenuLink" data-toggle="dropdown">
                         {{ Auth::guard('admin')->user()->name }} <i class=" fw-bold mdi mdi-menu-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
@@ -66,7 +66,7 @@
             @endauth
             @auth('student')
                 <li class="nav-item dropdown ">
-                    <a class="nav-link " href="#" id="navbarDarkDropdownMenuLink" >
+                    <a class="nav-link " href="#" id="navbarDarkDropdownMenuLink" data-toggle="dropdown">
                         {{ Auth::user()->username }} <i class=" fw-bold mdi mdi-menu-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">

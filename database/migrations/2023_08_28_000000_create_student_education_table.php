@@ -21,10 +21,10 @@ return new class extends Migration
             $table->decimal('percentage',5,2);
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
-            $table->foreign('academic_year_id')->references('id')->on('academic_years')->onDelete('cascade');
-            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
-            $table->foreign('last_class_id')->references('id')->on('classes')->onDelete('cascade');
-            $table->foreign('admission_id')->references('id')->on('admissions')->onDelete('cascade');
+            $table->foreign('academic_year_id')->references('id')->on('academic_years')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('student_id')->references('id')->on('students')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('last_class_id')->references('id')->on('classes')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('admission_id')->references('id')->on('admissions')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

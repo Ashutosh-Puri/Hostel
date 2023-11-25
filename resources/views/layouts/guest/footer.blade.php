@@ -60,7 +60,7 @@
                 <div class="col-md-6 text-center text-md-end">
                     <div class="footer-menu">
                         <a href="{{ route('home') }}">Home</a>
-                        <a href="{{ route('admin.login') }}">Admin Login</a>
+                        <a data-turbolinks="false" href="{{ route('admin.login') }}">Admin Login</a>
                     </div>
                 </div>
             </div>

@@ -12,7 +12,7 @@
       </li>
       @endcan
       {{-- Main --}}
-      @canany(['Access Academic Year', 'Access Class', 'Access Admission','Access Allocation','Access Attendance', 'Access Assgin RFID','Access Merit List'])
+      @canany(['Access Academic Year', 'Access Class', 'Access Admission','Access Allocation','Access Attendance', 'Access RFID','Access Merit List'])
         <li class="nav-item nav-category">Main</li>
         @can('Access Academic Year')
           <li class="nav-item">
@@ -54,7 +54,7 @@
           </a>
         </li>
         @endcan
-        @can('Access Assgin RFID')
+        @can('Access RFID')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('admin_assgin_rfid') }}">
               <span class="icon-bg"><i class="mdi mdi-credit-card-plus menu-icon"></i></span>
@@ -119,7 +119,7 @@
       @endcanany
       
       {{-- Forms --}}
-      @canany(['Access Enquiry Form', 'Access Nightout Form', 'Access Local Register Form','Access Student Come From Home Form'])
+      @canany(['Access Enquiry Form', 'Access Student Local Register Form', 'Access Student Night Out Form','Access Student Come From Home Form'])
         <li class="nav-item nav-category">Forms</li>
         @can('Access Enquiry Form')
           <li class="nav-item">
@@ -129,7 +129,7 @@
             </a>
           </li>
         @endcan
-        @can('Access Nightout Form')
+        @can('Access Student Night Out Form')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('all_student_night_out') }}">
               <span class="icon-bg"><i class="mdi mdi-message-alert menu-icon"></i></span>
@@ -137,7 +137,7 @@
             </a>
           </li>
         @endcan
-        @can('Access Local Register Form')
+        @can('Access Student Local Register Form')
           <li class="nav-item">
             <a class="nav-link" href="{{ route('all_student_local_register') }}">
               <span class="icon-bg"><i class="mdi mdi-message-processing menu-icon"></i></span>

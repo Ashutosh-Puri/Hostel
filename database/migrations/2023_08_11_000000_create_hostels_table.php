@@ -19,7 +19,7 @@ return new class extends Migration
             $table->tinyInteger('status')->default('0')->comment('0-active ,1-inactive');
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
-            $table->foreign('college_id')->references('id')->on('colleges')->onDelete('cascade');
+            $table->foreign('college_id')->references('id')->on('colleges')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

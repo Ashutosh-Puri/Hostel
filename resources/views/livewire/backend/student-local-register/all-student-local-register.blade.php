@@ -179,7 +179,7 @@
                                 <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
                                 <span class="visually-hidden">Loading...</span>
                             </a>
-                            @can('Add Student Local Register')
+                            @can('Add Student Local Register Form')
                             <a wire:loading.attr="disabled" wire:click="setmode('add')"
                                 class="btn btn-success ">
                                 Add Local Register Entry<span class="btn-label-right mx-2"><i
@@ -280,9 +280,9 @@
                                             <span class="badge bg-danger text-white">Done</span>
                                             @endif
                                         </td>
-                                        @can('Edit Student Local Register')
+                                        @can('Edit Student Local Register Form')
                                         <td>
-                                            @can('Edit Student Local Register')
+                                            @can('Edit Student Local Register Form')
                                             <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})"
                                                 class="btn btn-success "><i
                                                     class="mdi mdi-lead-pencil"></i></a>
@@ -297,7 +297,7 @@
                                                 <i class="mdi mdi-thumb-up"></i>
                                             </a>
                                             @endif
-                                            @endcan @can('Delete Student Local Register')
+                                            @endcan @can('Delete Student Local Register Form')
                                             @if ($item->deleted_at)
                                             <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
                                             <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
@@ -306,10 +306,9 @@
                                         @endif
                                             @endcan
                                         </td>
-                                        @elsecan('Delete Student Local
-                                        Register')
+                                        @elsecan('Delete Student Local Register Form')
                                         <td>
-                                            @can('Edit Student Local Register')
+                                            @can('Edit Student Local Register Form')
                                             <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})"
                                                 class="btn btn-success "><i
                                                     class="mdi mdi-lead-pencil"></i></a>
@@ -324,7 +323,7 @@
                                                 <i class="mdi mdi-thumb-up"></i>
                                             </a>
                                             @endif
-                                            @endcan @can('Delete Student Local Register')
+                                            @endcan @can('Delete Student Local Register Form')
                                             @if ($item->deleted_at)
                                                                 <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
                                                                 <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>

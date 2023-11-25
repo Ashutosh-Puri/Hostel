@@ -22,9 +22,9 @@ return new class extends Migration
             $table->tinyInteger('status')->nullable()->default('0')->comment('0-Not Paid,1-Paid,2-Cancel');
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
-            $table->foreign('academic_year_id')->references('id')->on('academic_years')->onDelete('cascade');
-            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
-            $table->foreign('admission_id')->references('id')->on('admissions')->onDelete('cascade');
+            $table->foreign('academic_year_id')->references('id')->on('academic_years')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('student_id')->references('id')->on('students')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('admission_id')->references('id')->on('admissions')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

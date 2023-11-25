@@ -280,7 +280,9 @@
                                             <th>Fine Name</th>
                                             <th>Amount</th>
                                             <th>Status</th>
+                                            @can('Pay Student Fine')
                                             <th>Paymet</th>
+                                            @endcan
                                             @can('Edit Student Fine')
                                                 <th>Action</th>
                                             @elsecan('Delete Student Fine')
@@ -307,6 +309,7 @@
                                                         <span class="badge bg-primary text-white">Refunded</span>
                                                     @endif
                                                 </td>
+                                                @can('Pay Student Fine')
                                                 <td>
                                                     @if ($item->status==0)                    
                                                         @if ($item->amount >0)
@@ -323,7 +326,8 @@
                                                         @endif
                                                     @endif
                                                 </td>
-                                                @can('View Student Fine')
+                                                @endcan
+                                                @can('View Student Fine Reciept')
                                                     <td>
                                                         @can('View Student Fine Reciept')
                                                             <a   target="_blank"  class="btn btn-warning " href="{{ route('view_fine_recipet', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
