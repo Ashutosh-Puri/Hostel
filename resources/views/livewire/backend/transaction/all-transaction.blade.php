@@ -32,7 +32,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
                                     <option value="10">10</option>
                                     <option value="50">50</option>
                                     <option value="100">100</option>
@@ -42,19 +42,19 @@
                                 <span class="col-12 col-md-10 px-1">
                                     <span class="row">
                                         <div class="col-12 col-md-3">
-                                            <input class="w-100 py-1" wire:model.debounce.500ms="student_name" type="search" placeholder="Student Name">
+                                            <input class="w-100 py-1" wire:model.live.debounce.500ms="student_name" type="search" placeholder="Student Name">
                                         </div>
                                         <div class="col-12 col-md-3">
-                                            <input class="w-100 py-1" wire:model.debounce.500ms="payment_id" type="search" placeholder="Payment ID">
+                                            <input class="w-100 py-1" wire:model.live.debounce.500ms="payment_id" type="search" placeholder="Payment ID">
                                         </div>
                                         <div class="col-12 col-md-2">
-                                            <input class="w-100  py-1" wire:model.debounce.500ms="refund_id" type="search" placeholder="Refund ID">
+                                            <input class="w-100  py-1" wire:model.live.debounce.500ms="refund_id" type="search" placeholder="Refund ID">
                                         </div>
                                         <div class="col-12 col-md-2">
-                                            <input class="w-100  py-1" wire:model.debounce.500ms="order_id" type="search" placeholder="Order ID">
+                                            <input class="w-100  py-1" wire:model.live.debounce.500ms="order_id" type="search" placeholder="Order ID">
                                         </div>
                                         <div class="col-12 col-md-2">
-                                            <select class="py-1"  wire:model="status">
+                                            <select class="py-1"  wire:model.live="status">
                                                
                                                 <option value="0">Created</option>
                                                 <option value="1">Authorized</option>

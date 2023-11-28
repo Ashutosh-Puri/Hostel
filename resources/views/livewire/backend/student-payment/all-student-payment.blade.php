@@ -28,7 +28,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="academic_year_id" class="form-label">Select Academic Year</label>
-                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
+                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model.live="academic_year_id" >
                                                 <option value="" hidden>Select Academic Year</option>
                                                 @foreach ($academic_years as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
@@ -44,7 +44,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="admission_id" class="form-label">Select Admission</label>
-                                            <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model="admission_id" >
+                                            <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model.live="admission_id" >
                                                 <option value="" hidden>Select Admission</option>
                                                 @foreach ($admissions as $item1)
                                                     <option  value="{{ $item1->id }}">Admisstion ID : {{ $item1->id }} --> Year : {{  $item1->AcademicYear->year }} --> Student Name : {{ $item1->Student->name==null?$item1->Student->username:$item1->Student->name; }} </option>
@@ -60,7 +60,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="student_id" class="form-label">Select Student</label>
-                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model="student_id" >
+                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.live="student_id" >
                                                 <option value="" hidden>Select Student</option>
                                                 @foreach ($students as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->name!=null? $item1->name: $item1->username; }} </option>
@@ -76,7 +76,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="seated_id" class="form-label">Select Seated</label>
-                                            <select class="form-select @error('seated_id') is-invalid @enderror" id="seated_id" wire:model="seated_id" >
+                                            <select class="form-select @error('seated_id') is-invalid @enderror" id="seated_id" wire:model.live="seated_id" >
                                                 <option value="" hidden>Select Seated</option>
                                                 @foreach ($seateds as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->seated }} Seated</option>
@@ -92,8 +92,8 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="totalamount" class="form-label">Total Amount</label>
-                                            <label for="totalamount"class="form-control @error('totalamount') is-invalid @enderror" wire:model="totalamount">{{ isset($totalamount)?$totalamount.' Rs.':''; }} </label>
-                                            {{-- <input type="text" min="0" @if (1) readonly @endif class="form-control readonly @error('totalamount') is-invalid @enderror" wire:model="totalamount" value="{{ old('totalamount') }}" id="totalamount" placeholder="Enter Fee Amount"> --}}
+                                            <label for="totalamount"class="form-control @error('totalamount') is-invalid @enderror" wire:model.live="totalamount">{{ isset($totalamount)?$totalamount.' Rs.':''; }} </label>
+                                            {{-- <input type="text" min="0" @if (1) readonly @endif class="form-control readonly @error('totalamount') is-invalid @enderror" wire:model.live="totalamount" value="{{ old('totalamount') }}" id="totalamount" placeholder="Enter Fee Amount"> --}}
                                             @error('totalamount')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -104,7 +104,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="deposite" class="form-label">Deposite</label>
-                                            <input type="text" min="0"  class="form-control readonly @error('deposite') is-invalid @enderror" wire:model="deposite" value="{{ old('deposite') }}" id="deposite" placeholder="Enter Fee Amount">
+                                            <input type="text" min="0"  class="form-control readonly @error('deposite') is-invalid @enderror" wire:model.live="deposite" value="{{ old('deposite') }}" id="deposite" placeholder="Enter Fee Amount">
                                             @error('deposite')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -147,7 +147,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="academic_year_id" class="form-label">Select Academic Year</label>
-                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
+                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model.live="academic_year_id" >
                                                 <option value="" hidden>Select Academic Year</option>
                                                 @foreach ($academic_years as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
@@ -163,7 +163,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="admission_id" class="form-label">Select Admission</label>
-                                            <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model="admission_id" >
+                                            <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model.live="admission_id" >
                                                 <option value="" hidden>Select Admission</option>
                                                 @foreach ($admissions as $item1)
                                                     <option  value="{{ $item1->id }}">Admisstion ID : {{ $item1->id }} --> Year : {{  $item1->AcademicYear->year }} --> Student Name : {{ $item1->Student->name==null?$item1->Student->username:$item1->Student->name; }} </option>
@@ -179,7 +179,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="student_id" class="form-label">Select Student</label>
-                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model="student_id" >
+                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.live="student_id" >
                                                 <option value="" hidden>Select Student</option>
                                                 @foreach ($students as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->name!=null? $item1->name: $item1->username; }} </option>
@@ -195,7 +195,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="seated_id" class="form-label">Select Seated</label>
-                                            <select class="form-select @error('seated_id') is-invalid @enderror" id="seated_id" wire:model="seated_id" >
+                                            <select class="form-select @error('seated_id') is-invalid @enderror" id="seated_id" wire:model.live="seated_id" >
                                                 <option value="" hidden>Select Seated</option>
                                                 @foreach ($seateds as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->seated }} Seated</option>
@@ -211,8 +211,8 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="totalamount" class="form-label">Total Amount</label>
-                                            <label for="totalamount"class="form-control @error('totalamount') is-invalid @enderror" wire:model="totalamount">{{ isset($totalamount)?$totalamount.' Rs.':''; }} </label>
-                                            {{-- <input type="text" min="0" class="form-control @error('totalamount') is-invalid @enderror" wire:model="totalamount" value="{{ old('totalamount') }}" id="totalamount" placeholder="Enter Fee Amount"> --}}
+                                            <label for="totalamount"class="form-control @error('totalamount') is-invalid @enderror" wire:model.live="totalamount">{{ isset($totalamount)?$totalamount.' Rs.':''; }} </label>
+                                            {{-- <input type="text" min="0" class="form-control @error('totalamount') is-invalid @enderror" wire:model.live="totalamount" value="{{ old('totalamount') }}" id="totalamount" placeholder="Enter Fee Amount"> --}}
                                             @error('totalamount')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -223,7 +223,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="deposite" class="form-label">Deposite</label>
-                                            <input type="text" min="0"  class="form-control readonly @error('deposite') is-invalid @enderror" wire:model="deposite" value="{{ old('deposite') }}" id="deposite" placeholder="Enter Fee Amount">
+                                            <input type="text" min="0"  class="form-control readonly @error('deposite') is-invalid @enderror" wire:model.live="deposite" value="{{ old('deposite') }}" id="deposite" placeholder="Enter Fee Amount">
                                             @error('deposite')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -276,7 +276,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -290,13 +290,13 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input class="w-100" wire:model.debounce.1000ms="admission_name" type="search" placeholder="Admission ID">
+                                                <input class="w-100" wire:model.live.debounce.1000ms="admission_name" type="search" placeholder="Admission ID">
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input class="w-100" wire:model.debounce.1000ms="year" type="search" placeholder="Academic Year">
+                                                <input class="w-100" wire:model.live.debounce.1000ms="year" type="search" placeholder="Academic Year">
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input class="w-100" wire:model.debounce.1000ms="student_name" type="search" placeholder="Student Name">
+                                                <input class="w-100" wire:model.live.debounce.1000ms="student_name" type="search" placeholder="Student Name">
                                             </div>
                                         </span>
                                     </span>
@@ -383,11 +383,11 @@
                                                         @can('Edit Student Payment')
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
                                                             @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
                                                             @elseif ($item->status==2)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-warning "> <i class="mdi mdi-clock"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-warning "> <i class="mdi mdi-clock"></i> </a>
                                                             @elseif ($item->status==0)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
                                                             @endif
                                                         @endcan
                                                         @can('Delete Student Payment')
@@ -410,11 +410,11 @@
                                                         @can('Edit Student Payment')
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
                                                             @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
                                                             @elseif ($item->status==2)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-warning "> <i class="mdi mdi-clock"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-warning "> <i class="mdi mdi-clock"></i> </a>
                                                             @elseif ($item->status==0)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
                                                             @endif
                                                         @endcan
                                                         @can('Delete Student Payment')
@@ -437,11 +437,11 @@
                                                         @can('Edit Student Payment')
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
                                                             @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
                                                             @elseif ($item->status==2)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-warning "> <i class="mdi mdi-clock"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-warning "> <i class="mdi mdi-clock"></i> </a>
                                                             @elseif ($item->status==0)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
                                                             @endif
                                                         @endcan
                                                         @can('Delete Student Payment')

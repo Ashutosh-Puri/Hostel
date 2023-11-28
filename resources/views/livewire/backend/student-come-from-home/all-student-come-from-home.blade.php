@@ -28,7 +28,7 @@
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3 form-group">
                                         <label for="come_time" class="form-label">Come Time</label>
-                                        <input type="time" wire:model="come_time"
+                                        <input type="time" wire:model.live="come_time"
                                             class="form-control @error('come_time') is-invalid @enderror " id="time"
                                             placeholder="Enter Come Time" />
                                         @error('come_time')
@@ -77,7 +77,7 @@
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3 form-group">
                                         <label for="come_time" class="form-label">Come Time</label>
-                                        <input type="time" wire:model="come_time"
+                                        <input type="time" wire:model.live="come_time"
                                             class="form-control @error('come_time') is-invalid @enderror " id="time"
                                             placeholder="Enter Come Time" />
                                         @error('come_time')
@@ -136,7 +136,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <label class="col-4 col-md-1 py-1">Per Page</label>
-                                <select class="col-4 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                <select class="col-4 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
                                     <option value="10">10</option>
                                     <option value="50">50</option>
                                     <option value="100">100</option>
@@ -150,15 +150,15 @@
                                             <label class="w-100 p-1 text-md-end">Search</label>
                                         </div>
                                         <div class="col-12 col-md-3">
-                                            <input class="w-100" wire:model.debounce.1000ms="year" type="search"
+                                            <input class="w-100" wire:model.live.debounce.1000ms="year" type="search"
                                                 placeholder="Academic Year" />
                                         </div>
                                         <div class="col-12 col-md-3">
-                                            <input class="w-100" wire:model.debounce.1000ms="class_name" type="search"
+                                            <input class="w-100" wire:model.live.debounce.1000ms="class_name" type="search"
                                                 placeholder="Class Name" />
                                         </div>
                                         <div class="col-12 col-md-3">
-                                            <input class="w-100" wire:model.debounce.1000ms="student_name" type="search"
+                                            <input class="w-100" wire:model.live.debounce.1000ms="student_name" type="search"
                                                 placeholder="Student Name" />
                                         </div>
                                     </div>
@@ -229,12 +229,12 @@
                                                 class="btn btn-success "><i
                                                     class="mdi mdi-lead-pencil"></i></a>
                                             @if ($item->status == 1)
-                                            <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
+                                            <a wire:loading.attr="disabled" wire:click="update_status({{ $item->id }})"
                                                 class="btn btn-danger ">
                                                 <i class="mdi mdi-thumb-down"></i>
                                             </a>
                                             @elseif ($item->status == 0)
-                                            <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
+                                            <a wire:loading.attr="disabled" wire:click="update_status({{ $item->id }})"
                                                 class="btn btn-success ">
                                                 <i class="mdi mdi-thumb-up"></i>
                                             </a>
@@ -255,12 +255,12 @@
                                                 class="btn btn-success "><i
                                                     class="mdi mdi-lead-pencil"></i></a>
                                             @if ($item->status == 1)
-                                            <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
+                                            <a wire:loading.attr="disabled" wire:click="update_status({{ $item->id }})"
                                                 class="btn btn-danger ">
                                                 <i class="mdi mdi-thumb-down"></i>
                                             </a>
                                             @elseif ($item->status == 0)
-                                            <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
+                                            <a wire:loading.attr="disabled" wire:click="update_status({{ $item->id }})"
                                                 class="btn btn-success ">
                                                 <i class="mdi mdi-thumb-up"></i>
                                             </a>

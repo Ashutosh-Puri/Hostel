@@ -28,7 +28,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="academic_year_id" class="form-label">Select Academic Year</label>
-                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
+                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model.live="academic_year_id" >
                                                 <option value="" hidden>Select Academic Year</option>
                                                 @foreach ($academic_years as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
@@ -44,7 +44,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="name" class="form-label">Fine Name</label>
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model.live="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
                                             @error('name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -55,7 +55,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="amount" class="form-label">Fine Amount</label>
-                                            <input type="text" min="0" class="form-control @error('amount') is-invalid @enderror" wire:model="amount" value="{{ old('amount') }}" id="amount" placeholder="Enter Amount">
+                                            <input type="text" min="0" class="form-control @error('amount') is-invalid @enderror" wire:model.live="amount" value="{{ old('amount') }}" id="amount" placeholder="Enter Amount">
                                             @error('amount')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -66,7 +66,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group ">
                                             <label for="status" class="form-label mb-3">Status</label><br>
-                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
+                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model.live="status" >
                                             <label class="form-check-label m-1" for="class_status">In-Active Fine</label>
                                             @error('status')
                                                 <div class="invalid-feedback">
@@ -110,7 +110,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="academic_year_id" class="form-label">Select Academic Year</label>
-                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
+                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model.live="academic_year_id" >
                                                 <option value="" hidden>Select Academic Year</option>
                                                 @foreach ($academic_years as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
@@ -126,7 +126,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="name" class="form-label">Fine Name</label>
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model.live="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
                                             @error('name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -137,7 +137,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="amount" class="form-label">Fine Amount</label>
-                                            <input type="text" min="0" class="form-control @error('amount') is-invalid @enderror" wire:model="amount" value="{{ old('amount') }}" id="amount" placeholder="Enter Amount">
+                                            <input type="text" min="0" class="form-control @error('amount') is-invalid @enderror" wire:model.live="amount" value="{{ old('amount') }}" id="amount" placeholder="Enter Amount">
                                             @error('amount')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -148,7 +148,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group ">
                                             <label for="status" class="form-label mb-3">Status</label><br>
-                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
+                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model.live="status" >
                                             <label class="form-check-label m-1" for="class_status">In-Active Fine</label>
                                             @error('status')
                                                 <div class="invalid-feedback">
@@ -202,7 +202,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -218,10 +218,10 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                                 </div>
                                                 <div class="col-12 col-md-3">
-                                                    <input class="w-100" wire:model.debounce.1000ms="year" type="search" placeholder="Academic Year">
+                                                    <input class="w-100" wire:model.live.debounce.1000ms="year" type="search" placeholder="Academic Year">
                                                 </div>
                                                 <div class="col-12 col-md-3">
-                                                    <input class="w-100" wire:model.debounce.1000ms="fine_name" type="search" placeholder="Fine Name">
+                                                    <input class="w-100" wire:model.live.debounce.1000ms="fine_name" type="search" placeholder="Fine Name">
                                                 </div>
                                             </div>
                                     </span>
@@ -262,9 +262,9 @@
                                                         @can('Edit Fine')
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
                                                             @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
                                                             @else
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
                                                             @endif
                                                         @endcan
                                                         @can('Delete Fine')
@@ -281,9 +281,9 @@
                                                         @can('Edit Fine')
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
                                                             @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
                                                             @else
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
                                                             @endif
                                                         @endcan
                                                         @can('Delete Fine')

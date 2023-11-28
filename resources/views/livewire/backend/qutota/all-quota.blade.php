@@ -28,7 +28,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="academic_year_id" class="form-label">Select Academic Year</label>
-                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
+                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model.live="academic_year_id" >
                                                 <option value="" hidden>Select Academic Year</option>
                                                 @foreach ($academic_years as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
@@ -44,7 +44,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="class_id" class="form-label">Select Class</label>
-                                            <select class="form-select @error('class_id') is-invalid @enderror" id="class_id" wire:model="class_id" >
+                                            <select class="form-select @error('class_id') is-invalid @enderror" id="class_id" wire:model.live="class_id" >
                                                 <option value="" hidden>Select Class</option>
                                                 @foreach ($classes as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
@@ -60,7 +60,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="max_capacity" class="form-label">Max Capacity</label>
-                                            <input type="number" min="1" class="form-control @error('max_capacity') is-invalid @enderror" wire:model="max_capacity" value="{{ old('max_capacity') }}" id="max_capacity" placeholder="Enter Max Capacity ">
+                                            <input type="number" min="1" class="form-control @error('max_capacity') is-invalid @enderror" wire:model.live="max_capacity" value="{{ old('max_capacity') }}" id="max_capacity" placeholder="Enter Max Capacity ">
                                             @error('max_capacity')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -71,7 +71,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group ">
                                             <label for="status" class="form-label mb-3">Status</label><br>
-                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
+                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model.live="status" >
                                             <label class="form-check-label m-1" for="class_status">In-Active Quota</label>
                                             @error('status')
                                                 <div class="invalid-feedback">
@@ -115,7 +115,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="academic_year_id" class="form-label">Select Academic Year</label>
-                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
+                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model.live="academic_year_id" >
                                                 <option value="" hidden>Select Academic Year</option>
                                                 @foreach ($academic_years as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
@@ -131,7 +131,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="class_id" class="form-label">Select Class</label>
-                                            <select class="form-select @error('class_id') is-invalid @enderror" id="class_id" wire:model="class_id" >
+                                            <select class="form-select @error('class_id') is-invalid @enderror" id="class_id" wire:model.live="class_id" >
                                                 <option value="" hidden>Select Class</option>
                                                 @foreach ($classes as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
@@ -147,7 +147,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="max_capacity" class="form-label">Max Capacity</label>
-                                            <input type="number" min="1" class="form-control @error('max_capacity') is-invalid @enderror" wire:model="max_capacity" value="{{ old('max_capacity') }}" id="max_capacity" placeholder="Enter Max Capacity ">
+                                            <input type="number" min="1" class="form-control @error('max_capacity') is-invalid @enderror" wire:model.live="max_capacity" value="{{ old('max_capacity') }}" id="max_capacity" placeholder="Enter Max Capacity ">
                                             @error('max_capacity')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -158,7 +158,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group ">
                                             <label for="status" class="form-label mb-3">Status</label><br>
-                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
+                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model.live="status" >
                                             <label class="form-check-label m-1" for="class_status">In-Active Quota</label>
                                             @error('status')
                                                 <div class="invalid-feedback">
@@ -212,7 +212,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -228,10 +228,10 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                                 </div>
                                                 <div class="col-12 col-md-3">
-                                                    <input class="w-100" wire:model.debounce.1000ms="year" type="search" placeholder="Academic Year">
+                                                    <input class="w-100" wire:model.live.debounce.1000ms="year" type="search" placeholder="Academic Year">
                                                 </div>
                                                 <div class="col-12 col-md-3">
-                                                    <input class="w-100"  wire:model.debounce.1000ms="class_name" type="search" placeholder="class Name">
+                                                    <input class="w-100"  wire:model.live.debounce.1000ms="class_name" type="search" placeholder="class Name">
                                                 </div>
                                             </div>
                                     </span>
@@ -272,9 +272,9 @@
                                                         @can('Edit Quota')
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
                                                             @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
                                                             @else
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
                                                             @endif
                                                         @endcan
                                                         @can('Delete Quota')
@@ -291,9 +291,9 @@
                                                         @can('Edit Quota')
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
                                                             @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
                                                             @else
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
                                                             @endif
                                                         @endcan
                                                         @can('Delete Quota')

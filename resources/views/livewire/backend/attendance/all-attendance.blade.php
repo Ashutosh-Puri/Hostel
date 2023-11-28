@@ -28,7 +28,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="student_id" class="form-label">Select Student</label>
-                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model="student_id">
+                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.live="student_id">
                                                 <option  hidden value="">Select Students</option>
                                                 @foreach($students as $item2)
                                                     <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name!=null?$item2->name: $item2->username; }}</option>
@@ -44,7 +44,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="rfid" class="form-label">RFID</label>
-                                            <input type="text" class="form-control @error('rfid') is-invalid @enderror"  wire:model="rfid" value="{{ old('rfid') }}" id="rfid" placeholder="Enter RFID">
+                                            <input type="text" class="form-control @error('rfid') is-invalid @enderror"  wire:model.live="rfid" value="{{ old('rfid') }}" id="rfid" placeholder="Enter RFID">
                                             @error('rfid')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -94,7 +94,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="student_id" class="form-label">Select Student</label>
-                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model="student_id">
+                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.live="student_id">
                                                 <option  hidden value="">Select Students</option>
                                                 @foreach($students as $item2)
                                                     <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name!=null?$item2->name: $item2->username; }}</option>
@@ -110,7 +110,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="rfid" class="form-label">RFID</label>
-                                            <input type="text" class="form-control @error('rfid') is-invalid @enderror"  wire:model="rfid" value="{{ old('rfid') }}" id="rfid" placeholder="Enter RFID">
+                                            <input type="text" class="form-control @error('rfid') is-invalid @enderror"  wire:model.live="rfid" value="{{ old('rfid') }}" id="rfid" placeholder="Enter RFID">
                                             @error('rfid')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -169,7 +169,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                    <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -182,13 +182,13 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input class="w-100 py-1" wire:model.debounce.1000ms="s_name" type="search" placeholder="Student Name">
+                                                <input class="w-100 py-1" wire:model.live.debounce.1000ms="s_name" type="search" placeholder="Student Name">
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input class="w-100 py-1" wire:model.debounce.1000ms="s_rfid" type="search" placeholder="Student RFID">
+                                                <input class="w-100 py-1" wire:model.live.debounce.1000ms="s_rfid" type="search" placeholder="Student RFID">
                                             </div>
                                             <div class="col-6 col-md-3">
-                                                <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="sortby_feild">
+                                                <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.live="sortby_feild">
                                                     <option value="" hidden>Sort By</option>
                                                     <option value="student_id">Name</option>
                                                     <option value="rfid">RFID</option>
@@ -196,7 +196,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-4 col-md-1">
-                                                <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="sortby_order">
+                                                <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.live="sortby_order">
                                                     <option value="ASC">ASC</option>
                                                     <option value="DESC">DESC</option>
                                                 </select>

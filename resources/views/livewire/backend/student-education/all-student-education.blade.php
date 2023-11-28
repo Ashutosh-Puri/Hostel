@@ -29,7 +29,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="academic_year_id" class="form-label">Select Academic Year</label>
-                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
+                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model.live="academic_year_id" >
                                                 <option value="" hidden>Select Academic Year</option>
                                                 @foreach ($academicyears as $item1)
                                                 <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
@@ -45,7 +45,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="admission_id" class="form-label">Select Student </label>
-                                            <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model="admission_id" >
+                                            <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model.live="admission_id" >
                                                 <option value="" hidden>Select Student</option>
                                                 @foreach ($admissions as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->Student->name}} </option>
@@ -61,7 +61,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="last_class_id" class="form-label">Select Last Class</label>
-                                            <select class="form-select @error('last_class_id') is-invalid @enderror" id="last_class_id" wire:model="last_class_id" >
+                                            <select class="form-select @error('last_class_id') is-invalid @enderror" id="last_class_id" wire:model.live="last_class_id" >
                                                 <option value="" hidden>Select Last Class</option>
                                                 @foreach ($classes as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
@@ -77,7 +77,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="sgpa" class="form-label">SGPA</label>
-                                            <input type="text" min="0" class="form-control @error('sgpa') is-invalid @enderror" wire:model="sgpa" value="{{ old('sgpa') }}" id="sgpa" placeholder="Enter SGPA">
+                                            <input type="text" min="0" class="form-control @error('sgpa') is-invalid @enderror" wire:model.live="sgpa" value="{{ old('sgpa') }}" id="sgpa" placeholder="Enter SGPA">
                                             @error('sgpa')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -88,7 +88,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="percentage" class="form-label">Percentage</label>
-                                            <input type="text" min="0" class="form-control @error('percentage') is-invalid @enderror" wire:model="percentage" value="{{ old('percentage') }}" id="percentage" placeholder="Enter Percentage">
+                                            <input type="text" min="0" class="form-control @error('percentage') is-invalid @enderror" wire:model.live="percentage" value="{{ old('percentage') }}" id="percentage" placeholder="Enter Percentage">
                                             @error('percentage')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -132,7 +132,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="academic_year_id" class="form-label">Select Academic Year</label>
-                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
+                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model.live="academic_year_id" >
                                                 <option value="" hidden>Select Academic Year</option>
                                                 @foreach ($academicyears as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
@@ -148,7 +148,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="admission_id" class="form-label">Select Student </label>
-                                            <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model="admission_id" >
+                                            <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model.live="admission_id" >
                                                 <option value="" hidden>Select Student</option>
                                                 @foreach ($admissions as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->Student->name}} </option>
@@ -164,7 +164,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="last_class_id" class="form-label">Select Last Class</label>
-                                            <select class="form-select @error('last_class_id') is-invalid @enderror" id="last_class_id" wire:model="last_class_id" >
+                                            <select class="form-select @error('last_class_id') is-invalid @enderror" id="last_class_id" wire:model.live="last_class_id" >
                                                 <option value="" hidden>Select Last Class</option>
                                                 @foreach ($classes as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
@@ -180,7 +180,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="sgpa" class="form-label">SGPA</label>
-                                            <input type="text" min="0" class="form-control @error('sgpa') is-invalid @enderror" wire:model="sgpa" value="{{ old('sgpa') }}" id="sgpa" placeholder="Enter SGPA">
+                                            <input type="text" min="0" class="form-control @error('sgpa') is-invalid @enderror" wire:model.live="sgpa" value="{{ old('sgpa') }}" id="sgpa" placeholder="Enter SGPA">
                                             @error('sgpa')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -191,7 +191,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="percentage" class="form-label">Percentage</label>
-                                            <input type="text" min="0" class="form-control @error('percentage') is-invalid @enderror" wire:model="percentage" value="{{ old('percentage') }}" id="percentage" placeholder="Enter Percentage">
+                                            <input type="text" min="0" class="form-control @error('percentage') is-invalid @enderror" wire:model.live="percentage" value="{{ old('percentage') }}" id="percentage" placeholder="Enter Percentage">
                                             @error('percentage')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -244,7 +244,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -259,16 +259,16 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                                 </div>
                                                 <div class="col-12 col-md-2 ">
-                                                    <input  class="w-100" wire:model.debounce.1000ms="ad" type="search" placeholder="Admission ID ">
+                                                    <input  class="w-100" wire:model.live.debounce.1000ms="ad" type="search" placeholder="Admission ID ">
                                                 </div>
                                                 <div class="col-12 col-md-2">
-                                                    <input  class="w-100" wire:model.debounce.1000ms="a" type="search" placeholder="Academic Year">
+                                                    <input  class="w-100" wire:model.live.debounce.1000ms="a" type="search" placeholder="Academic Year">
                                                 </div>
                                                 <div class="col-12 col-md-3">
-                                                    <input class="w-100"  wire:model.debounce.1000ms="s" type="search" placeholder="Student Name">
+                                                    <input class="w-100"  wire:model.live.debounce.1000ms="s" type="search" placeholder="Student Name">
                                                 </div>
                                                 <div class="col-12 col-md-3">
-                                                    <input class="w-100"  wire:model.debounce.1000ms="c" type="search" placeholder="Class Name">
+                                                    <input class="w-100"  wire:model.live.debounce.1000ms="c" type="search" placeholder="Class Name">
                                                 </div>
                                             </div>
                                     </span>

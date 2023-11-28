@@ -41,7 +41,7 @@
     <script>
         document.addEventListener('livewire:load', function () {
             setInterval(function () {
-                Livewire.emit('restart');
+                Livewire.dispatch('restart');
             }, 15000);
         });
     </script>

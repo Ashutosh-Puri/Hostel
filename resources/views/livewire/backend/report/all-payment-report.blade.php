@@ -40,7 +40,7 @@
                 <div class="card-header">
                     <div class="row">
                         <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                        <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                        <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
                             <option value="10">10</option>
                             <option value="50">50</option>
                             <option value="100">100</option>
@@ -52,7 +52,7 @@
                                 <div class="col-6 col-md-1  ">
                                 </div>
                                 <div class="col-6 col-md-1  ">
-                                    <select class="w-100 py-1"  wire:loading.attr="disabled" wire:model="year_id">
+                                    <select class="w-100 py-1"  wire:loading.attr="disabled" wire:model.live="year_id">
                                         <option value="" hidden>Year</option>
                                         @foreach ($years as $y) 
                                             <option value="{{ $y->id }}">{{ $y->year }}</option>
@@ -60,7 +60,7 @@
                                     </select>
                                 </div>
                                 <div class="col-6 col-md-2 ">
-                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="class_id">
+                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.live="class_id">
                                         <option value="" hidden>Class</option>
                                         @foreach ($class as $y) 
                                             <option value="{{ $y->id }}">{{ $y->name }}</option>
@@ -68,17 +68,17 @@
                                     </select>
                                 </div>
                                 <div class="col-6 col-md-2 ">
-                                    <input  class=" w-100 py-1"type="search" wire:model="student_name" id="" placeholder="Student Name">
+                                    <input  class=" w-100 py-1"type="search" wire:model.live="student_name" id="" placeholder="Student Name">
                                 </div>
                                 <div class="col-6 col-md-2">
-                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="gender">
+                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.live="gender">
                                         <option value="" hidden>Gender</option>
                                         <option value="0">Male</option>
                                         <option value="1">Female</option>
                                     </select>
                                 </div>
                                 <div class="col-6 col-md-2">
-                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="payment">
+                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.live="payment">
                                         <option value="" hidden>Payemnt</option>
                                         <option value="0">Nill</option>
                                         <option value="1">Pay</option>
@@ -86,7 +86,7 @@
                                     </select>
                                 </div>
                                 <div class="col-6 col-md-1">
-                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="payment_status">
+                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.live="payment_status">
                                         <option value="" hidden>Status</option>
                                         <option value="0">Not Paid</option>
                                         <option value="1">Paid</option>

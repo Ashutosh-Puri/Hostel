@@ -32,7 +32,7 @@
                                 <div class="col-12 col-md-5">
                                     <div class="mb-3 form-group">
                                         <label for="s_id" class="form-label">Enter Student ID</label>
-                                        <input type="text" min="0"  class="form-control @error('s_id') is-invalid @enderror" wire:model="s_id" value="{{ old('s_id') }}" id="s_id" placeholder="Enter Student ID">
+                                        <input type="text" min="0"  class="form-control @error('s_id') is-invalid @enderror" wire:model.live="s_id" value="{{ old('s_id') }}" id="s_id" placeholder="Enter Student ID">
                                         @error('s_id')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -46,7 +46,7 @@
                                 <div class="col-12 col-md-5 ">
                                     <div class="mb-3 form-group">
                                         <label for="a_id" class="form-label">Enter Admission ID</label>
-                                        <input type="text" min="0"  class="form-control @error('a_id') is-invalid @enderror" wire:model.debounce.2000ms="a_id" value="{{ old('a_id') }}" id="a_id" placeholder="Enter Admission ID">
+                                        <input type="text" min="0"  class="form-control @error('a_id') is-invalid @enderror" wire:model.live.debounce.2000ms="a_id" value="{{ old('a_id') }}" id="a_id" placeholder="Enter Admission ID">
                                         @error('a_id')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -60,7 +60,7 @@
                                 <div class="col-12 col-md-4">
                                     <div class="mb-3 form-group">
                                         <label for="student_name" class="form-label">Student ID</label>
-                                        <input disabled readonly type="text" class=" bg-dark  form-control @error('student_id') is-invalid @enderror"  wire:model.debounce.2000ms="student_id" >
+                                        <input disabled readonly type="text" class=" bg-dark  form-control @error('student_id') is-invalid @enderror"  wire:model.live.debounce.2000ms="student_id" >
                                         @error('student_id')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -80,7 +80,7 @@
                                     @endif
                                     <div class="mb-3 form-group" >
                                         <label  for="student_rfid" class="form-label">New RFID</label>
-                                        <input disabled readonly type="text"  class="bg-dark  form-control @error('rfid') is-invalid @enderror"  wire:model="rfid" >
+                                        <input disabled readonly type="text"  class="bg-dark  form-control @error('rfid') is-invalid @enderror"  wire:model.live="rfid" >
                                         @error('rfid')
                                             <div class="invalid-feedback">
                                                 {{ $message }}

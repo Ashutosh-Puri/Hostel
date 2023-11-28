@@ -22,11 +22,11 @@
                 <div class="col-12">
                     <div class="card ">
                         <div class="card-body">
-                            <form  wire:submit.prevent="save" method="post" action="" id="myForm">
+                            <form  wire:submit="save" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="form-group">
                                     <label for="role_id" class="form-label">All Roles</label>
-                                    <select class="form-select @error('role_id') is-invalid @enderror" id="role_id" wire:model="role_id">
+                                    <select class="form-select @error('role_id') is-invalid @enderror" id="role_id" wire:model.live="role_id">
                                         <option hidden value="" >Select Role</option>
                                         @foreach ($roles as $role)
                                             <option value="{{ $role->id }}">{{ $role->name }}</option>
@@ -63,7 +63,7 @@
                                                 @endphp
                                                 @foreach ($perm as $permissionitem)
                                                 <div class="form-group form-check mb-3 form-check-primary">
-                                                    <input class="form-check-input @error('permission') is-invalid @enderror" wire:model="permission.{{ $permissionitem->id }}" type="checkbox" value="{{ $permissionitem->id }}" id="customckeck{{ $permissionitem->id }}">
+                                                    <input class="form-check-input @error('permission') is-invalid @enderror" wire:model.live="permission.{{ $permissionitem->id }}" type="checkbox" value="{{ $permissionitem->id }}" id="customckeck{{ $permissionitem->id }}">
                                                     <label class="form-check-label" for="customckeck{{ $permissionitem->id }}">{{ $permissionitem->name }}</label>
                                                     @error('permission.{{ $permissionitem->id }}')
                                                         <div class="invalid-feedback">
@@ -107,7 +107,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
+                            <form  wire:submit="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="mb-3 form-group">
                                     <label for="role" class="form-label">Role</label>
@@ -135,7 +135,7 @@
                                             <td>
                                                 @foreach ($per as $permissionitem)
                                                     <div class="form-group form-check   form-check-primary">
-                                                        <input class="form-check-input @error('permission') is-invalid @enderror" wire:model="permission.{{ $permissionitem->id }}" type="checkbox" value="{{ $permissionitem->id }}" id="customckeck{{ $permissionitem->id }}" >
+                                                        <input class="form-check-input @error('permission') is-invalid @enderror" wire:model.live="permission.{{ $permissionitem->id }}" type="checkbox" value="{{ $permissionitem->id }}" id="customckeck{{ $permissionitem->id }}" >
                                                         <label class="form-check-label" for="customckeck{{ $permissionitem->id }}">{{ $permissionitem->name }}</label>
                                                         @error('permission')
                                                             <div class="invalid-feedback">
@@ -202,7 +202,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -218,7 +218,7 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                                 </div>
                                                 <div class="col-12 col-md-3">
-                                                    <input class="w-100" wire:model.debounce.1000ms="search" type="search" placeholder="Role Name">
+                                                    <input class="w-100" wire:model.live.debounce.1000ms="search" type="search" placeholder="Role Name">
                                                 </div>
                                             </div>
                                     </span>

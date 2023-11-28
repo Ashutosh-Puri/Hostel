@@ -28,7 +28,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="hostel_id" class="form-label">Select  Hostel</label>
-                                            <select class="form-select @error('hostel_id') is-invalid @enderror" id="hostel_id" wire:model="hostel_id" >
+                                            <select class="form-select @error('hostel_id') is-invalid @enderror" id="hostel_id" wire:model.live="hostel_id" >
                                                 <option hidden value="" >Select  Hostel</option>
                                                 @foreach ($hostels as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->name}} </option>
@@ -44,7 +44,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="building_id" class="form-label">Select  Building</label>
-                                            <select class="form-select @error('building_id') is-invalid @enderror" id="building_id" wire:model="building_id" >
+                                            <select class="form-select @error('building_id') is-invalid @enderror" id="building_id" wire:model.live="building_id" >
                                                 <option hidden value="" >Select  Building</option>
                                                 @foreach ($buildings as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->name}} </option>
@@ -60,7 +60,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="floor" class="form-label">Floor Number</label>
-                                            <input type="text" class="form-control @error('floor') is-invalid @enderror" wire:model="floor" value="{{ old('floor') }}" id="floor" placeholder="Enter Floor Number">
+                                            <input type="text" class="form-control @error('floor') is-invalid @enderror" wire:model.live="floor" value="{{ old('floor') }}" id="floor" placeholder="Enter Floor Number">
                                             @error('floor')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -71,7 +71,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group ">
                                             <label for="status" class="form-label mb-3">Status</label><br>
-                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
+                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model.live="status" >
                                             <label class="form-check-label m-1" for="class_status">In-Active Floor</label>
                                             @error('status')
                                                 <div class="invalid-feedback">
@@ -115,7 +115,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="hostel_id" class="form-label">Select  Hostel</label>
-                                            <select class="form-select @error('hostel_id') is-invalid @enderror" id="hostel_id" wire:model="hostel_id" >
+                                            <select class="form-select @error('hostel_id') is-invalid @enderror" id="hostel_id" wire:model.live="hostel_id" >
                                                 <option hidden value="" >Select  Hostel</option>
                                                 @foreach ($hostels as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->name}} </option>
@@ -131,7 +131,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="building_id" class="form-label">Select  Building</label>
-                                            <select class="form-select @error('building_id') is-invalid @enderror" id="building_id" wire:model="building_id" >
+                                            <select class="form-select @error('building_id') is-invalid @enderror" id="building_id" wire:model.live="building_id" >
                                                 <option hidden value="" >Select  Building</option>
                                                 @foreach ($buildings as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->name}} </option>
@@ -147,7 +147,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="floor" class="form-label">Floor Number</label>
-                                            <input type="text" class="form-control @error('floor') is-invalid @enderror" wire:model="floor" value="{{ old('floor') }}" id="floor" placeholder="Enter Floor Number">
+                                            <input type="text" class="form-control @error('floor') is-invalid @enderror" wire:model.live="floor" value="{{ old('floor') }}" id="floor" placeholder="Enter Floor Number">
                                             @error('floor')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -158,7 +158,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group ">
                                             <label for="status" class="form-label mb-3">Status</label><br>
-                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
+                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model.live="status" >
                                             <label class="form-check-label m-1" for="class_status">In-Active Floor</label>
                                             @error('status')
                                                 <div class="invalid-feedback">
@@ -212,7 +212,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -228,10 +228,10 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input class="w-100" wire:model.debounce.1000ms="building_name" type="search" placeholder="Building Name">
+                                                <input class="w-100" wire:model.live.debounce.1000ms="building_name" type="search" placeholder="Building Name">
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input class="w-100" wire:model.debounce.1000ms="floor_number" type="search" placeholder="Floor Number">
+                                                <input class="w-100" wire:model.live.debounce.1000ms="floor_number" type="search" placeholder="Floor Number">
                                             </div>
                                         </span>
                                     </span>
@@ -311,9 +311,9 @@
                                                         @can('Edit Floor')
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
                                                             @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
                                                             @else
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
                                                             @endif
                                                         @endcan
                                                         @can('Delete Floor')
@@ -330,9 +330,9 @@
                                                         @can('Edit Floor')
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
                                                             @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
                                                             @else
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
                                                             @endif
                                                         @endcan
                                                         @can('Delete Floor')

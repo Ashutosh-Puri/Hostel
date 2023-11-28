@@ -41,7 +41,7 @@
                 <div class="card-header">
                     <div class="row">
                         <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                        <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                        <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
                             <option value="10">10</option>
                             <option value="50">50</option>
                             <option value="100">100</option>
@@ -53,26 +53,26 @@
                                 <div class="col-6 col-md-1  ">
                                 </div>
                                 <div class="col-6 col-md-1 ">
-                                    <input  class=" w-100 py-1"type="search" wire:model="year" id="" placeholder="Year">
+                                    <input  class=" w-100 py-1"type="search" wire:model.live="year" id="" placeholder="Year">
                                 </div>
                                 <div class="col-6 col-md-1 ">
-                                    <input  class=" w-100 py-1"type="search" wire:model="month" id="" placeholder="Month">
+                                    <input  class=" w-100 py-1"type="search" wire:model.live="month" id="" placeholder="Month">
                                 </div>
                                 <div class="col-6 col-md-2 ">
-                                    <input  class=" w-100 py-1"type="date" wire:model="date" id="" >
+                                    <input  class=" w-100 py-1"type="date" wire:model.live="date" id="" >
                                 </div>
                                 <div class="col-6 col-md-2 ">
-                                    <input  class=" w-100 py-1"type="search" wire:model="student_name" id="" placeholder="Student Name">
+                                    <input  class=" w-100 py-1"type="search" wire:model.live="student_name" id="" placeholder="Student Name">
                                 </div>
                                 <div class="col-6 col-md-2">
-                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="gender">
+                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.live="gender">
                                         <option value="" hidden>Gender</option>
                                         <option value="0">Male</option>
                                         <option value="1">Female</option>
                                     </select>
                                 </div>
                                 <div class="col-6 col-md-2">
-                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="filter">
+                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.live="filter">
                                         <option value="" hidden>Filter</option>
                                         <option value="1">Today</option>
                                         <option value="2">Yesterday</option>

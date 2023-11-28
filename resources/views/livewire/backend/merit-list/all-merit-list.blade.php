@@ -28,7 +28,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="name" class="form-label">Student Name</label>
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror"  wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Student Name">
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror"  wire:model.live="name" value="{{ old('name') }}" id="name" placeholder="Enter Student Name">
                                             @error('name')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -39,7 +39,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="class" class="form-label">Class</label>
-                                            <input type="text" class="form-control @error('class') is-invalid @enderror"  wire:model="class" value="{{ old('class') }}" id="class" placeholder="Enter Class">
+                                            <input type="text" class="form-control @error('class') is-invalid @enderror"  wire:model.live="class" value="{{ old('class') }}" id="class" placeholder="Enter Class">
                                             @error('class')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -50,7 +50,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="email" class="form-label">Student Email</label>
-                                            <input type="email"  class="form-control @error('email') is-invalid @enderror"  wire:model="email"  placeholder="Enter Student Email">
+                                            <input type="email"  class="form-control @error('email') is-invalid @enderror"  wire:model.live="email"  placeholder="Enter Student Email">
                                             @error('email')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -61,7 +61,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="mobile" class="form-label">Student Mobile</label>
-                                            <input type="number"  class="form-control @error('mobile') is-invalid @enderror"  wire:model="mobile" value="{{ old('mobile') }}" id="mobile" placeholder="Enter Student Mobile">
+                                            <input type="number"  class="form-control @error('mobile') is-invalid @enderror"  wire:model.live="mobile" value="{{ old('mobile') }}" id="mobile" placeholder="Enter Student Mobile">
                                             @error('mobile')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -72,7 +72,7 @@
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
                                             <label for="gender" class="form-label">Select Gender</label>
-                                            <select class="form-select  @error('gender') is-invalid @enderror" id="gender" wire:model.debounce.500ms="gender">
+                                            <select class="form-select  @error('gender') is-invalid @enderror" id="gender" wire:model.live.debounce.500ms="gender">
                                                 <option hidden value="">Select </option>
                                                 <option value="0">Male</option>
                                                 <option value="1">Female</option>
@@ -87,7 +87,7 @@
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
                                             <label for="sgpa" class="form-label">SGPA</label>
-                                            <input type="text" class="form-control @error('sgpa') is-invalid @enderror" wire:model="sgpa" value="{{ old('sgpa') }}" id="sgpa"  placeholder="Enter SGPA">
+                                            <input type="text" class="form-control @error('sgpa') is-invalid @enderror" wire:model.live="sgpa" value="{{ old('sgpa') }}" id="sgpa"  placeholder="Enter SGPA">
                                             @error('sgpa')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -98,7 +98,7 @@
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
                                             <label for="percentage" class="form-label">Percentage</label>
-                                            <input type="text" class="form-control @error('percentage') is-invalid @enderror" wire:model="percentage" value="{{ old('percentage') }}" id="percentage"  placeholder="Enter Percentage">
+                                            <input type="text" class="form-control @error('percentage') is-invalid @enderror" wire:model.live="percentage" value="{{ old('percentage') }}" id="percentage"  placeholder="Enter Percentage">
                                             @error('percentage')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -148,7 +148,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="name" class="form-label">Student Name</label>
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror"  wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Student Name">
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror"  wire:model.live="name" value="{{ old('name') }}" id="name" placeholder="Enter Student Name">
                                             @error('name')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -159,7 +159,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="class" class="form-label">Class</label>
-                                            <input type="text" class="form-control @error('class') is-invalid @enderror"  wire:model="class" value="{{ old('class') }}" id="class" placeholder="Enter Class">
+                                            <input type="text" class="form-control @error('class') is-invalid @enderror"  wire:model.live="class" value="{{ old('class') }}" id="class" placeholder="Enter Class">
                                             @error('class')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -170,7 +170,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="email" class="form-label">Student Email</label>
-                                            <input type="email"  class="form-control @error('email') is-invalid @enderror"  wire:model="email" value="{{ old('email') }}"  placeholder="Enter Student Email">
+                                            <input type="email"  class="form-control @error('email') is-invalid @enderror"  wire:model.live="email" value="{{ old('email') }}"  placeholder="Enter Student Email">
                                             @error('email')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -181,7 +181,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="mobile" class="form-label">Student Mobile</label>
-                                            <input type="text"  class="form-control @error('mobile') is-invalid @enderror"  wire:model="mobile" value="{{ old('mobile') }}" id="mobile" placeholder="Enter Student Mobile">
+                                            <input type="text"  class="form-control @error('mobile') is-invalid @enderror"  wire:model.live="mobile" value="{{ old('mobile') }}" id="mobile" placeholder="Enter Student Mobile">
                                             @error('mobile')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -192,7 +192,7 @@
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
                                             <label for="gender" class="form-label">Select Gender</label>
-                                            <select class="form-select  @error('gender') is-invalid @enderror" id="gender" wire:model.debounce.500ms="gender">
+                                            <select class="form-select  @error('gender') is-invalid @enderror" id="gender" wire:model.live.debounce.500ms="gender">
                                                 <option hidden value="">Select </option>
                                                 <option value="0" {{ old('gender')==0?"selected":''; }}>Male</option>
                                                 <option value="1" {{ old('gender')==1?"selected":''; }}>Female</option>
@@ -207,7 +207,7 @@
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
                                             <label for="sgpa" class="form-label">SGPA</label>
-                                            <input type="text" class="form-control @error('sgpa') is-invalid @enderror" wire:model="sgpa" value="{{ old('sgpa') }}" id="sgpa"  placeholder="Enter SGPA">
+                                            <input type="text" class="form-control @error('sgpa') is-invalid @enderror" wire:model.live="sgpa" value="{{ old('sgpa') }}" id="sgpa"  placeholder="Enter SGPA">
                                             @error('sgpa')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -218,7 +218,7 @@
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
                                             <label for="percentage" class="form-label">Percentage</label>
-                                            <input type="text" class="form-control @error('percentage') is-invalid @enderror" wire:model="percentage" value="{{ old('percentage') }}" id="percentage"  placeholder="Enter Percentage">
+                                            <input type="text" class="form-control @error('percentage') is-invalid @enderror" wire:model.live="percentage" value="{{ old('percentage') }}" id="percentage"  placeholder="Enter Percentage">
                                             @error('percentage')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -277,7 +277,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                    <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -290,13 +290,13 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input class="w-100 py-1" wire:model.debounce.1000ms="m_name" type="search" placeholder="Student Name">
+                                                <input class="w-100 py-1" wire:model.live.debounce.1000ms="m_name" type="search" placeholder="Student Name">
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input class="w-100 py-1" wire:model.debounce.1000ms="m_class" type="search" placeholder="Student Class">
+                                                <input class="w-100 py-1" wire:model.live.debounce.1000ms="m_class" type="search" placeholder="Student Class">
                                             </div>
                                             <div class="col-6 col-md-3">
-                                                <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="sortby_feild">
+                                                <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.live="sortby_feild">
                                                     <option value="" hidden>Sort By</option>
                                                     <option value="name">Name</option>
                                                     <option value="class">Class</option>
@@ -309,7 +309,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-4 col-md-1">
-                                                <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="sortby_order">
+                                                <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.live="sortby_order">
                                                     <option value="ASC">ASC</option>
                                                     <option value="DESC">DESC</option>
                                                 </select>
@@ -362,9 +362,9 @@
                                                     @can('Edit Merit List')
                                                         <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
                                                         @if ($item->status==1)
-                                                            <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                            <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
                                                         @else
-                                                            <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                            <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
                                                         @endif
                                                     @endcan
                                                     @can('Delete Merit List')
@@ -381,9 +381,9 @@
                                                     @can('Edit Merit List')
                                                         <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
                                                         @if ($item->status==1)
-                                                            <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                            <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
                                                         @else
-                                                            <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                            <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
                                                         @endif
                                                     @endcan
                                                     @can('Delete Merit List')

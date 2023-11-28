@@ -28,7 +28,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="heading_1" class="form-label">College Heading</label>
-                                            <input type="text" class="form-control @error('heading_1') is-invalid @enderror" wire:model="heading_1" value="{{ old('heading_1') }}" id="heading_1" placeholder="Enter Heading">
+                                            <input type="text" class="form-control @error('heading_1') is-invalid @enderror" wire:model.live="heading_1" value="{{ old('heading_1') }}" id="heading_1" placeholder="Enter Heading">
                                             @error('heading_1')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -39,7 +39,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="heading_1_mr" class="form-label">College Heading In Marathi</label>
-                                            <input type="text" class="form-control @error('heading_1_mr') is-invalid @enderror" wire:model="heading_1_mr" value="{{ old('heading_1_mr') }}" id="heading_1_mr" placeholder="Enter Heading In Marathi">
+                                            <input type="text" class="form-control @error('heading_1_mr') is-invalid @enderror" wire:model.live="heading_1_mr" value="{{ old('heading_1_mr') }}" id="heading_1_mr" placeholder="Enter Heading In Marathi">
                                             @error('heading_1_mr')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -50,7 +50,7 @@
                                     <div class="col-12 col-md-12">
                                         <div class="mb-3 form-group">
                                             <label for="name" class="form-label">College Name</label>
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model.live="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
                                             @error('name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -61,7 +61,7 @@
                                     <div class="col-12 col-md-12">
                                         <div class="mb-3 form-group">
                                             <label for="name_mr" class="form-label">College Name In Marathi</label>
-                                            <input type="text" class="form-control @error('name_mr') is-invalid @enderror" wire:model="name_mr" value="{{ old('name_mr') }}" id="name_mr" placeholder="Enter Name In Marathi">
+                                            <input type="text" class="form-control @error('name_mr') is-invalid @enderror" wire:model.live="name_mr" value="{{ old('name_mr') }}" id="name_mr" placeholder="Enter Name In Marathi">
                                             @error('name_mr')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -72,7 +72,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="mobile" class="form-label">College Mobile</label>
-                                            <input type="text" class="form-control @error('mobile') is-invalid @enderror" wire:model="mobile" value="{{ old('mobile') }}" id="mobile" placeholder="Enter Mobile">
+                                            <input type="text" class="form-control @error('mobile') is-invalid @enderror" wire:model.live="mobile" value="{{ old('mobile') }}" id="mobile" placeholder="Enter Mobile">
                                             @error('mobile')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -83,7 +83,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="email" class="form-label">College Email</label>
-                                            <input type="email" class="form-control @error('email') is-invalid @enderror" wire:model="email" value="{{ old('email') }}" id="email" placeholder="Enter Email">
+                                            <input type="email" class="form-control @error('email') is-invalid @enderror" wire:model.live="email" value="{{ old('email') }}" id="email" placeholder="Enter Email">
                                             @error('email')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -94,7 +94,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="address" class="form-label">College Address</label>
-                                            <input type="text" class="form-control @error('address') is-invalid @enderror" wire:model="address" value="{{ old('address') }}" id="address" placeholder="Enter Address">
+                                            <input type="text" class="form-control @error('address') is-invalid @enderror" wire:model.live="address" value="{{ old('address') }}" id="address" placeholder="Enter Address">
                                             @error('address')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -105,7 +105,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group ">
                                             <label for="status" class="form-label mb-3">Status</label><br>
-                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
+                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model.live="status" >
                                             <label class="form-check-label m-1" for="class_status">In-Active College</label>
                                             @error('status')
                                                 <div class="invalid-feedback">
@@ -149,7 +149,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="heading_1" class="form-label">College Heading</label>
-                                            <input type="text" class="form-control @error('heading_1') is-invalid @enderror" wire:model="heading_1" value="{{ old('heading_1') }}" id="heading_1" placeholder="Enter Heading">
+                                            <input type="text" class="form-control @error('heading_1') is-invalid @enderror" wire:model.live="heading_1" value="{{ old('heading_1') }}" id="heading_1" placeholder="Enter Heading">
                                             @error('heading_1')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -160,7 +160,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="heading_1_mr" class="form-label">College Heading In Marathi</label>
-                                            <input type="text" class="form-control @error('heading_1_mr') is-invalid @enderror" wire:model="heading_1_mr" value="{{ old('heading_1_mr') }}" id="heading_1_mr" placeholder="Enter Heading In Marathi">
+                                            <input type="text" class="form-control @error('heading_1_mr') is-invalid @enderror" wire:model.live="heading_1_mr" value="{{ old('heading_1_mr') }}" id="heading_1_mr" placeholder="Enter Heading In Marathi">
                                             @error('heading_1_mr')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -171,7 +171,7 @@
                                     <div class="col-12 col-md-12">
                                         <div class="mb-3 form-group">
                                             <label for="name" class="form-label">College Name</label>
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model.live="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
                                             @error('name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -182,7 +182,7 @@
                                     <div class="col-12 col-md-12">
                                         <div class="mb-3 form-group">
                                             <label for="name_mr" class="form-label">College Name In Marathi</label>
-                                            <input type="text" class="form-control @error('name_mr') is-invalid @enderror" wire:model="name_mr" value="{{ old('name_mr') }}" id="name_mr" placeholder="Enter Name In Marathi">
+                                            <input type="text" class="form-control @error('name_mr') is-invalid @enderror" wire:model.live="name_mr" value="{{ old('name_mr') }}" id="name_mr" placeholder="Enter Name In Marathi">
                                             @error('name_mr')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -193,7 +193,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="mobile" class="form-label">College Mobile</label>
-                                            <input type="text" class="form-control @error('mobile') is-invalid @enderror" wire:model="mobile" value="{{ old('mobile') }}" id="mobile" placeholder="Enter Mobile">
+                                            <input type="text" class="form-control @error('mobile') is-invalid @enderror" wire:model.live="mobile" value="{{ old('mobile') }}" id="mobile" placeholder="Enter Mobile">
                                             @error('mobile')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -204,7 +204,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="email" class="form-label">College Email</label>
-                                            <input type="email" class="form-control @error('email') is-invalid @enderror" wire:model="email" value="{{ old('email') }}" id="email" placeholder="Enter Email">
+                                            <input type="email" class="form-control @error('email') is-invalid @enderror" wire:model.live="email" value="{{ old('email') }}" id="email" placeholder="Enter Email">
                                             @error('email')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -215,7 +215,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="address" class="form-label">College Address</label>
-                                            <input type="text" class="form-control @error('address') is-invalid @enderror" wire:model="address" value="{{ old('address') }}" id="address" placeholder="Enter Address">
+                                            <input type="text" class="form-control @error('address') is-invalid @enderror" wire:model.live="address" value="{{ old('address') }}" id="address" placeholder="Enter Address">
                                             @error('address')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -226,7 +226,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group ">
                                             <label for="status" class="form-label mb-3">Status</label><br>
-                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
+                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model.live="status" >
                                             <label class="form-check-label m-1" for="class_status">In-Active College</label>
                                             @error('status')
                                                 <div class="invalid-feedback">
@@ -280,7 +280,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -296,7 +296,7 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input class="w-100"wire:model.debounce.1000ms="search" type="search" placeholder="College Name">
+                                                <input class="w-100"wire:model.live.debounce.1000ms="search" type="search" placeholder="College Name">
                                             </div>
                                         </span>
                                     </span>
@@ -338,9 +338,9 @@
                                                         @can('Edit College')
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
                                                             @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
                                                             @else
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
                                                             @endif
                                                         @endcan
                                                         @can('Delete College')
@@ -357,9 +357,9 @@
                                                         @can('Edit College')
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
                                                             @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
                                                             @else
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
                                                             @endif
                                                         @endcan
                                                         @can('Delete College')

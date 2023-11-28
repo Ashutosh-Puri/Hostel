@@ -44,7 +44,7 @@
                 <div class="card-header">
                     <div class="row">
                         <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                        <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                        <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
                             <option value="10">10</option>
                             <option value="50">50</option>
                             <option value="100">100</option>
@@ -56,7 +56,7 @@
                                 <div class="col-6 col-md-1 ">
                                 </div>
                                 <div class="col-6 col-md-2 ">
-                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="college_id">
+                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.live="college_id">
                                         <option value="" hidden>College</option>
                                         @foreach ($colleges as $c)
                                             <option value="{{ $c->id }}">{{ $c->name }}</option>
@@ -64,7 +64,7 @@
                                     </select>
                                 </div>
                                 <div class="col-6 col-md-2 ">
-                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="hostel_id">
+                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.live="hostel_id">
                                         <option value="" hidden>Hostel</option>
                                         @foreach ($hostels as $h)
                                             <option value="{{ $h->id }}">{{ $h->name }}</option>
@@ -72,7 +72,7 @@
                                     </select>
                                 </div>
                                 <div class="col-6 col-md-2 ">
-                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="building_id">
+                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.live="building_id">
                                         <option value="" hidden>Building</option>
                                         @foreach ($buildings as $b)
                                             <option value="{{ $b->id }}">{{ $b->name }}</option>
@@ -80,7 +80,7 @@
                                     </select>
                                 </div>
                                 <div class="col-6 col-md-1 ">
-                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="floor_id">
+                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.live="floor_id">
                                         <option value="" hidden>Floor</option>
                                         @foreach ($floors as $f)
                                             <option value="{{ $f->id }}">
@@ -90,7 +90,7 @@
                                     </select>
                                 </div>
                                 <div class="col-6 col-md-1 ">
-                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="room_id">
+                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.live="room_id">
                                         <option value="" hidden>Room</option>
                                         @foreach ($rooms as $r)
                                             <option value="{{ $r->id }}">{{ $r->label }}</option>
@@ -98,14 +98,14 @@
                                     </select>
                                 </div>
                                 <div class="col-6 col-md-1">
-                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="room_status">
+                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.live="room_status">
                                         <option value="" hidden>Room Status</option>
                                         <option value="1">Full</option>
                                         <option value="0">Free</option>
                                     </select>
                                 </div>
                                 <div class="col-6 col-md-1">
-                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="bed_status">
+                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.live="bed_status">
                                         <option value="" hidden>Bed Status</option>
                                         <option value="1">Full</option>
                                         <option value="0">Free</option>

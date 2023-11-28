@@ -83,7 +83,7 @@
                         <div class="row g-3">
                             <div class="col-md-12">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" placeholder="Your Name">
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model.live="name" placeholder="Your Name">
                                     <label for="name">Your Name</label>
                                     @error('name')
                                         <div class="invalid-feedback">
@@ -94,7 +94,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-floating">
-                                    <input type="email" class="form-control @error('email') is-invalid @enderror" wire:model="email" placeholder="Your Email">
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror" wire:model.live="email" placeholder="Your Email">
                                     <label for="email">Your Email</label>
                                     @error('email')
                                         <div class="invalid-feedback">
@@ -105,7 +105,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control @error('mobile') is-invalid @enderror" wire:model="mobile" placeholder="Your Mobile">
+                                    <input type="text" class="form-control @error('mobile') is-invalid @enderror" wire:model.live="mobile" placeholder="Your Mobile">
                                     <label for="mobile">Your Mobile</label>
                                     @error('mobile')
                                     <div class="invalid-feedback">
@@ -116,7 +116,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control @error('subject') is-invalid @enderror" wire:model="subject" placeholder="Subject">
+                                    <input type="text" class="form-control @error('subject') is-invalid @enderror" wire:model.live="subject" placeholder="Subject">
                                     <label for="subject">Subject</label>
                                     @error('subject')
                                     <div class="invalid-feedback">
@@ -127,7 +127,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <textarea class="form-control @error('message') is-invalid @enderror" placeholder="Leave a message here" wire:model="message" style="height: 100px"></textarea>
+                                    <textarea class="form-control @error('message') is-invalid @enderror" placeholder="Leave a message here" wire:model.live="message" style="height: 100px"></textarea>
                                     <label for="message">Message</label>
                                     @error('message')
                                     <div class="invalid-feedback">

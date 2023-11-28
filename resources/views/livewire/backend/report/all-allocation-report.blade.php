@@ -43,7 +43,7 @@
                 <div class="card-header">
                     <div class="row">
                         <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                        <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                        <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
                             <option value="10">10</option>
                             <option value="50">50</option>
                             <option value="100">100</option>
@@ -56,7 +56,7 @@
                                 <div class="col-12 col-md-2 ">
                                 </div>
                                 <div class="col-6 col-md-3 ">
-                                    <select class="w-100 py-1"  wire:loading.attr="disabled" wire:model="year_id">
+                                    <select class="w-100 py-1"  wire:loading.attr="disabled" wire:model.live="year_id">
                                         <option value="" hidden>Select Year</option>
                                         @foreach ($years as $y) 
                                             <option value="{{ $y->id }}">{{ $y->year }}</option>
@@ -64,7 +64,7 @@
                                     </select>
                                 </div>
                                 <div class="col-6 col-md-3 ">
-                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="class_id">
+                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.live="class_id">
                                         <option value="" hidden>Select Class</option>
                                         @foreach ($class as $y) 
                                             <option value="{{ $y->id }}">{{ $y->name }}</option>
@@ -72,7 +72,7 @@
                                     </select>
                                 </div>
                                 <div class="col-6 col-md-3">
-                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="bed_status">
+                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.live="bed_status">
                                         <option value="" hidden>Select Bed Status</option>
                                         <option value="1">Allocated</option>
                                         <option value="0">Not Allocated</option>

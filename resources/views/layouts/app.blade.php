@@ -47,7 +47,7 @@
     @livewireScripts()
 
     <!-- Livewire Turbolinks -->
-    <script src="{{ asset('assets/turbolinks/turbolinks.js') }}" data-turbolinks-eval="false" data-turbo-eval="false"></script>   
+    {{-- <script src="{{ asset('assets/turbolinks/turbolinks.js') }}" data-turbolinks-eval="false" data-turbo-eval="false"></script>    --}}
 
     @auth
         <!-- admin template -->
@@ -110,7 +110,7 @@
                     confirmButtonText: 'Yes, Delete It !'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                    Livewire.emit('delete-confirmed')
+                    Livewire.dispatch('delete-confirmed')
                     }
                 });
             });

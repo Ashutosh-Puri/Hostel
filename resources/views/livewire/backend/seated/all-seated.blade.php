@@ -28,7 +28,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="seated" class="form-label">Seated Number</label>
-                                            <input type="text" class="form-control @error('seated') is-invalid @enderror" wire:model="seated" value="{{ old('seated') }}" id="seated" placeholder="Enter Seated Number">
+                                            <input type="text" class="form-control @error('seated') is-invalid @enderror" wire:model.live="seated" value="{{ old('seated') }}" id="seated" placeholder="Enter Seated Number">
                                             @error('seated')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -39,7 +39,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group ">
                                             <label for="status" class="form-label mb-3">Status</label><br>
-                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
+                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model.live="status" >
                                             <label class="form-check-label m-1" for="class_status">In-Active Seated</label>
                                             @error('status')
                                                 <div class="invalid-feedback">
@@ -83,7 +83,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="seated" class="form-label">Seated Number</label>
-                                            <input type="text" class="form-control @error('seated') is-invalid @enderror" wire:model="seated" value="{{ old('seated') }}" id="seated" placeholder="Enter Seated Number">
+                                            <input type="text" class="form-control @error('seated') is-invalid @enderror" wire:model.live="seated" value="{{ old('seated') }}" id="seated" placeholder="Enter Seated Number">
                                             @error('seated')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -94,7 +94,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group ">
                                             <label for="status" class="form-label mb-3">Status</label><br>
-                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
+                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model.live="status" >
                                             <label class="form-check-label m-1" for="class_status">In-Active Seated</label>
                                             @error('status')
                                                 <div class="invalid-feedback">
@@ -148,7 +148,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -164,7 +164,7 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input class="w-100" wire:model.debounce.1000ms="seated_number" type="search" placeholder="Seated Number">
+                                                <input class="w-100" wire:model.live.debounce.1000ms="seated_number" type="search" placeholder="Seated Number">
                                             </div>
                                         </span>
                                     </span>
@@ -201,9 +201,9 @@
                                                         @can('Edit Seated')
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
                                                             @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
                                                             @else
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
                                                             @endif
                                                         @endcan
                                                         @can('Delete Seated')
@@ -220,9 +220,9 @@
                                                         @can('Edit Seated')
                                                             <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
                                                             @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
                                                             @else
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
                                                             @endif
                                                         @endcan
                                                         @can('Delete Seated')

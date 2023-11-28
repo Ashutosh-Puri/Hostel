@@ -28,7 +28,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="stream" class="form-label">Select Stream</label>
-                                            <select class="form-select @error('stream') is-invalid @enderror" id="stream" wire:model="stream" >
+                                            <select class="form-select @error('stream') is-invalid @enderror" id="stream" wire:model.live="stream" >
                                                 <option hidden value="" >Select Stream</option>
                                                 <option  value="Arts" >Arts</option>
                                                 <option  value="Commerce" >Commerce</option>
@@ -44,7 +44,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="type" class="form-label">Select Student Level</label>
-                                            <select class="form-select @error('type') is-invalid @enderror" id="type" wire:model="type" >
+                                            <select class="form-select @error('type') is-invalid @enderror" id="type" wire:model.live="type" >
                                                 <option hidden value="" >Select Student Level</option>
                                                 <option  value="Junior" >Junior</option>
                                                 <option  value="Senior" >Senior</option>
@@ -61,7 +61,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="name" class="form-label">Class Name</label>
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Class Name">
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model.live="name" value="{{ old('name') }}" id="name" placeholder="Enter Class Name">
                                             @error('name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -72,7 +72,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group ">
                                             <label for="status" class="form-label mb-3">Status</label><br>
-                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
+                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model.live="status" >
                                             <label class="form-check-label m-1" for="class_status">In-Active Class</label>
                                             @error('status')
                                                 <div class="invalid-feedback">
@@ -116,7 +116,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="stream" class="form-label">Select Stream</label>
-                                            <select class="form-select @error('stream') is-invalid @enderror" id="stream" wire:model="stream" >
+                                            <select class="form-select @error('stream') is-invalid @enderror" id="stream" wire:model.live="stream" >
                                                 <option hidden value="" >Select Stream</option>
                                                 <option  value="Arts" >Arts</option>
                                                 <option  value="Commerce" >Commerce</option>
@@ -132,7 +132,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="type" class="form-label">Select Student Level</label>
-                                            <select class="form-select @error('type') is-invalid @enderror" id="type" wire:model="type" >
+                                            <select class="form-select @error('type') is-invalid @enderror" id="type" wire:model.live="type" >
                                                 <option hidden value="" >Select Student Level</option>
                                                 <option  value="Junior" >Junior</option>
                                                 <option  value="Senior" >Senior</option>
@@ -149,7 +149,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="name" class="form-label">Class Name</label>
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Class Name">
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model.live="name" value="{{ old('name') }}" id="name" placeholder="Enter Class Name">
                                             @error('name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -160,7 +160,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group ">
                                             <label for="status" class="form-label mb-3">Status</label><br>
-                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model="status" >
+                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model.live="status" >
                                             <label class="form-check-label m-1" for="class_status">In-Active Class</label>
                                             @error('status')
                                                 <div class="invalid-feedback">
@@ -214,7 +214,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -230,7 +230,7 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input  class="w-100" wire:model.debounce.1000ms="search" type="search" placeholder="Class Name">
+                                                <input  class="w-100" wire:model.live.debounce.1000ms="search" type="search" placeholder="Class Name">
                                             </div>
                                         </span>
                                     </span>
@@ -271,9 +271,9 @@
                                                     @can('Edit Class')
                                                         <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
                                                         @if ($item->status==1)
-                                                            <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                            <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
                                                         @else
-                                                            <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                            <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
                                                         @endif
                                                     @endcan
                                                     @can('Delete Class')
@@ -290,9 +290,9 @@
                                                     @can('Edit Class')
                                                         <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
                                                         @if ($item->status==1)
-                                                            <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                            <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
                                                         @else
-                                                            <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                            <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
                                                         @endif
                                                     @endcan
                                                     @can('Delete Class')

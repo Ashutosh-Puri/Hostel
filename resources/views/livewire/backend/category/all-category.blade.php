@@ -26,7 +26,7 @@
                                 @csrf
                                 <div class="mb-3 form-group">
                                     <label for="name" class="form-label">Category Name</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Category Name">
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model.live="name" value="{{ old('name') }}" id="name" placeholder="Enter Category Name">
                                     @error('name')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -65,7 +65,7 @@
                                 @csrf
                                 <div class="mb-3 form-group">
                                     <label for="name" class="form-label">Category Name</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Category Name">
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model.live="name" value="{{ old('name') }}" id="name" placeholder="Enter Category Name">
                                     @error('name')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -116,7 +116,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -132,7 +132,7 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input  class="w-100" wire:model.debounce.1000ms="search" type="search" placeholder="Category Name">
+                                                <input  class="w-100" wire:model.live.debounce.1000ms="search" type="search" placeholder="Category Name">
                                             </div>
                                         </span>
                                     </span>
