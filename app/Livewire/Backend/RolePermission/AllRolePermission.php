@@ -182,18 +182,7 @@ class AllRolePermission extends Component
         }
     }
 
-    public function status($id)
-    {
-        $status = Role::find($id);
-        if($status->status==1)
-        {   
-            $status->status=0;
-        }else
-        {
-            $status->status=1;
-        }
-        $status->update();
-    }
+    
 
     public function render()
     {   

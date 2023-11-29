@@ -43,7 +43,7 @@
                                     <label for="remember_me" class="form-check-label mx-2 mt-2">Remember Me</label>
                                 </div>
                                 <div class="col">
-                                    <a href="{{ route('admin.password.request') }}" class="form-check-label mx-2 mt-2">Forgot
+                                    <a wire:navigate href="{{ route('admin.password.request') }}" class="form-check-label mx-2 mt-2">Forgot
                                         Password?</a>
                                 </div>
                             </div>

@@ -121,9 +121,8 @@ class AllAcademicYear extends Component
     }
 
 
-    public function softdelete($id)
+    public function softdelete(AcademicYear  $academicyear)
     { 
-        $academicyear = AcademicYear::find($id);
         if($academicyear)
         {
             $academicyear->delete();
@@ -132,6 +131,8 @@ class AllAcademicYear extends Component
                 'type'=>'success',
                 'message'=>"Academic Year Deleted Successfully !!"
             ]);  
+
+            
         }else{
 
             $this->dispatch('alert',[
@@ -163,44 +164,46 @@ class AllAcademicYear extends Component
     }
 
     public function delete()
-    { 
+    {
         $academicyear = AcademicYear::withTrashed()->find($this->delete_id);
-        if($academicyear)
-        {
-            $academicyear->forceDelete();
-            $this->delete_id=null;
-            $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Academic Year Deleted Successfully !!"
-            ]);  
-        }else{
 
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
+        if (!$academicyear) {
+            $this->dispatch('alert', [
+                'type' => 'error',
+                'message' => 'Something Went Wrong !!',
             ]);
+
+            return;
         }
+
+        $academicyear->forceDelete();
+        $this->delete_id = null;
+        $this->setmode('all');
+
+        $this->dispatch('alert', [
+            'type' => 'success',
+            'message' => 'Academic Year Deleted Successfully !!',
+        ]);
     }
 
-    public function update_status($id)
+
+    public function update_status(AcademicYear  $academicyear)
     {
-        $status = AcademicYear::find($id);
-        if($status->status==1)
+        if($academicyear->status==1)
         {   
-            $status->status=0;
+            $academicyear->status=0;
         }else
         {
-            $status->status=1;
+            $academicyear->status=1;
         }
-        $status->update();
+        $academicyear->update();
     }
 
     public function render()
     {   
         $academicyear = AcademicYear::query()->select('id','year', 'status','deleted_at')->when($this->search, function ($query) {
             return $query->where('year', 'like', '%' . $this->search . '%');
-        })->orderByDesc('year')->withTrashed()->paginate($this->per_page);
+        })->latest('year')->withTrashed()->paginate($this->per_page);
 
         return view('livewire.backend.academic-year.all-academic-year',compact('academicyear'))->extends('layouts.admin.admin')->section('admin');
     }

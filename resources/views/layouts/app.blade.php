@@ -28,7 +28,6 @@
     <!-- data Table-->
     {{-- <link rel="stylesheet" href="{{ asset('assets/datatable/jquery.dataTables.min.css') }}"> --}}
     
-    {{-- <link rel="stylesheet" href="{{ asset('assets/bootstrap/bootstrap.min.css') }}"> --}}
     <!-- Scripts -->
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
     
@@ -69,16 +68,18 @@
     {{-- <!-- data Table-->
     <script src="{{ asset('assets/datatable/jquery.dataTables.min.js') }}"></script> --}}
     <!-- bootstrap  -->
-    
-    <script src="{{ asset('assets/bootstrap/bootstrap.min.js') }}"></script>
-    
+    {{-- <script src="{{ asset('assets/bootstrap/bootstrap.min.js') }}"></script> --}}
+
     <!-- jquery -->
     <script src="{{ asset('assets/jquery/jquery-3.6.0.min.js') }}"></script>
     
-   
+    
+    
+    
     <!-- Sweet Alert JS -->
     <script src="{{ asset('assets/sweetalert/sweetalert.js') }}"></script>
     <script>
+        document.addEventListener('livewire:init', () => {
             // Toster Config
             var Toast = Swal.mixin({
                 toast: true,
@@ -93,15 +94,15 @@
                 }
             });
             
-            // Notification Fire
-            window.addEventListener('alert',({detail:{type,message}})=>{
-                Toast.fire({
-                    icon:type,
-                    title:message
-                })
-
+         //  Notification Fire
+        window.addEventListener('alert', ({ detail: { type, message } }) => {
+            Toast.fire({
+                icon: type,
+                title: message
             });
-            
+        });
+    
+         
             // Delete Fire
             window.addEventListener('delete-confirmation',event=>{
                 Swal.fire({
@@ -118,7 +119,11 @@
                     }
                 });
             });
+
+        })
     </script>
+
+  
     <script>
             @if(session('alert'))
                 const toastEvent = @json(session('alert'));
