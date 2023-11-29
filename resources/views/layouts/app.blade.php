@@ -27,9 +27,10 @@
 
     <!-- data Table-->
     {{-- <link rel="stylesheet" href="{{ asset('assets/datatable/jquery.dataTables.min.css') }}"> --}}
-   
+    
+    {{-- <link rel="stylesheet" href="{{ asset('assets/bootstrap/bootstrap.min.css') }}"> --}}
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
     
     <!-- Styles-->
     @yield('styles')
@@ -62,16 +63,19 @@
         {{-- <!-- admin template 1-->     <script src="{{ asset('assets/admin_template/js/dashboard.js') }}" ></script>                                                 <!-- admin template --> --}}
         <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --><!-- admin template -->
     @endauth
-        
-    <!-- data Table-->
-    {{-- <script src="{{ asset('assets/datatable/jquery.dataTables.min.js') }}"></script> --}}
-
+    
+    
+    
+    {{-- <!-- data Table-->
+    <script src="{{ asset('assets/datatable/jquery.dataTables.min.js') }}"></script> --}}
     <!-- bootstrap  -->
+    
     <script src="{{ asset('assets/bootstrap/bootstrap.min.js') }}"></script>
     
     <!-- jquery -->
     <script src="{{ asset('assets/jquery/jquery-3.6.0.min.js') }}"></script>
-
+    
+   
     <!-- Sweet Alert JS -->
     <script src="{{ asset('assets/sweetalert/sweetalert.js') }}"></script>
     <script>
@@ -125,7 +129,17 @@
                 @php session()->forget('alert') @endphp
             @endif
     </script>
-    
+            {{-- <script>
+        
+       
+
+                $('#data-table').DataTable( {
+                    paging: false,
+                    info:false,
+                    searching: false,
+                });
+            </script> --}}
     @yield('scripts')
+    @stack('scripts')
 </body>
 </html>

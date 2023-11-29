@@ -139,7 +139,7 @@
                 @endsection
                 <div class="row">
                     <div class="col-12">
-                        <div class="bg-success">
+                        <div class="">
                             <div class="float-start pt-2 px-2">
                                 <h2>Data Rules</h2>
                                 <div wire:loading wire:target="per_page" class="loading-overlay">
@@ -150,11 +150,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <a wire:loading class="btn btn-primary btn-sm " style="padding:10px; ">
-                                <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
-                                <span class="visually-hidden">Loading...</span>
-                            </a>
                             <div class="float-end">
+                                <a wire:loading class="btn btn-primary btn-sm " style="padding:10px; ">
+                                    <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Loading...</span>
+                                </a>
                                 @can('Add Rule')
                                     <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success ">
                                         Add Rule<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>

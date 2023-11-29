@@ -342,7 +342,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($meritlist as $key => $item)
-                                            <tr>
+                                            <tr wire:key='{{ $item->id }}'>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->name}}</td>
                                                 <td>{{ $item->mobile}}</td>

@@ -365,22 +365,22 @@
 
     @section('dashboard')
     <script>
-        @if ($students)
+        @if ($students> 0)
                 var students = "{{ $students_a / $students }}";
             @else
                 var students = 0;
             @endif
-            @if ($rooms)
+            @if ($rooms> 0)
                 var rooms = "{{ $rooms_f / $rooms }}";
             @else
                 var rooms = 0;
             @endif
-            @if ($admissions)
+            @if ($admissions> 0)
                 var admissions = "{{ $admissions_c / $admissions }}";
             @else
                 var admissions = 0;
             @endif
-            @if ($allocations)
+            @if ($allocations> 0)
                 var allocations = "{{ $allocations_c / $allocations }}";
             @else
                 var allocations = 0;
