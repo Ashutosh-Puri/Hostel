@@ -76,10 +76,7 @@ class AllFine extends Component
                 'message'=>"Fine Created Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -95,10 +92,7 @@ class AllFine extends Component
             $this->status = $fine->status;
             $this->setmode('edit');
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -119,10 +113,7 @@ class AllFine extends Component
                 'message'=>"Fine Updated Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -143,10 +134,7 @@ class AllFine extends Component
                 'message'=>"Fine Deleted Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -161,10 +149,7 @@ class AllFine extends Component
                 'message'=>"Fine Restored Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -180,10 +165,7 @@ class AllFine extends Component
                 'message'=>"Fine Deleted Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 

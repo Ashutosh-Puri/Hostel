@@ -124,10 +124,7 @@ class AllAllocation extends Component
                 'message'=>"Allocation Created Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -143,10 +140,7 @@ class AllAllocation extends Component
             $this->admission_id=$admission->id;
             $this->setmode('edit');
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -165,10 +159,7 @@ class AllAllocation extends Component
                 'message'=>"Allocation Updated Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
     public function allocate($id)
@@ -182,10 +173,7 @@ class AllAllocation extends Component
             // $this->seated_id=$admission->seated_id;
 
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
         $allocation= Allocation::where('admission_id',$id)->first();
         if($allocation)
@@ -201,10 +189,7 @@ class AllAllocation extends Component
                 $this->room_id=$bed->Room->id;
             }
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
         $this->setmode('allocate');
     }
@@ -362,10 +347,7 @@ class AllAllocation extends Component
 
         }else
         {
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -404,10 +386,7 @@ class AllAllocation extends Component
             ]);
 
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -430,10 +409,7 @@ class AllAllocation extends Component
                 'message'=>"Allocation Deleted Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -450,10 +426,7 @@ class AllAllocation extends Component
                 'message'=>"Allocation Restored Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -471,10 +444,7 @@ class AllAllocation extends Component
                 'message'=>"Allocation Deleted Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 

@@ -91,10 +91,7 @@ class AllStudentPayment extends Component
                 'message'=>"Student Payment Created Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -119,10 +116,7 @@ class AllStudentPayment extends Component
             $this->admission_id = $studentpayment->admission_id;
             $this->setmode('edit');
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -145,10 +139,7 @@ class AllStudentPayment extends Component
                 'message'=>"Student Payment Updated Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -169,10 +160,7 @@ class AllStudentPayment extends Component
                 'message'=>"Student Payment Deleted Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -187,10 +175,7 @@ class AllStudentPayment extends Component
                 'message'=>"Student Payment Restored Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -206,10 +191,7 @@ class AllStudentPayment extends Component
                 'message'=>"Student Payment Deleted Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 

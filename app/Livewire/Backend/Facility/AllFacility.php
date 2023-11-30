@@ -76,10 +76,7 @@ class AllFacility extends Component
                 'message'=>"Facility Created Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -97,10 +94,7 @@ class AllFacility extends Component
             $this->status = $facility->status;
             $this->setmode('edit');
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -120,10 +114,7 @@ class AllFacility extends Component
                 'message'=>"Facility Updated Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -144,10 +135,7 @@ class AllFacility extends Component
                 'message'=>"Facility Deleted Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -162,10 +150,7 @@ class AllFacility extends Component
                 'message'=>"Facility Restored Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -181,10 +166,7 @@ class AllFacility extends Component
                 'message'=>"Facility Deleted Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 

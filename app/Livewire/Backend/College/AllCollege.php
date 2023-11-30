@@ -86,10 +86,7 @@ class AllCollege extends Component
                 'message'=>"College Created Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -109,10 +106,7 @@ class AllCollege extends Component
             $this->address = $college->address;
             $this->setmode('edit');
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -137,10 +131,7 @@ class AllCollege extends Component
                 'message'=>"College Updated Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -161,10 +152,7 @@ class AllCollege extends Component
                 'message'=>"College Deleted Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -179,10 +167,7 @@ class AllCollege extends Component
                 'message'=>"College Restored Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -198,10 +183,7 @@ class AllCollege extends Component
                 'message'=>"College Deleted Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 

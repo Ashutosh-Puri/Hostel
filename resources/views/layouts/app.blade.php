@@ -34,18 +34,21 @@
     <!-- Styles-->
     @yield('styles')
     @stack('styles')
-
+    <style>
+        .internet{
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            z-index: 999999;
+        }
+    </style>
     <!-- Livewire Styles-->
     @livewireStyles()
 </head>
 <body>
-    <div id="app">
-        @yield('content')
-    </div>
-
+    
     <!-- Livewire JS -->
     @livewireScripts()
-
     <!-- Livewire Turbolinks -->
     {{-- <script src="{{ asset('assets/turbolinks/turbolinks.js') }}" data-turbolinks-eval="false" data-turbo-eval="false"></script>    --}}
 
@@ -146,5 +149,9 @@
             </script> --}}
     @yield('scripts')
     @stack('scripts')
+    <div id="app">
+        @yield('content')
+        <span class="internet text-danger bg-drak" wire:offline >Offline</span>
+    </div>
 </body>
 </html>

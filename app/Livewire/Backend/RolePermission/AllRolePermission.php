@@ -146,10 +146,7 @@ class AllRolePermission extends Component
 
         }else{
 
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
             
         }
         
@@ -175,10 +172,7 @@ class AllRolePermission extends Component
                 'message'=>"Role Permission Remove Successfully !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 

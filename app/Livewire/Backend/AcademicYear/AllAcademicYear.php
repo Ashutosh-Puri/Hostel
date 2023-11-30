@@ -58,16 +58,10 @@ class AllAcademicYear extends Component
             $academicyear->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Academic Year Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Academic Year Created Successfully !!');  
         }
         else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -82,10 +76,7 @@ class AllAcademicYear extends Component
             $this->status = $academicyear->status;
             $this->setmode('edit');
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
 
     }
@@ -101,16 +92,10 @@ class AllAcademicYear extends Component
             $academicyear->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Academic Year Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Academic Year Updated Successfully !!');  
         }else{
 
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -126,19 +111,13 @@ class AllAcademicYear extends Component
         if($academicyear)
         {
             $academicyear->delete();
-            $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Academic Year Deleted Successfully !!"
-            ]);  
+            $this->setmode('all'); 
+            $this->dispatch('alert',type:'success',message:'Academic Year Deleted Successfully !!');  
 
             
         }else{
-
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -150,16 +129,10 @@ class AllAcademicYear extends Component
         {
             $academicyear->restore();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Academic Year Restored Successfully !!"
-            ]);  
+            $this->dispatch('alert',type:'success',message:'Academic Year Restored Successfully !!');  
         }else{
 
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
@@ -168,22 +141,14 @@ class AllAcademicYear extends Component
         $academicyear = AcademicYear::withTrashed()->find($this->delete_id);
 
         if (!$academicyear) {
-            $this->dispatch('alert', [
-                'type' => 'error',
-                'message' => 'Something Went Wrong !!',
-            ]);
-
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
             return;
         }
 
         $academicyear->forceDelete();
         $this->delete_id = null;
         $this->setmode('all');
-
-        $this->dispatch('alert', [
-            'type' => 'success',
-            'message' => 'Academic Year Deleted Successfully !!',
-        ]);
+        $this->dispatch('alert',type:'success',message:'Academic Year Deleted Successfully !!');  
     }
 
 

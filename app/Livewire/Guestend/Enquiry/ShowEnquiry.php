@@ -64,10 +64,7 @@ class ShowEnquiry extends Component
                 'message'=>"We Will Contact You Soon !!"
             ]);
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
 
     }
