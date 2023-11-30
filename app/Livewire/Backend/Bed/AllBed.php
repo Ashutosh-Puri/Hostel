@@ -37,7 +37,6 @@ class AllBed extends Component
         $this->floor_id=null;
         $this->seated_id=null;
         $this->room_id=null;
-        $this->search =null;
     }
 
     protected function rules()
@@ -185,16 +184,19 @@ class AllBed extends Component
             $buildings = Building::select('id','name')->where('status', 0)->where('hostel_id', $this->hostel_id)->get();
             $floors = Floor::select('id','floor')->where('status', 0)->where('building_id', $this->building_id)->get();
             $seateds= Seated::select('id','seated')->where('status',0)->orderBy('seated', 'ASC')->get();
+            $rooms=Room::select('id','label')->where('status', 0)->where('floor_id', $this->floor_id)->where('seated_id', $this->seated_id)->get();
         }
         else
-        {
+        {   
+            $this->resetinput();
             $hostels=null;
             $buildings=null;
             $floors=null;
             $seateds=null;
+            $rooms=null;
         }
       
-        $rooms=Room::select('id','label')->where('status', 0)->where('floor_id', $this->floor_id)->where('seated_id', $this->seated_id)->get();
+        
         $beds= Bed::select('id','room_id','status','deleted_at')->with('room:id,label')->orderBy('room_id', 'ASC')->when($this->search, function ($query) {
             $query->whereHas('room', function ($query) {
                 $query->where('label', 'like', '%' . $this->search . '%');

@@ -58,6 +58,8 @@ class AllMeritList extends Component
     {
         $this->sortby_feild='percentage';
         $this->sortby_order='DESC';
+        $this->m_name =null;
+        $this->m_class = null;
     }
 
     public function resetinput()
@@ -86,21 +88,17 @@ class AllMeritList extends Component
             $merit->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Merit List Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Merit List Created Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
 
     }
 
-    public function edit($id)
+    public function edit(MeritList  $meritlist)
     {
-        $this->current_id=$id;
-        $meritlist = MeritList::find($id);
         if($meritlist){
+            $this->current_id=$meritlist->id;
             $this->c_id=$meritlist->id;
             $this->name=$meritlist->name;
             $this->email=$meritlist->email;
@@ -115,10 +113,9 @@ class AllMeritList extends Component
         }
     }
 
-    public function update($id)
+    public function update(MeritList  $meritlist)
     {
         $validatedData = $this->validate();
-        $merit = MeritList::find($id);
         if($merit){
             $merit->name = $validatedData['name'];
             $merit->email = $validatedData['email'];
@@ -130,10 +127,7 @@ class AllMeritList extends Component
             $merit->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Merit List Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Merit List Updated Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -145,16 +139,12 @@ class AllMeritList extends Component
         $this->dispatch('delete-confirmation');
     }
 
-    public function softdelete($id)
+    public function softdelete(MeritList  $meritlist)
     {
-        $meritlist = MeritList::find($id);
         if($meritlist){
             $meritlist->delete();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Merit List Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Merit List Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -166,10 +156,7 @@ class AllMeritList extends Component
         if($meritlist){
             $meritlist->restore();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Merit List Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Merit List Restored Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -182,30 +169,31 @@ class AllMeritList extends Component
             $meritlist->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Merit List Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Merit List Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function update_status($id)
+    public function update_status(MeritList  $meritlist)
     {
-        $status = MeritList::find($id);
-        if($status->status==1)
+        if($meritlist->status==1)
         {
-            $status->status=0;
+            $meritlist->status=0;
         }else
         {
-            $status->status=1;
+            $meritlist->status=1;
         }
-        $status->update();
+        $meritlist->update();
     }
 
     public function render()
-    {
+    {   
+        if($this->mode=='all')
+        {
+            $this->resetinput();
+        }
+
         if (is_numeric($this->sgpa) && $this->sgpa >=1) {
             $this->percentage = (($this->sgpa * 10) - 7.5);
         }

@@ -45,7 +45,6 @@ class AllPhotoGallery extends Component
         $this->status=null;
         $this->title=null;
         $this->c_id=null;
-        $this->search=null;
         $this->current_id=null;
     }
 
@@ -75,20 +74,16 @@ class AllPhotoGallery extends Component
             $photogallery->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Photo Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Photo Created Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function edit($id)
+    public function edit(PhotoGallery  $photogallery)
     {
-        $this->current_id=$id;
-        $photogallery = PhotoGallery::find($id);
         if($photogallery){
+            $this->current_id=$photogallery->id; 
             $this->c_id=$photogallery->id;
             $this->photoold = $photogallery->photo;
             $this->title = $photogallery->title;
@@ -99,10 +94,9 @@ class AllPhotoGallery extends Component
         }
     }
 
-    public function update($id)
+    public function update(PhotoGallery  $photogallery)
     {
         $validatedData = $this->validate();
-        $photogallery = PhotoGallery::find($id);
         if($photogallery){
             $photogallery->title = $validatedData['title'];
             $photogallery->status = $this->status==1?'1':'0';
@@ -120,10 +114,7 @@ class AllPhotoGallery extends Component
             $photogallery->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Photo Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Photo Updated Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -135,9 +126,8 @@ class AllPhotoGallery extends Component
         $this->dispatch('delete-confirmation');
     }
 
-    public function softdelete($id)
+    public function softdelete(PhotoGallery  $photogallery)
     {
-        $photogallery = PhotoGallery::find($id);
         if($photogallery){
             if($photogallery->photo)
             {
@@ -146,10 +136,7 @@ class AllPhotoGallery extends Component
             $photogallery->delete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Photo Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Photo Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -166,10 +153,7 @@ class AllPhotoGallery extends Component
             $photogallery->restore();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Photo Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Photo Restored Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -186,30 +170,30 @@ class AllPhotoGallery extends Component
             $photogallery->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Photo Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Photo Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function update_status($id)
+    public function update_status(PhotoGallery  $photogallery)
     {
-        $status = PhotoGallery::find($id);
-        if($status->status==1)
+        if($photogallery->status==1)
         {
-            $status->status=0;
+            $photogallery->status=0;
         }else
         {
-            $status->status=1;
+            $photogallery->status=1;
         }
-        $status->update();
+        $photogallery->update();
     }
 
     public function render()
-    {
+    {   
+        if($this->mode=='all')
+        {
+            $this->resetinput();
+        }
         $photogalleries=PhotoGallery::select('id','photo','title','status','deleted_at')->when($this->search, function ($query) {
             return $query->where('title', 'like', '%' . $this->search . '%');
         })->withTrashed()->orderBy('title', 'ASC')->paginate($this->per_page);

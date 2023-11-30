@@ -40,11 +40,9 @@ class AllBuilding extends Component
     public function resetinput()
     {
         $this->hostel_id=null;
-        $this->hostel_name=null;
         $this->name=null;
         $this->status=null;
         $this->c_id=null;
-        $this->building_name =null;
         $this->current_id=null;
     }
 
@@ -72,8 +70,8 @@ class AllBuilding extends Component
 
     public function edit(Building $building)
     {
-        $this->current_id=$building->id;
         if($building){
+            $this->current_id=$building->id;
             $this->c_id=$building->id;
             $this->status = $building->status;
             $this->name = $building->name;
@@ -161,7 +159,8 @@ class AllBuilding extends Component
             $hostels=Hostel::where('status',0)->orderBy('name',"ASC")->get();
         }
         else
-        {
+        {   
+            $this->resetinput();
             $hostels=null;
         }
 

@@ -43,18 +43,12 @@ class AllStudentReport extends Component
 
             return Excel::download(new StudentReportExport($excel), 'student_report.xlsx');
 
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"EXCEL File Downloding..!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'EXCEL File Downloding..!');
 
         } 
         catch (\Exception $e) {
 
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"EXCEL File Generation Error !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'EXCEL File Generation Error !!');
         }
     }
 

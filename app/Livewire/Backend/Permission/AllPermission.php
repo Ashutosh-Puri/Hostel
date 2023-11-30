@@ -35,7 +35,6 @@ class AllPermission extends Component
 
     public function resetinput()
     {
-        $this->search=null;
         $this->name=null;
         $this->group_name=null;
         $this->c_id=null;
@@ -57,20 +56,16 @@ class AllPermission extends Component
             $permission->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Permission Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Permission Created Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function edit($id)
+    public function edit(Permission $permission)
     {
-        $this->current_id=$id;
-        $permission = Permission::find($id);
         if($permission){
+            $this->current_id=$permission->id;
             $this->c_id=$permission->id;
             $this->name = $permission->name;
             $this->group_name = $permission->group_name;
@@ -80,10 +75,9 @@ class AllPermission extends Component
         }
     }
 
-    public function update($id)
+    public function update(Permission $permission)
     {
         $validatedData = $this->validate();
-        $permission = Permission::find($id);
         if($permission){
             $permission->name = $validatedData['name'];
             $permission->group_name = $validatedData['group_name'];
@@ -91,10 +85,7 @@ class AllPermission extends Component
             $permission->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Permission Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Permission Updated Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -113,10 +104,7 @@ class AllPermission extends Component
             $permission->delete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Permission Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Permission Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -125,7 +113,16 @@ class AllPermission extends Component
 
     public function render()
     {   
-        $groups=Permission::all();
+        if($this->mode!=='all')
+        {
+            $groups=Permission::select('group_name')->distinct()->get();
+        }
+        else
+        {
+            $this->resetinput();
+            $groups=null;
+        }
+
         $permissions=Permission::select('id','name','group_name')->when($this->search, function ($query) {
             return $query->where('name', 'like', '%' . $this->search . '%');
         })->orderBy('group_name', 'ASC')->paginate($this->per_page);

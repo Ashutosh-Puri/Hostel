@@ -41,7 +41,7 @@
                 <div class="card-header">
                     <div class="row">
                         <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                        <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
+                        <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                             <option value="10">10</option>
                             <option value="50">50</option>
                             <option value="100">100</option>
@@ -65,14 +65,14 @@
                                     <input  class=" w-100 py-1"type="search" wire:model.live="student_name" id="" placeholder="Student Name">
                                 </div>
                                 <div class="col-6 col-md-2">
-                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.live="gender">
+                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.change="gender">
                                         <option value="" hidden>Gender</option>
                                         <option value="0">Male</option>
                                         <option value="1">Female</option>
                                     </select>
                                 </div>
                                 <div class="col-6 col-md-2">
-                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.live="filter">
+                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.change="filter">
                                         <option value="" hidden>Filter</option>
                                         <option value="1">Today</option>
                                         <option value="2">Yesterday</option>
@@ -101,7 +101,7 @@
                         </thead>
                         <tbody>
                             @foreach ($attendance as $key => $a)
-                                <tr>
+                                <tr wire:key='{{ $a->id }}'>
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $a->Student->name!=null?$a->Student->name:$a->Student->username; }}</td>
                                     <th>{{ $a->Student->gender===1?'Female':'Male'; }}</th>

@@ -35,7 +35,6 @@ class AllCategory extends Component
     {
         $this->name=null;
         $this->c_id=null;
-        $this->search=null;
         $this->current_id=null;
     }
 
@@ -61,8 +60,9 @@ class AllCategory extends Component
 
     public function edit(Category $category)
     {
-        $this->current_id=$category->id;
-        if($category){
+        if($category)
+        {
+            $this->current_id=$category->id;
             $this->c_id=$category->id;
             $this->name = $category->name;
             $this->setmode('edit');
@@ -128,7 +128,12 @@ class AllCategory extends Component
     }
 
     public function render()
-    {
+    {   
+        if($this->mode=='all')
+        {
+            $this->resetinput();
+        }
+        
         $category= Category::query()->select('id','name','deleted_at') ->when($this->search, function ($query) {
             return $query->where('name', 'like', '%' . $this->search . '%');
         })->withTrashed()->orderBy('name', 'ASC')->paginate($this->per_page);

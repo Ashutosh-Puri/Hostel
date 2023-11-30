@@ -72,7 +72,7 @@
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
                                             <label for="gender" class="form-label">Select Gender</label>
-                                            <select class="form-select  @error('gender') is-invalid @enderror" id="gender" wire:model.live.debounce.500ms="gender">
+                                            <select class="form-select  @error('gender') is-invalid @enderror" id="gender" wire:model.change="gender">
                                                 <option hidden value="">Select </option>
                                                 <option value="0">Male</option>
                                                 <option value="1">Female</option>
@@ -192,7 +192,7 @@
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
                                             <label for="gender" class="form-label">Select Gender</label>
-                                            <select class="form-select  @error('gender') is-invalid @enderror" id="gender" wire:model.live.debounce.500ms="gender">
+                                            <select class="form-select  @error('gender') is-invalid @enderror" id="gender" wire:model.change="gender">
                                                 <option hidden value="">Select </option>
                                                 <option value="0" {{ old('gender')==0?"selected":''; }}>Male</option>
                                                 <option value="1" {{ old('gender')==1?"selected":''; }}>Female</option>
@@ -277,7 +277,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
+                                    <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -296,7 +296,7 @@
                                                 <input class="w-100 py-1" wire:model.live.debounce.1000ms="m_class" type="search" placeholder="Student Class">
                                             </div>
                                             <div class="col-6 col-md-3">
-                                                <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.live="sortby_feild">
+                                                <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.change="sortby_feild">
                                                     <option value="" hidden>Sort By</option>
                                                     <option value="name">Name</option>
                                                     <option value="class">Class</option>
@@ -309,7 +309,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-4 col-md-1">
-                                                <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.live="sortby_order">
+                                                <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.change="sortby_order">
                                                     <option value="ASC">ASC</option>
                                                     <option value="DESC">DESC</option>
                                                 </select>

@@ -39,7 +39,6 @@ class AllAcademicYear extends Component
        $this->year=null;
        $this->status=null;
        $this->c_id=null;
-       $this->search =null;
        $this->current_id=null;
     }
 
@@ -65,12 +64,11 @@ class AllAcademicYear extends Component
         }
     }
 
-    public function edit($id)
+    public function edit(AcademicYear $academicyear)
     {   
-        $this->current_id=$id;
-        $academicyear = AcademicYear::find($id);
         if($academicyear)
         {
+            $this->current_id=$academicyear->id;
             $this->c_id=$academicyear->id;
             $this->year = $academicyear->year;
             $this->status = $academicyear->status;
@@ -81,10 +79,9 @@ class AllAcademicYear extends Component
 
     }
 
-    public function update($id)
+    public function update(AcademicYear $academicyear)
     {   
         $validatedData=$this->validate();
-        $academicyear = AcademicYear::find($id);
         if($academicyear)
         {
             $academicyear->year = $validatedData['year'];
@@ -166,6 +163,11 @@ class AllAcademicYear extends Component
 
     public function render()
     {   
+
+        if($this->mode=='all')
+        {
+            $this->resetinput();
+        }
         $academicyear = AcademicYear::query()->select('id','year', 'status','deleted_at')->when($this->search, function ($query) {
             return $query->where('year', 'like', '%' . $this->search . '%');
         })->latest('year')->withTrashed()->paginate($this->per_page);

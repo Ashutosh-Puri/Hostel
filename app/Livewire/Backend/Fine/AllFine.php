@@ -43,8 +43,6 @@ class AllFine extends Component
 
     public function resetinput()
     {
-        $this->year=null;
-        $this->fine_name=null;
         $this->type=null;
         $this->name=null;
         $this->amount=null;
@@ -71,20 +69,17 @@ class AllFine extends Component
             $fine->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Fine Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Fine Created Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function edit($id)
+    public function edit(Fine $fine)
     {
-        $this->current_id=$id;
-        $fine = Fine::find($id);
-        if($fine){
+        if($fine)
+        {
+            $this->current_id=$fine->id;
             $this->c_id=$fine->id;
             $this->academic_year_id=$fine->academic_year_id;
             $this->name = $fine->name;
@@ -96,10 +91,9 @@ class AllFine extends Component
         }
     }
 
-    public function update($id)
+    public function update(Fine $fine)
     {
         $validatedData = $this->validate();
-        $fine = Fine::find($id);
         if($fine){
             $fine->academic_year_id = $validatedData['academic_year_id'];
             $fine->name = $validatedData['name'];
@@ -108,10 +102,7 @@ class AllFine extends Component
             $fine->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Fine Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Fine Updated Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -123,16 +114,12 @@ class AllFine extends Component
         $this->dispatch('delete-confirmation');
     }
 
-    public function softdelete($id)
+    public function softdelete(Fine $fine)
     {
-        $fine = Fine::find($id);
         if($fine){
             $fine->delete();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Fine Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Fine Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -144,10 +131,7 @@ class AllFine extends Component
         if($fine){
             $fine->restore();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Fine Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Fine Restored Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -160,31 +144,36 @@ class AllFine extends Component
             $fine->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Fine Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Fine Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function update_status($id)
+    public function update_status(Fine $fine)
     {
-        $status = Fine::find($id);
-        if($status->status==1)
+        if($fine->status==1)
         {
-            $status->status=0;
+            $fine->status=0;
         }else
         {
-            $status->status=1;
+            $fine->status=1;
         }
-        $status->update();
+        $fine->update();
     }
 
     public function render()
-    {
-        $academic_years=AcademicYear::select('id','year')->where('status',0)->orderBy('year', 'DESC')->get();
+    {   
+        if($this->mode!=='all')
+        {
+            $academic_years=AcademicYear::select('id','year')->where('status',0)->orderBy('year', 'DESC')->get();
+        }
+        else
+        {   
+            $this->resetinput();
+            $academic_years=null;
+        }
+
         $query = Fine::query()->with('academicyear');
         if ($this->year) {
             $query->whereHas('academicyear', function ($subQuery) {

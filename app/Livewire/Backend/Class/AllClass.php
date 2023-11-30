@@ -45,7 +45,6 @@ class AllClass extends Component
         $this->type=null;
         $this->status=null;
         $this->c_id=null;
-        $this->search=null;
         $this->current_id=null;
     }
 
@@ -74,8 +73,9 @@ class AllClass extends Component
 
     public function edit(Classes $class)
     {
-        $this->current_id=$class->id;
-        if($class){
+        if($class)
+        {
+            $this->current_id=$class->id;
             $this->c_id=$class->id;
             $this->name = $class->name;
             $this->stream =$class->stream;
@@ -159,7 +159,12 @@ class AllClass extends Component
     }
 
     public function render()
-    {
+    {   
+        if($this->mode=='all')
+        {
+            $this->resetinput();
+        }
+        
         $class=Classes::query()->select('id','name','stream','type','status','deleted_at')->when($this->search, function ($query) {
             return $query->where('name', 'like', '%' . $this->search . '%');
         })->orderBy('name', 'ASC')->withTrashed()->paginate($this->per_page);

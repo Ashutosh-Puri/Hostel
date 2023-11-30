@@ -26,8 +26,6 @@ class AllQuota extends Component
 
     public function resetinput()
     {
-        $this->year=null;
-        $this->class_name=null;
         $this->max_capacity=null;
         $this->class_id=null;
         $this->academic_year_id=null;
@@ -63,18 +61,14 @@ class AllQuota extends Component
             $quota->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Quota Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Quota Created Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function edit($id)
+    public function edit(Quota $quota)
     {
-        $quota = Quota::find($id);
         if($quota){
             $this->c_id=$quota->id;
             $this->academic_year_id=$quota->academic_year_id;
@@ -87,10 +81,9 @@ class AllQuota extends Component
         }
     }
 
-    public function update($id)
+    public function update(Quota $quota)
     {
         $validatedData = $this->validate();
-        $quota = Quota::find($id);
         if($quota){
             $quota->academic_year_id = $validatedData['academic_year_id'];
             $quota->class_id = $validatedData['class_id'];
@@ -99,10 +92,7 @@ class AllQuota extends Component
             $quota->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Quota Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Quota Updated Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -114,16 +104,12 @@ class AllQuota extends Component
         $this->dispatch('delete-confirmation');
     }
 
-    public function softdelete($id)
+    public function softdelete(Quota $quota)
     {
-        $quota = Quota::find($id);
         if($quota){
             $quota->delete();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Quota Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Quota Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -135,10 +121,7 @@ class AllQuota extends Component
         if($quota){
             $quota->restore();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Quota Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Quota Restored Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -151,32 +134,38 @@ class AllQuota extends Component
             $quota->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Quota Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Quota Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function update_status($id)
+    public function update_status(Quota $quota)
     {
-        $status = Quota::find($id);
-        if($status->status==1)
+        if($quota->status==1)
         {
-            $status->status=0;
+            $quota->status=0;
         }else
         {
-            $status->status=1;
+            $quota->status=1;
         }
-        $status->update();
+        $quota->update();
     }
 
     public function render()
-    {
-        $academic_years=AcademicYear::select('id',"year")->where('status',0)->orderBy('year', 'DESC')->get();
-        $classes=Classes::select('id',"name")->where('status',0)->get();
+    {   
+        if($this->mode!=='all')
+        {
+            $academic_years=AcademicYear::select('id',"year")->where('status',0)->orderBy('year', 'DESC')->get();
+            $classes=Classes::select('id',"name")->where('status',0)->get();
+        }
+        else
+        {
+            $this->resetinput();
+            $academic_years=null;
+            $classes=null;
+        }
+
         $query = Quota::with('AcademicYear', 'Class')->orderBy('academic_year_id', 'DESC');
         if ($this->year) {
             $query->whereHas('AcademicYear', function ($query) {

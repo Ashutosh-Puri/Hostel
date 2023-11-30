@@ -40,7 +40,6 @@ class AllNotice extends Component
         $this->status=null;
         $this->description=null;
         $this->c_id=null;
-        $this->search=null;
         $this->current_id=null;
     }
 
@@ -60,21 +59,17 @@ class AllNotice extends Component
             $notice->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Notice Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Notice Created Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
 
     }
 
-    public function edit($id)
+    public function edit(Notice $notice)
     {
-        $this->current_id=$id;
-        $notice = Notice::find($id);
         if($notice){
+            $this->current_id=$notice->id;
             $this->c_id=$notice->id;
             $this->name = $notice->name;
             $this->description = $notice->description;
@@ -85,10 +80,9 @@ class AllNotice extends Component
         }
     }
 
-    public function update($id)
+    public function update(Notice $notice)
     {
         $validatedData = $this->validate();
-        $notice = Notice::find($id);
         if($notice){
             $notice->name = $validatedData['name'];
             $notice->description = $validatedData['description'];
@@ -96,10 +90,7 @@ class AllNotice extends Component
             $notice->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Notice Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Notice Updated Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -111,16 +102,12 @@ class AllNotice extends Component
         $this->dispatch('delete-confirmation');
     }
 
-    public function softdelete($id)
+    public function softdelete(Notice $notice)
     {
-        $notice = Notice::find($id);
         if($notice){
             $notice->delete();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Notice Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Notice Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -132,10 +119,7 @@ class AllNotice extends Component
         if($notice){
             $notice->restore();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Notice Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Notice Restored Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -148,30 +132,31 @@ class AllNotice extends Component
             $notice->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Notice Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Notice Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function update_status($id)
+    public function update_status(Notice $notice)
     {
-        $status = Notice::find($id);
-        if($status->status==1)
+        if($notice->status==1)
         {
-            $status->status=0;
+            $notice->status=0;
         }else
         {
-            $status->status=1;
+            $notice->status=1;
         }
-        $status->update();
+        $notice->update();
     }
 
     public function render()
-    {
+    {   
+        if($this->mode=='all')
+        {
+            $this->resetinput();
+        }
+
         $notice = Notice::query()->when($this->search, function ($query) {
             return $query->where('description', 'like', '%' . $this->search . '%');
         })->withTrashed()->orderBy('description', 'ASC')->paginate($this->per_page);

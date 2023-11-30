@@ -49,8 +49,6 @@ class AllFloor extends Component
         $this->floor=null;
         $this->status=null;
         $this->c_id=null;
-        $this->floor_number =null;
-        $this->building_name =null;
         $this->current_id=null;
     }
 
@@ -70,20 +68,17 @@ class AllFloor extends Component
             $floor->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Floor Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Floor Created Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function edit($id)
+    public function edit(Floor $floor)
     {
-        $this->current_id=$id;
-        $floor = Floor::find($id);
-        if($floor){
+        if($floor)
+        {
+            $this->current_id=$floor->id;
             $this->c_id=$floor->id;
             $this->hostel_id=$floor->Building->Hostel->id;
             $this->building_id=$floor->Building->id;
@@ -95,10 +90,9 @@ class AllFloor extends Component
         }
     }
 
-    public function update($id)
+    public function update(Floor $floor)
     {
         $validatedData = $this->validate();
-        $floor = Floor::find($id);
         if($floor){
             $floor->floor = $validatedData['floor'];
             $floor->building_id = $validatedData['building_id'];
@@ -106,10 +100,7 @@ class AllFloor extends Component
             $floor->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Floor Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Floor Updated Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -121,16 +112,12 @@ class AllFloor extends Component
         $this->dispatch('delete-confirmation');
     }
 
-    public function softdelete($id)
+    public function softdelete(Floor $floor)
     {
-        $floor = Floor::find($id);
         if($floor){
             $floor->delete();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Floor Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Floor Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -142,10 +129,7 @@ class AllFloor extends Component
         if($floor){
             $floor->restore();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Floor Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Floor Restored Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -158,32 +142,37 @@ class AllFloor extends Component
             $floor->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Floor Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Floor Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function update_status($id)
+    public function update_status(Floor $floor)
     {
-        $status = Floor::find($id);
-        if($status->status==1)
+        if($floor->status==1)
         {
-            $status->status=0;
+            $floor->status=0;
         }else
         {
-            $status->status=1;
+            $floor->status=1;
         }
-        $status->update();
+        $floor->update();
     }
 
     public function render()
-    {
-        $hostels=Hostel::select('id','name')->where('status',0)->get();
-        $buildings=Building::select('id','name')->where('status',0)->where('hostel_id',$this->hostel_id)->get();
+    {   
+        if($this->mode!=='all')
+        {
+            $hostels=Hostel::select('id','name')->where('status',0)->get();
+            $buildings=Building::select('id','name')->where('status',0)->where('hostel_id',$this->hostel_id)->get();
+        }
+        else
+        {   
+            $this->resetinput();
+            $hostels=null;
+            $buildings=null;
+        }
 
         $query = Floor::with('Building')->select('id','floor','building_id','deleted_at','status')->orderBy('floor', 'ASC');
         if ($this->building_name) {

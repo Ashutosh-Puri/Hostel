@@ -79,10 +79,6 @@ class AllAdmission extends Component
     {
         $this->name=null;
         $this->c_id=null;
-        $this->ad =null;
-        $this->a =null;
-        $this->s =null;
-        $this->c =null;
         $this->academic_year_id=null;
         $this->last_academic_year_id=null;
         $this->student_id=null;

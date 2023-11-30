@@ -44,7 +44,6 @@ class AllFacility extends Component
 
     public function resetinput()
     {
-        $this->search=null;
         $this->name=null;
         $this->hostel_id=null;
         $this->building_id=null;
@@ -79,8 +78,9 @@ class AllFacility extends Component
 
     public function edit(Facility $facility)
     {
-        $this->current_id=$facility->id;
-        if($facility){
+        if($facility)
+        {
+            $this->current_id=$facility->id;
             $this->c_id=$facility->id;
             $this->hostel_id=$facility->Room->Floor->Building->Hostel->id;
             $this->building_id=$facility->Room->Floor->Building->id;
@@ -174,7 +174,8 @@ class AllFacility extends Component
             $rooms=Room::select('id','label')->where('floor_id', $this->floor_id)->get();
         }
         else
-        {
+        {   
+            $this->resetinput();
             $hostels=null;
             $buildings=null;
             $floors=null;

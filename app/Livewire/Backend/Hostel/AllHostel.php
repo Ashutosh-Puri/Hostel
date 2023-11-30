@@ -48,8 +48,6 @@ class AllHostel extends Component
         $this->status=null;
         $this->gender=null;
         $this->c_id=null;
-        $this->college_name =null;
-        $this->hostel_name =null;
         $this->current_id=null;
     }
 
@@ -70,20 +68,17 @@ class AllHostel extends Component
             $hostel->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Hostel Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Hostel Created Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function edit($id)
+    public function edit(Hostel $hostel)
     {
-        $this->current_id=$id;
-        $hostel = Hostel::find($id);
-        if($hostel){
+        if($hostel)
+        {
+            $this->current_id=$hostel->id;
             $this->c_id=$hostel->id;
             $this->college_id=$hostel->college_id;
             $this->status = $hostel->status;
@@ -95,10 +90,9 @@ class AllHostel extends Component
         }
     }
 
-    public function update($id)
+    public function update(Hostel $hostel)
     {
         $validatedData = $this->validate();
-        $hostel = Hostel::find($id);
         if($hostel){
             $hostel->name = $validatedData['name'];
             $hostel->college_id = $validatedData['college_id'];
@@ -107,10 +101,7 @@ class AllHostel extends Component
             $hostel->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Hostel Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Hostel Updated Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -122,16 +113,12 @@ class AllHostel extends Component
         $this->dispatch('delete-confirmation');
     }
 
-    public function softdelete($id)
+    public function softdelete(Hostel $hostel)
     {
-        $hostel = Hostel::find($id);
         if($hostel){
             $hostel->delete();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Hostel Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Hostel Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -143,10 +130,7 @@ class AllHostel extends Component
         if($hostel){
             $hostel->restore();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Hostel Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'"Hostel Restored Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -159,31 +143,36 @@ class AllHostel extends Component
             $hostel->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Hostel Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'"Hostel Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function update_status($id)
+    public function update_status(Hostel $hostel)
     {
-        $status = Hostel::find($id);
-        if($status->status==1)
+        if($hostel->status==1)
         {
-            $status->status=0;
+            $hostel->status=0;
         }else
         {
-            $status->status=1;
+            $hostel->status=1;
         }
-        $status->update();
+        $hostel->update();
     }
 
     public function render()
-    {
-        $colleges=College::select('id','name','deleted_at')->where('status',0)->orderBy('name',"ASC")->get();
+    {   
+        if($this->mode!=='all')
+        {
+            $colleges=College::select('id','name','deleted_at')->where('status',0)->orderBy('name',"ASC")->get();
+        }
+        else
+        {   
+            $this->resetinput();
+            $colleges=null;
+        }
+
         $query = Hostel::orderBy('name', 'ASC');
         if ($this->college_name || $this->hostel_name) {
             $query->when($this->college_name, function ($query) {

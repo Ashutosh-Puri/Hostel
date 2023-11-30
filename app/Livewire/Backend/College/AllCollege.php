@@ -56,7 +56,6 @@ class AllCollege extends Component
         $this->address=null;
         $this->status=null;
         $this->c_id=null;
-        $this->earch =null;
         $this->current_id=null;
     }
 
@@ -89,8 +88,9 @@ class AllCollege extends Component
 
     public function edit(College $college)
     {
-        $this->current_id=$college->id;
-        if($college){
+        if($college)
+        {
+            $this->current_id=$college->id;
             $this->c_id=$college->id;
             $this->status = $college->status;
             $this->name = $college->name;
@@ -182,7 +182,12 @@ class AllCollege extends Component
     }
 
     public function render()
-    {
+    {   
+        if($this->mode=='all')
+        {
+            $this->resetinput();
+        }
+        
         $colleges = College::query()->when($this->search, function ($query) {
             return $query->where('name', 'like', '%' . $this->search . '%');
         })->orderBy('name', 'ASC')->withTrashed()->paginate($this->per_page);

@@ -47,10 +47,6 @@ class AllAllocation extends Component
 
     public function resetinput()
     {
-        $this->a=null;
-        $this->s=null;
-        $this->c=null;
-        $this->ad=null;
         $this->c_id=null;
         $this->hostel_id=null;
         $this->academic_year_id=null;
@@ -422,7 +418,11 @@ class AllAllocation extends Component
     }
 
     public function render()
-    {
+    {   
+        if($this->mode=='all')
+        {
+            $this->resetinput();
+        }
         if($this->mode=='add'|| $this->mode=='edit')
         {
               // Allocation Add , Edit

@@ -66,7 +66,6 @@ class AllAdmin extends Component
         $this->password_confirmation=null;
         $this->photo=null;
         $this->photoold=null;
-        $this->search =null;
         $this->current_id=null;
     }
 
@@ -81,7 +80,6 @@ class AllAdmin extends Component
         $admin= new Admin;
         if($admin)
         {
-
             $admin->name = $validatedData['name'];
             $admin->email= $validatedData['email'];
             $admin->password= Hash::make($validatedData['password']);
@@ -95,14 +93,9 @@ class AllAdmin extends Component
                 $this->reset('photo');
             }
             if ($this->role) {
-
                 $admin->assignRole($this->role);
-
             }
             $admin->save();
-
-
-
             $this->resetinput();
             $this->setmode('all');
             $this->dispatch('alert',type:'success',message:'Admin Created Successfully !!');  
@@ -111,12 +104,11 @@ class AllAdmin extends Component
         }
     }
 
-    public function edit($id)
+    public function edit(Admin $admin)
     {
-        $this->current_id=$id;
-        $admin = Admin::find($id);
         if($admin)
         {
+            $this->current_id=$admin->id;
             $role=$admin->roles->pluck('name');
             $this->role=$role[0];
             $this->c_id=$admin->id;
@@ -131,10 +123,9 @@ class AllAdmin extends Component
         }
     }
 
-    public function update($id)
+    public function update(Admin $admin)
     {
         $validatedData =  $this->validate();
-        $admin = Admin::find($id);
         if($admin)
         {
             $admin->name = $validatedData['name'];
@@ -173,9 +164,8 @@ class AllAdmin extends Component
         $this->dispatch('delete-confirmation');
     }
 
-    public function softdelete($id)
+    public function softdelete(Admin $admin)
     {
-        $admin = Admin::find($id);
         if($admin)
         {
             if($admin->photo)
@@ -227,17 +217,16 @@ class AllAdmin extends Component
         }
     }
 
-    public function update_status($id)
+    public function update_status(Admin $admin)
     {
-        $status = Admin::find($id);
-        if($status->status==1)
+        if($admin->status==1)
         {
-            $status->status=0;
+            $admin->status=0;
         }else
         {
-            $status->status=1;
+            $admin->status=1;
         }
-        $status->update();
+        $admin->update();
     }
 
     public function render()
@@ -246,7 +235,8 @@ class AllAdmin extends Component
         {
             $roles=Role::select('id','name')->where('status',0)->get();
         }else
-        {
+        {   
+            $this->resetinput();
             $roles=null;
         }
 

@@ -78,8 +78,9 @@ class AllContact extends Component
 
     public function edit(Contact $contact)
     {
-        $this->current_id=$contact->id;
-        if($contact){
+        if($contact)
+        {
+            $this->current_id=$contact->id;
             $this->c_id=$contact->id;
             $this->name = $contact->name;
             $this->email = $contact->email;
@@ -165,7 +166,12 @@ class AllContact extends Component
     }
 
     public function render()
-    {
+    {   
+        if($this->mode=='all')
+        {
+            $this->resetinput();
+        }
+        
         $contact = Contact::query()->when($this->search, function ($query) {
             return $query->where('name', 'like', '%' . $this->search . '%');
         })->withTrashed()->orderBy('name', 'ASC')->paginate($this->per_page);

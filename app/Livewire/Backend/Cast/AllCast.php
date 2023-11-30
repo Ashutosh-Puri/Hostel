@@ -40,7 +40,6 @@ class AllCast extends Component
         $this->category_id=null;
         $this->status=null;
         $this->c_id=null;
-        $this->search=null;
         $this->current_id=null;
     }
 
@@ -68,8 +67,9 @@ class AllCast extends Component
 
     public function edit(Cast $cast)
     {
-        $this->current_id=$cast->id;
-        if($cast){
+        if($cast)
+        {
+            $this->current_id=$cast->id;
             $this->c_id=$cast->id;
             $this->name = $cast->name;
             $this->category_id =$cast->category_id;
@@ -158,6 +158,7 @@ class AllCast extends Component
         else
         {
             $categories=null;
+            $this->resetinput();
         }
        
         $cast = Cast::query()->select('id','category_id','name','status','deleted_at')->when($this->search, function ($query) {

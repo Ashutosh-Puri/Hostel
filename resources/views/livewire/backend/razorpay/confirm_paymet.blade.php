@@ -41,7 +41,7 @@
                             </form>
                             <div class="row mb-3">
                                 <div class="col-4">
-                                    <a href="{{ route('all_student_payment') }}" class="btn btn-lg w-100 btn-danger" > Cancel </a>
+                                    <a  wire:navigate href="{{ route('all_student_payment') }}" class="btn btn-lg w-100 btn-danger" > Cancel </a>
                                 </div>
                                 <div class="col-8">
                                     <button type="submit" class="btn btn-lg w-100 btn-success" id="rzp-button1"> Pay  With Razorpay ( {{ $order->amount / 100  }} Rs. )</button>
@@ -63,14 +63,6 @@
                                         document.getElementById('error_razorpay_payment_id').value=response.error.metadata.payment_id;
                                         document.getElementById('error_razorpay_order_id').value=response.error.metadata.order_id;
                                         document.paymentfeefail.submit();
-
-                                            // alert(response.error.code);
-                                            // alert(response.error.description);
-                                            // alert(response.error.source);
-                                            // alert(response.error.step);
-                                            // alert(response.error.reason);
-                                            // alert(response.error.metadata.order_id);
-                                            // alert(response.error.metadata.payment_id);
                                     });
 
                                     document.getElementById('rzp-button1').onclick = function(e){

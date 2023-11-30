@@ -44,7 +44,6 @@ class AllFee extends Component
 
     public function resetinput()
     {
-        $this->search=null;
         $this->academic_year_id=null;
         $this->seated_id=null;
         $this->status=null;
@@ -70,20 +69,17 @@ class AllFee extends Component
             $fee->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Fee Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Fee Created Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function edit($id)
+    public function edit(Fee $fee)
     {
-        $this->current_id=$id;
-        $fee = Fee::find($id);
-        if($fee){
+        if($fee)
+        {
+            $this->current_id=$fee->id;
             $this->c_id=$fee->id;
             $this->academic_year_id=$fee->academic_year_id;
             $this->seated_id = $fee->seated_id;
@@ -95,10 +91,9 @@ class AllFee extends Component
         }
     }
 
-    public function update($id)
+    public function update(Fee $fee)
     {
         $validatedData = $this->validate();
-        $fee = Fee::find($id);
         if($fee){
             $fee->academic_year_id = $validatedData['academic_year_id'];
             $fee->seated_id = $validatedData['seated_id'];
@@ -107,10 +102,7 @@ class AllFee extends Component
             $fee->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Fee Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Fee Updated Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -122,17 +114,13 @@ class AllFee extends Component
         $this->dispatch('delete-confirmation');
     }
 
-    public function softdelete($id)
+    public function softdelete(Fee $fee)
     {
-        $fee = Fee::find($id);
         if($fee){
             $fee->delete();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Fee Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Fee Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -145,10 +133,7 @@ class AllFee extends Component
             $fee->restore();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Fee Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Fee Restored Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -162,32 +147,38 @@ class AllFee extends Component
             $this->delete_id=null;
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Fee Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Fee Deleted Successfully !!!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function update_status($id)
+    public function update_status(Fee $fee)
     {
-        $status = Fee::find($id);
-        if($status->status==1)
+        if($fee->status==1)
         {
-            $status->status=0;
+            $fee->status=0;
         }else
         {
-            $status->status=1;
+            $fee->status=1;
         }
-        $status->update();
+        $fee->update();
     }
 
     public function render()
     {
-        $seateds=Seated::select('id','seated')->where('status',0)->orderBy('seated', 'ASC')->get();
-        $academic_years=AcademicYear::select('id','year')->where('status',0)->orderBy('year', 'DESC')->get();
+        
+        if($this->mode!=='all')
+        {
+            $seateds=Seated::select('id','seated')->where('status',0)->orderBy('seated', 'ASC')->get();
+            $academic_years=AcademicYear::select('id','year')->where('status',0)->orderBy('year', 'DESC')->get();
+        }
+        else
+        {   
+            $this->resetinput();
+            $seateds=null;
+            $academic_years=null;
+        }
         $feesQuery = Fee::with('AcademicYear')->orderBy('academic_year_id', 'ASC');
         if ($this->search) {
             $feesQuery->whereHas('AcademicYear', function ($query) {

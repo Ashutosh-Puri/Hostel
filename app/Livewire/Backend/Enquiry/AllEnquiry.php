@@ -59,7 +59,6 @@ class AllEnquiry extends Component
         $this->c_id=null;
         $this->m_id=null;
         $this->reply=null;
-        $this->search=null;
         $this->current_id=null;
     }
 
@@ -92,8 +91,9 @@ class AllEnquiry extends Component
 
     public function edit(Enquiry $enquiry)
     {
-        $this->current_id=$enquiry->id;
-        if($enquiry){
+        if($enquiry)
+        {
+            $this->current_id=$enquiry->id;
             $this->c_id=$enquiry->id;
             $this->name = $enquiry->name;
             $this->email = $enquiry->email;
@@ -212,7 +212,11 @@ class AllEnquiry extends Component
     }
 
     public function render()
-    {
+    {   
+        if($this->mode=='all')
+        {
+            $this->resetinput();
+        }
         $enquiries = Enquiry::query()->when($this->search, function ($query) {
              return $query->where('name', 'like', '%' . $this->search . '%');
         })->withTrashed()->orderBy('status', 'ASC')->paginate($this->per_page);

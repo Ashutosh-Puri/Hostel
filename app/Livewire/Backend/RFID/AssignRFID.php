@@ -38,10 +38,7 @@ class AssignRFID extends Component
         if($student){
             $student->rfid=null;
             $student->update();
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"RFID Removed Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'RFID Removed Successfully !!');
         }
     }
 
@@ -77,10 +74,7 @@ class AssignRFID extends Component
             DB::table('assign_rfid')->where('id', 1)->update(['rfid' => null]);
             $this->resetinput();
             $this->status=1;
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"RFID Assgined Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'RFID Assgined Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }

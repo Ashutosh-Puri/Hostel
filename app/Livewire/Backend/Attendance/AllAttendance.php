@@ -48,6 +48,8 @@ class AllAttendance extends Component
     {
         $this->sortby_feild='id';
         $this->sortby_order='DESC';
+        $this->s_name = null;
+        $this->s_rfid = null;
     }
 
     public function resetinput()
@@ -78,8 +80,8 @@ class AllAttendance extends Component
 
     public function edit(Attendance $attendance)
     {
-        $this->current_id=$attendance->id;
         if($attendance){
+            $this->current_id=$attendance->id;
             $this->c_id=$attendance->id;
             $this->student_id=$attendance->student_id;
             $this->rfid=$attendance->rfid;
@@ -157,6 +159,7 @@ class AllAttendance extends Component
             $students=Student::where('status',0)->get();
         }
         else{
+            $this->resetinput();
             $students=null;
         }
         

@@ -41,7 +41,7 @@
                             </form>
                             <div class="row mb-3">
                                 <div class="col-4">
-                                    <a href="{{ route('all_student_fine') }}" class="btn btn-lg w-100 btn-danger" > Cancel </a>
+                                    <a wire:navigate href="{{ route('all_student_fine') }}" class="btn btn-lg w-100 btn-danger" > Cancel </a>
                                 </div>
                                 <div class="col-8">
                                     <button type="submit" class="btn btn-lg w-100 btn-success" id="rzp-button1"> Pay  With Razorpay ( {{ $order->amount / 100  }} Rs. )</button>
