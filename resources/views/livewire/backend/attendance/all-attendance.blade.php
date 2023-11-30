@@ -22,13 +22,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form wire:submit.prevent="save" method="post" action="" id="myForm">
+                            <form wire:submit="save" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row text-start">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="student_id" class="form-label">Select Student</label>
-                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.live="student_id">
+                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.change="student_id">
                                                 <option  hidden value="">Select Students</option>
                                                 @foreach($students as $item2)
                                                     <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name!=null?$item2->name: $item2->username; }}</option>
@@ -88,13 +88,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
+                            <form  wire:submit="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row text-start">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="student_id" class="form-label">Select Student</label>
-                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.live="student_id">
+                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.change="student_id">
                                                 <option  hidden value="">Select Students</option>
                                                 @foreach($students as $item2)
                                                     <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name!=null?$item2->name: $item2->username; }}</option>
@@ -169,7 +169,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
+                                    <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -188,7 +188,7 @@
                                                 <input class="w-100 py-1" wire:model.live.debounce.1000ms="s_rfid" type="search" placeholder="Student RFID">
                                             </div>
                                             <div class="col-6 col-md-3">
-                                                <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.live="sortby_feild">
+                                                <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.change="sortby_feild">
                                                     <option value="" hidden>Sort By</option>
                                                     <option value="student_id">Name</option>
                                                     <option value="rfid">RFID</option>
@@ -196,7 +196,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-4 col-md-1">
-                                                <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.live="sortby_order">
+                                                <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.change="sortby_order">
                                                     <option value="ASC">ASC</option>
                                                     <option value="DESC">DESC</option>
                                                 </select>
@@ -226,7 +226,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($attendance as $key => $item)
-                                            <tr>
+                                            <tr wire:key='{{ $item->id }}'>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->Student->name!==null?$item->Student->name:$item->Student->username;}}</td>
                                                 <td>{{ $item->rfid}}</td>

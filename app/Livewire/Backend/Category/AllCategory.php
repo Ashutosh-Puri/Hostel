@@ -53,19 +53,15 @@ class AllCategory extends Component
             $category->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Category Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Category Created Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function edit($id)
+    public function edit(Category $category)
     {
-        $this->current_id=$id;
-        $category = Category::find($id);
+        $this->current_id=$category->id;
         if($category){
             $this->c_id=$category->id;
             $this->name = $category->name;
@@ -75,19 +71,15 @@ class AllCategory extends Component
         }
     }
 
-    public function update($id)
+    public function update(Category $category)
     {
         $validatedData = $this->validate();
-        $category = Category::find($id);
         if($category){
             $category->name = $validatedData['name'];
             $category->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Category Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Category Updated Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -99,16 +91,12 @@ class AllCategory extends Component
         $this->dispatch('delete-confirmation');
     }
 
-    public function softdelete($id)
+    public function softdelete(Category $category)
     {
-        $category = Category::find($id);
         if($category){
             $category->delete();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Category Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Category Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -120,10 +108,7 @@ class AllCategory extends Component
         if($category){
             $category->restore();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Category Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Category Restored Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -136,10 +121,7 @@ class AllCategory extends Component
             $category->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Category Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Category Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }

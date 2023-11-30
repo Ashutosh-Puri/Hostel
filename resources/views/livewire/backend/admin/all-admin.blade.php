@@ -22,13 +22,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="save" method="post" action="" id="myForm">
+                            <form  wire:submit="save" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="role" class="form-label">Select Role</label>
-                                            <select class="form-select @error('role') is-invalid @enderror" id="role" wire:model.live="role" >
+                                            <select class="form-select @error('role') is-invalid @enderror" id="role" wire:model.change="role" >
                                                 <option hidden value="">Select Role</option>
                                                 @foreach ($roles as $item1)
                                                     <option  value="{{ $item1->name}}"> {{ $item1->name }} </option>
@@ -162,13 +162,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
+                            <form  wire:submit="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="role" class="form-label">Select Role</label>
-                                            <select class="form-select @error('role') is-invalid @enderror" id="role" wire:model.live="role" >
+                                            <select class="form-select @error('role') is-invalid @enderror" id="role" wire:model.change="role" >
                                                 <option hidden value="">Select Role</option>
                                                 @foreach ($roles as $item1)
                                                     <option  value="{{ $item1->name  }}"> {{ $item1->name }} </option>
@@ -303,7 +303,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -345,7 +345,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($admins as $key => $item)
-                                            <tr>
+                                            <tr wire:key='{{ $item->id }}'>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>
                                                     <img id="showImage" src="{{ (!empty($item->photo)) ? asset($item->photo) : asset('assets/images/no_image.jpg') }}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image" style="height: 45px; width:45px;">

@@ -64,19 +64,15 @@ class AllBuilding extends Component
             $building->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Building Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Building Created Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function edit($id)
+    public function edit(Building $building)
     {
-        $this->current_id=$id;
-        $building = Building::find($id);
+        $this->current_id=$building->id;
         if($building){
             $this->c_id=$building->id;
             $this->status = $building->status;
@@ -88,10 +84,9 @@ class AllBuilding extends Component
         }
     }
 
-    public function update($id)
+    public function update(Building $building)
     {
         $validatedData =  $this->validate();
-        $building = Building::find($id);
         if($building){
             $building->name = $validatedData['name'];
             $building->hostel_id = $validatedData['hostel_id'];
@@ -99,10 +94,7 @@ class AllBuilding extends Component
             $building->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Building Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Building Updated Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -115,16 +107,12 @@ class AllBuilding extends Component
         $this->dispatch('delete-confirmation');
     }
 
-    public function softdelete($id)
+    public function softdelete(Building $building)
     {
-        $building = Building::find($id);
         if($building){
             $building->delete();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Building Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Building Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -136,10 +124,7 @@ class AllBuilding extends Component
         if($building){
             $building->restore();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Building Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Building Restored Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -152,31 +137,34 @@ class AllBuilding extends Component
             $building->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Building Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Building Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function update_status($id)
+    public function update_status(Building $building)
     {
-        $status = Building::find($id);
-        if($status->status==1)
+        if($building->status==1)
         {
-            $status->status=0;
+            $building->status=0;
         }else
         {
-            $status->status=1;
+            $building->status=1;
         }
-        $status->update();
+        $building->update();
     }
 
     public function render()
-    {
-        $hostels=Hostel::where('status',0)->orderBy('name',"ASC")->get();
+    {   
+        if($this->mode!=='all'){
+            $hostels=Hostel::where('status',0)->orderBy('name',"ASC")->get();
+        }
+        else
+        {
+            $hostels=null;
+        }
+
         $query = Building::select('id','hostel_id','name','status','deleted_at')->with('hostel')->orderBy('name', 'ASC');
         if ($this->hostel_name) {
             $query->whereHas('hostel', function ($query) {

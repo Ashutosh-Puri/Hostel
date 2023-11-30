@@ -83,20 +83,16 @@ class AllEnquiry extends Component
             $enquiry->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Enquiry Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Enquiry Created Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
 
     }
 
-    public function edit($id)
+    public function edit(Enquiry $enquiry)
     {
-        $this->current_id=$id;
-        $enquiry = Enquiry::find($id);
+        $this->current_id=$enquiry->id;
         if($enquiry){
             $this->c_id=$enquiry->id;
             $this->name = $enquiry->name;
@@ -112,10 +108,9 @@ class AllEnquiry extends Component
         }
     }
 
-    public function update($id)
+    public function update(Enquiry $enquiry)
     {
         $validatedData = $this->validate();
-        $enquiry = Enquiry::find($id);
         if($enquiry){
             $enquiry->name = $validatedData['name'];
             $enquiry->email = $validatedData['email'];
@@ -127,19 +122,15 @@ class AllEnquiry extends Component
             $enquiry->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Enquiry Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Enquiry Updated Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-     public function mail($id)
+     public function mail(Enquiry $enquiry)
     {
-        $enquiry = Enquiry::find($id);
-        $this->m_id=$id;
+        $this->m_id=$enquiry->id;
         $this->name=$enquiry->name;
         $this->email=$enquiry->email;
         $this->mobile=$enquiry->mobile;
@@ -148,27 +139,20 @@ class AllEnquiry extends Component
         $this->setmode('mail');
     }
 
-    public function sendmail($id)
+    public function sendmail(Enquiry $enquiry)
     {
         $this->validate([ 'reply' => ['required','string']]);
         $this->setmode('all');
-        $enquiry = Enquiry::find($id);
         $mail=Mail::to($enquiry->email)->send(new EnquiryReply($this->reply ,$enquiry->name));
         if($mail)
         {   
             $enquiry->status=1;
             $enquiry->update();
             $this->resetinput();
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Email Send  Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Email Send  Successfully !!');
         }
         else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Email Not Send !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Email Not Send !!');
         }
 
     }
@@ -179,16 +163,12 @@ class AllEnquiry extends Component
         $this->dispatch('delete-confirmation');
     }
 
-    public function softdelete($id)
+    public function softdelete(Enquiry $enquiry)
     {
-        $enquiry = Enquiry::find($id);
         if($enquiry){
             $enquiry->delete();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Enquiry Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Enquiry Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -200,10 +180,7 @@ class AllEnquiry extends Component
         if($enquiry){
             $enquiry->restore();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Enquiry Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Enquiry Restored Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -216,26 +193,22 @@ class AllEnquiry extends Component
             $enquiry->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Enquiry Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Enquiry Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function update_status($id)
+    public function update_status(Enquiry $enquiry)
     {
-        $status = Enquiry::find($id);
-        if($status->status==1)
+        if($enquiry->status==1)
         {
-            $status->status=0;
+            $enquiry->status=0;
         }else
         {
-            $status->status=1;
+            $enquiry->status=1;
         }
-        $status->update();
+        $enquiry->update();
     }
 
     public function render()

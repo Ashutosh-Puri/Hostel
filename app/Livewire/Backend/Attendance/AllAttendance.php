@@ -69,20 +69,16 @@ class AllAttendance extends Component
             $attendance->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Attendence Recorded Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Attendence Recorded Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
 
     }
 
-    public function edit($id)
+    public function edit(Attendance $attendance)
     {
-        $this->current_id=$id;
-        $attendance = Attendance::find($id);
+        $this->current_id=$attendance->id;
         if($attendance){
             $this->c_id=$attendance->id;
             $this->student_id=$attendance->student_id;
@@ -93,10 +89,9 @@ class AllAttendance extends Component
         }
     }
 
-    public function update($id)
+    public function update(Attendance $attendance)
     {
         $validatedData = $this->validate();
-        $attendance = Attendance::find($id);
         if($attendance){
             $attendance->student_id = $validatedData['student_id'];
             $attendance->rfid = $validatedData['rfid'];
@@ -104,10 +99,7 @@ class AllAttendance extends Component
             $attendance->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Attendance Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Attendance Updated Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -119,17 +111,13 @@ class AllAttendance extends Component
         $this->dispatch('delete-confirmation');
     }
 
-    public function softdelete($id)
+    public function softdelete(Attendance $attendance)
     {
-        $attendance = Attendance::find($id);
         if($attendance){
             $attendance->delete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Attendance Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Attendance Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -142,10 +130,7 @@ class AllAttendance extends Component
             $attendance->restore();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Attendance Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Attendance Restored Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -158,10 +143,7 @@ class AllAttendance extends Component
             $attendance->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Attendance Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Attendance Deleted Successfully !');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -169,8 +151,15 @@ class AllAttendance extends Component
 
 
     public function render()
-    {
-        $students=Student::where('status',0)->get();
+    {   
+        if($this->mode!=='all')
+        {
+            $students=Student::where('status',0)->get();
+        }
+        else{
+            $students=null;
+        }
+        
 
 
         $attendanceQuery = Attendance::orderBy($this->sortby_feild, $this->sortby_order);

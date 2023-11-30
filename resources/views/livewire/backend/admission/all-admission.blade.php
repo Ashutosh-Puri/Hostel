@@ -26,7 +26,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="save" method="post" action="" id="myForm">
+                            <form  wire:submit="save" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 mb-3 h3">
@@ -37,7 +37,7 @@
                                     <div class="col-12 col-md-12">
                                         <div class="mb-3 form-group">
                                             <label for="student_id" class="form-label">Select Student</label>
-                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.live="student_id">
+                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.change="student_id">
                                                 <option  hidden value="">Select Students</option>
                                                 @foreach($students as $item2)
                                                     <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name!=null?$item2->name: $item2->username; }}</option>
@@ -121,7 +121,7 @@
                                             <div class="col-12 col-md-6">
                                                 <div class="mb-3 form-group">
                                                     <label for="cast_id" class="form-label">Select Cast</label>
-                                                    <select class="form-select @error('cast_id') is-invalid @enderror" id="cast_id" wire:model.live="cast_id">
+                                                    <select class="form-select @error('cast_id') is-invalid @enderror" id="cast_id" wire:model.change="cast_id">
                                                         <option  hidden value="">Select Cast</option>
                                                         @foreach($casts as $item2)
                                                             <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name }}</option>
@@ -137,7 +137,7 @@
                                             <div class="col-12 col-md-6">
                                                 <div class="mb-3 form-group">
                                                     <label for="category_id" class="form-label">Select Category</label>
-                                                    <select class="form-select @error('category_id') is-invalid @enderror" id="category_id" wire:model.live="category_id">
+                                                    <select class="form-select @error('category_id') is-invalid @enderror" id="category_id" wire:model.change="category_id">
                                                         <option  hidden value="">Select Category</option>
                                                         @foreach($categories as $item2)
                                                             <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name }}</option>
@@ -155,7 +155,7 @@
                                             <div class="col-12 col-md-3">
                                                 <div class="mb-3 form-group">
                                                     <label for="gender" class="form-label">Select Gender</label>
-                                                    <select class="form-select  @error('gender') is-invalid @enderror" id="gender" wire:model.live.debounce.500ms="gender" >
+                                                    <select class="form-select  @error('gender') is-invalid @enderror" id="gender" wire:model.change="gender" >
                                                         <option hidden value="" >Select </option>
                                                         <option  value="0">Male</option>
                                                         <option  value="1">Female</option>
@@ -170,7 +170,7 @@
                                             <div class="col-12 col-md-3">
                                                 <div class="mb-3 form-group">
                                                     <label for="blood_group" class="form-label">Select Blood Group</label>
-                                                    <select class="form-select @error('blood_group') is-invalid @enderror" id="blood_group" wire:model.live.debounce.500ms="blood_group" >
+                                                    <select class="form-select @error('blood_group') is-invalid @enderror" id="blood_group" wire:model.change="blood_group" >
                                                         <option hidden value="" >Select Blood Group</option>
                                                         <option  value="A+" >A +</option>
                                                         <option  value="A-" >A -</option>
@@ -262,7 +262,7 @@
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="academic_year_id" class="form-label">Select Academic Year</label>
-                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model.live="academic_year_id">
+                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model.change="academic_year_id">
                                                 <option  hidden value="">Select Academic Year</option>
                                                 @foreach($academicyears as $item2)
                                                     <option class="py-4" value="{{ $item2->id  }}">{{ $item2->year }}</option>
@@ -278,7 +278,7 @@
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="stream" class="form-label">Select Stream</label>
-                                            <select class="form-select @error('stream') is-invalid @enderror" id="stream" wire:model.live="stream">
+                                            <select class="form-select @error('stream') is-invalid @enderror" id="stream" wire:model.change="stream">
                                                 <option  hidden value="">Select Stream</option>
                                                 @forelse($streams as $item2)
                                                     <option class="py-4" value="{{ $item2->stream  }}">{{ $item2->stream }}</option>
@@ -296,7 +296,7 @@
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="stream_type" class="form-label">Select Student Level</label>
-                                            <select class="form-select @error('stream_type') is-invalid @enderror" id="stream_type" wire:model.live="stream_type">
+                                            <select class="form-select @error('stream_type') is-invalid @enderror" id="stream_type" wire:model.change="stream_type">
                                                 <option  hidden value="">Select Student Level</option>
                                                 @forelse ($types as $item2)
                                                     <option class="py-4" value="{{ $item2->type  }}">{{ $item2->type }}</option>
@@ -314,7 +314,7 @@
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="class_id" class="form-label">Select Class</label>
-                                            <select class="form-select @error('class_id') is-invalid @enderror" id="class_id" wire:model.live="class_id">
+                                            <select class="form-select @error('class_id') is-invalid @enderror" id="class_id" wire:model.change="class_id">
                                                 <option  hidden value="">Select Class</option>
                                                 @forelse ($classes as $item2)
                                                     <option class="py-4" value="{{ $item2->id }}">{{ $item2->name }}</option>
@@ -339,7 +339,7 @@
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="last_academic_year_id" class="form-label">Select Last Academic Year</label>
-                                            <select class="form-select @error('last_academic_year_id') is-invalid @enderror" id="last_academic_year_id" wire:model.live="last_academic_year_id">
+                                            <select class="form-select @error('last_academic_year_id') is-invalid @enderror" id="last_academic_year_id" wire:model.change="last_academic_year_id">
                                                 <option  hidden value="">Select Last Academic Year</option>
                                                 @foreach($lastacademicyears as $item2)
                                                     <option class="py-4" value="{{ $item2->id  }}">{{ $item2->year }}</option>
@@ -355,7 +355,7 @@
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="last_class_id" class="form-label">Select Last Class</label>
-                                            <select class="form-select @error('last_class_id') is-invalid @enderror" id="last_class_id" wire:model.live="last_class_id">
+                                            <select class="form-select @error('last_class_id') is-invalid @enderror" id="last_class_id" wire:model.change="last_class_id">
                                                 <option  hidden value="">Select Last Class</option>
                                                 @foreach ($classes as $item2)
                                                     <option class="py-4" value="{{ $item2->id }}">{{ $item2->name }}</option>
@@ -464,7 +464,7 @@
                                     <div class="col-12 col-md-2">
                                         <div class="mb-3 form-group">
                                             <label for="address_type" class="form-label">Select Address Type</label>
-                                            <select class="form-select  @error('address_type') is-invalid @enderror" id="address_type" wire:model.live.debounce.500ms="address_type" >
+                                            <select class="form-select  @error('address_type') is-invalid @enderror" id="address_type" wire:model.change="address_type" >
                                                 <option hidden value="" >Select </option>
                                                 <option  value="0" >Rural</option>
                                                 <option  value="1" >Urbon</option>
@@ -479,7 +479,7 @@
                                     <div class="col-12 col-md-5">
                                         <div class="mb-3 form-group">
                                             <label for="parent_address" class="form-label">Parent Address</label>
-                                            <textarea class="form-control @error('parent_address') is-invalid @enderror" wire:model.live.debounce.500ms="parent_address" id="parent_address" placeholder="Enter Parent Address"   cols="30" rows="1"> {{ old('parent_address') }}{{ $parent_address }}</textarea>
+                                            <textarea class="form-control @error('parent_address') is-invalid @enderror" wire:model="parent_address" id="parent_address" placeholder="Enter Parent Address"   cols="30" rows="1"> {{ old('parent_address') }}{{ $parent_address }}</textarea>
                                             @error('parent_address')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -490,7 +490,7 @@
                                     <div class="col-12 col-md-5">
                                         <div class="mb-3 form-group">
                                             <label for="local_parent_address" class="form-label">Parent Address In Sangamner</label>
-                                            <textarea class="form-control @error('local_parent_address') is-invalid @enderror" wire:model.live.debounce.500ms="local_parent_address" id="local_parent_address" placeholder="Enter Parent Address In Sangamner"   cols="30" rows="3">{{ old('local_parent_address') }} {{ $local_parent_address }}</textarea>
+                                            <textarea class="form-control @error('local_parent_address') is-invalid @enderror" wire:model="local_parent_address" id="local_parent_address" placeholder="Enter Parent Address In Sangamner"   cols="30" rows="3">{{ old('local_parent_address') }} {{ $local_parent_address }}</textarea>
                                             @error('local_parent_address')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -527,7 +527,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
+                            <form  wire:submit="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 mb-3 h3">
@@ -538,7 +538,7 @@
                                     <div class="col-12 col-md-12">
                                         <div class="mb-3 form-group">
                                             <label for="student_id" class="form-label">Select Student</label>
-                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.live="student_id">
+                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.change="student_id">
                                                 <option  hidden value="">Select Students</option>
                                                 @foreach($students as $item2)
                                                     <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name!=null?$item2->name: $item2->username; }}</option>
@@ -622,7 +622,7 @@
                                             <div class="col-12 col-md-6">
                                                 <div class="mb-3 form-group">
                                                     <label for="cast_id" class="form-label">Select Cast</label>
-                                                    <select class="form-select @error('cast_id') is-invalid @enderror" id="cast_id" wire:model.live="cast_id">
+                                                    <select class="form-select @error('cast_id') is-invalid @enderror" id="cast_id" wire:model.change="cast_id">
                                                         <option  hidden value="">Select Cast</option>
                                                         @foreach($casts as $item2)
                                                             <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name }}</option>
@@ -638,7 +638,7 @@
                                             <div class="col-12 col-md-6">
                                                 <div class="mb-3 form-group">
                                                     <label for="category_id" class="form-label">Select Category</label>
-                                                    <select class="form-select @error('category_id') is-invalid @enderror" id="category_id" wire:model.live="category_id">
+                                                    <select class="form-select @error('category_id') is-invalid @enderror" id="category_id" wire:model.change="category_id">
                                                         <option  hidden value="">Select Category</option>
                                                         @foreach($categories as $item2)
                                                             <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name }}</option>
@@ -656,7 +656,7 @@
                                             <div class="col-12 col-md-3">
                                                 <div class="mb-3 form-group">
                                                     <label for="gender" class="form-label">Select Gender</label>
-                                                    <select class="form-select  @error('gender') is-invalid @enderror" id="gender" wire:model.live.debounce.500ms="gender" >
+                                                    <select class="form-select  @error('gender') is-invalid @enderror" id="gender" wire:model.change="gender" >
                                                         <option hidden value="" >Select </option>
                                                         <option  value="0">Male</option>
                                                         <option  value="1">Female</option>
@@ -671,7 +671,7 @@
                                             <div class="col-12 col-md-3">
                                                 <div class="mb-3 form-group">
                                                     <label for="blood_group" class="form-label">Select Blood Group</label>
-                                                    <select class="form-select @error('blood_group') is-invalid @enderror" id="blood_group" wire:model.live.debounce.500ms="blood_group" >
+                                                    <select class="form-select @error('blood_group') is-invalid @enderror" id="blood_group" wire:model.change="blood_group" >
                                                         <option hidden value="" >Select Blood Group</option>
                                                         <option  value="A+" >A +</option>
                                                         <option  value="A-" >A -</option>
@@ -763,7 +763,7 @@
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="academic_year_id" class="form-label">Select Academic Year</label>
-                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model.live="academic_year_id">
+                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model.change="academic_year_id">
                                                 <option  hidden value="">Select Academic Year</option>
                                                 @foreach($academicyears as $item2)
                                                     <option class="py-4" value="{{ $item2->id  }}">{{ $item2->year }}</option>
@@ -779,7 +779,7 @@
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="stream" class="form-label">Select Stream</label>
-                                            <select class="form-select @error('stream') is-invalid @enderror" id="stream" wire:model.live="stream">
+                                            <select class="form-select @error('stream') is-invalid @enderror" id="stream" wire:model.change="stream">
                                                 <option  hidden value="">Select Stream</option>
                                                 @foreach($streams as $item2)
                                                     <option class="py-4" value="{{ $item2->stream }}">{{ $item2->stream }}</option>
@@ -795,7 +795,7 @@
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="stream_type" class="form-label">Select Student Level</label>
-                                            <select class="form-select @error('stream_type') is-invalid @enderror" id="stream_type" wire:model.live="stream_type">
+                                            <select class="form-select @error('stream_type') is-invalid @enderror" id="stream_type" wire:model.change="stream_type">
                                                 <option  hidden value="">Select Student Level</option>
                                                 @forelse ($types as $item2)
                                                     <option class="py-4" value="{{ $item2->type  }}">{{ $item2->type }}</option>
@@ -813,7 +813,7 @@
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="class_id" class="form-label">Select Class</label>
-                                            <select class="form-select @error('class_id') is-invalid @enderror" id="class_id" wire:model.live="class_id">
+                                            <select class="form-select @error('class_id') is-invalid @enderror" id="class_id" wire:model.change="class_id">
                                                 <option  hidden value="">Select Class</option>
                                                 @forelse ($classes as $item2)
                                                     <option class="py-4" value="{{ $item2->id }}">{{ $item2->name }}</option>
@@ -838,7 +838,7 @@
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="last_academic_year_id" class="form-label">Select Last Academic Year</label>
-                                            <select class="form-select @error('last_academic_year_id') is-invalid @enderror" id="last_academic_year_id" wire:model.live="last_academic_year_id">
+                                            <select class="form-select @error('last_academic_year_id') is-invalid @enderror" id="last_academic_year_id" wire:model.change="last_academic_year_id">
                                                 <option  hidden value="">Select Last Academic Year</option>
                                                 @foreach($lastacademicyears as $item2)
                                                     <option class="py-4" value="{{ $item2->id  }}">{{ $item2->year }}</option>
@@ -854,7 +854,7 @@
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="last_class_id" class="form-label">Select Last Class</label>
-                                            <select class="form-select @error('last_class_id') is-invalid @enderror" id="last_class_id" wire:model.live="last_class_id">
+                                            <select class="form-select @error('last_class_id') is-invalid @enderror" id="last_class_id" wire:model.change="last_class_id">
                                                 <option  hidden value="">Select Last Class</option>
                                                 @foreach ($classes as $item2)
                                                     <option class="py-4" value="{{ $item2->id }}">{{ $item2->name }}</option>
@@ -963,7 +963,7 @@
                                     <div class="col-12 col-md-2">
                                         <div class="mb-3 form-group">
                                             <label for="address_type" class="form-label">Select Address Type</label>
-                                            <select class="form-select  @error('address_type') is-invalid @enderror" id="address_type" wire:model.live.debounce.500ms="address_type" >
+                                            <select class="form-select  @error('address_type') is-invalid @enderror" id="address_type" wire:model.change="address_type" >
                                                 <option hidden value="" >Select </option>
                                                 <option  value="0">Rural</option>
                                                 <option  value="1">Urban</option>
@@ -1281,7 +1281,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -1319,7 +1319,7 @@
                                             <th>Academic Year</th>
                                             <th>Student Name</th>
                                             <th>Class Name</th>
-                                            <th>seated</th>
+                                            <th>Seated</th>
                                             <th>Status</th>
                                             @can('View Admission Form')
                                                 <th>Action</th>
@@ -1332,7 +1332,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($admissions as $key => $item)
-                                            <tr>
+                                            <tr wire:key='{{ $item->id }}'>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->id }}</td>
                                                 <td>{{ $item->AcademicYear->year }}</td>

@@ -71,19 +71,15 @@ class AllFacility extends Component
             $facility->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Facility Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Facility Created Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function edit($id)
+    public function edit(Facility $facility)
     {
-        $this->current_id=$id;
-        $facility = Facility::find($id);
+        $this->current_id=$facility->id;
         if($facility){
             $this->c_id=$facility->id;
             $this->hostel_id=$facility->Room->Floor->Building->Hostel->id;
@@ -98,10 +94,9 @@ class AllFacility extends Component
         }
     }
 
-    public function update($id)
+    public function update(Facility $facility)
     {
         $validatedData = $this->validate();
-        $facility = Facility::find($id);
         if($facility){
             $facility->room_id = $validatedData['room_id'];
             $facility->name = $validatedData['name'];
@@ -109,10 +104,7 @@ class AllFacility extends Component
             $facility->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Facility Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Facility Updated Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -124,16 +116,12 @@ class AllFacility extends Component
         $this->dispatch('delete-confirmation');
     }
 
-    public function softdelete($id)
+    public function softdelete(Facility $facility)
     {
-        $facility = Facility::find($id);
         if($facility){
             $facility->delete();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Facility Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Facility Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -145,10 +133,7 @@ class AllFacility extends Component
         if($facility){
             $facility->restore();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Facility Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Facility Restored Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -161,34 +146,41 @@ class AllFacility extends Component
             $facility->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Facility Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Facility Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function update_status($id)
+    public function update_status(Facility $facility)
     {
-        $status = Facility::find($id);
-        if($status->status==1)
+        if($facility->status==1)
         {
-            $status->status=0;
+            $facility->status=0;
         }else
         {
-            $status->status=1;
+            $facility->status=1;
         }
-        $status->update();
+        $facility->update();
     }
 
     public function render()
-    {
-        $hostels = Hostel::select('id','name')->where('status', 0)->get();
-        $buildings = Building::select('id','name')->where('hostel_id', $this->hostel_id)->get();
-        $floors = Floor::select('id','floor')->where('building_id', $this->building_id)->get();
-        $rooms=Room::select('id','label')->where('floor_id', $this->floor_id)->get();
+    {   
+        if($this->mode!=='all')
+        {
+            $hostels = Hostel::select('id','name')->where('status', 0)->get();
+            $buildings = Building::select('id','name')->where('hostel_id', $this->hostel_id)->get();
+            $floors = Floor::select('id','floor')->where('building_id', $this->building_id)->get();
+            $rooms=Room::select('id','label')->where('floor_id', $this->floor_id)->get();
+        }
+        else
+        {
+            $hostels=null;
+            $buildings=null;
+            $floors=null;
+            $rooms=null;
+        }
+
         $facilityQuery = Facility::select('id','name','status','room_id','deleted_at')->with('room')->orderBy('room_id', 'ASC');
         if ($this->search) {
             $facilityQuery->whereHas('room', function ($query) {

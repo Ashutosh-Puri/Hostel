@@ -60,19 +60,15 @@ class AllCast extends Component
             $cast->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Cast Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Cast Created Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function edit($id)
+    public function edit(Cast $cast)
     {
-        $this->current_id=$id;
-        $cast = Cast::find($id);
+        $this->current_id=$cast->id;
         if($cast){
             $this->c_id=$cast->id;
             $this->name = $cast->name;
@@ -84,10 +80,9 @@ class AllCast extends Component
         }
     }
 
-    public function update($id)
+    public function update(Cast $cast)
     {
         $validatedData = $this->validate();
-        $cast = Cast::find($id);
         if($cast){
             $cast->name = $validatedData['name'];
             $cast->category_id = $validatedData['category_id'];
@@ -95,10 +90,7 @@ class AllCast extends Component
             $cast->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Cast Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Cast Updated Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -110,16 +102,12 @@ class AllCast extends Component
         $this->dispatch('delete-confirmation');
     }
 
-    public function softdelete($id)
+    public function softdelete(Cast $cast)
     {
-        $cast = Cast::find($id);
         if($cast){
             $cast->delete();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Cast Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Cast Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -131,10 +119,7 @@ class AllCast extends Component
         if($cast){
             $cast->restore();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Cast Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Cast Restored Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -147,32 +132,34 @@ class AllCast extends Component
             $cast->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Cast Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Cast Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function update_status($id)
+    public function update_status(Cast $cast)
     {
-        $status = Cast::find($id);
-        if($status->status==1)
+        if($cast->status==1)
         {
-            $status->status=0;
+            $cast->status=0;
         }else
-        {
-            $status->status=1;
+        { 
+            $cast->status=1;
         }
-        $status->update();
+        $cast->update();
     }
 
     public function render()
-    {
-        $categories=Category::select('id','name')->get();
-
+    {   
+        if($this->mode!=='all'){
+            $categories=Category::select('id','name')->get();
+        }
+        else
+        {
+            $categories=null;
+        }
+       
         $cast = Cast::query()->select('id','category_id','name','status','deleted_at')->when($this->search, function ($query) {
             return $query->where('name', 'like', '%' . $this->search . '%');
         })->withTrashed()->orderBy('name', 'ASC')->paginate($this->per_page);

@@ -22,7 +22,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="save" method="post" action="" id="myForm">
+                            <form  wire:submit="save" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 col-md-6">
@@ -148,7 +148,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
+                            <form  wire:submit="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 col-md-6">
@@ -333,7 +333,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($beds as $key => $item)
-                                            <tr>
+                                            <tr wire:key='{{ $item->id }}'>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->Room->Floor->Building->Hostel->name }}</td>
                                                 <td>{{ $item->Room->Floor->Building->name }}</td>

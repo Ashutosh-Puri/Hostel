@@ -22,7 +22,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="save" method="post" action="" id="myForm">
+                            <form  wire:submit="save" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 col-md-6">
@@ -39,7 +39,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="category_id" class="form-label">Select Category</label>
-                                            <select class="form-select @error('category_id') is-invalid @enderror" id="category_id" wire:model.live="category_id" >
+                                            <select class="form-select @error('category_id') is-invalid @enderror" id="category_id" wire:model.change="category_id" >
                                                 <option hidden value="" >Select Category</option>
                                                 @foreach ($categories as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
@@ -93,7 +93,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
+                            <form  wire:submit="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 col-md-6">
@@ -110,7 +110,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="category_id" class="form-label">Select Category</label>
-                                            <select class="form-select @error('category_id') is-invalid @enderror" id="category_id" wire:model.live="category_id" >
+                                            <select class="form-select @error('category_id') is-invalid @enderror" id="category_id" wire:model.change="category_id" >
                                                 <option hidden value="" >Select Category</option>
                                                 @foreach ($categories as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
@@ -180,7 +180,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -219,7 +219,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($cast as $key => $item)
-                                            <tr>
+                                            <tr wire:key='{{ $item->id }}'>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->name }}</td>
                                                 <td>{{ $item->Category->name}}</td>

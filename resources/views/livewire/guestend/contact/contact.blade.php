@@ -78,7 +78,7 @@
                 </div>
 
                 <div class="col-lg-8 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
-                    <form wire:submit.prevent="save" method="post" action=""id="myForm">
+                    <form wire:submit="save" method="post" action=""id="myForm">
                         @csrf
                         <div class="row g-3">
                             <div class="col-md-12">

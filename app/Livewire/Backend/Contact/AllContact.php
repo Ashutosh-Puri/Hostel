@@ -69,20 +69,16 @@ class AllContact extends Component
             $contact->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Contact Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Contact Created Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
 
     }
 
-    public function edit($id)
+    public function edit(Contact $contact)
     {
-        $this->current_id=$id;
-        $contact = Contact::find($id);
+        $this->current_id=$contact->id;
         if($contact){
             $this->c_id=$contact->id;
             $this->name = $contact->name;
@@ -96,10 +92,9 @@ class AllContact extends Component
         }
     }
 
-    public function update($id)
+    public function update(Contact $contact)
     {
         $validatedData = $this->validate();
-        $contact = Contact::find($id);
         if($contact){
             $contact->name = $validatedData['name'];
             $contact->email = $validatedData['email'];
@@ -109,10 +104,7 @@ class AllContact extends Component
             $contact->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Contact Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Contact Updated Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -124,16 +116,12 @@ class AllContact extends Component
         $this->dispatch('delete-confirmation');
     }
 
-    public function softdelete($id)
+    public function softdelete(Contact $contact)
     {
-        $contact = Contact::find($id);
         if($contact){
             $contact->delete();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Contact Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Contact Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -145,10 +133,7 @@ class AllContact extends Component
         if($contact){
             $contact->restore();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Contact Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Contact Restored Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -161,26 +146,22 @@ class AllContact extends Component
             $contact->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Contact Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Contact Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function update_status($id)
+    public function update_status(Contact $contact)
     {
-        $status = Contact::find($id);
-        if($status->status==1)
+        if($contact->status==1)
         {
-            $status->status=0;
+            $contact->status=0;
         }else
         {
-            $status->status=1;
+            $contact->status=1;
         }
-        $status->update();
+        $contact->update();
     }
 
     public function render()

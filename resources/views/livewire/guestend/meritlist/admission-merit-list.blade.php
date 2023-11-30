@@ -27,7 +27,7 @@
                     <div class="col-lg-12 col-sm-12 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="bg-primary text-center pt-3">
                             <div class="p-4">
-                                        <form wire:submit.prevent="save" method="post" action="" id="myForm">
+                                        <form wire:submit="save" method="post" action="" id="myForm">
                                             @csrf
                                             <div class="row text-start">
                                                 <div class="col-12 col-md-6">

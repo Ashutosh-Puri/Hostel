@@ -67,7 +67,7 @@ class AllCollege extends Component
 
     public function save()
     {
-        $validatedData = $validatedData = $this->validate();
+        $validatedData = $this->validate();
         $college= new College;
         if($college){
             $college->name = $validatedData['name'];
@@ -81,19 +81,15 @@ class AllCollege extends Component
             $college->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"College Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'College Created Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function edit($id)
+    public function edit(College $college)
     {
-        $this->current_id=$id;
-        $college = College::find($id);
+        $this->current_id=$college->id;
         if($college){
             $this->c_id=$college->id;
             $this->status = $college->status;
@@ -110,10 +106,9 @@ class AllCollege extends Component
         }
     }
 
-    public function update($id)
+    public function update(College $college)
     {
         $validatedData = $this->validate();
-        $college = College::find($id);
         if($college){
             $college->name = $validatedData['name'];
             $college->name_mr = $validatedData['name_mr'];
@@ -126,10 +121,7 @@ class AllCollege extends Component
             $college->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"College Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'College Updated Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -141,16 +133,12 @@ class AllCollege extends Component
         $this->dispatch('delete-confirmation');
     }
 
-    public function softdelete($id)
+    public function softdelete(College $college)
     {
-        $college = College::find($id);
         if($college){
             $college->delete();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"College Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'College Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -162,10 +150,7 @@ class AllCollege extends Component
         if($college){
             $college->restore();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"College Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'College Restored Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -178,26 +163,22 @@ class AllCollege extends Component
             $college->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"College Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'College Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function update_status($id)
+    public function update_status(College $college)
     {
-        $status = College::find($id);
-        if($status->status==1)
+        if($college->status==1)
         {
-            $status->status=0;
+            $college->status=0;
         }else
         {
-            $status->status=1;
+            $college->status=1;
         }
-        $status->update();
+        $college->update();
     }
 
     public function render()

@@ -119,10 +119,7 @@ class AllAllocation extends Component
             $allocation->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Allocation Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Allocation Created Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -154,10 +151,7 @@ class AllAllocation extends Component
             $allocation->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Allocation Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Allocation Updated Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -170,7 +164,6 @@ class AllAllocation extends Component
         {
             $this->gender= $admission->Student->gender;
             $this->academic_year_id=$admission->academic_year_id;
-            // $this->seated_id=$admission->seated_id;
 
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
@@ -210,7 +203,7 @@ class AllAllocation extends Component
                 $bed=Bed::find($validatedData['bed_id']);
                 if($bed)
                 {
-                    $fee=Fee::where('seated_id',$bed->Room->Seated->id)->first();
+                    $fee=Fee::where('seated_id',$bed->Room->Seated->id)->where('academic_year_id',$admission->academic_year_id)->first();
                     if($fee)
                     {   $allocation=Allocation::where('admission_id',$admissionid)->first();
                         $oldbed=Bed::find($allocation->bed_id);
@@ -227,6 +220,7 @@ class AllAllocation extends Component
                         $studentpayment->amount=$fee->amount;
                         $studentpayment->total_amount= ($fee->amount - $studentpayment->deposite );
                     }
+                    $studentpayment->status=0;
                     $studentpayment->update();
                     $admission->seated_id=$bed->Room->Seated->id;
                     $admission->update();
@@ -236,10 +230,7 @@ class AllAllocation extends Component
 
                 $this->resetinput();
                 $this->setmode('all');
-                $this->dispatch('alert',[
-                    'type'=>'success',
-                    'message'=>"Bed Re Allocated Successfully !!"
-                ]);
+                $this->dispatch('alert',type:'success',message:'Bed Re Allocated Successfully !!');
             }
             else
             {
@@ -252,7 +243,7 @@ class AllAllocation extends Component
                     $bed=Bed::find($validatedData['bed_id']);
                     if($bed)
                     {
-                        $fee=Fee::where('seated_id',$bed->Room->Seated->id)->first();
+                        $fee=Fee::where('seated_id',$bed->Room->Seated->id)->where('academic_year_id',$admission->academic_year_id)->first();
                         if($fee)
                         {
                             $allocation=Allocation::where('admission_id',$admissionid)->first();
@@ -274,10 +265,7 @@ class AllAllocation extends Component
 
                 $this->resetinput();
                 $this->setmode('all');
-                $this->dispatch('alert',[
-                    'type'=>'success',
-                    'message'=>"Bed  Allocated Successfully !!"
-                ]);
+                $this->dispatch('alert',type:'success',message:'Bed  Allocated Successfully !!');
             }
         }
     }
@@ -308,8 +296,8 @@ class AllAllocation extends Component
                 $b2=Bed::find($all2->bed_id);
                 if($b1 && $b2)
                 {
-                    $fee1=Fee::where('seated_id',$b1->Room->Seated->id)->first();
-                    $fee2=Fee::where('seated_id',$b2->Room->Seated->id)->first();
+                    $fee1=Fee::where('seated_id',$b1->Room->Seated->id)->where('academic_year_id',$add1->academic_year_id)->first();
+                    $fee2=Fee::where('seated_id',$b2->Room->Seated->id)->where('academic_year_id',$add2->academic_year_id)->first();
                     if($fee1 && $fee2)
                     {
                         $payment1=StudentPayment::where('admission_id', $id)->first();
@@ -340,11 +328,7 @@ class AllAllocation extends Component
             $add2->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Bed Exchanged Successfully !!"
-            ]);
-
+            $this->dispatch('alert',type:'success',message:'Bed Exchanged Successfully !!');
         }else
         {
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
@@ -373,6 +357,7 @@ class AllAllocation extends Component
             {
                 $studentpayment->amount=0;
                 $studentpayment->total_amount=0- $studentpayment->deposite;
+                $studentpayment->status=2;
                 $studentpayment->update();
             }
             $admission->seated_id=null;
@@ -380,10 +365,7 @@ class AllAllocation extends Component
 
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Bed De Allocated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Bed De Allocated Successfully !!');
 
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
@@ -404,10 +386,7 @@ class AllAllocation extends Component
             $this->deallocate($allocation->admission_id);
             $allocation->delete();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Allocation Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Allocation Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -421,10 +400,7 @@ class AllAllocation extends Component
             $this->deallocate($allocation->admission_id);
             $allocation->restore();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Allocation Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Allocation Restored Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -439,10 +415,7 @@ class AllAllocation extends Component
             $allocation->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Allocation Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Allocation Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -511,22 +484,16 @@ class AllAllocation extends Component
                 $admission2=Admission::find($this->admissionid2);
                 $alloc2=Allocation::where('admission_id',$this->admissionid2)->first();
                 if(!$admission2 && $this->admissionid2)
-                {
-                    $this->dispatch('alert',[
-                        'type'=>'error',
-                        'message'=>"Admission Not Found !!"
-                    ]);
+                {   
+                    $this->dispatch('alert',type:'error',message:'Admission Not Found !!');
                 }
             }else
             {
                 $admission2=null;
                 $alloc2=null;
                 if($this->mode=="exchange")
-                {
-                    $this->dispatch('alert',[
-                        'type'=>'info',
-                        'message'=>"Enter Unother Admission ID , You Have Enter Same Admission ID!!"
-                    ]);
+                {   
+                    $this->dispatch('alert',type:'info',message:'Enter Unother Admission ID , You Have Enter Same Admission ID!!');
                 }
             }
         }else

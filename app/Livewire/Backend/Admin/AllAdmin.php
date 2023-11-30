@@ -105,10 +105,7 @@ class AllAdmin extends Component
 
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Admin Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Admin Created Successfully !!');  
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -164,10 +161,7 @@ class AllAdmin extends Component
 
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Admin Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Admin Updated Successfully !!');  
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -190,10 +184,7 @@ class AllAdmin extends Component
             }
             $admin->delete();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Admin Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Admin Deleted Successfully !!');  
             $this->delete_id=null;
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
@@ -211,10 +202,7 @@ class AllAdmin extends Component
             }
             $admin->restore();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Admin Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Admin Restored Successfully !!');  
             $this->delete_id=null;
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
@@ -232,10 +220,7 @@ class AllAdmin extends Component
             }
             $admin->forceDelete();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Admin Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Admin Deleted Successfully !!');  
             $this->delete_id=null;
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
@@ -256,8 +241,15 @@ class AllAdmin extends Component
     }
 
     public function render()
-    {
-        $roles=Role::select('id','name')->where('status',0)->get();
+    {   
+        if($this->mode!=='all')
+        {
+            $roles=Role::select('id','name')->where('status',0)->get();
+        }else
+        {
+            $roles=null;
+        }
+
         $admins = Admin::query()->when($this->search, function ($query) {
             return $query->where('name', 'like', '%' . $this->search . '%');
         })->withTrashed()->orderBy('name', 'ASC')->paginate($this->per_page);

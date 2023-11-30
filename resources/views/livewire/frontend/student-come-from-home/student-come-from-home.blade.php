@@ -22,7 +22,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form wire:submit.prevent="save" method="post" action="" id="myForm">
+                        <form wire:submit="save" method="post" action="" id="myForm">
                             @csrf
                             <div class="row">
                                 <div class="col-12 col-md-6">
@@ -70,7 +70,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form wire:submit.prevent="update({{ isset($c_id) ? $c_id : '' }})" method="post" action=""
+                        <form wire:submit="update({{ isset($c_id) ? $c_id : '' }})" method="post" action=""
                             id="myForm">
                             @csrf
                             <div class="row">

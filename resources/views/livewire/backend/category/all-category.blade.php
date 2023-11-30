@@ -22,7 +22,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="save" method="post" action="" id="myForm">
+                            <form  wire:submit="save" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="mb-3 form-group">
                                     <label for="name" class="form-label">Category Name</label>
@@ -61,7 +61,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
+                            <form  wire:submit="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="mb-3 form-group">
                                     <label for="name" class="form-label">Category Name</label>
@@ -116,7 +116,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -153,7 +153,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($category as $key => $item)
-                                            <tr>
+                                            <tr wire:key='{{ $item->id }}'>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->name }}</td>
                                                 @can('Edit Category')

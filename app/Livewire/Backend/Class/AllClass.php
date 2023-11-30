@@ -66,19 +66,15 @@ class AllClass extends Component
             $class->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Class Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Class Created Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function edit($id)
+    public function edit(Classes $class)
     {
-        $this->current_id=$id;
-        $class = Classes::find($id);
+        $this->current_id=$class->id;
         if($class){
             $this->c_id=$class->id;
             $this->name = $class->name;
@@ -87,17 +83,13 @@ class AllClass extends Component
             $this->status = $class->status;
             $this->setmode('edit');
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Something Went Wrong!!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function update($id)
+    public function update(Classes $class)
     {
         $validatedData = $this->validate();
-        $class = Classes::find($id);
         if($class){
             $class->name = $validatedData['name'];
             $class->stream = $validatedData['stream'];
@@ -106,10 +98,7 @@ class AllClass extends Component
             $class->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Class Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Class Updated Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -121,16 +110,12 @@ class AllClass extends Component
         $this->dispatch('delete-confirmation');
     }
 
-    public function softdelete($id)
+    public function softdelete(Classes $class)
     {
-        $class = Classes::find($id);
         if($class){
             $class->delete();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Class Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Class Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -142,10 +127,7 @@ class AllClass extends Component
         if($class){
             $class->restore();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Class Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Class Restored Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -158,26 +140,22 @@ class AllClass extends Component
             $class->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Class Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Class Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function update_status($id)
+    public function update_status(Classes $class)
     {
-        $status = Classes::find($id);
-        if($status->status==1)
+        if($class->status==1)
         {
-            $status->status=0;
+            $class->status=0;
         }else
         {
-            $status->status=1;
+            $class->status=1;
         }
-        $status->update();
+        $class->update();
     }
 
     public function render()

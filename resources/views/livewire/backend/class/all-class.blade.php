@@ -22,13 +22,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="save" method="post" action="" id="myForm">
+                            <form  wire:submit="save" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="stream" class="form-label">Select Stream</label>
-                                            <select class="form-select @error('stream') is-invalid @enderror" id="stream" wire:model.live="stream" >
+                                            <select class="form-select @error('stream') is-invalid @enderror" id="stream" wire:model.change="stream" >
                                                 <option hidden value="" >Select Stream</option>
                                                 <option  value="Arts" >Arts</option>
                                                 <option  value="Commerce" >Commerce</option>
@@ -44,7 +44,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="type" class="form-label">Select Student Level</label>
-                                            <select class="form-select @error('type') is-invalid @enderror" id="type" wire:model.live="type" >
+                                            <select class="form-select @error('type') is-invalid @enderror" id="type" wire:model.change="type" >
                                                 <option hidden value="" >Select Student Level</option>
                                                 <option  value="Junior" >Junior</option>
                                                 <option  value="Senior" >Senior</option>
@@ -110,13 +110,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
+                            <form  wire:submit="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="stream" class="form-label">Select Stream</label>
-                                            <select class="form-select @error('stream') is-invalid @enderror" id="stream" wire:model.live="stream" >
+                                            <select class="form-select @error('stream') is-invalid @enderror" id="stream" wire:model.change="stream" >
                                                 <option hidden value="" >Select Stream</option>
                                                 <option  value="Arts" >Arts</option>
                                                 <option  value="Commerce" >Commerce</option>
@@ -132,7 +132,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="type" class="form-label">Select Student Level</label>
-                                            <select class="form-select @error('type') is-invalid @enderror" id="type" wire:model.live="type" >
+                                            <select class="form-select @error('type') is-invalid @enderror" id="type" wire:model.change="type" >
                                                 <option hidden value="" >Select Student Level</option>
                                                 <option  value="Junior" >Junior</option>
                                                 <option  value="Senior" >Senior</option>
@@ -214,7 +214,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -254,7 +254,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($class as $key => $item)
-                                            <tr>
+                                            <tr wire:key='{{ $item->id }}'>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->stream }}</td>
                                                 <td>{{ $item->type }}</td>

@@ -172,10 +172,7 @@ class AllAdmission extends Component
             $admissionCount = Admission::where('academic_year_id', $this->academic_year_id)->where('class_id', $this->class_id)->count();
             if ($admissionCount >= $maxCapacity) {
                 $this->admissionfull=1;
-                $this->dispatch('alert',[
-                    'type'=>'info',
-                    'message'=>"Admission Full In This  Academic Year For This class !!"
-                ]);
+                $this->dispatch('alert',type:'info',message:'Admission Full In This  Academic Year For This class !!');
             } else {
                 $this->admissionfull=0;
             }
@@ -226,11 +223,8 @@ class AllAdmission extends Component
     public function save()
     {
         if( $this->admissionfull==1)
-        {
-            $this->dispatch('alert',[
-                'type'=>'info',
-                'message'=>"Admission Full In This  Academic Year For This class !!"
-            ]);
+        {   
+            $this->dispatch('alert',type:'info',message:'Admission Full In This  Academic Year For This class !!');
         }
         $validatedData = $this->validate();
 
@@ -269,10 +263,7 @@ class AllAdmission extends Component
                 }
                 $student->update();
             }else{
-                $this->dispatch('alert',[
-                    'type'=>'error',
-                    'message'=>"Student Not Found !!"
-                ]);
+                $this->dispatch('alert',type:'error',message:'Student Not Found !!');
             }
 
             $admission = new Admission;
@@ -283,20 +274,14 @@ class AllAdmission extends Component
                 $admission->status = '0';
                 $admission->save();
             }else{
-                $this->dispatch('alert',[
-                    'type'=>'error',
-                    'message'=>"Admission Not Stored !!"
-                ]);
+                $this->dispatch('alert',type:'error',message:'Admission Not Stored !!');
             }
             $allocation =new Allocation;
             if($allocation){
                 $allocation->admission_id= $admission->id;
                 $allocation->save();
             }else{
-                $this->dispatch('alert',[
-                    'type'=>'error',
-                    'message'=>"Allocation Not Stored !!"
-                ]);
+                $this->dispatch('alert',type:'error',message:'Allocation Not Stored !!');
             }
             $education = new StudentEducation;
             if($education){
@@ -309,23 +294,16 @@ class AllAdmission extends Component
                 $education->save();
                 $this->resetinput();
                 $this->setmode('all');
-                $this->dispatch('alert',[
-                    'type'=>'success',
-                    'message'=>"Admission Created Successfully !!"
-                ]);
+                $this->dispatch('alert',type:'success',message:'Admission Created Successfully !!');
             }else{
-                $this->dispatch('alert',[
-                    'type'=>'error',
-                    'message'=>"Student Eduction Not Stored !!"
-                ]);
+                $this->dispatch('alert',type:'error',message:'Student Eduction Not Stored !!');
             }
         }
     }
 
-    public function edit($id)
+    public function edit(Admission  $admission)
     {
-        $this->current_id=$id;
-        $admission = Admission::find($id);
+        $this->current_id=$admission->id;
         if ($admission)
         {
             $this->c_id = $admission->id;
@@ -340,10 +318,7 @@ class AllAdmission extends Component
                 $this->stream = $class->stream;
                 $this->stream_type = $class->type;
             }else{
-                $this->dispatch('alert',[
-                    'type'=>'error',
-                    'message'=>"Stream And Stream Type Not Found !!"
-                ]);
+                $this->dispatch('alert',type:'error',message:'Stream And Stream Type Not Found !!');
             }
 
             $student = Student::find($this->student_id);
@@ -365,10 +340,7 @@ class AllAdmission extends Component
                         $this->category_id = $tempccat[0];
                     }
                 }else{
-                    $this->dispatch('alert',[
-                        'type'=>'error',
-                        'message'=>"Cast And Category Not Found !!"
-                    ]);
+                    $this->dispatch('alert',type:'error',message:'Cast And Category Not Found !!');
                 }
                 $this->parent_name = $student->parent_name;
                 $this->parent_mobile = $student->parent_mobile;
@@ -384,10 +356,7 @@ class AllAdmission extends Component
                 $this->member_id = $student->member_id;
                 $this->photoold = $student->photo;
             }else{
-                $this->dispatch('alert',[
-                    'type'=>'error',
-                    'message'=>"Student Not Found !!"
-                ]);
+                $this->dispatch('alert',type:'error',message:'Student Not Found !!');
             }
 
             $education = StudentEducation::where('admission_id',$admission->id)->latest()->first();
@@ -398,20 +367,16 @@ class AllAdmission extends Component
                 $this->sgpa = $education->sgpa;
                 $this->percentage = $education->percentage;
             }else{
-                $this->dispatch('alert',[
-                    'type'=>'error',
-                    'message'=>"Last Education Not Found !!"
-                ]);
+                $this->dispatch('alert',type:'error',message:'Last Education Not Found !!');
             }
             $this->setmode('edit');
         }
 
     }
 
-    public function update($id)
+    public function update(Admission $admission)
     {
         $validatedData = $this->validate();
-        $admission = Admission::find($id);
         if($admission){
             $oldyearid=$admission->academic_year_id;
             $oldstudentid=$admission->student_id;
@@ -421,12 +386,9 @@ class AllAdmission extends Component
             $admission->status ='0';
             $admission->update();
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Admission Not Found !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Admission Not Found !!');
         }
-        $education =StudentEducation::where('admission_id', $id)->latest()->first();
+        $education =StudentEducation::where('admission_id', $admission->id)->latest()->first();
         if ($education)
         {
             $education->academic_year_id=$validatedData['last_academic_year_id'];
@@ -435,10 +397,7 @@ class AllAdmission extends Component
             $education->percentage = $validatedData['percentage'];
             $education->update();
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Student Education Not Found !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Student Education Not Found !!');
         }
         $student= Student::find($this->student_id);
         if($student)
@@ -475,15 +434,9 @@ class AllAdmission extends Component
             $student->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Admission Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Admission Updated Successfully !!');
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Student Not Found !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Student Not Found !!');
         }
     }
 
@@ -494,40 +447,62 @@ class AllAdmission extends Component
     }
 
 
-    public function update_status($id)
+    public function update_status(Admission $admission)
     {
-        $status = Admission::find($id);
-        if($status->status==1)
+        if($admission->status==1)
         {
-            $status->status=0;
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Admission In Wating List !!"
-            ]);
-        }elseif($status->status==0)
+            $admission->status=0;
+            $this->dispatch('alert',type:'success',message:'Admission In Wating List !!');
+        }elseif($admission->status==0)
         {
-            $status->status=1;
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Admission Confirm Successfully !!"
-            ]);
+            $admission->status=1;
+            $this->dispatch('alert',type:'success',message:'Admission Confirmed Successfully !!');
         }
-        $status->update();
+        $admission->update();
     }
 
 
-    public function cancel($id)
+    public function cancel(Admission $admission)
     {
-        $status = Admission::find($id);
-        if($status)
+        // if($admission)
+        // {
+        //     $admission->status=2;
+
+        //     $this->dispatch('alert',type:'success',message:'Admission Canceled Successfully !!');
+        // }
+        // $admission->update();
+
+        if($admission)
         {
-            $status->status=2;
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Admission Canceled Successfully !!"
-            ]);
+            $allocation =Allocation::where('admission_id',$admission->id)->first();
+            if(isset($allocation->bed_id))
+            {
+                $bed=Bed::find($allocation->bed_id);
+                if($bed)
+                {
+                    $bed->status=0;
+                    $bed->update();
+                }
+                $allocation->bed_id=null;
+                $allocation->update();
+            }
+            $studentpayment=StudentPayment::where('admission_id',$admission->id)->first();
+            if($studentpayment)
+            {
+                $studentpayment->amount=0;
+                $studentpayment->total_amount= 0- $studentpayment->deposite;
+                $studentpayment->status=2;
+                $studentpayment->update();
+            }
+            $admission->seated_id=null;
+            $admission->status=2;
+            $admission->update();
+
+            $this->dispatch('alert',type:'success',message:'Admission Canceled Successfully !!');
+
+        }else{
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
-        $status->update();
     }
 
 
@@ -537,28 +512,21 @@ class AllAdmission extends Component
         $this->dispatch('delete-confirmation');
     }
 
-    public function softdelete($id)
+    public function softdelete(Admission $admission)
     {
-        $admission = Admission::find($id);
         if ($admission)
         {
             $stdedu= StudentEducation::where('student_id', $admission->student_id)->where('academic_year_id', $admission->academic_year_id)->first();
             if($stdedu){
                 $stdedu->delete();
             }else{
-                $this->dispatch('alert',[
-                    'type'=>'error',
-                    'message'=>"Something Went Wrong !!"
-                ]);
+                $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');
             }
             $admission->delete();
             $this->delete_id=null;
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Admission Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Admission Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -573,19 +541,13 @@ class AllAdmission extends Component
             if($stdedu){
                 $stdedu->delete();
             }else{
-                $this->dispatch('alert',[
-                    'type'=>'error',
-                    'message'=>"Something Went Wrong !!"
-                ]);
+                $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');
             }
             $admission->restore();
             $this->delete_id=null;
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Admission Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Admission Restored Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -600,19 +562,13 @@ class AllAdmission extends Component
             if($stdedu){
                 $stdedu->delete();
             }else{
-                $this->dispatch('alert',[
-                    'type'=>'error',
-                    'message'=>"Something Went Wrong !!"
-                ]);
+                $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');
             }
             $admission->forceDelete();
             $this->delete_id=null;
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Admission Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Admission Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
