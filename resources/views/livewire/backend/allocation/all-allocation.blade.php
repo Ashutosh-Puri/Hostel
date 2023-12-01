@@ -736,7 +736,7 @@
 
                                                     @if (isset($item->Admission->Seated->Fees))
                                                         @foreach ($item->Admission->Seated->Fees as $fee)
-                                                            @if ($fee->academic_year_id==$item->Admission->academic_year_id)
+                                                            @if ($fee->academic_year_id===$item->Admission->academic_year_id)
                                                                 @if ($fee->amount)
                                                                     {{ $fee->amount }}
                                                                 @endif

@@ -71,7 +71,6 @@ class AllStudentFine extends Component
             $studentfine->student_id = $validatedData['student_id'];
             $studentfine->fine_id = $validatedData['fine_id'];
             $studentfine->amount = $this->amount;
-            $studentfine->status = $this->status==1?1:0;
             $studentfine->save();
             $this->resetinput();
             $this->setmode('all');
@@ -90,7 +89,6 @@ class AllStudentFine extends Component
             $this->student_id = $studentfine->student_id;
             $this->fine_id = $studentfine->fine_id;
             $this->amount = $studentfine->amount;
-            $this->status = $studentfine->status;
             $this->setmode('edit');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
@@ -105,7 +103,6 @@ class AllStudentFine extends Component
             $studentfine->student_id = $validatedData['student_id'];
             $studentfine->fine_id = $validatedData['fine_id'];
             $studentfine->amount = $this->amount;
-            $studentfine->status = $this->status==1?'1':'0';
             $studentfine->update();
             $this->resetinput();
             $this->setmode('all');

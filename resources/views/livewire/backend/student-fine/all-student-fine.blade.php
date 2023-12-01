@@ -85,17 +85,6 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="mb-3 form-group ">
-                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model.live="status" >
-                                            <label class="form-check-label m-1" for="class_status">In-Active Student Fine</label>
-                                            @error('status')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
                                 </div>
                                 <button type="submit"  class="btn btn-primary ">Save Data</button>
                             </form>
@@ -182,17 +171,6 @@
                                             <label for="amount"class="form-control @error('amount') is-invalid @enderror" wire:model.live="amount">{{ isset($amount)?$amount.' Rs.':''; }} </label>
                                             {{-- <input type="text" min="0" class="form-control @error('amount') is-invalid @enderror" wire:model.live="amount" value="{{ old('amount') }}" id="amount" placeholder="Enter Amount"> --}}
                                             @error('amount')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="mb-3 form-group ">
-                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ old('status')==true?'checked':''; }} id="class_status"  wire:model.live="status" >
-                                            <label class="form-check-label m-1" for="class_status">In-Active Student Fine</label>
-                                            @error('status')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
