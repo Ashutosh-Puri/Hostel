@@ -33,9 +33,6 @@ class AllStudentPayment extends Component
 
     public function resetinput()
     {
-        $this->year = null;
-        $this->student_name = null;
-        $this->admission_name = null;
         $this->totalamount= null;
         $this->academic_year_id= null;
         $this->admission_id= null;
@@ -86,18 +83,14 @@ class AllStudentPayment extends Component
             $studentpayment->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Student Payment Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Student Payment Created Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function edit($id)
+    public function edit(StudentPayment $studentpayment)
     {
-        $studentpayment = StudentPayment::find($id);
         if($studentpayment){
             $alloc =Allocation::where('admission_id',$studentpayment->admission_id)->first();
             if($alloc)
@@ -120,10 +113,9 @@ class AllStudentPayment extends Component
         }
     }
 
-    public function update($id)
+    public function update(StudentPayment $studentpayment)
     {
         $validatedData = $this->validate();
-        $studentpayment = StudentPayment::find($id);
         if($studentpayment){
             $studentpayment->academic_year_id = $validatedData['academic_year_id'];
             $studentpayment->student_id = $validatedData['student_id'];
@@ -134,10 +126,7 @@ class AllStudentPayment extends Component
             $studentpayment->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Student Payment Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Student Payment Updated Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -149,16 +138,12 @@ class AllStudentPayment extends Component
         $this->dispatch('delete-confirmation');
     }
 
-    public function softdelete($id)
+    public function softdelete(StudentPayment $studentpayment)
     {
-        $studentpayment = StudentPayment::find($id);
         if($studentpayment){
             $studentpayment->delete();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Student Payment Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Student Payment Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -170,10 +155,7 @@ class AllStudentPayment extends Component
         if($studentpayment){
             $studentpayment->restore();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Student Payment Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Student Payment Restored Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -186,45 +168,55 @@ class AllStudentPayment extends Component
             $studentpayment->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Student Payment Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Student Payment Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function update_status($id)
+    public function update_status(StudentPayment $studentpayment)
     {
-        $status = StudentPayment::find($id);
-        if($status->status==1)
+        if($studentpayment->status==1)
         {
-            $status->status=2;
-        }elseif($status->status==2)
+            $studentpayment->status=2;
+        }elseif($studentpayment->status==2)
         {
-            $status->status=0;
+            $studentpayment->status=0;
         }else
         {
-            $status->status=1;
+            $studentpayment->status=1;
         }
-        $status->update();
+        $studentpayment->update();
     }
 
     public function render()
-    {
-        $academic_years=AcademicYear::select('id','year')->where('status',0)->orderBy('year', 'DESC')->get();
-        $admissions = Admission::where('academic_year_id', $this->academic_year_id)->get();
-        $students=Student::select('id','name','username')->where('status',0)->whereIn('id',  $admissions->pluck('student_id'))->get();
-        $seateds=Seated::select('id','seated')->where('status',0)->orderBy('seated', 'ASC')->get();
-        $fees=Fee::where('status',0)->where('academic_year_id',$this->academic_year_id)->where('seated_id',$this->seated_id)->first();
-        if($fees)
+    {   
+
+        if($this->mode!=='all')
         {
-            $this->totalamount=$fees->amount;
-        }else
-        {
-            $this->totalamount=null;
+            $academic_years=AcademicYear::select('id','year')->where('status',0)->orderBy('year', 'DESC')->get();
+            $admissions = Admission::where('academic_year_id', $this->academic_year_id)->get();
+            $students=Student::select('id','name','username')->where('status',0)->whereIn('id',  $admissions->pluck('student_id'))->get();
+            $seateds=Seated::select('id','seated')->where('status',0)->orderBy('seated', 'ASC')->get();   
+            $fees=Fee::where('status',0)->where('academic_year_id',$this->academic_year_id)->where('seated_id',$this->seated_id)->first();
+            if($fees)
+            {
+                $this->totalamount=$fees->amount;
+            }else
+            {
+                $this->totalamount=null;
+            }
         }
+        else
+        {
+            $this->resetinput();
+            $academic_years=null;
+            $admissions=null;
+            $students=null;
+            $seateds=null;
+        }
+
+        
         $query = StudentPayment::orderBy('academic_year_id', 'DESC')->when($this->year, function ($query) {
             $query->whereIn('academic_year_id', function ($subQuery) {
                 $subQuery->select('id')->from('academic_years')->where('year', 'like', '%' . $this->year . '%');

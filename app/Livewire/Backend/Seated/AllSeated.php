@@ -37,7 +37,6 @@ class AllSeated extends Component
         $this->seated=null;
         $this->status=null;
         $this->c_id=null;
-        $this->seated_number =null;
         $this->current_id=null;
     }
 
@@ -56,20 +55,16 @@ class AllSeated extends Component
             $seated->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Seated Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Seated Created Successfully !!');  
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function edit($id)
+    public function edit(Seated $seated)
     {
-        $this->current_id=$id;
-        $seated = Seated::find($id);
         if($seated){
+            $this->current_id=$seated->id;
             $this->c_id=$seated->id;
             $this->status = $seated->status;
             $this->seated = $seated->seated;
@@ -79,20 +74,16 @@ class AllSeated extends Component
         }
     }
 
-    public function update($id)
+    public function update(Seated $seated)
     {
         $validatedData = $this->validate();
-        $seated = Seated::find($id);
         if($seated){
             $seated->seated = $validatedData['seated'];
             $seated->status = $this->status==1?1:0;
             $seated->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Seated Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Seated Updated Successfully !!');  
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -104,16 +95,12 @@ class AllSeated extends Component
         $this->dispatch('delete-confirmation');
     }
 
-    public function softdelete($id)
+    public function softdelete(Seated $seated)
     {
-        $seated = Seated::find($id);
         if($seated){
             $seated->delete();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Seated Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Seated Deleted Successfully !!');  
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -125,10 +112,7 @@ class AllSeated extends Component
         if($seated){
             $seated->restore();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Seated Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Seated Restored Successfully !!');  
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -141,30 +125,31 @@ class AllSeated extends Component
             $seated->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Seated Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Seated Deleted Successfully !!');  
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function update_status($id)
+    public function update_status(Seated $seated)
     {
-        $status = Seated::find($id);
-        if($status->status==1)
+        if($seated->status==1)
         {
-            $status->status=0;
+            $seated->status=0;
         }else
         {
-            $status->status=1;
+            $seated->status=1;
         }
-        $status->update();
+        $seated->update();
     }
 
     public function render()
-    {
+    {   
+        if($this->mode=='all')
+        {
+            $this->resetinput();
+        }
+
         $seateds = Seated::query()->when($this->seated_number, function ($query) {
             return $query->where('seated', 'like', $this->seated_number . '%');
         })->withTrashed()->paginate($this->per_page);

@@ -37,7 +37,6 @@ class AllRole extends Component
 
     public function resetinput()
     {
-        $this->search=null;
         $this->name=null;
         $this->status=null;
         $this->c_id=null;
@@ -58,43 +57,35 @@ class AllRole extends Component
             $name->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Role Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Role Created Successfully !!');  
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function edit($id)
+    public function edit(Role $role)
     {
-        $this->current_id=$id;
-        $name = Role::find($id);
-        if($name){
-            $this->c_id=$name->id;
-            $this->name = $name->name;
-            $this->status = $name->status;
+        if($role){
+            $this->current_id=$role->id;
+            $this->c_id=$role->id;
+            $this->name = $role->name;
+            $this->status = $role->status;
             $this->setmode('edit');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function update($id)
+    public function update(Role $role)
     {
         $validatedData = $this->validate();
-        $name = Role::find($id);
-        if($name){
-            $name->name = $validatedData['name'];
-            $name->status = $this->status==1?'1':'0';
-            $name->update();
+        if($role){
+            $role->name = $validatedData['name'];
+            $role->status = $this->status==1?'1':'0';
+            $role->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Role Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Role Updated Successfully !!');  
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -108,35 +99,36 @@ class AllRole extends Component
 
     public function delete()
     {
-        $name = Role::find($this->delete_id);
-        if($name){
-            $name->delete();
+        $role = Role::find($this->delete_id);
+        if($role){
+            $role->delete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Role Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Role Deleted Successfully !!');  
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function update_status($id)
+    public function update_status(Role $role)
     {
-        $status = Role::find($id);
         if($status->status==1)
         {   
-            $status->status=0;
+            $role->status=0;
         }else
         {
-            $status->status=1;
+            $role->status=1;
         }
-        $status->update();
+        $role->update();
     }
 
     public function render()
-    {
+    {   
+        if($this->mode=='all')
+        {
+            $this->resetinput();
+        }
+
         $roles = Role::query()->whereNotIn('name', ['super admin'])->when($this->search, function ($query) {
             return $query->where('name', 'like', '%' . $this->search . '%');
         })->orderBy('created_at', 'ASC')->paginate($this->per_page);

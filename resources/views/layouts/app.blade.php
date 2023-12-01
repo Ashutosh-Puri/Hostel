@@ -29,7 +29,7 @@
     {{-- <link rel="stylesheet" href="{{ asset('assets/datatable/jquery.dataTables.min.css') }}"> --}}
     
     <!-- Scripts -->
-    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     
     <!-- Styles-->
     @yield('styles')
@@ -46,7 +46,6 @@
     @livewireStyles()
 </head>
 <body>
-    
     <!-- Livewire JS -->
     @livewireScripts()
     <!-- Livewire Turbolinks -->

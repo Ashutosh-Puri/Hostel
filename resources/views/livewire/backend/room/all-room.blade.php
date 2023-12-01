@@ -28,7 +28,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="hostel_id" class="form-label">Select Hostel</label>
-                                            <select class="form-select @error('hostel_id') is-invalid @enderror" id="hostel_id" wire:model.live="hostel_id" >
+                                            <select class="form-select @error('hostel_id') is-invalid @enderror" id="hostel_id" wire:model.change="hostel_id" >
                                                 <option hidden >Select Hostel</option>
                                                 @foreach ($hostels as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
@@ -44,7 +44,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="building_id" class="form-label">Select Building</label>
-                                            <select class="form-select @error('building_id') is-invalid @enderror" id="building_id" wire:model.live="building_id" >
+                                            <select class="form-select @error('building_id') is-invalid @enderror" id="building_id" wire:model.change="building_id" >
                                                 <option hidden >Select Building</option>
                                                 @foreach ($buildings as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
@@ -60,7 +60,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="floor_id" class="form-label">Select Floor</label>
-                                            <select class="form-select @error('floor_id') is-invalid @enderror" id="floor_id" wire:model.live="floor_id" >
+                                            <select class="form-select @error('floor_id') is-invalid @enderror" id="floor_id" wire:model.change="floor_id" >
                                                 <option hidden >Select Floor</option>
                                                 @foreach ($floors as $item1)
                                                     <option  value="{{ $item1->id }}">
@@ -78,7 +78,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="seated_id" class="form-label">Select Seated</label>
-                                            <select class="form-select @error('seated_id') is-invalid @enderror" id="seated_id" wire:model.live="seated_id" >
+                                            <select class="form-select @error('seated_id') is-invalid @enderror" id="seated_id" wire:model.change="seated_id" >
                                                 <option hidden >Select Seated</option>
                                                 @foreach ($seateds as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->seated}} Seated </option>
@@ -160,7 +160,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="hostel_id" class="form-label">Select Hostel</label>
-                                            <select class="form-select @error('hostel_id') is-invalid @enderror" id="hostel_id" wire:model.live="hostel_id" >
+                                            <select class="form-select @error('hostel_id') is-invalid @enderror" id="hostel_id" wire:model.change="hostel_id" >
                                                 <option hidden >Select Hostel</option>
                                                 @foreach ($hostels as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
@@ -176,7 +176,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="building_id" class="form-label">Select Building</label>
-                                            <select class="form-select @error('building_id') is-invalid @enderror" id="building_id" wire:model.live="building_id" >
+                                            <select class="form-select @error('building_id') is-invalid @enderror" id="building_id" wire:model.change="building_id" >
                                                 <option hidden >Select Building</option>
                                                 @foreach ($buildings as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
@@ -192,7 +192,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="floor_id" class="form-label">Select Floor</label>
-                                            <select class="form-select @error('floor_id') is-invalid @enderror" id="floor_id" wire:model.live="floor_id" >
+                                            <select class="form-select @error('floor_id') is-invalid @enderror" id="floor_id" wire:model.change="floor_id" >
                                                 <option hidden >Select Floor</option>
                                                 @foreach ($floors as $item1)
                                                     <option  value="{{ $item1->id }}">
@@ -210,7 +210,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="seated_id" class="form-label">Select Seated</label>
-                                            <select class="form-select @error('seated_id') is-invalid @enderror" id="seated_id" wire:model.live="seated_id" >
+                                            <select class="form-select @error('seated_id') is-invalid @enderror" id="seated_id" wire:model.change="seated_id" >
                                                 <option hidden >Select Seated</option>
                                                 @foreach ($seateds as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->seated}} Seated </option>
@@ -302,7 +302,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -348,7 +348,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($rooms as $key => $item)
-                                            <tr>
+                                            <tr wire:key='{{ $item->id }}'>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->Floor->Building->Hostel->name }}</td>
                                                 <td>{{ $item->Floor->Building->name }}</td>

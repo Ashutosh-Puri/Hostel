@@ -72,82 +72,76 @@ class AllRolePermission extends Component
         $this->mode=$mode;
     }
 
-    public function save()
-    {
-        $validatedData = $this->validate();
+    // public function save()
+    // {
+    //     $validatedData = $this->validate();
+    //     $data = array();
+    //     $permissions = $this->permission;
+    //     foreach($permissions as $key => $item) {
+    //         $data['role_id']        = $this->role_id;
+    //         $data['permission_id']  = $item;
+    //         try 
+    //         {
+    //             DB::table('role_has_permissions')->insert($data);
+    //             $this->resetinput();
+    //             $this->setmode('all');
+    //             $this->dispatch('alert',type:'success',message:'Role Permission Assigned Successfully !!');  
+    //         } catch (QueryException $e) {          
+    //             if ($e->getCode() == '23000') {
+    //                 $this->addError('permission', 'The selected permissions are not unique.');
+    //                 $this->dispatch('alert',type:'error',message:'You Are Trying To Give Dublicate Permission!!');  
+    //             }     
+    //         }
+    //     } 
+    // }
 
-        $data = array();
-        $permissions = $this->permission;
-        foreach($permissions as $key => $item) {
+    // public function edit($id)
+    // {   
+    //     $this->resetinput();
+    //     if($id)
+    //     {   
+    //         $this->current_id=$id;
+    //         $this->c_id=$id;
+    //         $this->role= Role::findOrFail($id);
+    //        foreach($this->role->permissions->pluck('id') as $data){
+    //         $this->permission[$data]=$data;
+    //        }
+    //         $this->setmode('edit');
+    //     }else{
+    //         $this->role=null;
+    //     }
+    // }
 
-            $data['role_id']        = $this->role_id;
-            $data['permission_id']  = $item;
-            try 
-            {
-                DB::table('role_has_permissions')->insert($data);
-
-                $this->resetinput();
-                $this->setmode('all');
-                $this->dispatch('alert',[
-                    'type'=>'success',
-                    'message'=>"Role Permission Assigned Successfully !!"
-                ]);
-
-            } catch (QueryException $e) {
-                
-                if ($e->getCode() == '23000') {
-                    $this->addError('permission', 'The selected permissions are not unique.');
-                    $this->dispatch('alert',[
-                        'type'=>'error',
-                        'message'=>"You Are Trying To Give Dublicate Permission!!"
-                    ]);
-                }
-                
-            }
-        }
-
-  
-       
-    }
-
-    public function edit($id)
+    public function edit(Role $role)
     {   
         $this->resetinput();
-        if($id)
+        if($role)
         {   
-            $this->current_id=$id;
-            $this->c_id=$id;
-            $this->role= Role::findOrFail($id);
-           foreach($this->role->permissions->pluck('id') as $data){
+            $this->role=$role;
+            $this->current_id=$role->id;
+            $this->c_id=$role->id;
+           foreach($role->permissions->pluck('id') as $data){
             $this->permission[$data]=$data;
            }
             $this->setmode('edit');
         }else{
             $this->role=null;
         }
-    }
+    } 
 
-    public function update($id)
+    public function update(Role $role)
     {   
-
-        $role = Role::findOrFail($id);
         if($role)
         {
             $permission = $this->permission;
             if (!empty($permission)) {
-                $role->syncPermissions($permission);
+                $role->syncPermissions(array_keys($permission));
             }
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Role Permission Updated Successfully !!"
-            ]);
-
+            $this->dispatch('alert',type:'success',message:'Role Permission Updated Successfully !!');  
         }else{
-
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
-            
         }
         
     }
@@ -167,10 +161,7 @@ class AllRolePermission extends Component
             $this->resetinput();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Role Permission Remove Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Role Permission Remove Successfully !!');  
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -184,7 +175,6 @@ class AllRolePermission extends Component
         {   
             if($this->mode=="add")
             {
-
                 $role= Role::findOrFail( $this->role_id);
                 foreach($role->permissions->pluck('id') as $data){
                  $this->permission[$data]=$data;
@@ -200,11 +190,23 @@ class AllRolePermission extends Component
         {
             $role=null;
         }
-        $roles=Role::where('status',0)->get();
-        $permission = Permission::all();
 
-        $permission_groups = Admin::getpermissionGroups();
-        $allroles=Role::whereNotIn('name', ['super admin'])->paginate($this->per_page);
+        if($this->mode!=='all')
+        {
+            $roles=Role::where('status',0)->get();
+            $permission = Permission::all();
+            $permission_groups = Admin::getpermissionGroups();
+        }else
+        {
+            $this->resetinput();
+            $roles=null;
+            $permission=null;
+            $permission_groups=null;
+        }
+ 
+        $allroles=Role::whereNotIn('name', ['super admin'])->when($this->search, function ($query) {
+            return $query->where('name', 'like', '%' . $this->search . '%');
+        })->paginate($this->per_page);
         return view('livewire.backend.role-permission.all-role-permission',compact('role','permission_groups','permission','roles','allroles'))->extends('layouts.admin.admin')->section('admin');
     }
 

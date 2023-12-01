@@ -26,7 +26,7 @@
                                 @csrf
                                 <div class="form-group">
                                     <label for="role_id" class="form-label">All Roles</label>
-                                    <select class="form-select @error('role_id') is-invalid @enderror" id="role_id" wire:model.live="role_id">
+                                    <select class="form-select @error('role_id') is-invalid @enderror" id="role_id" wire:model.change="role_id">
                                         <option hidden value="" >Select Role</option>
                                         @foreach ($roles as $role)
                                             <option value="{{ $role->id }}">{{ $role->name }}</option>
@@ -135,7 +135,7 @@
                                             <td>
                                                 @foreach ($per as $permissionitem)
                                                     <div class="form-group form-check   form-check-primary">
-                                                        <input class="form-check-input @error('permission') is-invalid @enderror" wire:model.live="permission.{{ $permissionitem->id }}" type="checkbox" value="{{ $permissionitem->id }}" id="customckeck{{ $permissionitem->id }}" >
+                                                        <input class="form-check-input @error('permission') is-invalid @enderror" wire:model.change="permission.{{ $permissionitem->id }}" type="checkbox" value="{{ $permissionitem->id }}" id="customckeck{{ $permissionitem->id }}"   @if(array_key_exists($permissionitem->id, $permission)) checked @endif>
                                                         <label class="form-check-label" for="customckeck{{ $permissionitem->id }}">{{ $permissionitem->name }}</label>
                                                         @error('permission')
                                                             <div class="invalid-feedback">
@@ -202,7 +202,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -241,7 +241,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($allroles as $key => $item)
-                                            <tr>
+                                            <tr wire:key='{{ $item->id }}'>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->name }}</td>
                                                 <td>

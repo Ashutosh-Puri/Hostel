@@ -8,7 +8,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
+            <tr wire:key='1'>
                 <td>1</td>
                 <td>Image  Symbolic Link</td>
                 <td>

@@ -2,9 +2,11 @@
 
 namespace App\Livewire\Backend\StudentComeFromHome;
 
+use Carbon\Carbon;
 use Livewire\Component;
 use App\Models\Admission;
 use App\Models\Allocation;
+use App\Models\AcademicYear;
 use App\Models\ComeFromHome;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
@@ -41,9 +43,6 @@ class AllStudentComeFromHome extends Component
 
     public function resetinput()
     {
-        $this->year=null;
-        $this->class_name=null;
-        $this->student_name=null;
         $this->student_id=null;
         $this->come_time=null;
         $this->allocation_id=null;
@@ -60,55 +59,97 @@ class AllStudentComeFromHome extends Component
     public function save()
     {
         $validatedData = $this->validate();
-        $studentlocalregister= new ComeFromHome;
-        if($studentlocalregister){
-            $admission = Admission::where('student_id', $this->student_id)->latest()->first();
-            $allocation=Allocation::where('admission_id', $admission->id)->first();
-            $studentlocalregister->allocation_id = $allocation->id;
-            $studentlocalregister->come_time = now()->format('Y-m-d') . ' ' . $validatedData['come_time'];
-            $studentlocalregister->save();
-            $this->resetinput();
-            $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Come From Home Entry Created Successfully !!"
-            ]);
-        }else{
-            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
+        $comefromhome= new ComeFromHome;
+        if($comefromhome){
+            $currentYear = Carbon::now()->year;
+            $aid=AcademicYear::where('year',$currentYear)->first()->id;
+            if($aid)
+            {   
+                $admission = Admission::where('academic_year_id',$aid)->where('student_id', $this->student_id)->latest()->first();
+                if($admission)
+                {   
+                    $allocation=Allocation::where('admission_id', $admission->id)->first();
+                    if($allocation)
+                    {
+                        $allocation=Allocation::where('admission_id', $admission->id)->first();
+                        $comefromhome->allocation_id = $allocation->id;
+                        $comefromhome->come_time = now()->format('Y-m-d') . ' ' . $validatedData['come_time'];
+                        $comefromhome->save();
+                        $this->resetinput();
+                        $this->setmode('all');
+                        $this->dispatch('alert',type:'success',message:'Come From Home Entry Created Successfully !!');            
+                    }
+                    else
+                    {
+                        $this->dispatch('alert',type:'error',message:'Allocation Not Found !!');  
+                    }
+                }
+                else
+                {
+                    $this->dispatch('alert',type:'error',message:'Admission Not Found !!');  
+                }
+            }
+            else
+            {
+                $this->dispatch('alert',type:'error',message:'Current Year Not Found !!');  
+            }
         }
+        else
+        {
+            $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
+        }     
     }
 
-    public function edit($id)
+    public function edit(ComeFromHome $comefromhome)
     {
-        $this->current_id=$id;
-        $studentlocalregister = ComeFromHome::find($id);
-        if($studentlocalregister){
-            $this->c_id=$studentlocalregister->id;
-            $this->allocation_id=$studentlocalregister->allocation_id;
-            $this->come_time =date('H:i', strtotime($studentlocalregister->come_time)) ;
+        if($comefromhome){
+            $this->current_id=$comefromhome->id;
+            $this->c_id=$comefromhome->id;
+            $this->allocation_id=$comefromhome->allocation_id;
+            $this->come_time =date('H:i', strtotime($comefromhome->come_time)) ;
             $this->setmode('edit');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function update($id)
+    public function update(ComeFromHome $comefromhome)
     {
         $validatedData = $this->validate();
-        $studentlocalregister = ComeFromHome::find($id);
-        if($studentlocalregister){
-            $admission = Admission::where('student_id', $this->student_id)->latest()->first();
-            $allocation=Allocation::where('admission_id', $admission->id)->first();
-            $studentlocalregister->allocation_id = $allocation->id;
-            $studentlocalregister->come_time = now()->format('Y-m-d') . ' ' . $validatedData['come_time'];
-            $studentlocalregister->update();
-            $this->resetinput();
-            $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Come From Home Entry Updated Successfully !!"
-            ]);
-        }else{
+        if($comefromhome){
+            $currentYear = Carbon::now()->year;
+            $aid=AcademicYear::where('year',$currentYear)->first()->id;
+            if($aid)
+            {  
+                $admission = Admission::where('academic_year_id',$aid)->where('student_id', $this->student_id)->latest()->first();
+                if($admission)
+                {
+                    $allocation=Allocation::where('admission_id', $admission->id)->first();
+                    if($allocation)
+                    {
+                        $comefromhome->allocation_id = $allocation->id;
+                        $comefromhome->come_time = now()->format('Y-m-d') . ' ' . $validatedData['come_time'];
+                        $comefromhome->update();
+                        $this->resetinput();
+                        $this->setmode('all');
+                        $this->dispatch('alert',type:'success',message:'Come From Home Entry Updated Successfully !!');
+                    }
+                    else
+                    {
+                        $this->dispatch('alert',type:'error',message:'Allocation Not Found !!');  
+                    }
+                }
+                else
+                {
+                    $this->dispatch('alert',type:'error',message:'Admission Not Found !!');  
+                } 
+            }
+            else
+            {
+                $this->dispatch('alert',type:'error',message:'Current Year Not Found !!');  
+            }  
+        }
+        else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
@@ -119,16 +160,12 @@ class AllStudentComeFromHome extends Component
         $this->dispatch('delete-confirmation');
     }
 
-    public function softdelete($id)
+    public function softdelete(ComeFromHome $comefromhome)
     {
-        $studentlocalregister = ComeFromHome::find($id);
-        if($studentlocalregister){
-            $studentlocalregister->delete();
+        if($comefromhome){
+            $comefromhome->delete();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Come From Home Entry Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Come From Home Entry Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -136,14 +173,11 @@ class AllStudentComeFromHome extends Component
 
     public function restore($id)
     {
-        $studentlocalregister = ComeFromHome::withTrashed()->find($id);
-        if($studentlocalregister){
-            $studentlocalregister->restore();
+        $comefromhome = ComeFromHome::withTrashed()->find($id);
+        if($comefromhome){
+            $comefromhome->restore();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Come From Home Entry Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Come From Home Entry Restored Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -151,35 +185,34 @@ class AllStudentComeFromHome extends Component
 
     public function delete()
     {
-        $studentlocalregister = ComeFromHome::withTrashed()->find($this->delete_id);
-        if($studentlocalregister){
-            $studentlocalregister->forceDelete();
+        $comefromhome = ComeFromHome::withTrashed()->find($this->delete_id);
+        if($comefromhome){
+            $comefromhome->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Come From Home Entry Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Come From Home Entry Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function update_status($id)
+    public function update_status(ComeFromHome $comefromhome)
     {
-        $status = ComeFromHome::find($id);
-        if($status->status==1)
+        if($comefromhome->status==1)
         {   
-            $status->status=0;
+            $comefromhome->status=0;
         }else
         {
-            $status->status=1;
+            $comefromhome->status=1;
         }
-        $status->update();
+        $comefromhome->update();
     }
 
     public function render()
-    {   
+    {    if($this->mode=='all')
+            {
+                $this->resetinput();
+            }
         $this->student_id=Auth::guard('admin')->user()->id;
 
         $come_from_home = ComeFromHome::query()->with('allocation.admission.class', 'allocation.admission.student', 'allocation.admission.academicyear')

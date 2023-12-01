@@ -40,7 +40,6 @@ class AllRule extends Component
         $this->status=null;
         $this->description=null;
         $this->c_id=null;
-        $this->search=null;
         $this->current_id=null;
     }
 
@@ -60,21 +59,17 @@ class AllRule extends Component
             $rule->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Rule Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Rule Created Successfully !!');  
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
 
     }
 
-    public function edit($id)
+    public function edit(Rule $rule)
     {
-        $this->current_id=$id;
-        $rule = Rule::find($id);
         if($rule){
+            $this->current_id=$rule->id;
             $this->c_id=$rule->id;
             $this->name = $rule->name;
             $this->description = $rule->description;
@@ -85,10 +80,9 @@ class AllRule extends Component
         }
     }
 
-    public function update($id)
+    public function update(Rule $rule)
     {
         $validatedData = $this->validate();
-        $rule = Rule::find($id);
         if($rule){
             $rule->name = $validatedData['name'];
             $rule->description = $validatedData['description'];
@@ -96,10 +90,7 @@ class AllRule extends Component
             $rule->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Rule Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Rule Updated Successfully !!');  
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -111,16 +102,12 @@ class AllRule extends Component
         $this->dispatch('delete-confirmation');
     }
 
-    public function softdelete($id)
-    {
-        $rule = Rule::find($id);
+    public function softdelete(Rule $rule)
+    {;
         if($rule){
             $rule->delete();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Rule Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Rule Deleted Successfully !!');  
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -132,10 +119,7 @@ class AllRule extends Component
         if($rule){
             $rule->restore();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Rule Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Rule Restored Successfully !!');  
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -148,30 +132,32 @@ class AllRule extends Component
             $rule->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Rule Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Rule Deleted Successfully !!'); 
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function update_status($id)
+    public function update_status(Rule $rule)
     {
-        $status = Rule::find($id);
-        if($status->status==1)
+        $rule = Rule::find($id);
+        if($rule->status==1)
         {
-            $status->status=0;
+            $rule->status=0;
         }else
         {
-            $status->status=1;
+            $rule->status=1;
         }
-        $status->update();
+        $rule->update();
     }
 
     public function render()
-    {
+    {   
+        if($this->mode=='all')
+        {
+            $this->resetinput();
+        }
+        
         $rule = Rule::query()->when($this->search, function ($query) {
             return $query->where('description', 'like', '%' . $this->search . '%');
         })->withTrashed()->orderByRaw('CAST(SUBSTRING_INDEX(name, "Rule", -1) AS UNSIGNED) ASC')->paginate($this->per_page);

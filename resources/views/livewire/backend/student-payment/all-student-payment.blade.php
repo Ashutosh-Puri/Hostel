@@ -28,7 +28,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="academic_year_id" class="form-label">Select Academic Year</label>
-                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model.live="academic_year_id" >
+                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model.change="academic_year_id" >
                                                 <option value="" hidden>Select Academic Year</option>
                                                 @foreach ($academic_years as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
@@ -44,7 +44,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="admission_id" class="form-label">Select Admission</label>
-                                            <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model.live="admission_id" >
+                                            <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model.change="admission_id" >
                                                 <option value="" hidden>Select Admission</option>
                                                 @foreach ($admissions as $item1)
                                                     <option  value="{{ $item1->id }}">Admisstion ID : {{ $item1->id }} --> Year : {{  $item1->AcademicYear->year }} --> Student Name : {{ $item1->Student->name==null?$item1->Student->username:$item1->Student->name; }} </option>
@@ -60,7 +60,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="student_id" class="form-label">Select Student</label>
-                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.live="student_id" >
+                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.change="student_id" >
                                                 <option value="" hidden>Select Student</option>
                                                 @foreach ($students as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->name!=null? $item1->name: $item1->username; }} </option>
@@ -76,7 +76,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="seated_id" class="form-label">Select Seated</label>
-                                            <select class="form-select @error('seated_id') is-invalid @enderror" id="seated_id" wire:model.live="seated_id" >
+                                            <select class="form-select @error('seated_id') is-invalid @enderror" id="seated_id" wire:model.change="seated_id" >
                                                 <option value="" hidden>Select Seated</option>
                                                 @foreach ($seateds as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->seated }} Seated</option>
@@ -147,7 +147,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="academic_year_id" class="form-label">Select Academic Year</label>
-                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model.live="academic_year_id" >
+                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model.change="academic_year_id" >
                                                 <option value="" hidden>Select Academic Year</option>
                                                 @foreach ($academic_years as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->year }} </option>
@@ -163,7 +163,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="admission_id" class="form-label">Select Admission</label>
-                                            <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model.live="admission_id" >
+                                            <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model.change="admission_id" >
                                                 <option value="" hidden>Select Admission</option>
                                                 @foreach ($admissions as $item1)
                                                     <option  value="{{ $item1->id }}">Admisstion ID : {{ $item1->id }} --> Year : {{  $item1->AcademicYear->year }} --> Student Name : {{ $item1->Student->name==null?$item1->Student->username:$item1->Student->name; }} </option>
@@ -179,7 +179,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="student_id" class="form-label">Select Student</label>
-                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.live="student_id" >
+                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.change="student_id" >
                                                 <option value="" hidden>Select Student</option>
                                                 @foreach ($students as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->name!=null? $item1->name: $item1->username; }} </option>
@@ -195,7 +195,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="seated_id" class="form-label">Select Seated</label>
-                                            <select class="form-select @error('seated_id') is-invalid @enderror" id="seated_id" wire:model.live="seated_id" >
+                                            <select class="form-select @error('seated_id') is-invalid @enderror" id="seated_id" wire:model.change="seated_id" >
                                                 <option value="" hidden>Select Seated</option>
                                                 @foreach ($seateds as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->seated }} Seated</option>
@@ -276,7 +276,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -326,7 +326,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($student_payments as $key => $item)
-                                            <tr>
+                                            <tr wire:key='{{ $item->id }}'>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->Admission->id }}</td>
                                                 <td>{{ $item->AcademicYear->year}}</td>

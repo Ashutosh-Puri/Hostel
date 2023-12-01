@@ -33,7 +33,6 @@ class AllStudent extends Component
 
     public function resetinput()
     {
-        $this->search=null;
         $this->s_name=null;
         $this->password=null;
         $this->password_confirmation=null;
@@ -78,18 +77,14 @@ class AllStudent extends Component
             $student->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Student Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Student Created Successfully !!');  
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function edit($id)
-    {   $this->current_id=$id;
-        $student = Student::find($id);
+    public function edit(Student $student)
+    {   $this->current_id=$student->id;
         if($student){
             $this->c_id=$student->id;
             $this->username=$student->username;
@@ -101,10 +96,9 @@ class AllStudent extends Component
         }
     }
 
-    public function update($id)
+    public function update(Student $student)
     {
         $validatedData = $this->validate();
-        $student = Student::find($id);
         if($student){
             $student->username = $validatedData['username'];
             $student->email= $validatedData['email'];
@@ -112,10 +106,7 @@ class AllStudent extends Component
             $student->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Student Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Student Updated Successfully !!');  
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -127,16 +118,12 @@ class AllStudent extends Component
         $this->dispatch('delete-confirmation');
     }
 
-    public function softdelete($id)
+    public function softdelete(Student $student)
     {
-        $student = Student::find($id);
         if($student){
             $student->delete();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Student Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Student Deleted Successfully !!');  
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -148,10 +135,7 @@ class AllStudent extends Component
         if($student){
             $student->restore();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Student Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Student Restored Successfully !!');  
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -164,26 +148,22 @@ class AllStudent extends Component
             $student->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Student Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Student Deleted Successfully !!');  
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function update_status($id)
+    public function update_status(Student $student)
     {
-        $status = Student::find($id);
-        if($status->status==1)
+        if($student->status==1)
         {
-            $status->status=0;
+            $student->status=0;
         }else
         {
-            $status->status=1;
+            $student->status=1;
         }
-        $status->update();
+        $student->update();
     }
     public function assign_rfid($id)
     {
@@ -203,17 +183,19 @@ class AllStudent extends Component
             $student->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"RFID Assigend Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'RFID Assigend Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
     public function render()
-    {
+    {   
+        if($this->mode=='all')
+        {
+            $this->resetinput();
+        }
+        
         $students = Student::query()->when($this->search, function ($query) {
             return $query->where('username', 'like', '%' . $this->search . '%');
         })->when($this->name_search, function ($query) {

@@ -2,9 +2,11 @@
 
 namespace App\Livewire\Backend\StudentLocalRegister;
 
+use Carbon\Carbon;
 use Livewire\Component;
 use App\Models\Admission;
 use App\Models\Allocation;
+use App\Models\AcademicYear;
 use Livewire\WithPagination;
 use App\Models\LocalRegister;
 use App\Models\StudentLocalRegister;
@@ -46,9 +48,6 @@ class AllStudentLocalRegister extends Component
 
     public function resetinput()
     {
-        $this->year=null;
-        $this->class_name=null;
-        $this->student_name=null;
         $this->student_id=null;
         $this->reason=null;
         $this->entry_time=null;
@@ -69,29 +68,50 @@ class AllStudentLocalRegister extends Component
         $validatedData = $this->validate();
         $studentlocalregister= new LocalRegister;
         if($studentlocalregister){
-            $admission = Admission::where('student_id', $this->student_id)->latest()->first();
-            $allocation=Allocation::where('admission_id', $admission->id)->first();
-            $studentlocalregister->allocation_id = $allocation->id;
-            $studentlocalregister->reason = $validatedData['reason'];
-            $studentlocalregister->entry_time = now()->format('Y-m-d') . ' ' . $validatedData['entry_time'];
-            $studentlocalregister->exit_time = now()->format('Y-m-d') . ' ' . $validatedData['exit_time'];
-            $studentlocalregister->save();
-            $this->resetinput();
-            $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Student Local Register Created Successfully !!"
-            ]);
-        }else{
+            $currentYear = Carbon::now()->year;
+            $aid=AcademicYear::where('year',$currentYear)->first()->id;
+            if($aid)
+            {
+                $admission = Admission::where('academic_year_id',$aid)->where('student_id', $this->student_id)->latest()->first();
+                if($admission)
+                {
+                    $allocation=Allocation::where('admission_id', $admission->id)->first();
+                    if($allocation)
+                    {
+                        $studentlocalregister->allocation_id = $allocation->id;
+                        $studentlocalregister->reason = $validatedData['reason'];
+                        $studentlocalregister->entry_time = now()->format('Y-m-d') . ' ' . $validatedData['entry_time'];
+                        $studentlocalregister->exit_time = now()->format('Y-m-d') . ' ' . $validatedData['exit_time'];
+                        $studentlocalregister->save();
+                        $this->resetinput();
+                        $this->setmode('all');
+                        $this->dispatch('alert',type:'success',message:'Student Local Register Entry Created Successfully !!');
+                    }
+                    else
+                    {
+                        $this->dispatch('alert',type:'error',message:'Allocation Not Found !!');  
+                    }
+                }
+                else
+                {
+                    $this->dispatch('alert',type:'error',message:'Admission Not Found !!');  
+                }
+            }
+            else
+            {
+                $this->dispatch('alert',type:'error',message:'Current Year Not Found !!');  
+            }
+        }
+        else
+        {
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function edit($id)
+    public function edit(LocalRegister $studentlocalregister)
     {
-        $this->current_id=$id;
-        $studentlocalregister = LocalRegister::find($id);
         if($studentlocalregister){
+            $this->current_id=$studentlocalregister->id;
             $this->c_id=$studentlocalregister->id;
             $this->allocation_id=$studentlocalregister->allocation_id;
             $this->reason = $studentlocalregister->reason;
@@ -103,24 +123,43 @@ class AllStudentLocalRegister extends Component
         }
     }
 
-    public function update($id)
+    public function update(LocalRegister $studentlocalregister)
     {
         $validatedData = $this->validate();
-        $studentlocalregister = LocalRegister::find($id);
         if($studentlocalregister){
-            $admission = Admission::where('student_id', $this->student_id)->latest()->first();
-            $allocation=Allocation::where('admission_id', $admission->id)->first();
-            $studentlocalregister->allocation_id = $allocation->id;
-            $studentlocalregister->reason = $validatedData['reason'];
-            $studentlocalregister->entry_time = now()->format('Y-m-d') . ' ' . $validatedData['entry_time'];
-            $studentlocalregister->exit_time = now()->format('Y-m-d') . ' ' . $validatedData['exit_time'];
-            $studentlocalregister->update();
-            $this->resetinput();
-            $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Student Local Register Updated Successfully !!"
-            ]);
+            $currentYear = Carbon::now()->year;
+            $aid=AcademicYear::where('year',$currentYear)->first()->id;
+            if($aid)
+            {
+                $admission = Admission::where('academic_year_id',$aid)->where('student_id', $this->student_id)->latest()->first();
+                if($admission)
+                {
+                    $allocation=Allocation::where('admission_id', $admission->id)->first();
+                    if($allocation)
+                    {
+                        $studentlocalregister->allocation_id = $allocation->id;
+                        $studentlocalregister->reason = $validatedData['reason'];
+                        $studentlocalregister->entry_time = now()->format('Y-m-d') . ' ' . $validatedData['entry_time'];
+                        $studentlocalregister->exit_time = now()->format('Y-m-d') . ' ' . $validatedData['exit_time'];
+                        $studentlocalregister->update();
+                        $this->resetinput();
+                        $this->setmode('all');
+                        $this->dispatch('alert',type:'success',message:'Student Local Register Entry Updated Successfully !!');
+                    }
+                    else
+                    {
+                        $this->dispatch('alert',type:'error',message:'Allocation Not Found !!');  
+                    }
+                }
+                else
+                {
+                    $this->dispatch('alert',type:'error',message:'Admission Not Found !!');  
+                }
+            }
+            else
+            {
+                $this->dispatch('alert',type:'error',message:'Current Year Not Found !!');  
+            }
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -132,16 +171,12 @@ class AllStudentLocalRegister extends Component
         $this->dispatch('delete-confirmation');
     }
 
-    public function softdelete($id)
+    public function softdelete(LocalRegister $studentlocalregister)
     {
-        $studentlocalregister = LocalRegister::find($id);
         if($studentlocalregister){
             $studentlocalregister->delete();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Student Local Register Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Student Local Register Entry Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -152,10 +187,7 @@ class AllStudentLocalRegister extends Component
         if($studentlocalregister){
             $studentlocalregister->restore();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Student Local Register Restored Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Student Local Register Entry Restored Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -167,30 +199,30 @@ class AllStudentLocalRegister extends Component
             $studentlocalregister->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Student Local Register Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Student Local Register Entry Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
 
-    public function update_status($id)
+    public function update_status(LocalRegister $studentlocalregister)
     {
-        $status = LocalRegister::find($id);
-        if($status->status==1)
+        if($studentlocalregister->status==1)
         {   
-            $status->status=0;
+            $studentlocalregister->status=0;
         }else
         {
-            $status->status=1;
+            $studentlocalregister->status=1;
         }
-        $status->update();
+        $studentlocalregister->update();
     }
 
     public function render()
     {   
+        if($this->mode=='all')
+        {
+            $this->resetinput();
+        }
         $this->student_id=Auth::guard('admin')->user()->id;
 
         $local_registers = LocalRegister::query()->with('allocation.admission.class', 'allocation.admission.student', 'allocation.admission.academicyear')
@@ -207,7 +239,6 @@ class AllStudentLocalRegister extends Component
                 $subQuery->where('name', 'like', '%' . $this->student_name . '%');
             });
         })->withTrashed()->paginate($this->per_page);
-    
 
         return view('livewire.backend.student-local-register.all-student-local-register',compact('local_registers'))->extends('layouts.admin.admin')->section('admin');
     }

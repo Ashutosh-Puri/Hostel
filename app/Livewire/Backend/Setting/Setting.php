@@ -14,30 +14,18 @@ class Setting extends Component
 
         if (is_link($linkPath)) {
             unlink($linkPath);
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Symbolic Link Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Symbolic Link Deleted Successfully !!');  
         } else {
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"No symbolic link found. !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'No symbolic link found !!');
         }
 
         if (is_dir($linkPath)) {
             exec("rd /s /q $linkPath", $output, $returnVar);
     
             if ($returnVar === 0) {
-                $this->dispatch('alert',[
-                    'type'=>'success',
-                    'message'=>"Directory Removed Successfully !!"
-                ]);
+                $this->dispatch('alert',type:'success',message:'Directory Removed Successfully !!');  
             } else {
-                $this->dispatch('alert',[
-                    'type'=>'error',
-                    'message'=>"An error occurred while removing the directory. !!"
-                ]);
+                $this->dispatch('alert',type:'error',message:'An error occurred while removing the directory !!');  
             }
         }
     }
@@ -46,17 +34,11 @@ class Setting extends Component
     {
        
         if( Artisan::call('storage:link'))
-        {
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Fresh Symbolic Link Genrated Successfully !!"
-            ]);
+        {   
+            $this->dispatch('alert',type:'success',message:'Fresh Symbolic Link Genrated Successfully !!');  
         }else
-        {
-            $this->dispatch('alert',[
-                'type'=>'info',
-                'message'=>"Symbolic Link Already Exists !!"
-            ]);
+        {   
+            $this->dispatch('alert',type:'info',message:'Symbolic Link Already Exists !!');  
         }
     }
 

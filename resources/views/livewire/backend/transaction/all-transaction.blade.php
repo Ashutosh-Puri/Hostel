@@ -32,7 +32,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
+                                <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                                     <option value="10">10</option>
                                     <option value="50">50</option>
                                     <option value="100">100</option>
@@ -54,7 +54,7 @@
                                             <input class="w-100  py-1" wire:model.live.debounce.500ms="order_id" type="search" placeholder="Order ID">
                                         </div>
                                         <div class="col-12 col-md-2">
-                                            <select class="py-1"  wire:model.live="status">
+                                            <select class="py-1"  wire:model.change="status">
                                                
                                                 <option value="0">Created</option>
                                                 <option value="1">Authorized</option>
@@ -86,7 +86,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($transactions as $key => $item)
-                                        <tr>
+                                        <tr wire:key='{{ $item->id }}'>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $item->student->name }}</td>
                                             <td>{{ $item->student_payment_id }}</td>
