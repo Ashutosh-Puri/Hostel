@@ -10,7 +10,7 @@ use Illuminate\Validation\Rule;
 class AllCollege extends Component
 {
     use WithPagination;
-    protected $paginationTheme = 'bootstrap';
+    
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $search = '';

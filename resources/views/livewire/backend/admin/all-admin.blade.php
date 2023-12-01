@@ -411,7 +411,7 @@
                                     </tbody>
                                 </table>
                                 <div class="mt-4">
-                                    {{ $admins->links('pagination::bootstrap-5') }}
+                                    {{ $admins->links() }}
                                 </div>
                             </div>
                         </div>

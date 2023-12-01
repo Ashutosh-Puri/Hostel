@@ -23,7 +23,7 @@ use Illuminate\Validation\Rule;
 class AllAllocation extends Component
 {
     use WithPagination;
-    protected $paginationTheme = 'bootstrap';
+    
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $a = '',$s = '',$c = '',$ad="";
     public $per_page = 10;

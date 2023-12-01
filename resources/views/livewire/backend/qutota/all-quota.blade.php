@@ -311,7 +311,7 @@
                                     </tbody>
                                 </table>
                                 <div class="mt-4">
-                                    {{ $quotas->links('pagination::bootstrap-5') }}
+                                    {{ $quotas->links() }}
                                 </div>
                             </div>
                         </div>

@@ -13,7 +13,7 @@ use App\Exports\AllocationReportExport;
 class AllAllocationReport extends Component
 {   
     use WithPagination;
-    protected $paginationTheme = 'bootstrap';
+    
     public $per_page = 10;
     public $class_id;
     public $year_id;

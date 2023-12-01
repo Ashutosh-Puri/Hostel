@@ -280,7 +280,7 @@
                                 </tbody>
                             </table>
                             <div class="mt-4">
-                                {{ $come_from_home->links('pagination::bootstrap-5') }}
+                                {{ $come_from_home->links() }}
                             </div>
                         </div>
                     </div>

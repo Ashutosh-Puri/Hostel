@@ -15,7 +15,7 @@ use App\Livewire\Backend\Report\AllAttendanceReport;
 class AllAttendanceReport extends Component
 {   
     use WithPagination;
-    protected $paginationTheme = 'bootstrap';
+    
     public $per_page = 10;
     public $class_id;
     public $gender;

@@ -12,7 +12,7 @@ class AllPhotoGallery extends Component
 {
     use WithPagination;
     use WithFileUploads;
-    protected $paginationTheme = 'bootstrap';
+    
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $search = '';

@@ -311,7 +311,7 @@
                                     </tbody>
                                 </table>
                                 <div class="mt-4">
-                                    {{ $hostels->links('pagination::bootstrap-5') }}
+                                    {{ $hostels->links() }}
                                 </div>
                             </div>
                         </div>

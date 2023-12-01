@@ -190,7 +190,7 @@
                                     </tbody>
                                 </table>
                                 <div class="mt-4">
-                                    {{ $category->links('pagination::bootstrap-5') }}
+                                    {{ $category->links() }}
                                 </div>
                             </div>
                         </div>

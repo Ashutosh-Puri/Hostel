@@ -18,7 +18,7 @@ use Maatwebsite\Excel\Facades\Excel;
 class AllRoomReport extends Component
 {   
     use WithPagination;
-    protected $paginationTheme = 'bootstrap';
+    
     public $per_page = 10;
     public $college_id;
     public $hostel_id;

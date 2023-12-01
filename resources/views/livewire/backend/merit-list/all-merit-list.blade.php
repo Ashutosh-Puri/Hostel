@@ -402,7 +402,7 @@
 
                                 </table>
                                 <div class="mt-4">
-                                    {{ $meritlist->links('pagination::bootstrap-5') }}
+                                    {{ $meritlist->links() }}
                                 </div>
                             </div>
                         </div>

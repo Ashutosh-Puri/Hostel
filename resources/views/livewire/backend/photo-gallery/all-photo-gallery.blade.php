@@ -288,7 +288,7 @@
                                     </tbody>
                                 </table>
                                 <div class="mt-4">
-                                    {{ $photogalleries->links('pagination::bootstrap-5') }}
+                                    {{ $photogalleries->links() }}
                                 </div>
                             </div>
                         </div>

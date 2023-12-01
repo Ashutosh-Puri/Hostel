@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 class AllStudentLocalRegister extends Component
 {   
     use WithPagination;
-    protected $paginationTheme = 'bootstrap';
+    
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $year = '';

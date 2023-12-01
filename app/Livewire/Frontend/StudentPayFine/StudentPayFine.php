@@ -9,7 +9,7 @@ use Livewire\WithPagination;
 class StudentPayFine extends Component
 {   
     use WithPagination;
-    protected $paginationTheme = 'bootstrap';
+    
     public $per_page = 10;
 
     public function render()

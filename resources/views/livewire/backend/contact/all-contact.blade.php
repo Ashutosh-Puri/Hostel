@@ -313,7 +313,7 @@
                                     </tbody>
                                 </table>
                                 <div class="mt-4">
-                                    {{ $contact->links('pagination::bootstrap-5') }}
+                                    {{ $contact->links() }}
                                 </div>
                             </div>
                         </div>

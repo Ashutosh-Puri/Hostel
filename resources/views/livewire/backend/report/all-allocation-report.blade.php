@@ -181,7 +181,7 @@
                         </tbody>
                     </table>
                     <div class="mt-4">
-                        {{ $admission->links('pagination::bootstrap-5') }}
+                        {{ $admission->links() }}
                     </div>
                 </div>
             </div>

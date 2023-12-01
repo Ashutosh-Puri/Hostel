@@ -9,7 +9,7 @@ use App\Models\StudentPayment;
 class StudentFee extends Component
 {   
     use WithPagination;
-    protected $paginationTheme = 'bootstrap';
+    
     public $per_page = 10;
 
     public function render()

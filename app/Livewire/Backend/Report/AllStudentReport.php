@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Facades\Excel;
 class AllStudentReport extends Component 
 {   
     use WithPagination;
-    protected $paginationTheme = 'bootstrap';
+    
     public $per_page = 10;
     public $class_id;
     public $year_id;

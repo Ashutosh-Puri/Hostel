@@ -11,7 +11,7 @@ use Illuminate\Validation\Rule;
 class AllHostel extends Component
 {
     use WithPagination;
-    protected $paginationTheme = 'bootstrap';
+    
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $college_name = '';

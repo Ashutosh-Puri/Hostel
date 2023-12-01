@@ -158,7 +158,7 @@
                         </tfoot>
                     </table>
                     <div class="mt-4">
-                        {{ $payments->links('pagination::bootstrap-5') }}
+                        {{ $payments->links() }}
                     </div>
                 </div>
             </div>

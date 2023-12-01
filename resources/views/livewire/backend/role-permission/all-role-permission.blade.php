@@ -280,7 +280,7 @@
                                     </tbody>
                                 </table>
                                 <div class="mt-4">
-                                    {{ $allroles->links('pagination::bootstrap-5') }}
+                                    {{ $allroles->links() }}
                                 </div>
                             </div>
                         </div>

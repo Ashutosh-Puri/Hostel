@@ -240,7 +240,7 @@
                                     </tbody>
                                 </table>
                                 <div class="mt-4">
-                                    {{ $seateds->links('pagination::bootstrap-5') }}
+                                    {{ $seateds->links() }}
                                 </div>
                             </div>
                         </div>

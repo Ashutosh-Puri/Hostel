@@ -89,14 +89,14 @@
                                     <td>
                                         @if ($item->status==0)
                                             @if ($item->total_amount >0)
-                                                <a class="btn btn-sm btn-success" data-turbolinks="false" href="{{ route('student_pay_fee',$item->id) }}">Pay</a>
+                                                <a class="btn btn-sm btn-success"  href="{{ route('student_pay_fee',$item->id) }}">Pay</a>
                                             @endif
                                         @endif
                                         @if ($item->status==2)
                                             @if ($item->total_amount >=0)
                                                 @if (isset($item->transaction->status))
                                                     @if ($item->transaction->status==2)
-                                                        <a class="btn  btn-sm btn-primary" data-turbolinks="false" href="{{ route('student_refund_fee',$item->id) }}">Refund</a>
+                                                        <a class="btn  btn-sm btn-primary"  href="{{ route('student_refund_fee',$item->id) }}">Refund</a>
                                                     @endif
                                                 @endif
                                             @endif
@@ -112,7 +112,7 @@
                             </tbody>
                         </table>
                         <div class="mt-4">
-                            {{ $student_payments->links('pagination::bootstrap-5') }}
+                            {{ $student_payments->links() }}
                         </div>
                     </div>
                 </div>

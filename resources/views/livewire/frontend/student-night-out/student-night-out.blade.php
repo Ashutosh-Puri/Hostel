@@ -267,7 +267,7 @@
                                 </tbody>
                             </table>
                             <div class="mt-4">
-                                {{ $night_out->links('pagination::bootstrap-5') }}
+                                {{ $night_out->links() }}
                             </div>
                         </div>
                     </div>

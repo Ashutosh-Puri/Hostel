@@ -12,7 +12,7 @@ use Illuminate\Validation\Rule;
 class AllFloor extends Component
 {
     use WithPagination;
-    protected $paginationTheme = 'bootstrap';
+    
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $floor_number = '';

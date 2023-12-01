@@ -120,7 +120,7 @@
                         </tbody>
                     </table>
                     <div class="mt-4">
-                        {{ $attendance->links('pagination::bootstrap-5') }}
+                        {{ $attendance->links() }}
                     </div>
                 </div>
             </div>

@@ -884,7 +884,7 @@
                                     </tbody>
                                 </table>
                                 <div class="mt-4">
-                                    {{ $allocations->links('pagination::bootstrap-5') }}
+                                    {{ $allocations->links() }}
                                 </div>
                             </div>
                         </div>

@@ -51,7 +51,7 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
-                                        {{ $meritlist->links('pagination::bootstrap-5') }}
+                                        {{ $meritlist->links() }}
                                 </div>
                             </div>
                         </div>

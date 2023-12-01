@@ -473,7 +473,7 @@
                                     </tbody>
                                 </table>
                                 <div class="mt-4">
-                                    {{ $enquiries->links('pagination::bootstrap-5') }}
+                                    {{ $enquiries->links() }}
                                 </div>
                             </div>
                         </div>

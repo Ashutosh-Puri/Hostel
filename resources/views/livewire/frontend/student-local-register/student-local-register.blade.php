@@ -266,7 +266,7 @@
                                 </tbody>
                             </table>
                             <div class="mt-4">
-                                {{ $local_registers->links('pagination::bootstrap-5') }}
+                                {{ $local_registers->links() }}
                             </div>
                         </div>
                     </div>

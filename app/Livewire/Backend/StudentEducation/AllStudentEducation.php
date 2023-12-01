@@ -13,7 +13,7 @@ use App\Models\StudentEducation;
 class AllStudentEducation extends Component
 {
     use WithPagination;
-    protected $paginationTheme = 'bootstrap';
+    
     protected $listeners = ['delete-confirmed'=>'delete'];
     public $delete_id=null;
     public $a = '',$s = '',$c = '',$ad = '';

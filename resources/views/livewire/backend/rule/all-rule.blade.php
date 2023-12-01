@@ -264,7 +264,7 @@
                                     </tbody>
                                 </table>
                                 <div class="mt-4">
-                                    {{ $rule->links('pagination::bootstrap-5') }}
+                                    {{ $rule->links() }}
                                 </div>
                             </div>
                         </div>

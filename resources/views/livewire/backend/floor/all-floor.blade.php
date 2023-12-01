@@ -350,7 +350,7 @@
                                     </tbody>
                                 </table>
                                 <div class="mt-4">
-                                    {{ $floors->links('pagination::bootstrap-5') }}
+                                    {{ $floors->links() }}
                                 </div>
                             </div>
                         </div>

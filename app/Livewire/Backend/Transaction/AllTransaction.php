@@ -9,7 +9,7 @@ use Livewire\WithPagination;
 class AllTransaction extends Component
 {   
     use WithPagination;
-    protected $paginationTheme = 'bootstrap';
+    
     public $per_page = 10;
     public $student_name='';
     public $payment_id='';

@@ -426,7 +426,7 @@
                                     </tbody>
                                 </table>
                                 <div class="mt-4">
-                                    {{ $facility->links('pagination::bootstrap-5') }}
+                                    {{ $facility->links() }}
                                 </div>
                             </div>
                         </div>

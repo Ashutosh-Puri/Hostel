@@ -1438,7 +1438,7 @@
                                     </tbody>
                                 </table>
                                 <div class="mt-4">
-                                    {{ $admissions->links('pagination::bootstrap-5') }}
+                                    {{ $admissions->links() }}
                                 </div>
                             </div>
                         </div>

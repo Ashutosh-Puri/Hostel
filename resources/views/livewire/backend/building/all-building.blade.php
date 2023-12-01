@@ -277,7 +277,7 @@
                                     </tbody>
                                 </table>
                                 <div class="mt-4">
-                                    {{ $building->links('pagination::bootstrap-5') }}
+                                    {{ $building->links() }}
                                 </div>
                             </div>
                         </div>
