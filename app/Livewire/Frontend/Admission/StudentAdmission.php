@@ -135,7 +135,7 @@ class StudentAdmission extends Component
             'local_parent_address'=>['nullable','string','max:255'],
             'address_type'=>['required','integer','max:255'],
             'is_allergy'=>['nullable','string','max:255'],
-            'is_ragging'=>['nullable','in:0,1'],
+            'is_ragging'=>['nullable','boolean'],
             'mobile'=>['required','numeric','digits:10'],
             'member_id'=>['required','numeric','unique:students,member_id,'.($this->mode=='edit'? $this->student_id :($this->mode=='add'? Auth::user()->id :'')),],
             'photo'=>[($this->mode=='edit'? 'nullable' : ($this->photoold!=null? 'nullable' : 'required')),'image','mimes:jpeg,jpg,png','max:1024'],
@@ -225,10 +225,7 @@ class StudentAdmission extends Component
             }
             $student->update();
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Student Not Found !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Student Not Found !!');  
         }
         $admission = new Admission;
         if($admission){
@@ -237,51 +234,40 @@ class StudentAdmission extends Component
             $admission->class_id = $validatedData['class_id'];
             $admission->status = '0';
             $admission->save();
+
+            $allocation =new Allocation;
+            if($allocation){
+                $allocation->admission_id= $admission->id;
+                $allocation->save();
+            }else{
+                $this->dispatch('alert',type:'error',message:'Allocation Not Stored !!');  
+            }
+
+            $education = new StudentEducation;
+            if($education){
+                $education->admission_id = $admission->id;
+                $education->academic_year_id =$validatedData['last_academic_year_id'];
+                $education->student_id =$this->student_id;
+                $education->last_class_id = $validatedData['last_class_id'];
+                $education->sgpa = $validatedData['sgpa'];
+                $education->percentage = $validatedData['percentage'];
+                $education->save();
+                $this->resetinput();
+                $this->setmode('all');
+                $this->dispatch('alert',type:'success',message:'Admission Created Successfully !!');  
+            }else{
+                $this->dispatch('alert',type:'error',message:'Student Eduction Not Stored !!');  
+            }
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Admission Not Stored !!"
-            ]);
-        }
-        $allocation =new Allocation;
-        if($allocation){
-            $allocation->admission_id= $admission->id;
-            $allocation->save();
-        }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Allocation Not Stored !!"
-            ]);
-        }
-        $education = new StudentEducation;
-        if($education){
-            $education->admission_id = $admission->id;
-            $education->academic_year_id =$validatedData['last_academic_year_id'];
-            $education->student_id =$this->student_id;
-            $education->last_class_id = $validatedData['last_class_id'];
-            $education->sgpa = $validatedData['sgpa'];
-            $education->percentage = $validatedData['percentage'];
-            $education->save();
-            $this->resetinput();
-            $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Admission Created Successfully !!"
-            ]);
-        }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Student Eduction Not Stored !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Admission Not Stored !!');  
         }
     }
 
-    public function edit($id)
+    public function edit(Admission $admission)
     {
-        $this->current_id=$id;
-        $admission = Admission::find($id);
         if ($admission)
         {
+            $this->current_id=$admission->id;
             $this->c_id = $admission->id;
             $this->academic_year_id = $admission->academic_year_id;
             $this->student_id = $admission->student_id;
@@ -294,10 +280,18 @@ class StudentAdmission extends Component
                 $this->stream = $class->stream;
                 $this->stream_type = $class->type;
             }else{
-                $this->dispatch('alert',[
-                    'type'=>'error',
-                    'message'=>"Stream And Stream Type Not Found !!"
-                ]);
+                $this->dispatch('alert',type:'error',message:'Stream And Stream Type Not Found !!');  
+            }
+
+            $education = StudentEducation::where('admission_id',$admission->id)->latest()->first();
+            if ($education)
+            {   
+                $this->last_academic_year_id = $education->academic_year_id;
+                $this->last_class_id = $education->last_class_id;
+                $this->sgpa = $education->sgpa;
+                $this->percentage = $education->percentage;
+            }else{
+                $this->dispatch('alert',type:'error',message:'Last Education Not Found !!');  
             }
             
             $student = Student::find($this->student_id);
@@ -319,10 +313,7 @@ class StudentAdmission extends Component
                         $this->category_id = $tempccat[0];
                     }
                 }else{
-                    $this->dispatch('alert',[
-                        'type'=>'error',
-                        'message'=>"Cast And Category Not Found !!"
-                    ]);
+                    $this->dispatch('alert',type:'error',message:'Cast And Category Not Found !!');  
                 }
                 $this->parent_name = $student->parent_name;
                 $this->parent_mobile = $student->parent_mobile;
@@ -338,69 +329,47 @@ class StudentAdmission extends Component
                 $this->member_id = $student->member_id;
                 $this->photoold = $student->photo;
             }else{
-                $this->dispatch('alert',[
-                    'type'=>'error',
-                    'message'=>"Student Not Found !!"
-                ]);
-            }
-
-            $education = StudentEducation::where('admission_id',$admission->id)->latest()->first();
-            if ($education)
-            {   
-                $this->last_academic_year_id = $education->academic_year_id;
-                $this->last_class_id = $education->last_class_id;
-                $this->sgpa = $education->sgpa;
-                $this->percentage = $education->percentage;
-            }else{
-                $this->dispatch('alert',[
-                    'type'=>'error',
-                    'message'=>"Last Education Not Found !!"
-                ]);
-            }
+                $this->dispatch('alert',type:'error',message:'Student Not Found !!');  
+            }   
             $this->setmode('edit');
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Your Admission Is Confirmed Please Contact The Administrator To Request Cancellation Of The Admission Form.!!"
-            ]);
+            $this->dispatch('alert',type:'info',message:'Your Admission Is Confirmed Please Contact The Administrator To Request Cancellation Of The Admission Form.!!'); 
         }
        
     }
 
-    public function update($id)
+    public function update(Admission $admission)
     {
         $validatedData = $this->validate();
-        $admission = Admission::find($id);
         if($admission){
             $admission->academic_year_id=$this->academic_year_id;
             $admission->student_id= $this->student_id;
             $admission->class_id = $validatedData['class_id'];
             $admission->status ='0';
             $admission->update();
+
+            $education =StudentEducation::where('admission_id', $admission->id)->latest()->first();
+            if ($education)
+            {
+                $education->academic_year_id=$validatedData['last_academic_year_id'];
+                $education->last_class_id = $validatedData['last_class_id'];
+                $education->sgpa = $validatedData['sgpa'];
+                $education->percentage = $validatedData['percentage'];
+                $education->update();
+            }else{
+                $education =new StudentEducation;
+                $education->student_id=$this->student_id;
+                $education->admission_id=$admission->id;
+                $education->academic_year_id=$validatedData['last_academic_year_id'];
+                $education->last_class_id = $validatedData['last_class_id'];
+                $education->sgpa = $validatedData['sgpa'];
+                $education->percentage = $validatedData['percentage'];
+                $education->save();
+            }
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Admission Not Found !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Admission Not Found !!');  
         }
-        $education =StudentEducation::where('admission_id', $id)->latest()->first();
-        if ($education)
-        {
-            $education->academic_year_id=$validatedData['last_academic_year_id'];
-            $education->last_class_id = $validatedData['last_class_id'];
-            $education->sgpa = $validatedData['sgpa'];
-            $education->percentage = $validatedData['percentage'];
-            $education->update();
-        }else{
-            $education =new StudentEducation;
-            $education->student_id=$this->student_id;
-            $education->admission_id=$id;
-            $education->academic_year_id=$validatedData['last_academic_year_id'];
-            $education->last_class_id = $validatedData['last_class_id'];
-            $education->sgpa = $validatedData['sgpa'];
-            $education->percentage = $validatedData['percentage'];
-            $education->save();
-        }
+        
         $student= Student::find($this->student_id);
         if($student)
         {
@@ -436,27 +405,44 @@ class StudentAdmission extends Component
             $student->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Admission Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Admission Updated Successfully !!');  
         }else{
-            $this->dispatch('alert',[
-                'type'=>'error',
-                'message'=>"Student Not Found !!"
-            ]);
+            $this->dispatch('alert',type:'error',message:'Student Not Found !!');  
         }
     }
 
-    public function view($id)
-    {
-        $this->viewid=$id;
-        $this->setmode('view');
-    }
-
-
     public function render()
     {   
+        
+        if($this->mode!=='all')
+        {
+            $today = Carbon::today();
+            $this->mindate=$minus15Years = $today->copy()->subYears(15)->format('Y-m-d');
+            $this->name = $this->last_name." ".$this->first_name." ".$this->middle_name;
+            if (is_numeric($this->sgpa) && $this->sgpa >=1) {
+                $this->percentage = (($this->sgpa * 10) - 7.5);
+            }
+            
+            $lastacademicyears = AcademicYear::where('year', '<', function ($query) { 
+                $query->selectRaw('MAX(year)')->from('academic_years');
+            })->orderBy('year', 'DESC')->get();
+            
+            $streams=Classes::select('stream')->where('status',0)->distinct('stream')->get();
+            $types=Classes::select('type')->where('status',0)->where('stream',$this->stream)->distinct('type')->get();
+            $classes=Classes::select('id','name')->where('status',0)->where('type',$this->stream_type)->orderBy('name',"ASC")->get();
+            $casts=Cast::where('status',0)->orderBy('name',"ASC")->get();
+            
+        }
+        else
+        {   
+            $this->resetinput();
+            $streams=null;
+            $types=null;
+            $classes=null;
+            $casts=null;
+            $lastacademicyears=null;
+        }
+
         $this->student_id=Auth::guard('student')->user()->id;
 
         $academicyears = AcademicYear::where('status', 0)->orderBy('year', 'DESC')->get();
@@ -468,21 +454,7 @@ class StudentAdmission extends Component
                 break;
             }
         }
-
-        $today = Carbon::today();
-        $this->mindate=$minus15Years = $today->copy()->subYears(15)->format('Y-m-d');
-        $this->name = $this->last_name." ".$this->first_name." ".$this->middle_name;
-        if (is_numeric($this->sgpa) && $this->sgpa >=1) {
-            $this->percentage = (($this->sgpa * 10) - 7.5);
-        }
-        $lastacademicyears = AcademicYear::where('year', '<', function ($query) { 
-            $query->selectRaw('MAX(year)')->from('academic_years');
-        })->orderBy('year', 'DESC')->get();
-        $streams=Classes::select('stream')->where('status',0)->distinct('stream')->get();
-        $types=Classes::select('type')->where('status',0)->where('stream',$this->stream)->distinct('type')->get();
-        $classes=Classes::select('id','name')->where('status',0)->where('type',$this->stream_type)->orderBy('name',"ASC")->get();
-
-        $casts=Cast::where('status',0)->orderBy('name',"ASC")->get();
+        
         $query =Admission::orderBy('academic_year_id', 'DESC');
         if ($this->cast_id) {
             $categories =Cast::find($this->cast_id)->category()->orderBy('name', 'ASC')->get();
@@ -490,17 +462,7 @@ class StudentAdmission extends Component
             $categories = [];
         }
 
-        if($this->viewid!=null)
-        {
-            $viewadmission=Admission::where('id',$this->viewid)->get();
-            $lastclass=StudentEducation::where('admission_id',$this->viewid)->first();
-        }
-       else
-        {
-            $viewadmission=null;
-            $lastclass=null;
-        }
         $admissions = Admission::where('student_id',$this->student_id)->paginate($this->per_page);
-        return view('livewire.frontend.admission.student-admission',compact('hasAdmission','lastacademicyears','categories','casts','lastclass','viewadmission','admissions','classes','streams','types','academicyears'))->extends('layouts.student.student')->section('student');
+        return view('livewire.frontend.admission.student-admission',compact('hasAdmission','lastacademicyears','categories','casts','admissions','classes','streams','types','academicyears'))->extends('layouts.student.student')->section('student');
     }
 }

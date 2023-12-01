@@ -28,7 +28,7 @@
                     <div class="card-header">
                         <div class="row">
                             <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                            <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
+                            <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                                 <option value="10">10</option>
                                 <option value="50">50</option>
                                 <option value="100">100</option>
@@ -56,7 +56,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($student_payments as $key => $item)
-                                <tr>
+                                <tr wire:key='{{ $item->id }}'>
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $item->Admission->id }}</td>
                                     <td>{{ $item->AcademicYear->year}}</td>
@@ -89,14 +89,14 @@
                                     <td>
                                         @if ($item->status==0)
                                             @if ($item->total_amount >0)
-                                                <a class="btn btn-sm btn-success"  href="{{ route('student_pay_fee',$item->id) }}">Pay</a>
+                                                <a  class="btn btn-sm btn-success"  href="{{ route('student_pay_fee',$item->id) }}">Pay</a>
                                             @endif
                                         @endif
                                         @if ($item->status==2)
                                             @if ($item->total_amount >=0)
                                                 @if (isset($item->transaction->status))
                                                     @if ($item->transaction->status==2)
-                                                        <a class="btn  btn-sm btn-primary"  href="{{ route('student_refund_fee',$item->id) }}">Refund</a>
+                                                        <a  class="btn  btn-sm btn-primary"  href="{{ route('student_refund_fee',$item->id) }}">Refund</a>
                                                     @endif
                                                 @endif
                                             @endif

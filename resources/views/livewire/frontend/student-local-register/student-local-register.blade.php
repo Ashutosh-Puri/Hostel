@@ -30,7 +30,7 @@
                                         <label for="entry_time" class="form-label">Entry Time</label>
                                         <input type="time"
                                             class="form-control @error('entry_time') is-invalid @enderror"
-                                            wire:model.live.debounce.1000ms="entry_time" value="{{ old('entry_time') }}"
+                                            wire:model.change="entry_time" value="{{ old('entry_time') }}"
                                             id="entry_time" placeholder="Enter entry time" />
                                         @error('entry_time')
                                         <div class="invalid-feedback">
@@ -43,7 +43,7 @@
                                     <div class="mb-3 form-group">
                                         <label for="exit_time" class="form-label">Exit Time</label>
                                         <input type="time" class="form-control @error('exit_time') is-invalid @enderror"
-                                            wire:model.live.debounce.1000ms="exit_time" value="{{ old('exit_time') }}"
+                                            wire:model.change="exit_time" value="{{ old('exit_time') }}"
                                             id="exit_time" placeholder="Enter exit time" />
                                         @error('exit_time')
                                         <div class="invalid-feedback">
@@ -58,7 +58,7 @@
                                     <div class="mb-3 form-group">
                                         <label for="reason" class="form-label">Hostel Leaving Reasone</label>
                                         <textarea class="w-100 @error('reason') is-invalid @enderror"
-                                            wire:model.live.debounce.1000ms="reason" id="reason"
+                                            wire:model.blur="reason" id="reason"
                                             placeholder="Enter Reasone To Leave Hostel" cols="30" rows="4">
                                             {{ old('reason') }}</textarea>
                                         @error('reason')
@@ -109,7 +109,7 @@
                                         <label for="entry_time" class="form-label">Entry Time</label>
                                         <input type="time"
                                             class="form-control @error('entry_time') is-invalid @enderror"
-                                            wire:model.live.debounce.1000ms="entry_time" value="{{ old('entry_time') }}"
+                                            wire:model.change="entry_time" value="{{ old('entry_time') }}"
                                             id="entry_time" placeholder="Enter entry time" />
                                         @error('entry_time')
                                         <div class="invalid-feedback">
@@ -122,7 +122,7 @@
                                     <div class="mb-3 form-group">
                                         <label for="exit_time" class="form-label">Exit Time</label>
                                         <input type="time" class="form-control @error('exit_time') is-invalid @enderror"
-                                            wire:model.live.debounce.1000ms="exit_time" value="{{ old('exit_time') }}"
+                                            wire:model.change="exit_time" value="{{ old('exit_time') }}"
                                             id="exit_time" placeholder="Enter exit time" />
                                         @error('exit_time')
                                         <div class="invalid-feedback">
@@ -137,7 +137,7 @@
                                     <div class="mb-3 form-group">
                                         <label for="reason" class="form-label">Hostel Leaving Reasone</label>
                                         <textarea class="w-100 @error('reason') is-invalid @enderror"
-                                            wire:model.live.debounce.1000ms="reason" id="reason"
+                                            wire:model.blur="reason" id="reason"
                                             placeholder="Enter Reasone To Leave Hostel" cols="30" rows="4">
                                             {{ old('reason') }}</textarea>
                                         @error('reason')
@@ -188,7 +188,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <label class="col-4 col-md-1 py-1">Per Page</label>
-                                <select class="col-4 col-md-1" wire:loading.attr="disabled" wire:model.live="per_page">
+                                <select class="col-4 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                                     <option value="10">10</option>
                                     <option value="50">50</option>
                                     <option value="100">100</option>
@@ -217,7 +217,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($local_registers as $key => $item)
-                                    <tr>
+                                    <tr wire:key='{{ $item->id }}'>
                                         <td>{{ $key + 1 }}</td>
                                         <td>
                                             {{ $item->allocation->admission->academicyear->year }}
