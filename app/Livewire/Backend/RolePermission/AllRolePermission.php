@@ -31,25 +31,12 @@ class AllRolePermission extends Component
     protected function rules()
     {
         return [
-            'permission.*' => ['required','integer',],
+            'permission.*' => ['nullable'],
 
             'role_id' => ['required','integer','unique:role_has_permissions'],
         ];
     }
 
-    public function updatedPermission()
-    {
-        try {
-            $this->validate([
-                'permission.*' => 'required|integer',
-                'role_id' => 'required|integer',
-            ]);
-        } catch (QueryException $e) {
-            if ($e->getCode() == 23000) {
-                $this->addError('role_id', 'This combination of role ID and permission is already in use.');
-            }
-        }
-    }
 
     public function updated($propertyName)
     {
@@ -64,7 +51,6 @@ class AllRolePermission extends Component
         $this->status=null;
         $this->role=null;
         $this->c_id=null;
-        $this->role=null;
     }
 
     public function setmode($mode)
@@ -72,45 +58,6 @@ class AllRolePermission extends Component
         $this->mode=$mode;
     }
 
-    // public function save()
-    // {
-    //     $validatedData = $this->validate();
-    //     $data = array();
-    //     $permissions = $this->permission;
-    //     foreach($permissions as $key => $item) {
-    //         $data['role_id']        = $this->role_id;
-    //         $data['permission_id']  = $item;
-    //         try 
-    //         {
-    //             DB::table('role_has_permissions')->insert($data);
-    //             $this->resetinput();
-    //             $this->setmode('all');
-    //             $this->dispatch('alert',type:'success',message:'Role Permission Assigned Successfully !!');  
-    //         } catch (QueryException $e) {          
-    //             if ($e->getCode() == '23000') {
-    //                 $this->addError('permission', 'The selected permissions are not unique.');
-    //                 $this->dispatch('alert',type:'error',message:'You Are Trying To Give Dublicate Permission!!');  
-    //             }     
-    //         }
-    //     } 
-    // }
-
-    // public function edit($id)
-    // {   
-    //     $this->resetinput();
-    //     if($id)
-    //     {   
-    //         $this->current_id=$id;
-    //         $this->c_id=$id;
-    //         $this->role= Role::findOrFail($id);
-    //        foreach($this->role->permissions->pluck('id') as $data){
-    //         $this->permission[$data]=$data;
-    //        }
-    //         $this->setmode('edit');
-    //     }else{
-    //         $this->role=null;
-    //     }
-    // }
 
     public function edit(Role $role)
     {   
@@ -121,7 +68,7 @@ class AllRolePermission extends Component
             $this->current_id=$role->id;
             $this->c_id=$role->id;
            foreach($role->permissions->pluck('id') as $data){
-            $this->permission[$data]=$data;
+            $this->permission[$data]=1;
            }
             $this->setmode('edit');
         }else{
@@ -133,10 +80,15 @@ class AllRolePermission extends Component
     {   
         if($role)
         {
-            $permission = $this->permission;
-            if (!empty($permission)) {
-                $role->syncPermissions(array_keys($permission));
+            $permission = [];
+            foreach($this->permission as $key => $value)
+            {   
+                if($value)
+                {
+                    $permission[$key]=$key;
+                }
             }
+            $role->syncPermissions($permission);
             $this->resetinput();
             $this->setmode('all');
             $this->dispatch('alert',type:'success',message:'Role Permission Updated Successfully !!');  
@@ -171,17 +123,7 @@ class AllRolePermission extends Component
 
     public function render()
     {   
-        if($this->role_id!=null)
-        {   
-            if($this->mode=="add")
-            {
-                $role= Role::findOrFail( $this->role_id);
-                foreach($role->permissions->pluck('id') as $data){
-                 $this->permission[$data]=$data;
-                }
-            }
-        }
-        
+
         if($this->current_id)
         {
             $role= Role::findOrFail($this->current_id);

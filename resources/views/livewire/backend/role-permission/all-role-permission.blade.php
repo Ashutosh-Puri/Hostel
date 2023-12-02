@@ -1,91 +1,6 @@
 <div class="content ">
     <div class="container-fluid">
-        @if ($mode=='add')
-            @section('title')
-                Add Role Permission
-            @endsection
-            <div class="row">
-                <div class="col-12">
-                    <div class="bg-success">
-                        <div class="float-start pt-2 px-2">
-                            <h2>Add Role Permission</h2>
-                        </div>
-                        <div class="float-end">
-                            <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success ">
-                                Back<span class="btn-label-right mx-2"><i class="mdi mdi-arrow-left-thick"></i></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card ">
-                        <div class="card-body">
-                            <form  wire:submit="save" method="post" action="" id="myForm">
-                                @csrf
-                                <div class="form-group">
-                                    <label for="role_id" class="form-label">All Roles</label>
-                                    <select class="form-select @error('role_id') is-invalid @enderror" id="role_id" wire:model.change="role_id">
-                                        <option hidden value="" >Select Role</option>
-                                        @foreach ($roles as $role)
-                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('role_id')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <table  id="data-table" class="table dt-responsive nowrap w-100">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Group Name</th>
-                                            <th>Permission Name</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($permission_groups as  $key => $group)
-                                        <tr>
-                                            <td>
-                                                {{ $key+1; }}
-                                            </td>
-                                            <td>
-                                                <div class="form-group form-check mb-3 form-check-primary">
-                                                    <label class="form-check-label"  >{{ $group->group_name }}</label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                @php
-                                                    $perm = App\Models\Admin::getpermissionByGroupName($group->group_name);
-                                                @endphp
-                                                @foreach ($perm as $permissionitem)
-                                                <div class="form-group form-check mb-3 form-check-primary">
-                                                    <input class="form-check-input @error('permission') is-invalid @enderror" wire:model.live="permission.{{ $permissionitem->id }}" type="checkbox" value="{{ $permissionitem->id }}" id="customckeck{{ $permissionitem->id }}">
-                                                    <label class="form-check-label" for="customckeck{{ $permissionitem->id }}">{{ $permissionitem->name }}</label>
-                                                    @error('permission.{{ $permissionitem->id }}')
-                                                        <div class="invalid-feedback">
-                                                            {{ $message }}
-                                                        </div>
-                                                    @enderror
-                                                </div>
-                                            @endforeach
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                                <div class="mt-3">
-                                    <button type="submit"  class="btn btn-primary ">Save Data</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @elseif($mode=='edit')
+        @if($mode=='edit')
             @section('title')
                 Edit Role
             @endsection
@@ -134,8 +49,8 @@
                                             </td>
                                             <td>
                                                 @foreach ($per as $permissionitem)
-                                                    <div class="form-group form-check   form-check-primary">
-                                                        <input class="form-check-input @error('permission') is-invalid @enderror" wire:model.change="permission.{{ $permissionitem->id }}" type="checkbox" value="{{ $permissionitem->id }}" id="customckeck{{ $permissionitem->id }}"   @if(array_key_exists($permissionitem->id, $permission)) checked @endif>
+                                                    <div class="form-group form-check form-check-primary">
+                                                        <input type="checkbox" class="form-check-input @error('permission') is-invalid @enderror" name="permission.{{ $permissionitem->id }}" wire:model.live="permission.{{ $permissionitem->id }}"  value="{{ $permissionitem->id }}" id="customckeck{{ $permissionitem->id }}" @if (in_array($permissionitem->id, array_keys($permission))) checked @endif>
                                                         <label class="form-check-label" for="customckeck{{ $permissionitem->id }}">{{ $permissionitem->name }}</label>
                                                         @error('permission')
                                                             <div class="invalid-feedback">
