@@ -3,6 +3,7 @@
 namespace App\Livewire\Backend\StudentLocalRegister;
 
 use Carbon\Carbon;
+use App\Models\Student;
 use Livewire\Component;
 use App\Models\Admission;
 use App\Models\Allocation;
@@ -77,15 +78,21 @@ class AllStudentLocalRegister extends Component
                 {
                     $allocation=Allocation::where('admission_id', $admission->id)->first();
                     if($allocation)
-                    {
-                        $studentlocalregister->allocation_id = $allocation->id;
-                        $studentlocalregister->reason = $validatedData['reason'];
-                        $studentlocalregister->entry_time = now()->format('Y-m-d') . ' ' . $validatedData['entry_time'];
-                        $studentlocalregister->exit_time = now()->format('Y-m-d') . ' ' . $validatedData['exit_time'];
-                        $studentlocalregister->save();
-                        $this->resetinput();
-                        $this->setmode('all');
-                        $this->dispatch('alert',type:'success',message:'Student Local Register Entry Created Successfully !!');
+                    {   
+                        if(isset($allocation->bed_id))
+                        {
+                            $studentlocalregister->allocation_id = $allocation->id;
+                            $studentlocalregister->reason = $validatedData['reason'];
+                            $studentlocalregister->entry_time = now()->format('Y-m-d') . ' ' . $validatedData['entry_time'];
+                            $studentlocalregister->exit_time = now()->format('Y-m-d') . ' ' . $validatedData['exit_time'];
+                            $studentlocalregister->save();
+                            $this->resetinput();
+                            $this->setmode('all');
+                            $this->dispatch('alert',type:'success',message:'Student Local Register Entry Created Successfully !!');
+                        }else
+                        {
+                            $this->dispatch('alert',type:'error',message:'Bed Not Allocated Yet !!');
+                        }
                     }
                     else
                     {
@@ -111,6 +118,7 @@ class AllStudentLocalRegister extends Component
     public function edit(LocalRegister $studentlocalregister)
     {
         if($studentlocalregister){
+            $this->student_id=$studentlocalregister->allocation->admission->student_id;
             $this->current_id=$studentlocalregister->id;
             $this->c_id=$studentlocalregister->id;
             $this->allocation_id=$studentlocalregister->allocation_id;
@@ -136,15 +144,21 @@ class AllStudentLocalRegister extends Component
                 {
                     $allocation=Allocation::where('admission_id', $admission->id)->first();
                     if($allocation)
-                    {
-                        $studentlocalregister->allocation_id = $allocation->id;
-                        $studentlocalregister->reason = $validatedData['reason'];
-                        $studentlocalregister->entry_time = now()->format('Y-m-d') . ' ' . $validatedData['entry_time'];
-                        $studentlocalregister->exit_time = now()->format('Y-m-d') . ' ' . $validatedData['exit_time'];
-                        $studentlocalregister->update();
-                        $this->resetinput();
-                        $this->setmode('all');
-                        $this->dispatch('alert',type:'success',message:'Student Local Register Entry Updated Successfully !!');
+                    {   
+                        if(isset($allocation->bed_id))
+                        {
+                            $studentlocalregister->allocation_id = $allocation->id;
+                            $studentlocalregister->reason = $validatedData['reason'];
+                            $studentlocalregister->entry_time = now()->format('Y-m-d') . ' ' . $validatedData['entry_time'];
+                            $studentlocalregister->exit_time = now()->format('Y-m-d') . ' ' . $validatedData['exit_time'];
+                            $studentlocalregister->update();
+                            $this->resetinput();
+                            $this->setmode('all');
+                            $this->dispatch('alert',type:'success',message:'Student Local Register Entry Updated Successfully !!');
+                        }else
+                        {
+                            $this->dispatch('alert',type:'error',message:'Bed Not Allocated Yet !!');
+                        }
                     }
                     else
                     {
@@ -222,8 +236,11 @@ class AllStudentLocalRegister extends Component
         if($this->mode=='all')
         {
             $this->resetinput();
+            $students=null;
+        }else
+        {
+            $students=Student::select('id','name','username')->where('status',0)->orderBy('name',"ASC")->get();
         }
-        $this->student_id=Auth::guard('admin')->user()->id;
 
         $local_registers = LocalRegister::query()->with('allocation.admission.class', 'allocation.admission.student', 'allocation.admission.academicyear')
         ->when($this->year, function ($query) {
@@ -240,6 +257,6 @@ class AllStudentLocalRegister extends Component
             });
         })->withTrashed()->paginate($this->per_page);
 
-        return view('livewire.backend.student-local-register.all-student-local-register',compact('local_registers'))->extends('layouts.admin.admin')->section('admin');
+        return view('livewire.backend.student-local-register.all-student-local-register',compact('students','local_registers'))->extends('layouts.admin.admin')->section('admin');
     }
 }

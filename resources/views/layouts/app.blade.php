@@ -45,6 +45,10 @@
     @livewireStyles()
 </head>
 <body>
+    <div id="app">
+        @yield('content')
+        @livewire('guestend.internet.internet')
+    </div>
     <!-- Livewire JS -->
     @livewireScripts()
     <!-- Livewire Turbolinks -->
@@ -121,11 +125,6 @@
                 });
             });
 
-        })
-    </script>
-
-  
-    <script>
             @if(session('alert'))
                 const toastEvent = @json(session('alert'));
                 Toast.fire({
@@ -134,22 +133,10 @@
                 });
                 @php session()->forget('alert') @endphp
             @endif
-    </script>
-            {{-- <script>
-        
-       
 
-                $('#data-table').DataTable( {
-                    paging: false,
-                    info:false,
-                    searching: false,
-                });
-            </script> --}}
+        })
+    </script>
     @yield('scripts')
     @stack('scripts')
-    <div id="app">
-        @yield('content')
-        <span class="internet text-danger bg-drak" wire:offline >Offline</span>
-    </div>
 </body>
 </html>

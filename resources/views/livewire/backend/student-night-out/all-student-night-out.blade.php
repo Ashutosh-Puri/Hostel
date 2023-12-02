@@ -24,7 +24,23 @@
                         <form wire:submit="save" method="post" action="" id="myForm">
                             @csrf
                             <div class="row">
-                                <div class="col-12 col-md-6">
+                                <div class="col-12 col-md-4">
+                                    <div class="mb-3 form-group">
+                                        <label for="student_id" class="form-label">Select Student</label>
+                                        <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.change="student_id">
+                                            <option  hidden value="">Select Students</option>
+                                            @foreach($students as $item2)
+                                                <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name!=null?$item2->name: $item2->username; }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('student_id')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
                                     <div class="mb-3 form-group">
                                         <label for="going_date" class="form-label">Going Date</label>
                                         <input type="date"
@@ -38,7 +54,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6">
+                                <div class="col-12 col-md-4">
                                     <div class="mb-3 form-group">
                                         <label for="comming_date" class="form-label">Comming Date</label>
                                         <input type="date"
@@ -103,7 +119,23 @@
                             action="" id="myForm">
                             @csrf
                             <div class="row">
-                                <div class="col-12 col-md-6">
+                                <div class="col-12 col-md-4">
+                                    <div class="mb-3 form-group">
+                                        <label for="student_id" class="form-label">Select Student</label>
+                                        <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.change="student_id">
+                                            <option  hidden value="">Select Students</option>
+                                            @foreach($students as $item2)
+                                                <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name!=null?$item2->name: $item2->username; }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('student_id')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
                                     <div class="mb-3 form-group">
                                         <label for="going_date" class="form-label">Going Date</label>
                                         <input type="date"
@@ -117,7 +149,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6">
+                                <div class="col-12 col-md-4">
                                     <div class="mb-3 form-group">
                                         <label for="comming_date" class="form-label">Comming Date</label>
                                         <input type="date"
@@ -265,8 +297,12 @@
                                                 {{ date('d / m / Y', strtotime($item->comming_date)) }}
                                             </td>
                                             <td>
-                                                {{ $item->allocation->Bed->Room->id }} - (
-                                                {{ $item->allocation->Bed->Room->label }} )
+                                                @if ($item->allocation->bed_id)
+                                                    {{ $item->allocation->Bed->Room->id }} - (
+                                                    {{ $item->allocation->Bed->Room->label }} )
+                                                @else
+                                                    N.A.
+                                                @endif
                                             </td>
                                             <td>
                                                 @if ($item->status == '0')

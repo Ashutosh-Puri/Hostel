@@ -33,8 +33,8 @@ class AllAdmission extends Component
     public $s = '';
     public $a = '';
     public $c = '';
-    public $stream = '';
-    public $stream_type = '';
+    public $stream =null;
+    public $stream_type = null;
     public $per_page = 10;
     public $mode='all';
     public $c_id;
@@ -146,7 +146,7 @@ class AllAdmission extends Component
             'local_parent_address'=>['nullable','string','max:255'],
             'address_type'=>['required','integer','max:255'],
             'is_allergy'=>['nullable','string','max:255'],
-            'is_ragging'=>['nullable', 'in:0,1'],
+            'is_ragging'=>['nullable', 'boolean'],
             'mobile'=>['required','numeric','digits:10','unique:students,mobile,'.($this->mode=='edit'? $this->student_id :($this->mode=='add'? Auth::user()->id :'')),],
             'member_id'=>['required','numeric','unique:students,member_id,'.($this->mode=='edit'? $this->student_id :($this->mode=='add'? Auth::user()->id :'')),],
             'photo'=>[($this->mode=='edit'? 'nullable' : ($this->photoold!=null? 'nullable' : 'required')),'image','mimes:jpeg,jpg,png','max:1024'],
@@ -158,6 +158,47 @@ class AllAdmission extends Component
         $this->validateOnly($propertyName);
         if ($propertyName === 'class_id') {
             $this->checkfull();
+        }
+        if ($propertyName === 'student_id') {
+            if($this->mode=="add" || $this->mode=="edit")
+            {   
+                if($this->student_id)
+                {
+                    $student = Student::find($this->student_id);
+                    if ($student)
+                    {
+                        $nameParts = explode(' ', $student->name);
+                        $this->last_name = isset($nameParts[0]) ? $nameParts[0] : '';
+                        $this->first_name = isset($nameParts[1]) ? $nameParts[1] : '';
+                        $this->middle_name = isset($nameParts[2]) ? $nameParts[2] : '';
+                        $this->mobile = $student->mobile;
+                        $this->mother_name = $student->mother_name;
+                        $this->dob = $student->dob;
+                        if(isset($student->cast_id))
+                        {
+                            $tempccat=Cast::find($student->cast_id)->category()->pluck('id');
+                            if( $tempccat[0])
+                            {
+                                $this->category_id = $tempccat[0];
+                            }
+                        }
+                        $this->cast_id = $student->cast_id;
+                        $this->parent_name = $student->parent_name;
+                        $this->parent_mobile = $student->parent_mobile;
+                        $this->parent_address = $student->parent_address;
+                        $this->local_parent_name = $student->local_parent_name;
+                        $this->local_parent_mobile = $student->local_parent_mobile;
+                        $this->local_parent_address = $student->local_parent_address;
+                        $this->blood_group = $student->blood_group;
+                        $this->is_allergy = $student->is_allergy;
+                        $this->is_ragging = $student->is_ragging;
+                        $this->gender = $student->gender;
+                        $this->address_type = $student->address_type;
+                        $this->member_id = $student->member_id;
+                        $this->photoold = $student->photo;
+                    }
+                }
+            }
         }
     }
     public function checkfull()
@@ -178,42 +219,6 @@ class AllAdmission extends Component
     public function setmode($mode)
     {
         $this->mode=$mode;
-        if($mode=="add")
-        {
-            $student = Student::find(Auth::user()->id);
-            if ($student)
-            {
-                $nameParts = explode(' ', $student->name);
-                $this->last_name = isset($nameParts[0]) ? $nameParts[0] : '';
-                $this->first_name = isset($nameParts[1]) ? $nameParts[1] : '';
-                $this->middle_name = isset($nameParts[2]) ? $nameParts[2] : '';
-                $this->mobile = $student->mobile;
-                $this->mother_name = $student->mother_name;
-                $this->dob = $student->dob;
-                if(isset($student->cast_id))
-                {
-                    $tempccat=Cast::find($student->cast_id)->category()->pluck('id');
-                    if( $tempccat[0])
-                    {
-                        $this->category_id = $tempccat[0];
-                    }
-                }
-                $this->cast_id = $student->cast_id;
-                $this->parent_name = $student->parent_name;
-                $this->parent_mobile = $student->parent_mobile;
-                $this->parent_address = $student->parent_address;
-                $this->local_parent_name = $student->local_parent_name;
-                $this->local_parent_mobile = $student->local_parent_mobile;
-                $this->local_parent_address = $student->local_parent_address;
-                $this->blood_group = $student->blood_group;
-                $this->is_allergy = $student->is_allergy;
-                $this->is_ragging = $student->is_ragging;
-                $this->gender = $student->gender;
-                $this->address_type = $student->address_type;
-                $this->member_id = $student->member_id;
-                $this->photoold = $student->photo;
-            }
-        }
     }
 
     public function save()
@@ -436,13 +441,6 @@ class AllAdmission extends Component
         }
     }
 
-    public function view($id)
-    {
-        $this->viewid=$id;
-        $this->setmode('view');
-    }
-
-
     public function update_status(Admission $admission)
     {
         if($admission->status==1)
@@ -569,10 +567,9 @@ class AllAdmission extends Component
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
     }
-
+    
     public function render()
-    {
-
+    {   
         $today = Carbon::today();
         $this->mindate=$minus15Years = $today->copy()->subYears(15)->format('Y-m-d');
         $this->name = $this->last_name." ".$this->first_name." ".$this->middle_name;
@@ -599,7 +596,7 @@ class AllAdmission extends Component
             $classes = [];
         }
 
-        $students=Student::select('id','username')->where('status',0)->orderBy('username',"ASC")->get();
+        $students=Student::select('id','username','name')->where('status',0)->orderBy('username',"ASC")->get();
         $casts=Cast::select('id','name')->where('status',0)->orderBy('name',"ASC")->get();
 
         if ($this->cast_id) {
@@ -628,16 +625,6 @@ class AllAdmission extends Component
 
         $admissions = $query->withTrashed()->paginate($this->per_page);
 
-        if($this->viewid!=null)
-        {
-            $viewadmission=Admission::where('id',$this->viewid)->get();
-            $lastclass=StudentEducation::where('admission_id',$this->viewid)->first();
-        }
-       else
-        {
-            $viewadmission=null;
-            $lastclass=null;
-        }
-        return view('livewire.backend.Admission.all-Admission',compact('lastacademicyears','categories','casts','lastclass','viewadmission','students','admissions','classes','streams','types','academicyears'))->extends('layouts.admin.admin')->section('admin');
+        return view('livewire.backend.Admission.all-Admission',compact('lastacademicyears','categories','casts','students','admissions','classes','streams','types','academicyears'))->extends('layouts.admin.admin')->section('admin');
     }
 }

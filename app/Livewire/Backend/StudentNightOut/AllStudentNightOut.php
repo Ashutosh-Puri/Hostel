@@ -3,6 +3,7 @@
 namespace App\Livewire\Backend\StudentNightOut;
 
 use Carbon\Carbon;
+use App\Models\Student;
 use Livewire\Component;
 use App\Models\NightOut;
 use App\Models\Admission;
@@ -29,7 +30,7 @@ class AllStudentNightOut extends Component
     public $status;
     public $c_id;
     public $current_id;
-    public $student_id;
+    public $student_id=null;
 
     protected function rules()
     {
@@ -76,15 +77,21 @@ class AllStudentNightOut extends Component
                 {
                     $allocation=Allocation::where('admission_id', $admission->id)->first(); 
                     if($allocation)
-                    {
-                        $nightout->allocation_id = $allocation->id;
-                        $nightout->reason = $validatedData['reason'];
-                        $nightout->going_date =  $validatedData['going_date'];
-                        $nightout->comming_date = $validatedData['comming_date'];
-                        $nightout->save();
-                        $this->resetinput();
-                        $this->setmode('all');
-                        $this->dispatch('alert',type:'success',message:'Student Night Out Entry Created Successfully !!');  
+                    {   
+                        if(isset($allocation->bed_id))
+                        {
+                            $nightout->allocation_id = $allocation->id;
+                            $nightout->reason = $validatedData['reason'];
+                            $nightout->going_date =  $validatedData['going_date'];
+                            $nightout->comming_date = $validatedData['comming_date'];
+                            $nightout->save();
+                            $this->resetinput();
+                            $this->setmode('all');
+                            $this->dispatch('alert',type:'success',message:'Student Night Out Entry Created Successfully !!');  
+                        }else
+                        {
+                            $this->dispatch('alert',type:'error',message:'Bed Not Allocated Yet !!');
+                        }
                     }
                     else
                     {
@@ -106,6 +113,7 @@ class AllStudentNightOut extends Component
     public function edit(NightOut $nightout)
     {
         if($nightout){
+            $this->student_id=$nightout->allocation->admission->student_id;
             $this->current_id=$nightout->id;
             $this->c_id=$nightout->id;
             $this->allocation_id=$nightout->allocation_id;
@@ -131,15 +139,21 @@ class AllStudentNightOut extends Component
                 {
                     $allocation=Allocation::where('admission_id', $admission->id)->first();
                     if($allocation)
-                    {
-                        $nightout->allocation_id = $allocation->id;
-                        $nightout->reason = $validatedData['reason'];
-                        $nightout->going_date = $validatedData['going_date'];
-                        $nightout->comming_date =$validatedData['comming_date'];
-                        $nightout->update();
-                        $this->resetinput();
-                        $this->setmode('all');
-                        $this->dispatch('alert',type:'success',message:'Student Night Out Entry Updated Successfully !!');  
+                    {   
+                        if(isset($allocation->bed_id))
+                        {
+                            $nightout->allocation_id = $allocation->id;
+                            $nightout->reason = $validatedData['reason'];
+                            $nightout->going_date = $validatedData['going_date'];
+                            $nightout->comming_date =$validatedData['comming_date'];
+                            $nightout->update();
+                            $this->resetinput();
+                            $this->setmode('all');
+                            $this->dispatch('alert',type:'success',message:'Student Night Out Entry Updated Successfully !!');  
+                        }else
+                        {
+                            $this->dispatch('alert',type:'error',message:'Bed Not Allocated Yet !!');
+                        }
                     }
                     else
                     {
@@ -216,8 +230,11 @@ class AllStudentNightOut extends Component
         if($this->mode=='all')
         {
             $this->resetinput();
+            $students=null;
+        }else
+        {
+            $students=Student::select('id','name','username')->where('status',0)->orderBy('name',"ASC")->get();
         }
-        $this->student_id=Auth::guard('admin')->user()->id;
         $night_out = NightOut::query()->with('allocation.admission.class', 'allocation.admission.student', 'allocation.admission.academicyear')
         ->when($this->year, function ($query) {
             $query->whereHas('allocation.admission.academicyear', function ($subQuery) {
@@ -234,7 +251,7 @@ class AllStudentNightOut extends Component
         })->withTrashed()->paginate($this->per_page);
     
 
-        return view('livewire.backend.student-night-out.all-student-night-out',compact('night_out'))->extends('layouts.admin.admin')->section('admin');
+        return view('livewire.backend.student-night-out.all-student-night-out',compact('night_out','students'))->extends('layouts.admin.admin')->section('admin');
     }
 
 }

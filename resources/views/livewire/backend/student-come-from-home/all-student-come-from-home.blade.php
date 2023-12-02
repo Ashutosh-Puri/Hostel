@@ -27,6 +27,22 @@
                             <div class="row">
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3 form-group">
+                                        <label for="student_id" class="form-label">Select Student</label>
+                                        <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.change="student_id">
+                                            <option  hidden value="">Select Students</option>
+                                            @foreach($students as $item2)
+                                                <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name!=null?$item2->name: $item2->username; }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('student_id')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3 form-group">
                                         <label for="come_time" class="form-label">Come Time</label>
                                         <input type="time" wire:model.live="come_time"
                                             class="form-control @error('come_time') is-invalid @enderror " id="time"
@@ -74,6 +90,22 @@
                             id="myForm">
                             @csrf
                             <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3 form-group">
+                                        <label for="student_id" class="form-label">Select Student</label>
+                                        <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.change="student_id">
+                                            <option  hidden value="">Select Students</option>
+                                            @foreach($students as $item2)
+                                                <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name!=null?$item2->name: $item2->username; }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('student_id')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3 form-group">
                                         <label for="come_time" class="form-label">Come Time</label>

@@ -3,6 +3,7 @@
 namespace App\Livewire\Backend\StudentComeFromHome;
 
 use Carbon\Carbon;
+use App\Models\Student;
 use Livewire\Component;
 use App\Models\Admission;
 use App\Models\Allocation;
@@ -70,14 +71,20 @@ class AllStudentComeFromHome extends Component
                 {   
                     $allocation=Allocation::where('admission_id', $admission->id)->first();
                     if($allocation)
-                    {
-                        $allocation=Allocation::where('admission_id', $admission->id)->first();
-                        $comefromhome->allocation_id = $allocation->id;
-                        $comefromhome->come_time = now()->format('Y-m-d') . ' ' . $validatedData['come_time'];
-                        $comefromhome->save();
-                        $this->resetinput();
-                        $this->setmode('all');
-                        $this->dispatch('alert',type:'success',message:'Come From Home Entry Created Successfully !!');            
+                    {   
+                        if(isset($allocation->bed_id))
+                        {
+                            $allocation=Allocation::where('admission_id', $admission->id)->first();
+                            $comefromhome->allocation_id = $allocation->id;
+                            $comefromhome->come_time = now()->format('Y-m-d') . ' ' . $validatedData['come_time'];
+                            $comefromhome->save();
+                            $this->resetinput();
+                            $this->setmode('all');
+                            $this->dispatch('alert',type:'success',message:'Come From Home Entry Created Successfully !!');            
+                        }else
+                        {
+                            $this->dispatch('alert',type:'error',message:'Bed Not Allocated Yet !!');
+                        }
                     }
                     else
                     {
@@ -103,6 +110,7 @@ class AllStudentComeFromHome extends Component
     public function edit(ComeFromHome $comefromhome)
     {
         if($comefromhome){
+            $this->student_id=$comefromhome->allocation->admission->student_id;
             $this->current_id=$comefromhome->id;
             $this->c_id=$comefromhome->id;
             $this->allocation_id=$comefromhome->allocation_id;
@@ -126,13 +134,19 @@ class AllStudentComeFromHome extends Component
                 {
                     $allocation=Allocation::where('admission_id', $admission->id)->first();
                     if($allocation)
-                    {
-                        $comefromhome->allocation_id = $allocation->id;
-                        $comefromhome->come_time = now()->format('Y-m-d') . ' ' . $validatedData['come_time'];
-                        $comefromhome->update();
-                        $this->resetinput();
-                        $this->setmode('all');
-                        $this->dispatch('alert',type:'success',message:'Come From Home Entry Updated Successfully !!');
+                    {   
+                        if(isset($allocation->bed_id))
+                        {
+                            $comefromhome->allocation_id = $allocation->id;
+                            $comefromhome->come_time = now()->format('Y-m-d') . ' ' . $validatedData['come_time'];
+                            $comefromhome->update();
+                            $this->resetinput();
+                            $this->setmode('all');
+                            $this->dispatch('alert',type:'success',message:'Come From Home Entry Updated Successfully !!');
+                        }else
+                        {
+                            $this->dispatch('alert',type:'error',message:'Bed Not Allocated Yet !!');
+                        }
                     }
                     else
                     {
@@ -210,10 +224,13 @@ class AllStudentComeFromHome extends Component
 
     public function render()
     {    if($this->mode=='all')
-            {
-                $this->resetinput();
-            }
-        $this->student_id=Auth::guard('admin')->user()->id;
+        {
+            $this->resetinput();
+            $students=null;
+        }else
+        {
+            $students=Student::select('id','name','username')->where('status',0)->orderBy('name',"ASC")->get();
+        }
 
         $come_from_home = ComeFromHome::query()->with('allocation.admission.class', 'allocation.admission.student', 'allocation.admission.academicyear')
         ->when($this->year, function ($query) {
@@ -231,6 +248,6 @@ class AllStudentComeFromHome extends Component
         })->withTrashed()->paginate($this->per_page);
     
 
-        return view('livewire.backend.student-come-from-home.all-student-come-from-home',compact('come_from_home'))->extends('layouts.admin.admin')->section('admin');
+        return view('livewire.backend.student-come-from-home.all-student-come-from-home',compact('students','come_from_home'))->extends('layouts.admin.admin')->section('admin');
     }
 }
