@@ -1,4 +1,7 @@
 @extends('layouts.student.student')
+@section('title')
+    Confirm Payment
+@endsection
 @section('student')
 <div class="container-fulid page-body-wrapper  bg-img">
     <div class="content-wrapper d-flex align-items-center auth py-0">

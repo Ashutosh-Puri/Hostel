@@ -60,6 +60,7 @@ class RazorpayController extends Controller
                         "currency"=> "INR",
                         "name"=>preg_replace('/(?<!\ )[A-Z]/', ' $0', config('app.name', 'Laravel')), 
                         "description"=> "Student Paymnet",
+                        "image"=>asset('assets/logo/favicon.ico'),
                         "order_id"=> $order->id,
                         "prefill"=> [
                             "name"=> $student_payment->student->name,
@@ -229,6 +230,7 @@ class RazorpayController extends Controller
                         "currency"=> "INR",
                         "name"=>preg_replace('/(?<!\ )[A-Z]/', ' $0', config('app.name', 'Laravel')), 
                         "description"=> "Student Paymnet",
+                        "image"=>asset('assets/logo/favicon.ico'),
                         "order_id"=> $order->id,
                         "prefill"=> [
                             "name"=> $student_fine->student->name,

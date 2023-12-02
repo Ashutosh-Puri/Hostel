@@ -289,16 +289,18 @@
                                                 </td>
                                                 @can('Pay Student Fine')
                                                 <td>
-                                                    @if ($item->status==0)                    
-                                                        @if ($item->amount >0)
-                                                            <a class="btn btn-sm btn-success"  href="{{ route('pay_fine',$item->id) }}" >Pay</a>
+                                                    @if (!$item->deleted_at)
+                                                        @if ($item->status==0)                    
+                                                            @if ($item->amount >0)
+                                                                <a class="btn btn-sm btn-success"  href="{{ route('pay_fine',$item->id) }}" >Pay</a>
+                                                            @endif
                                                         @endif
-                                                    @endif
-                                                    @if ($item->status==2)                    
-                                                        @if ($item->amount >=0)
-                                                            @if (isset($item->transaction->status))
-                                                                @if ($item->transaction->status==2)
-                                                                    <a  class="btn  btn-sm btn-primary"  href="{{ route('refund_fine',$item->id) }}" >Refund</a>
+                                                        @if ($item->status==2)                    
+                                                            @if ($item->amount >=0)
+                                                                @if (isset($item->transaction->status))
+                                                                    @if ($item->transaction->status==2)
+                                                                        <a  class="btn  btn-sm btn-primary"  href="{{ route('refund_fine',$item->id) }}" >Refund</a>
+                                                                    @endif
                                                                 @endif
                                                             @endif
                                                         @endif
@@ -307,55 +309,59 @@
                                                 @endcan
                                                 @can('View Student Fine Reciept')
                                                     <td>
-                                                        @can('View Student Fine Reciept')
-                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('view_fine_recipet', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
-                                                        @endcan
-                                                        @can('Download Student Fine Reciept')
-                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('download_fine_recipet', $item->id) }}"> <i class="mdi mdi-download"></i></a>
-                                                        @endcan
-                                                        @can('Edit Student Fine')
-                                                        <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                        @if ($item->status==1)
-                                                            <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
-                                                        @elseif ($item->status==2)
-                                                            <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-warning "> <i class="mdi mdi-clock"></i> </a>
-                                                        @elseif ($item->status==0)
-                                                            <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
-                                                            @elseif ($item->status==3)
-                                                            <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-primary "> <i class="mdi mdi-refresh"></i> </a>
+                                                        @if (!$item->deleted_at)
+                                                            @can('View Student Fine Reciept')
+                                                                <a   target="_blank"  class="btn btn-warning " href="{{ route('view_fine_recipet', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
+                                                            @endcan
+                                                            @can('Download Student Fine Reciept')
+                                                                <a   target="_blank"  class="btn btn-warning " href="{{ route('download_fine_recipet', $item->id) }}"> <i class="mdi mdi-download"></i></a>
+                                                            @endcan
+                                                            @can('Edit Student Fine')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                                @if ($item->status==1)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                @elseif ($item->status==2)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-warning "> <i class="mdi mdi-clock"></i> </a>
+                                                                @elseif ($item->status==0)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                @elseif ($item->status==3)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-primary "> <i class="mdi mdi-refresh"></i> </a>
+                                                                @endif
+                                                            @endcan
                                                         @endif
-                                                        @endcan
                                                         @can('Delete Student Fine')
-                                                        @if ($item->deleted_at)
-                                                        <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
-                                                        <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
-                                                    @else
-                                                        <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
-                                                    @endif
+                                                            @if ($item->deleted_at)
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
+                                                            @else
+                                                                <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
+                                                            @endif
                                                         @endcan
                                                     </td>
                                                 @elsecan('Edit Student Fine')
                                                     <td>
-                                                        @can('View Student Fine Reciept')
-                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('view_fine_recipet', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
-                                                        @endcan
-                                                        @can('Download Student Fine Reciept')
-                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('download_fine_recipet', $item->id) }}"> <i class="mdi mdi-download"></i></a>
-                                                        @endcan
-                                                        @can('Edit Student Fine')
-                                                        <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                        @if ($item->status==1)
-                                                            <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
-                                                        @elseif ($item->status==2)
-                                                            <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-warning "> <i class="mdi mdi-clock"></i> </a>
-                                                        @elseif ($item->status==0)
-                                                            <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
-                                                            @elseif ($item->status==3)
-                                                            <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-primary "> <i class="mdi mdi-refresh"></i> </a>
+                                                        @if (!$item->deleted_at)
+                                                            @can('View Student Fine Reciept')
+                                                                <a   target="_blank"  class="btn btn-warning " href="{{ route('view_fine_recipet', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
+                                                            @endcan
+                                                            @can('Download Student Fine Reciept')
+                                                                <a   target="_blank"  class="btn btn-warning " href="{{ route('download_fine_recipet', $item->id) }}"> <i class="mdi mdi-download"></i></a>
+                                                            @endcan
+                                                            @can('Edit Student Fine')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                                @if ($item->status==1)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                @elseif ($item->status==2)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-warning "> <i class="mdi mdi-clock"></i> </a>
+                                                                @elseif ($item->status==0)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                @elseif ($item->status==3)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-primary "> <i class="mdi mdi-refresh"></i> </a>
+                                                                @endif
+                                                            @endcan
                                                         @endif
-                                                        @endcan
                                                         @can('Delete Student Fine')
-                                                        @if ($item->deleted_at)
+                                                            @if ($item->deleted_at)
                                                                 <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
                                                                 <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
                                                             @else
@@ -365,24 +371,26 @@
                                                     </td>
                                                 @elsecan('Delete Student Fine')
                                                     <td>
-                                                        @can('View Student Fine Reciept')
-                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('view_fine_recipet', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
-                                                        @endcan
-                                                        @can('Download Student Fine Reciept')
-                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('download_fine_recipet', $item->id) }}"> <i class="mdi mdi-download"></i></a>
-                                                        @endcan
-                                                        @can('Edit Student Fine')
-                                                        <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                        @if ($item->status==1)
-                                                            <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
-                                                        @elseif ($item->status==2)
-                                                            <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-warning "> <i class="mdi mdi-clock"></i> </a>
-                                                        @elseif ($item->status==0)
-                                                            <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                        @if (!$item->deleted_at)
+                                                            @can('View Student Fine Reciept')
+                                                                <a   target="_blank"  class="btn btn-warning " href="{{ route('view_fine_recipet', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
+                                                            @endcan
+                                                            @can('Download Student Fine Reciept')
+                                                                <a   target="_blank"  class="btn btn-warning " href="{{ route('download_fine_recipet', $item->id) }}"> <i class="mdi mdi-download"></i></a>
+                                                            @endcan
+                                                            @can('Edit Student Fine')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                                @if ($item->status==1)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                @elseif ($item->status==2)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-warning "> <i class="mdi mdi-clock"></i> </a>
+                                                                @elseif ($item->status==0)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                @endif
+                                                            @endcan
                                                         @endif
-                                                        @endcan
                                                         @can('Delete Student Fine')
-                                                        @if ($item->deleted_at)
+                                                            @if ($item->deleted_at)
                                                                 <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
                                                                 <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
                                                             @else

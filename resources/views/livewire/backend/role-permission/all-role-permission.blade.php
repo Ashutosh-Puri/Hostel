@@ -174,13 +174,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div wire:loading class="loading-overlay">
-                                    <div class="loading-spinner">
-                                        <div class="spinner-border spinner-border-lg text-primary" role="status">
-                                            <span class="visually-hidden">Loading...</span>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                             <div class="float-end">
                                 <a wire:loading class="btn btn-primary btn-sm " style="padding:10px; ">
@@ -258,18 +251,22 @@
                                                 </td>
                                                 @can('Edit Role Wise Permission')
                                                     <td>
-                                                        @can('Edit Role Wise Permission')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Edit Role Wise Permission')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Role Wise Permission')
                                                             <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete"></i></a>
                                                         @endcan
                                                     </td>
                                                 @elsecan('Edit Role Wise Permission')
                                                     <td>
-                                                        @can('Edit Role Wise Permission')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Edit Role Wise Permission')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Role Wise Permission')
                                                             <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete"></i></a>
                                                         @endcan

@@ -1,4 +1,7 @@
 @extends('layouts.admin.admin')
+@section('title')
+    Confirm Payment
+@endsection
 @section('admin')
 <div class="container-fulid page-body-wrapper  bg-img">
     <div class="content-wrapper d-flex align-items-center auth py-0">

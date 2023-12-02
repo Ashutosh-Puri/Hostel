@@ -370,11 +370,13 @@
                                                 @can('Edit Admin')
                                                     <td>
                                                         @can('Edit Admin')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                            @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
-                                                            @else
-                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                            @if (!$item->deleted_at)
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                                @if ($item->status==1)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                @else
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                @endif
                                                             @endif
                                                         @endcan
                                                         @can('Delete Admin')
@@ -389,11 +391,13 @@
                                                 @elsecan('Delete Admin')
                                                     <td>
                                                         @can('Edit Admin')
-                                                        <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                            @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
-                                                            @else
-                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                            @if (!$item->deleted_at)
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                                @if ($item->status==1)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                @else
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                @endif
                                                             @endif
                                                         @endcan
                                                         @can('Delete Admin')

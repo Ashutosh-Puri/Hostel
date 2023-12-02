@@ -193,7 +193,7 @@
                                             <div class="col-12 col-md-3 ">
                                             </div>
                                             <div class="col-12 col-md-3 ">
-                                                    <label class="w-100 p-1  text-md-end">Search</label>
+                                                <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
                                                 <input class="w-100" wire:model.live.debounce.1000ms="hostel_name" type="search" placeholder="Hostel Name">
@@ -235,14 +235,16 @@
                                                 </td>
                                                 @can('Edit Building')
                                                     <td>
-                                                        @can('Edit Building')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                            @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
-                                                            @else
-                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
-                                                            @endif
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Edit Building')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                                @if ($item->status==1)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                @else
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                @endif
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Building')
                                                             @if ($item->deleted_at)
                                                                 <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
@@ -254,14 +256,16 @@
                                                     </td>
                                                 @elsecan('Delete Building')
                                                     <td>
-                                                        @can('Edit Building')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                            @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
-                                                            @else
-                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
-                                                            @endif
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Edit Building')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                                @if ($item->status==1)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                @else
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                @endif
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Building')
                                                             @if ($item->deleted_at)
                                                                 <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>

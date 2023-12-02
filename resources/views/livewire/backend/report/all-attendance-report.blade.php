@@ -30,8 +30,8 @@
                             Processing..<span class="btn-label-right"><i
                                     class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
                         </a>
-                        @endcan
-                    </div>
+                    @endcan
+                </div>
             </div>
         </div>
     </div>
@@ -154,7 +154,7 @@
                                 </thead>
                                     <tbody>
                                         @foreach ($absent_students as $as)  
-                                            <tr>
+                                            <tr wire:key='{{ $as->id }}'>
                                                 <td scope="row">{{ $as->id }}</td>
                                                 <td>{{ $as->name }}</td>
                                                 <td>{{ $as->gender==1?'Female':'Male'; }}</td>
@@ -183,7 +183,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($present_students as $as)  
-                                            <tr>
+                                            <tr wire:key='{{ $as->id }}'>
                                                 <td scope="row">{{ $as->id }}</td>
                                                 <td>{{ $as->name }}</td>
                                                 <td>{{ $as->gender==1?'Female':'Male'; }}</td>

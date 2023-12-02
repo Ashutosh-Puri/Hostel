@@ -187,16 +187,5 @@
             </div>
         </div>
     </div>
-    @push('scripts')
-    <script>
-
-           $('#data-table-custom').DataTable({
-                searching:false,
-                paging:false,
-                info:false,
-            });
-
-    </script>
-    @endpush
 </div>
     

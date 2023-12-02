@@ -733,7 +733,6 @@
                                                     @endif
                                                 </td>
                                                 <td>
-
                                                     @if (isset($item->Admission->Seated->Fees))
                                                         @foreach ($item->Admission->Seated->Fees as $fee)
                                                             @if ($fee->academic_year_id===$item->Admission->academic_year_id)
@@ -765,18 +764,20 @@
                                                 </td>
                                                 @can('Allocate Bed')
                                                     <td>
-                                                        @can('Allocate Bed')
-                                                            <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success "> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('Exchange Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning "><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('De Allocate Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger "><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('Edit Allocation')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Allocate Bed')
+                                                                <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success "> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('Exchange Bed')
+                                                                <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning "><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('De Allocate Bed')
+                                                                <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger "><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('Edit Allocation')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Allocation')
                                                             @if ($item->deleted_at)
                                                                 <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
@@ -788,18 +789,20 @@
                                                     </td>
                                                 @elsecan('Exchange Bed')
                                                     <td>
-                                                        @can('Allocate Bed')
-                                                            <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success "> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('Exchange Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning "><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('De Allocate Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger "><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('Edit Allocation')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Allocate Bed')
+                                                                <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success "> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('Exchange Bed')
+                                                                <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning "><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('De Allocate Bed')
+                                                                <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger "><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('Edit Allocation')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Allocation')
                                                             @if ($item->deleted_at)
                                                                 <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
@@ -811,18 +814,20 @@
                                                     </td>
                                                 @elsecan('De Allocate Bed')
                                                     <td>
-                                                        @can('Allocate Bed')
-                                                            <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success "> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('Exchange Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning "><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('De Allocate Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger "><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('Edit Allocation')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Allocate Bed')
+                                                                <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success "> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('Exchange Bed')
+                                                                <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning "><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('De Allocate Bed')
+                                                                <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger "><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('Edit Allocation')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Allocation')
                                                             @if ($item->deleted_at)
                                                                 <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
@@ -834,18 +839,20 @@
                                                     </td>
                                                 @elsecan('Edit Allocation')
                                                     <td>
-                                                        @can('Allocate Bed')
-                                                            <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success "> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('Exchange Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning "><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('De Allocate Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger "><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('Edit Allocation')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Allocate Bed')
+                                                                <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success "> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('Exchange Bed')
+                                                                <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning "><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('De Allocate Bed')
+                                                                <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger "><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('Edit Allocation')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Allocation')
                                                             @if ($item->deleted_at)
                                                                 <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
@@ -857,18 +864,20 @@
                                                     </td>
                                                 @elsecan('Delete Allocation')
                                                     <td>
-                                                        @can('Allocate Bed')
-                                                            <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success "> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('Exchange Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning "><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('De Allocate Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger "><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('Edit Allocation')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Allocate Bed')
+                                                                <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success "> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('Exchange Bed')
+                                                                <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning "><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('De Allocate Bed')
+                                                                <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger "><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('Edit Allocation')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Allocation')
                                                             @if ($item->deleted_at)
                                                                 <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>

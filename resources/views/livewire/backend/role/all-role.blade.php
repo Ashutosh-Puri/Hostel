@@ -198,28 +198,32 @@
                                                 </td>
                                                 @can('Edit Role')
                                                     <td>
-                                                        @can('Edit Role')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                            @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
-                                                            @else
-                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
-                                                            @endif
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Edit Role')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                                @if ($item->status==1)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                @else
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                @endif
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Role')
                                                             <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete"></i></a>
                                                         @endcan
                                                     </td>
                                                 @elsecan('Delete Role')
                                                     <td>
-                                                        @can('Edit Role')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                            @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
-                                                            @else
-                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
-                                                            @endif
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Edit Role')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                                @if ($item->status==1)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                @else
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                @endif
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Role')
                                                             <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete"></i></a>
                                                         @endcan

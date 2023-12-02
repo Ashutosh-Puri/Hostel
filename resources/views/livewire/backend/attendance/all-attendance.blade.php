@@ -68,13 +68,6 @@
                     <div class="bg-success">
                         <div class="float-start pt-2 px-2">
                             <h2>Edit Attendance</h2>
-                            <div wire:loading class="loading-overlay">
-                                <div class="loading-spinner">
-                                    <div class="spinner-border spinner-border-lg text-primary" role="status">
-                                        <span class="visually-hidden">Loading...</span>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div class="float-end">
                             <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success ">
@@ -234,9 +227,11 @@
                                                 <td> @if ($item->exit_time) {{ date('d / m / Y - h : i : s - A',strtotime($item->exit_time)) }} @endif</td>
                                                 @can('Edit Attendance')
                                                 <td>
-                                                    @can('Edit Attendance')
-                                                        <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                    @endcan
+                                                    @if (!$item->deleted_at)
+                                                        @can('Edit Attendance')
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                        @endcan
+                                                    @endif
                                                     @can('Delete Attendance')
                                                         @if ($item->deleted_at)
                                                             <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
@@ -248,9 +243,11 @@
                                                 </td>
                                             @elsecan('Delete Attendance')
                                                 <td>
-                                                    @can('Edit Attendance')
-                                                        <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                    @endcan
+                                                    @if (!$item->deleted_at)
+                                                        @can('Edit Attendance')
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                        @endcan
+                                                    @endif
                                                     @can('Delete Attendance')
                                                         @if ($item->deleted_at)
                                                             <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>

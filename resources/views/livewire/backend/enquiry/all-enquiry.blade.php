@@ -403,17 +403,19 @@
                                                 </td>
                                                 @can('Edit Enquiry Form')
                                                     <td>
-                                                        @can('Send Enquiry Reply')
-                                                            <a wire:loading.attr="disabled"  wire:click="mail({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-reply"></i></a>
-                                                        @endcan
-                                                        @can('Edit Enquiry Form')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                            @if ($item->status==0)
-                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-eye"></i> </a>
-                                                            @else
-                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-eye-off"></i> </a>
-                                                            @endif
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Send Enquiry Reply')
+                                                                <a wire:loading.attr="disabled"  wire:click="mail({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-reply"></i></a>
+                                                            @endcan
+                                                            @can('Edit Enquiry Form')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                                @if ($item->status==0)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-eye"></i> </a>
+                                                                @else
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-eye-off"></i> </a>
+                                                                @endif
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Enquiry Form')
                                                             @if ($item->deleted_at)
                                                                 <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
@@ -425,17 +427,19 @@
                                                     </td>
                                                 @elsecan('Send Enquiry Reply')
                                                     <td>
-                                                        @can('Send Enquiry Reply')
-                                                            <a wire:loading.attr="disabled"  wire:click="mail({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-reply"></i></a>
-                                                        @endcan
-                                                        @can('Edit Enquiry Form')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                            @if ($item->status==0)
-                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-eye"></i> </a>
-                                                            @else
-                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-eye-off"></i> </a>
-                                                            @endif
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Send Enquiry Reply')
+                                                                <a wire:loading.attr="disabled"  wire:click="mail({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-reply"></i></a>
+                                                            @endcan
+                                                            @can('Edit Enquiry Form')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                                @if ($item->status==0)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-eye"></i> </a>
+                                                                @else
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-eye-off"></i> </a>
+                                                                @endif
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Enquiry Form')
                                                             @if ($item->deleted_at)
                                                                 <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
@@ -447,17 +451,19 @@
                                                     </td>
                                                 @elsecan('Delete Enquiry Form')
                                                     <td>
-                                                        @can('Send Enquiry Reply')
-                                                            <a wire:loading.attr="disabled"  wire:click="mail({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-reply"></i></a>
-                                                        @endcan
-                                                        @can('Edit Enquiry Form')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                            @if ($item->status==0)
-                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-eye"></i> </a>
-                                                            @else
-                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-eye-off"></i> </a>
-                                                            @endif
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Send Enquiry Reply')
+                                                                <a wire:loading.attr="disabled"  wire:click="mail({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-reply"></i></a>
+                                                            @endcan
+                                                            @can('Edit Enquiry Form')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                                @if ($item->status==0)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-eye"></i> </a>
+                                                                @else
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-eye-off"></i> </a>
+                                                                @endif
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Enquiry Form')
                                                             @if ($item->deleted_at)
                                                                 <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>

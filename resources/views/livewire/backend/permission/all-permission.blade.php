@@ -200,18 +200,22 @@
                                                 <td>{{ $item->name }}</td>
                                                 @can('Edit Permission')
                                                     <td>
-                                                        @can('Edit Permission')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Edit Permission')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Permission')
                                                             <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete"></i></a>
                                                         @endcan
                                                     </td>
                                                 @elsecan('Delete Permission')
                                                     <td>
-                                                        @can('Edit Permission')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Edit Permission')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Permission')
                                                             <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete"></i></a>
                                                         @endcan

@@ -122,13 +122,6 @@
                     <div class="bg-success">
                         <div class="float-start pt-2 px-2">
                             <h2>Edit Merit List</h2>
-                            <div wire:loading class="loading-overlay">
-                                <div class="loading-spinner">
-                                    <div class="spinner-border spinner-border-lg text-primary" role="status">
-                                        <span class="visually-hidden">Loading...</span>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div class="float-end">
                             <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success ">
@@ -351,22 +344,24 @@
                                                 <td>{{ $item->sgpa }}</td>
                                                 <td>{{ $item->gender==0?"Male":"Female"; }}</td>
                                                 <td>
-                                                    @if ( $item->status == '1')
-                                                        <span class="badge bg-success text-white"> Selected</span>
-                                                    @else
+                                                    @if ( $item->status == '0')
                                                         <span class="badge bg-danger text-white">Not Selected</span>
+                                                    @else
+                                                        <span class="badge bg-success text-white"> Selected</span>
                                                     @endif
                                                 </td>
                                                 @can('Edit Merit List')
                                                 <td>
-                                                    @can('Edit Merit List')
-                                                        <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                        @if ($item->status==1)
-                                                            <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
-                                                        @else
-                                                            <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
-                                                        @endif
-                                                    @endcan
+                                                    @if (!$item->deleted_at)
+                                                        @can('Edit Merit List')
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                            @if ($item->status==1)
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                            @else
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                            @endif
+                                                        @endcan
+                                                    @endif
                                                     @can('Delete Merit List')
                                                         @if ($item->deleted_at)
                                                             <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
@@ -378,14 +373,16 @@
                                                 </td>
                                             @elsecan('Delete Merit List')
                                                 <td>
-                                                    @can('Edit Merit List')
-                                                        <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                        @if ($item->status==1)
-                                                            <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
-                                                        @else
-                                                            <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
-                                                        @endif
-                                                    @endcan
+                                                    @if (!$item->deleted_at)
+                                                        @can('Edit Merit List')
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                            @if ($item->status==1)
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                            @else
+                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                            @endif
+                                                        @endcan
+                                                    @endif
                                                     @can('Delete Merit List')
                                                         @if ($item->deleted_at)
                                                             <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
@@ -399,7 +396,6 @@
                                             </tr>
                                         @endforeach
                                     </tbody>
-
                                 </table>
                                 <div class="mt-4">
                                     {{ $meritlist->links() }}

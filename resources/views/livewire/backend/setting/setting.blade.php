@@ -16,7 +16,6 @@
                     <a wire:loading.attr="disabled" wire:click.prevent="createsymboliclink()"  class="btn btn-success "><i class="mdi mdi-plus-circle"></i></a>
                 </td>
             </tr>
-            
         </tbody>
     </table>
 </div>

@@ -97,15 +97,15 @@
                                             <td>{{ $item->amount}}</td>
                                             <td>
                                                 @if ($item->status ==0)
-                                                <span class="badge bg-warning text-white">Created</span>
+                                                    <span class="badge bg-warning text-white">Created</span>
                                                 @elseif ($item->status ==1)
-                                                <span class="badge bg-info text-white">Authorized</span>
+                                                    <span class="badge bg-info text-white">Authorized</span>
                                                 @elseif ($item->status ==2)
-                                                <span class="badge bg-success text-white">Captured</span>
+                                                    <span class="badge bg-success text-white">Captured</span>
                                                 @elseif ($item->status ==3)
-                                                <span class="badge bg-primary text-white">Refunded</span>
+                                                    <span class="badge bg-primary text-white">Refunded</span>
                                                 @elseif ($item->status ==4)
-                                                <span class="badge bg-danger text-white">Failed</span>
+                                                    <span class="badge bg-danger text-white">Failed</span>
                                                 @endif
                                             </td>
                                             {{-- <td>{{ $item->razorpay_signature }}</td> --}}

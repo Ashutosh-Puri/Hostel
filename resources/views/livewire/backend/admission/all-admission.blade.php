@@ -1051,23 +1051,23 @@
                                     </select>
                                     <label class=" col-4 col-md-1  py-1 ">Records</label>
                                     <span class="col-12 col-md-9 p-0">
-                                            <div class="row ">
-                                                <div class="col-12 col-md-2 ">
-                                                    <label class="w-100 p-1  text-md-end">Search</label>
-                                                </div>
-                                                <div class="col-12 col-md-2 ">
-                                                    <input  class="w-100" wire:model.blur="ad" type="search" placeholder="Admission ID ">
-                                                </div>
-                                                <div class="col-12 col-md-2">
-                                                    <input  class="w-100" wire:model.blur="a" type="search" placeholder="Academic Year">
-                                                </div>
-                                                <div class="col-12 col-md-3">
-                                                    <input class="w-100"  wire:model.blur="s" type="search" placeholder="Student Name">
-                                                </div>
-                                                <div class="col-12 col-md-3">
-                                                    <input class="w-100"  wire:model.blur="c" type="search" placeholder="Class Name">
-                                                </div>
+                                        <div class="row ">
+                                            <div class="col-12 col-md-2 ">
+                                                <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
+                                            <div class="col-12 col-md-2 ">
+                                                <input  class="w-100" wire:model.blur="ad" type="search" placeholder="Admission ID ">
+                                            </div>
+                                            <div class="col-12 col-md-2">
+                                                <input  class="w-100" wire:model.blur="a" type="search" placeholder="Academic Year">
+                                            </div>
+                                            <div class="col-12 col-md-3">
+                                                <input class="w-100"  wire:model.blur="s" type="search" placeholder="Student Name">
+                                            </div>
+                                            <div class="col-12 col-md-3">
+                                                <input class="w-100"  wire:model.blur="c" type="search" placeholder="Class Name">
+                                            </div>
+                                        </div>
                                     </span>
                                 </div>
                             </div>
@@ -1111,21 +1111,25 @@
                                                 </td>
                                                 @can('View Admission Form')
                                                     <td>
-                                                        @can('View Admission Form')
-                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('view_admission_form', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
-                                                        @endcan
-                                                        @can('Download Admission Form')
-                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('download_admission_form', $item->id) }}"> <i class="mdi mdi-download"></i></a>
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('View Admission Form')
+                                                                <a   target="_blank"  class="btn btn-warning " href="{{ route('view_admission_form', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
+                                                            @endcan
+                                                            @can('Download Admission Form')
+                                                                <a   target="_blank"  class="btn btn-warning " href="{{ route('download_admission_form', $item->id) }}"> <i class="mdi mdi-download"></i></a>
+                                                            @endcan
+                                                        @endif
                                                         @can('Edit Admission')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-lead-pencil"></i></a>
-                                                            @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-warning "> <i class="mdi mdi-clock"></i> </a>
-                                                            @elseif ($item->status==0)
-                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
-                                                            @endif
-                                                            @if ($item->status!=2)
-                                                                <a wire:loading.attr="disabled"  wire:click="cancel({{ $item->id }})" class="btn btn-danger "><i class="mdi mdi-thumb-down"></i></a>
+                                                            @if (!$item->deleted_at)
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-lead-pencil"></i></a>
+                                                                @if ($item->status==1)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-warning "> <i class="mdi mdi-clock"></i> </a>
+                                                                @elseif ($item->status==0)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                @endif
+                                                                @if ($item->status!=2)
+                                                                    <a wire:loading.attr="disabled"  wire:click="cancel({{ $item->id }})" class="btn btn-danger "><i class="mdi mdi-thumb-down"></i></a>
+                                                                @endif
                                                             @endif
                                                         @endcan
                                                         @can('Delete Admission')
@@ -1139,21 +1143,25 @@
                                                     </td>
                                                 @elsecan('Edit Admission')
                                                     <td>
-                                                        @can('View Admission Form')
-                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('view_admission_form', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
-                                                        @endcan
-                                                        @can('Download Admission Form')
-                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('download_admission_form', $item->id) }}"> <i class="mdi mdi-download"></i></a>
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('View Admission Form')
+                                                                <a   target="_blank"  class="btn btn-warning " href="{{ route('view_admission_form', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
+                                                            @endcan
+                                                            @can('Download Admission Form')
+                                                                <a   target="_blank"  class="btn btn-warning " href="{{ route('download_admission_form', $item->id) }}"> <i class="mdi mdi-download"></i></a>
+                                                            @endcan
+                                                        @endif
                                                         @can('Edit Admission')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-lead-pencil"></i></a>
-                                                            @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-warning "> <i class="mdi mdi-clock"></i> </a>
-                                                            @elseif ($item->status==0)
-                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
-                                                            @endif
-                                                            @if ($item->status!=2)
-                                                                <a wire:loading.attr="disabled"  wire:click="cancel({{ $item->id }})" class="btn btn-danger "><i class="mdi mdi-thumb-down"></i></a>
+                                                            @if (!$item->deleted_at)
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-lead-pencil"></i></a>
+                                                                @if ($item->status==1)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-warning "> <i class="mdi mdi-clock"></i> </a>
+                                                                @elseif ($item->status==0)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                @endif
+                                                                @if ($item->status!=2)
+                                                                    <a wire:loading.attr="disabled"  wire:click="cancel({{ $item->id }})" class="btn btn-danger "><i class="mdi mdi-thumb-down"></i></a>
+                                                                @endif
                                                             @endif
                                                         @endcan
                                                         @can('Delete Admission')
@@ -1167,21 +1175,25 @@
                                                     </td>
                                                 @elsecan('Delete Admission')
                                                     <td>
-                                                         @can('View Admission Form')
-                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('view_admission_form', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
-                                                        @endcan
-                                                        @can('Download Admission Form')
-                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('download_admission_form', $item->id) }}"> <i class="mdi mdi-download"></i></a>
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('View Admission Form')
+                                                                <a   target="_blank"  class="btn btn-warning " href="{{ route('view_admission_form', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
+                                                            @endcan
+                                                            @can('Download Admission Form')
+                                                                <a   target="_blank"  class="btn btn-warning " href="{{ route('download_admission_form', $item->id) }}"> <i class="mdi mdi-download"></i></a>
+                                                            @endcan
+                                                        @endif
                                                         @can('Edit Admission')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-lead-pencil"></i></a>
-                                                            @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-warning "> <i class="mdi mdi-clock"></i> </a>
-                                                            @elseif ($item->status==0)
-                                                                <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
-                                                            @endif
-                                                            @if ($item->status!=2)
-                                                                <a wire:loading.attr="disabled"  wire:click="cancel({{ $item->id }})" class="btn btn-danger "><i class="mdi mdi-thumb-down"></i></a>
+                                                            @if (!$item->deleted_at)
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-lead-pencil"></i></a>
+                                                                @if ($item->status==1)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-warning "> <i class="mdi mdi-clock"></i> </a>
+                                                                @elseif ($item->status==0)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                @endif
+                                                                @if ($item->status!=2)
+                                                                    <a wire:loading.attr="disabled"  wire:click="cancel({{ $item->id }})" class="btn btn-danger "><i class="mdi mdi-thumb-down"></i></a>
+                                                                @endif
                                                             @endif
                                                         @endcan
                                                         @can('Delete Admission')

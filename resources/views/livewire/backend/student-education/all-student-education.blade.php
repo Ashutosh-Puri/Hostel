@@ -304,9 +304,11 @@
                                                 <td>{{ $item->percentage }} %</td>
                                                 @can('Edit Student Education')
                                                 <td>
-                                                    @can('Edit Student Education')
-                                                    <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                    @endcan
+                                                    @if (!$item->deleted_at)
+                                                        @can('Edit Student Education')
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                        @endcan
+                                                    @endif
                                                     @can('Delete Student Education')
                                                         @if ($item->deleted_at)
                                                             <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
@@ -318,9 +320,11 @@
                                                 </td>
                                                 @elsecan('Delete Student Education')
                                                 <td>
-                                                    @can('Edit Student Education')
-                                                    <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                    @endcan
+                                                    @if (!$item->deleted_at)
+                                                        @can('Edit Student Education')
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                        @endcan
+                                                    @endif
                                                     @can('Delete Student Education')
                                                         @if ($item->deleted_at)
                                                             <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>

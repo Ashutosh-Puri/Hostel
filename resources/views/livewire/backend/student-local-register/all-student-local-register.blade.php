@@ -314,54 +314,44 @@
                                         </td>
                                         @can('Edit Student Local Register Form')
                                         <td>
-                                            @can('Edit Student Local Register Form')
-                                            <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})"
-                                                class="btn btn-success "><i
-                                                    class="mdi mdi-lead-pencil"></i></a>
-                                            @if ($item->status == 1)
-                                            <a wire:loading.attr="disabled" wire:click="update_status({{ $item->id }})"
-                                                class="btn btn-danger ">
-                                                <i class="mdi mdi-thumb-down"></i>
-                                            </a>
-                                            @elseif ($item->status == 0)
-                                            <a wire:loading.attr="disabled" wire:click="update_status({{ $item->id }})"
-                                                class="btn btn-success ">
-                                                <i class="mdi mdi-thumb-up"></i>
-                                            </a>
+                                            @if (!$item->deleted_at)
+                                                @can('Edit Student Local Register Form')
+                                                    <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                    @if ($item->status == 1)
+                                                        <a wire:loading.attr="disabled" wire:click="update_status({{ $item->id }})" class="btn btn-danger "><i class="mdi mdi-thumb-down"></i></a>
+                                                    @elseif ($item->status == 0)
+                                                        <a wire:loading.attr="disabled" wire:click="update_status({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-thumb-up"></i></a>
+                                                    @endif
+                                                @endcan 
                                             @endif
-                                            @endcan @can('Delete Student Local Register Form')
-                                            @if ($item->deleted_at)
-                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
-                                            <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
-                                        @else
-                                            <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
-                                        @endif
+                                            @can('Delete Student Local Register Form')
+                                                @if ($item->deleted_at)
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
+                                                @else
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
+                                                @endif
                                             @endcan
                                         </td>
                                         @elsecan('Delete Student Local Register Form')
                                         <td>
-                                            @can('Edit Student Local Register Form')
-                                            <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})"
-                                                class="btn btn-success "><i
-                                                    class="mdi mdi-lead-pencil"></i></a>
-                                            @if ($item->status == 1)
-                                            <a wire:loading.attr="disabled" wire:click="update_status({{ $item->id }})"
-                                                class="btn btn-danger ">
-                                                <i class="mdi mdi-thumb-down"></i>
-                                            </a>
-                                            @elseif ($item->status == 0)
-                                            <a wire:loading.attr="disabled" wire:click="update_status({{ $item->id }})"
-                                                class="btn btn-success ">
-                                                <i class="mdi mdi-thumb-up"></i>
-                                            </a>
+                                            @if (!$item->deleted_at)
+                                                @can('Edit Student Local Register Form')
+                                                    <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                    @if ($item->status == 1)
+                                                        <a wire:loading.attr="disabled" wire:click="update_status({{ $item->id }})" class="btn btn-danger "><i class="mdi mdi-thumb-down"></i></a>
+                                                    @elseif ($item->status == 0)
+                                                        <a wire:loading.attr="disabled" wire:click="update_status({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-thumb-up"></i> </a>
+                                                    @endif
+                                                @endcan 
                                             @endif
-                                            @endcan @can('Delete Student Local Register Form')
-                                            @if ($item->deleted_at)
-                                                                <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
-                                                                <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
-                                                            @else
-                                                                <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
-                                                            @endif
+                                            @can('Delete Student Local Register Form')
+                                                @if ($item->deleted_at)
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
+                                                @else
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
+                                                @endif
                                             @endcan
                                         </td>
                                         @endcan
