@@ -165,39 +165,63 @@ class AdminDashboard extends Component
 
 
         // Bar Grapth Data
+        $aYears=[];
         $last10AcademicYears = AcademicYear::orderBy('year', 'desc')->take(10)->get();
         foreach ($last10AcademicYears as $key => $academicYear) {
-            $academicYears[$key] = $academicYear->year;
+            $aYears[$key] = $academicYear->year;
         }
-        $this->academicYears=json_encode(array_values($academicYears));
-        
+        if($aYears)
+        {
+
+            $this->academicYears=json_encode(array_values($aYears));
+        }
+        else
+        {
+            $this->academicYears='';
+        }
+        $y_w_t_a=[];
         foreach ($last10AcademicYears as $key => $academicYear) {
             $admissionCount = $academicYear->admissions()->count();
-            $year_wise_total_admission[$key] = $admissionCount;
+            $y_w_t_a[$key] = $admissionCount;
         }
-        $this->year_wise_total_admission=json_encode(array_values($year_wise_total_admission));
-       
+        $this->year_wise_total_admission=json_encode(array_values($y_w_t_a));
+        
+        $y_w_c_a=[];
         foreach ($last10AcademicYears as $key => $academicYear) {
             $admissionCountStatus1 = $academicYear->admissions()->where('status', 1)->count();
-            $year_wise_confirm_admission[$key] = $admissionCountStatus1;
+            $y_w_c_a[$key] = $admissionCountStatus1;
         }
-        $this->year_wise_confirm_admission= json_encode(array_values($year_wise_confirm_admission));
+        $this->year_wise_confirm_admission= json_encode(array_values($y_w_c_a));
 
-        $data=$year_wise_confirm_admission;
+        $data=$y_w_c_a;
         $growthRates = [];
         for ($i = 1; $i < count($data); $i++) {
             $oldValue = $data[$i - 1];
             $newValue = $data[$i];
             if($oldValue)
-            {
-                $growthRate = (($newValue - $oldValue) / $oldValue) * 100;
+            {   
+                if($oldValue >0)
+                {
+                    $growthRate = (($newValue - $oldValue) / $oldValue) * 100;
+                }else
+                {
+                    $growthRate=0;
+                }
+                
             }else
             {
                 $growthRate=0;
             }
             $growthRates[] = $growthRate;
         }
-        $this->totalGrowth = array_sum($growthRates) / count($growthRates);
+        if(count($growthRates)>0)
+        {
+            $this->totalGrowth = array_sum($growthRates) / count($growthRates);
+        }
+        else
+        {
+            $this->totalGrowth=0;
+        }
 
         $currentMonthStart = now()->startOfMonth();
         $currentMonthEnd = now()->endOfMonth();

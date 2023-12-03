@@ -145,6 +145,10 @@ class AllStudent extends Component
     {
         $student = Student::withTrashed()->find($this->delete_id);
         if($student){
+            if($student->photo)
+            {
+                File::delete($student->photo);
+            }
             $student->forceDelete();
             $this->delete_id=null;
             $this->setmode('all');

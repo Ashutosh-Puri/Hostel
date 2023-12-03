@@ -19,7 +19,7 @@ use App\Livewire\Backend\Class\AllClass;
 use App\Livewire\Backend\Floor\AllFloor;
 use App\Livewire\Backend\Qutota\AllQuota;
 use App\Livewire\Backend\RFID\AssignRFID;
-use App\Livewire\Backend\Setting\Setting;
+use App\Livewire\Backend\Setting\SiteSetting;
 use App\Livewire\Backend\Admin\AdminLogin;
 use App\Livewire\Backend\Hostel\AllHostel;
 use App\Livewire\Backend\Notice\AllNotice;
@@ -91,10 +91,10 @@ use App\Livewire\Frontend\StudentLocalRegister\StudentLocalRegister;
 use App\Livewire\Backend\StudentLocalRegister\AllStudentLocalRegister;
 
 Livewire::setUpdateRoute(function ($handle) {
-    return Route::post('Hostel/public/livewire/update', $handle);
+    return Route::post(env('LIVEWIRE_ROOT').'/livewire/update', $handle);
 });
 Livewire::setScriptRoute(function ($handle) {
-    return Route::get('Hostel/public/livewire/livewire.js', $handle);
+    return Route::get(env('LIVEWIRE_ROOT').'/livewire/livewire.js', $handle);
 });
 
 // Guest Routes
@@ -239,11 +239,6 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
             Route::get('all/admins',AllAdmin::class)->name('all_admin');
         });
 
-        Route::group(['middleware' => ['permission:Access Site Setting']], function () {
-            // Site Setting
-            Route::get('site/setting',Setting::class)->name('site_setting');
-        });
-
         Route::group(['middleware' => ['permission:Access College']], function () {
             // All College
             Route::get('all/colleges',AllCollege::class)->name('all_college');
@@ -254,6 +249,11 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
             Route::get('all/hostels',AllHostel::class)->name('all_hostel');
         });
 
+    });
+
+    Route::group(['middleware' => ['permission:Access Site Setting']], function () {
+        // Site Setting
+        Route::get('site/setting',SiteSetting::class)->name('site_setting');
     });
 
     Route::group(['middleware' => ['permission:Access Admission']], function () {
@@ -584,9 +584,6 @@ Route::middleware(['auth:admin','is_admin'])->group(function () {
     });
 
 });
-
-
-
 
 require __DIR__.'/student_auth.php';
 require __DIR__.'/admin_auth.php';

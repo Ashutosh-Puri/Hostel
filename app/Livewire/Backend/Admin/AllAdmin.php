@@ -151,6 +151,7 @@ class AllAdmin extends Component
             }
 
             $this->resetinput();
+            $this->dispatch('update-navbar'); 
             $this->setmode('all');
             $this->dispatch('alert',type:'success',message:'Admin Updated Successfully !!');  
         }else{
@@ -168,10 +169,6 @@ class AllAdmin extends Component
     {
         if($admin)
         {
-            if($admin->photo)
-            {
-                File::delete($admin->photo);
-            }
             $admin->delete();
             $this->setmode('all');
             $this->dispatch('alert',type:'success',message:'Admin Deleted Successfully !!');  
@@ -186,10 +183,6 @@ class AllAdmin extends Component
         $admin = Admin::withTrashed()->find($id);
         if($admin)
         {
-            if($admin->photo)
-            {
-                File::delete($admin->photo);
-            }
             $admin->restore();
             $this->setmode('all');
             $this->dispatch('alert',type:'success',message:'Admin Restored Successfully !!');  

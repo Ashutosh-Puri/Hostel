@@ -2,10 +2,11 @@
 
 namespace App\Livewire\Backend\Setting;
 
+use App\Models\Setting;
 use Livewire\Component;
 use Illuminate\Support\Facades\Artisan;
 
-class Setting extends Component
+class SiteSetting extends Component
 {
 
     public function removesymboliclink()
@@ -42,8 +43,24 @@ class Setting extends Component
         }
     }
 
-    public function render()
+    public function show_merit_list()
     {
-        return view('livewire.backend.setting.setting')->extends('layouts.admin.admin')->section('admin');
+        $setting=Setting::first();
+        if ($setting->show_merit_list===1)
+        {
+            $setting->show_merit_list=0;
+        }
+        else
+        {
+            $setting->show_merit_list=1;
+        }
+        $setting->update();                 
+        
+    }
+
+    public function render()
+    {   
+        $setting=Setting::first();
+        return view('livewire.backend.setting.setting',compact('setting'))->extends('layouts.admin.admin')->section('admin');
     }
 }

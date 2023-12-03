@@ -129,10 +129,6 @@ class AllPhotoGallery extends Component
     public function softdelete(PhotoGallery  $photogallery)
     {
         if($photogallery){
-            if($photogallery->photo)
-            {
-                File::delete($photogallery->photo);
-            }
             $photogallery->delete();
             $this->delete_id=null;
             $this->setmode('all');
@@ -146,10 +142,6 @@ class AllPhotoGallery extends Component
     {
         $photogallery = PhotoGallery::withTrashed()->find($id);
         if($photogallery){
-            if($photogallery->photo)
-            {
-                File::delete($photogallery->photo);
-            }
             $photogallery->restore();
             $this->delete_id=null;
             $this->setmode('all');

@@ -281,7 +281,7 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            {{-- <th>Image</th> --}}
+                                            <th>Image</th>
                                             <th>Username</th>
                                             <th>Name</th>
                                             <th>Email</th>
@@ -299,9 +299,9 @@
                                         @foreach ($students as $key => $item)
                                             <tr wire:key='{{ $item->id }}'>
                                                 <td>{{ $key+1 }}</td>
-                                                {{-- <td>
-                                                    <img id="showImage" src="{{ (!empty($item->photo)) ? asset($item->photo) : asset('assets/images/no_image.jpg') }}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image" style="height: 45px; width:45px;">
-                                                </td>                                    --}}
+                                                <td>
+                                                    <img id="showImage" src="{{ (!empty($item->photo)) ? asset($item->photo) : asset('assets/images/no_image.jpg') }}" class="rounded-circle avatar-lg " alt="profile-image" style="height: 45px; width:45px;">
+                                                </td>                                   
                                                 <td>{{ $item->username }}</td>
                                                 <td>{{ $item->name }}</td>
                                                 <td>{{ $item->email }}</td>

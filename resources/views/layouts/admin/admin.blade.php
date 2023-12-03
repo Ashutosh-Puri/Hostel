@@ -127,7 +127,8 @@ input[type="time"] {
         <!-- Container Start -->
         <div class="container-scroller">
             <!-- Navbar -->
-              @include('layouts.admin.navbar')
+              {{-- @include('layouts.admin.navbar') --}}
+              @livewire('backend.admin.navbar')
             <!-- navbar End -->
       
             <!-- Body start -->

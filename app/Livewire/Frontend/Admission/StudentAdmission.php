@@ -404,6 +404,7 @@ class StudentAdmission extends Component
             }
             $student->update();
             $this->resetinput();
+            $this->dispatch('update-student-navbar');  
             $this->setmode('all');
             $this->dispatch('alert',type:'success',message:'Admission Updated Successfully !!');  
         }else{

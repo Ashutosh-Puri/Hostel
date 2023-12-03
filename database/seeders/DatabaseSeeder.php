@@ -29,6 +29,7 @@ use Database\Seeders\AdmissionSeeder;
 use Database\Seeders\AtendanceSeeder;
 use Database\Seeders\AllocationSeeder;
 use Database\Seeders\PermissionSeeder;
+use Database\Seeders\SiteSettingSeeder;
 use Database\Seeders\StudentFineSeeder;
 use Database\Seeders\AcademicYearSeeder;
 use Database\Seeders\ComeFromHomeSeeder;
@@ -46,6 +47,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {   
         
+        $this->call(SiteSettingSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(PermissionSeeder::class);
         $this->call(AdminSeeder::class);            //  Role ,
@@ -57,10 +59,11 @@ class DatabaseSeeder extends Seeder
         $this->call(BuildingSeeder::class);         //  Hostel ,
         $this->call(FloorSeeder::class);            //  Building ,
         $this->call(SeatedSeeder::class);
+        $this->call(AcademicYearSeeder::class);
         
         //  Sometime Run
         
-        // $this->call(AcademicYearSeeder::class);
+        
         // $this->call(ClassesSeeder::class);
         // $this->call(StudentSeeder::class);          //  Cast ,
         // $this->call(AtendanceSeeder::class);        //   Student
