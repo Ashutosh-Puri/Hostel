@@ -9,6 +9,7 @@ use App\Models\Attendance;
 use App\Models\AcademicYear;
 use Livewire\WithPagination;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Jobs\SendAbsenceNotification;
 use App\Exports\AttendanceReportExport;
 use App\Livewire\Backend\Report\AllAttendanceReport;
 
@@ -26,6 +27,7 @@ class AllAttendanceReport extends Component
     public $student_name;
     public $attendanceArray;
     public $students;
+    public $absent_student_ids=[];
 
     public function clear()
     {
@@ -54,6 +56,32 @@ class AllAttendanceReport extends Component
         }
     }
   
+    public function notify(Student $student)
+    {   
+        if($student->parent_email)
+        {
+            $this->dispatch('alert',type:'success',message:'E-Mail Sended Successfully');
+            SendAbsenceNotification::dispatch($student);
+        }
+        else
+        {
+            $this->dispatch('alert',type:'error',message:'E-Mail Not Found');
+        }
+    }
+    public function notifyall()
+    {
+        $students = Student::find($this->absent_student_ids);
+        foreach( $students  as $student)
+        {
+            if($student->parent_email)
+            {
+                SendAbsenceNotification::dispatch($student);
+            }
+
+        }
+        $this->dispatch('alert',type:'success',message:'E-Mails Sended Successfully');
+    }
+
     public function render()
     {   
         $query = Attendance::orderBy('created_at', 'DESC');
@@ -106,7 +134,7 @@ class AllAttendanceReport extends Component
 
         $total_admission = count($admitted_student_ids);
 
-        $absent_student_ids = array_diff($admitted_student_ids, $presentStudentIds);
+        $this->absent_student_ids=$absent_student_ids = array_diff($admitted_student_ids, $presentStudentIds);
         $absent_students = Student::whereIn('id', $absent_student_ids)->get();
 
         return view('livewire.backend.report.all-attendance-report',compact('attendance','absent_students','present_students','total_admission'))->extends('layouts.admin.admin')->section('admin');

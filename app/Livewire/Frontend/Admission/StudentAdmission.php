@@ -50,6 +50,7 @@ class StudentAdmission extends Component
     public $mother_name;
     public $parent_name;
     public $parent_mobile;
+    public $parent_email;
     public $parent_address;
     public $local_parent_name;
     public $local_parent_mobile;
@@ -86,6 +87,7 @@ class StudentAdmission extends Component
         $this->category_id =null;
         $this->parent_name =null;
         $this->parent_mobile =null;
+        $this->parent_email =null;
         $this->parent_address =null;
         $this->local_parent_name =null;
         $this->local_parent_mobile =null;
@@ -128,6 +130,7 @@ class StudentAdmission extends Component
             'sgpa'=>['nullable','numeric','min:0.00','max:10.00'],
             'parent_name'=>['required','string','max:255'],
             'mother_name'=>['required','string','max:255'],
+            'parent_email'=>['required','email'],
             'parent_mobile'=>['required','numeric','digits:10'],
             'parent_address'=>['required','string','max:255'],
             'local_parent_name'=>['nullable','string','max:255'],
@@ -175,6 +178,7 @@ class StudentAdmission extends Component
                 $this->cast_id = $student->cast_id;
                 $this->parent_name = $student->parent_name;
                 $this->parent_mobile = $student->parent_mobile;
+                $this->parent_email = $student->parent_email;
                 $this->parent_address = $student->parent_address;
                 $this->local_parent_name = $student->local_parent_name;
                 $this->local_parent_mobile = $student->local_parent_mobile;
@@ -202,6 +206,7 @@ class StudentAdmission extends Component
             $student->cast_id = $validatedData['cast_id'];
             $student->parent_name = $validatedData['parent_name'];
             $student->parent_mobile = $validatedData['parent_mobile'];
+            $student->parent_email = $validatedData['parent_email'];
             $student->parent_address = $validatedData['parent_address'];
             $student->local_parent_name = $validatedData['local_parent_name'];
             $student->local_parent_mobile = $validatedData['local_parent_mobile'];
@@ -317,6 +322,7 @@ class StudentAdmission extends Component
                 }
                 $this->parent_name = $student->parent_name;
                 $this->parent_mobile = $student->parent_mobile;
+                $this->parent_email = $student->parent_email;
                 $this->parent_address = $student->parent_address;
                 $this->local_parent_name = $student->local_parent_name;
                 $this->local_parent_mobile = $student->local_parent_mobile;
@@ -380,6 +386,7 @@ class StudentAdmission extends Component
             $student->cast_id = $validatedData['cast_id'];
             $student->parent_name = $validatedData['parent_name'];
             $student->parent_mobile = $validatedData['parent_mobile'];
+            $student->parent_email = $validatedData['parent_email'];
             $student->parent_address = $validatedData['parent_address'];
             $student->local_parent_name = $validatedData['local_parent_name'];
             $student->local_parent_mobile = $validatedData['local_parent_mobile'];

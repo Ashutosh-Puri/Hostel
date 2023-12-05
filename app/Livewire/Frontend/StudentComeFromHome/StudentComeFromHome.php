@@ -71,10 +71,7 @@ class StudentComeFromHome extends Component
             $studentlocalregister->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Come From Home Entry Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Come From Home Entry Created Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -106,10 +103,7 @@ class StudentComeFromHome extends Component
             $studentlocalregister->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Come From Home Entry Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Come From Home Entry Updated Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -128,10 +122,7 @@ class StudentComeFromHome extends Component
             $studentlocalregister->delete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Come From Home Entry Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Come From Home Entry Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }

@@ -32,8 +32,10 @@
                   <li><a wire:navigate class="dropdown-item {{ (request()->is('gallery')) ? 'active' : '' }}" href="{{ route('gallery') }}">Gallery</a></li>
                   <li><a wire:navigate class="dropdown-item {{ (request()->is('meritform')) ? 'active' : '' }}" href="{{ route('meritform') }}">Merit Form</a></li>
                   @if ($setting=App\Models\Setting::first())
-                    @if (isset($setting->show_merit_list)) 
-                        <li><a wire:navigate class="dropdown-item {{ (request()->is('meritlist')) ? 'active' : '' }}" href="{{ route('meritlist') }}">Merit List</a></li>  
+                    @if (isset($setting->show_merit_list))
+                        @if($setting->show_merit_list)
+                            <li><a wire:navigate class="dropdown-item {{ (request()->is('meritlist')) ? 'active' : '' }}" href="{{ route('meritlist') }}">Merit List</a></li>  
+                        @endif 
                     @endif
                   @endif
                   <li><a wire:navigate class="dropdown-item {{ (request()->is('team')) ? 'active' : '' }}" href="{{ route('team') }}">Team</a></li>

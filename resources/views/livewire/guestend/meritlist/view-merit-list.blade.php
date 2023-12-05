@@ -20,46 +20,54 @@
             </div>
         </div>
         <!-- Header End -->
-
-        <!-- Service Start -->
-        <div class="container-xxl py-5">
-            <div class="container">
-                <div class="row g-4">
-                    <div class="col-lg-12 col-sm-12 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="bg-primary text-center pt-3">
-                            <div class="p-4">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-hover table-borderless table-primary align-middle">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Student Name</th>
-                                                <th>Class Name</th>
-                                                <th>Percentage</th>
-                                                <th>Gender</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody class="table-group-divider">
-                                                @foreach ($meritlist as $key => $item)
-                                                <tr class="table-primary" >
-                                                    <td scope="row">{{ $key+1 }}</td>
-                                                    <td>{{ $item->name }}</td>
-                                                    <td>{{ $item->class }}</td>
-                                                    <td>{{ $item->percentage }}</td>
-                                                    <td>{{ $item->gender==0?'Male':'Female'; }}</td>
+        @if ($meritlist!==null)
+            <!-- Service Start -->
+            <div class="container-xxl py-5">
+                <div class="container">
+                    <div class="row g-4">
+                        <div class="col-lg-12 col-sm-12 wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="bg-primary text-center pt-3">
+                                <div class="p-4">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover table-borderless table-primary align-middle">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Student Name</th>
+                                                    <th>Class Name</th>
+                                                    <th>Percentage</th>
+                                                    <th>Gender</th>
                                                 </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                        {{ $meritlist->links() }}
+                                                </thead>
+                                                <tbody class="table-group-divider">
+                                                    @forelse ($meritlist as $key => $item)
+                                                    <tr class="table-primary" >
+                                                        <td scope="row">{{ $key+1 }}</td>
+                                                        <td>{{ $item->name }}</td>
+                                                        <td>{{ $item->class }}</td>
+                                                        <td>{{ $item->percentage }}</td>
+                                                        <td>{{ $item->gender==0?'Male':'Female'; }}</td>
+                                                    </tr>
+                                                    @empty
+                                                    <tr>
+
+                                                        <td colspan="5" class="text-center mb-5 text-danger h3">No Students Selected Yet</td>
+                                                    </tr>
+                                                    @endforelse
+                                                </tbody>
+                                            </table>
+                                            {{ $meritlist->links() }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Service End -->
+            <!-- Service End -->
+        @else
+            <h3 class="text-center mb-5 text-danger"> Merit List Not Published Yet</h3>
+        @endif
 
 </div>
 

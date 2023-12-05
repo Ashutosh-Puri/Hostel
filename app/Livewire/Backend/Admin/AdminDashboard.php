@@ -16,6 +16,7 @@ use App\Models\Admission;
 use App\Models\Allocation;
 use App\Models\Attendance;
 use App\Models\AcademicYear;
+use Illuminate\Support\Facades\DB;
 
 
 class AdminDashboard extends Component
@@ -79,9 +80,12 @@ class AdminDashboard extends Component
     public $currentMonthDateRange;
     public $lastMonthDateRange;
     
+    public $loggedInUserCount;
+    
     public function render()
     {   
        
+        $this->loggedInUserCount = DB::table('sessions')->whereNotNull('user_id')->count();
         // Colleges
         $this->total_college=College::count();
         $this->a_college=College::where('status',0)->count();

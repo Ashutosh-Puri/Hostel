@@ -421,6 +421,17 @@
                                     </div>
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
+                                            <label for="parent_email" class="form-label">Parent Email</label>
+                                            <input type="email"  class="form-control @error('parent_email') is-invalid @enderror" wire:model.blur="parent_email" value="{{ old('parent_email') }}" id="parent_email" placeholder="Enter Parent Email">
+                                            @error('parent_email')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="mb-3 form-group">
                                             <label for="mother_name" class="form-label">Mother Name</label>
                                             <input type="text"  class="form-control @error('mother_name') is-invalid @enderror" wire:model.blur="mother_name" value="{{ old('mother_name') }}" id="mother_name" placeholder="Enter Mother Name">
                                             @error('mother_name')
@@ -430,8 +441,6 @@
                                             @enderror
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
                                             <label for="local_parent_name" class="form-label">Parent Name In Sangamner</label>
@@ -920,6 +929,17 @@
                                     </div>
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
+                                            <label for="parent_email" class="form-label">Parent Email</label>
+                                            <input type="email"  class="form-control @error('parent_email') is-invalid @enderror" wire:model.blur="parent_email" value="{{ old('parent_email') }}" id="parent_email" placeholder="Enter Parent Email">
+                                            @error('parent_email')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="mb-3 form-group">
                                             <label for="mother_name" class="form-label">Mother Name</label>
                                             <input type="text"  class="form-control @error('mother_name') is-invalid @enderror" wire:model.blur="mother_name" value="{{ old('mother_name') }}" id="mother_name" placeholder="Enter Mother Name">
                                             @error('mother_name')
@@ -929,8 +949,6 @@
                                             @enderror
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
                                             <label for="local_parent_name" class="form-label">Parent Name In Sangamner</label>

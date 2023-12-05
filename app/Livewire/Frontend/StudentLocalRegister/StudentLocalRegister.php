@@ -78,10 +78,7 @@ class StudentLocalRegister extends Component
             $studentlocalregister->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Student Local Register Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Student Local Register Created Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -117,10 +114,7 @@ class StudentLocalRegister extends Component
             $studentlocalregister->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Student Local Register Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Student Local Register Updated Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -139,9 +133,10 @@ class StudentLocalRegister extends Component
             $studentlocalregister->delete();
             $this->delete_id=null;
             $this->setmode('all');
+            $this->dispatch('alert',type:'success',message:'Student Local Register Deleted Successfully !!');
             $this->dispatch('alert',[
                 'type'=>'success',
-                'message'=>"Studen tLocal Register Deleted Successfully !!"
+                'message'=>"Student Local Register Deleted Successfully !!"
             ]);
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  

@@ -6,6 +6,9 @@
         <div class="col-md-12">
             <div class="d-sm-flex justify-content-between align-items-center transaparent-tab-border {">
                 <h1>Dashboard Overview</h1>
+                <div class="float-end">
+                    Visiters<span class="badge  bg-white mx-1"> <strong class=" text-dark fw-bold">{{ $loggedInUserCount}}</strong></span>
+                </div>
             </div>
             <div class="tab-content tab-transparent-content">
                 <div class="tab-pane fade show active" id="business-1" role="tabpanel" aria-labelledby="business-tab">

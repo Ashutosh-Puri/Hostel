@@ -58,11 +58,8 @@ class ShowEnquiry extends Component
             $enquiry->description = $validatedData['description'];
             $enquiry->gender = $this->gender==1?'1':'0';
             $enquiry->save();
-            $this->resetinput();
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"We Will Contact You Soon !!"
-            ]);
+            $this->resetinput(); 
+            $this->dispatch('alert',type:'success',message:'We Will Contact You Soon !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }

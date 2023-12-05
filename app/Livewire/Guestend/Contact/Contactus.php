@@ -50,10 +50,7 @@ class Contactus extends Component
             $contact->message = $validatedData['message'];
             $contact->save();
             $this->resetinput();
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"We Will Contact You Soon !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'We Will Contact You Soon !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }

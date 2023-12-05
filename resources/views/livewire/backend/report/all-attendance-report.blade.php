@@ -139,8 +139,15 @@
             </div>
             <div class="col-12 col-md-6">
                 <div class="card my-3">
-                    <div class="card-header">
+                    <div class="card-header d-inline">
                         <h3>Absent Students ( {{ count($absent_students) }} )</h3>
+                      
+                        <a wire:loading.attr="disabled"  wire:click="notifyall()"class="btn btn-sm btn-primary float-end">
+                            <span wire:loading  wire:target='notifyall' class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
+                            <span wire:loading  wire:target='notifyall'>Sending Email</span>
+                            <span wire:loading.remove  wire:target='notifyall'> Notify All</span> 
+                        </a>
+                       
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -150,6 +157,7 @@
                                         <th>ID</th>
                                         <th>Name</th>
                                         <th>Gender</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                     <tbody>
@@ -158,6 +166,13 @@
                                                 <td scope="row">{{ $as->id }}</td>
                                                 <td>{{ $as->name }}</td>
                                                 <td>{{ $as->gender==1?'Female':'Male'; }}</td>
+                                                <td>
+                                                    <a wire:loading.attr="disabled"  wire:click="notify({{ $as->id }})"class="btn btn-sm btn-primary ">
+                                                        <span wire:loading  wire:target='notify' class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
+                                                        <span wire:loading  wire:target='notify'>Sending Email</span>
+                                                        <span wire:loading.remove  wire:target='notify'> Notify </span>
+                                                    </a>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>

@@ -58,10 +58,7 @@ class AdmissionMeritList extends Component
             $merit->gender = $this->gender==1?'1':'0';
             $merit->save();
             $this->resetinput();
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"We Will Contact You Soon !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'We Will Contact You Soon !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }

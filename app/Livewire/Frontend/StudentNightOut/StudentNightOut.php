@@ -78,10 +78,7 @@ class StudentNightOut extends Component
             $studentlocalregister->save();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Student Night Out Entry Created Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Student Night Out Entry Created Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -117,10 +114,7 @@ class StudentNightOut extends Component
             $studentlocalregister->update();
             $this->resetinput();
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Student Night Out Entry Updated Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Student Night Out Entry Updated Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }
@@ -139,10 +133,7 @@ class StudentNightOut extends Component
             $studentlocalregister->delete();
             $this->delete_id=null;
             $this->setmode('all');
-            $this->dispatch('alert',[
-                'type'=>'success',
-                'message'=>"Studen tLocal Register Deleted Successfully !!"
-            ]);
+            $this->dispatch('alert',type:'success',message:'Student Local Register Deleted Successfully !!');
         }else{
             $this->dispatch('alert',type:'error',message:'Something Went Wrong !!');  
         }

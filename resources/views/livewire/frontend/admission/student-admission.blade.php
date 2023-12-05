@@ -191,7 +191,7 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="mb-3 form-group">
-                                                    <label for="photo" class="form-label">Photo <span class="text-danger fw-bold">*</span></label> <label wire:loading wire:target='photo' class="text-danger mx-2 "> Loading...</label>
+                                                    <label for="photo" class="form-label">Photo <span class="text-danger fw-bold">* <small>( 1024 KB / 1MB )</small> </span></label> 
                                                     <input type="file"  class="form-control @error('photo') is-invalid @enderror" wire:model.live="photo" value="{{ old('photo') }}" id="photo" placeholder="Enter Mobile">
                                                     @error('photo')
                                                         <div class="invalid-feedback">
@@ -398,6 +398,17 @@
                                     </div>
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
+                                            <label for="parent_email" class="form-label">Parent Email</label>
+                                            <input type="email"  class="form-control @error('parent_email') is-invalid @enderror" wire:model.blur="parent_email" value="{{ old('parent_email') }}" id="parent_email" placeholder="Enter Parent Email">
+                                            @error('parent_email')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="mb-3 form-group">
                                             <label for="mother_name" class="form-label">Mother Name <span class="text-danger fw-bold">*</span></label>
                                             <input type="text"  class="form-control @error('mother_name') is-invalid @enderror" wire:model.blur="mother_name" value="{{ old('mother_name') }}" id="mother_name" placeholder="Enter Mother Name">
                                             @error('mother_name')
@@ -407,8 +418,6 @@
                                             @enderror
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
                                             <label for="local_parent_name" class="form-label">Parent Name In Sangamner</label>
@@ -518,7 +527,7 @@
                                 <div class="row">
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
-                                            <label for="first_name" class="form-label">First Name</label>
+                                            <label for="first_name" class="form-label">First Name <span class="text-danger fw-bold">*</span></label>
                                             <input type="text"  class="form-control @error('first_name') is-invalid @enderror" wire:model.blur="first_name" value="{{ old('first_name') }}" id="first_name" placeholder="Enter First Name">
                                             @error('first_name')
                                                 <div class="invalid-feedback">
@@ -529,7 +538,7 @@
                                     </div>
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
-                                            <label for="middle_name" class="form-label">Middle Name</label>
+                                            <label for="middle_name" class="form-label">Middle Name <span class="text-danger fw-bold">*</span></label>
                                             <input type="text"  class="form-control @error('middle_name') is-invalid @enderror" wire:model.blur="middle_name" value="{{ old('middle_name') }}" id="middle_name" placeholder="Enter Middle Name">
                                             @error('middle_name')
                                                 <div class="invalid-feedback">
@@ -540,7 +549,7 @@
                                     </div>
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
-                                            <label for="last_name" class="form-label">Last Name</label>
+                                            <label for="last_name" class="form-label">Last Name <span class="text-danger fw-bold">*</span></label>
                                             <input type="text"  class="form-control @error('last_name') is-invalid @enderror" wire:model.blur="last_name" value="{{ old('last_name') }}" id="last_name" placeholder="Enter Last Name">
                                             @error('last_name')
                                                 <div class="invalid-feedback">
@@ -555,7 +564,7 @@
                                         <div class="row">
                                             <div class="col-12 col-md-6">
                                                 <div class="mb-3 form-group">
-                                                    <label for="mobile" class="form-label">Mobile</label>
+                                                    <label for="mobile" class="form-label">Mobile <span class="text-danger fw-bold">*</span></label>
                                                     <input type="text"  class="form-control @error('mobile') is-invalid @enderror" wire:model.blur="mobile" value="{{ old('mobile') }}" id="mobile" placeholder="Enter Mobile">
                                                     @error('mobile')
                                                         <div class="invalid-feedback">
@@ -566,7 +575,7 @@
                                             </div>
                                             <div class="col-12 col-md-6">
                                                 <div class="mb-3 form-group">
-                                                    <label for="dob" class="form-label">Date Of Birth</label>
+                                                    <label for="dob" class="form-label">Date Of Birth <span class="text-danger fw-bold">*</span></label>
                                                     <input type="date" max="{{ $mindate }}" class="form-control @error('dob') is-invalid @enderror" wire:model.blur="dob" value="{{ old('dob') }}" id="dob" placeholder=" Select Date Of Birth">
                                                     @error('dob')
                                                         <div class="invalid-feedback">
@@ -579,7 +588,7 @@
                                         <div class="row">
                                             <div class="col-12 col-md-6">
                                                 <div class="mb-3 form-group">
-                                                    <label for="cast_id" class="form-label">Select Cast</label>
+                                                    <label for="cast_id" class="form-label">Select Cast <span class="text-danger fw-bold">*</span></label>
                                                     <select class="form-select @error('cast_id') is-invalid @enderror" id="cast_id" wire:model.change="cast_id">
                                                         <option  hidden value="">Select Cast</option>
                                                         @foreach($casts as $item2)
@@ -595,7 +604,7 @@
                                             </div> 
                                             <div class="col-12 col-md-6">
                                                 <div class="mb-3 form-group">
-                                                    <label for="category_id" class="form-label">Select Category</label>
+                                                    <label for="category_id" class="form-label">Select Category <span class="text-danger fw-bold">*</span></label>
                                                     <select class="form-select @error('category_id') is-invalid @enderror" id="category_id" wire:model.change="category_id">
                                                         <option  hidden value="">Select Category</option>
                                                         @foreach($categories as $item2)
@@ -613,7 +622,7 @@
                                         <div class="row">
                                             <div class="col-12 col-md-3">
                                                 <div class="mb-3 form-group">
-                                                    <label for="gender" class="form-label">Select Gender</label>
+                                                    <label for="gender" class="form-label">Select Gender <span class="text-danger fw-bold">*</span></label>
                                                     <select class="form-select  @error('gender') is-invalid @enderror" id="gender" wire:model.change="gender" >
                                                         <option hidden  >Select </option>
                                                         <option  value="0">Male</option>
@@ -628,7 +637,7 @@
                                             </div>
                                             <div class="col-12 col-md-3">
                                                 <div class="mb-3 form-group">
-                                                    <label for="blood_group" class="form-label">Select Blood Group</label>
+                                                    <label for="blood_group" class="form-label">Select Blood Group <span class="text-danger fw-bold">*</span></label>
                                                     <select class="form-select @error('blood_group') is-invalid @enderror" id="blood_group" wire:model.change="blood_group" >
                                                         <option hidden value="" >Select Blood Group</option>
                                                         <option  value="A+" >A +</option>
@@ -649,7 +658,7 @@
                                             </div>
                                             <div class="col-12 col-md-6">
                                                 <div class="mb-3 form-group">
-                                                    <label for="member_id" class="form-label">Member ID</label>
+                                                    <label for="member_id" class="form-label">Member ID <span class="text-danger fw-bold">*</span></label>
                                                     <input type="text" class="form-control @error('member_id') is-invalid @enderror" wire:model.blur="member_id" id="member_id" value="{{ old('member_id') }}" placeholder="Enter Member ID">
                                                     @error('member_id')
                                                         <div class="invalid-feedback">
@@ -673,7 +682,7 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="mb-3 form-group">
-                                                    <label for="photo" class="form-label">Photo</label> <label wire:loading wire:target='photo' class="text-danger mx-2 "> Loading...</label>
+                                                    <label for="photo" class="form-label">Photo <span class="text-danger fw-bold">* <small>( 1024 KB / 1MB )</small> </span></label> 
                                                     <input type="file"  class="form-control @error('photo') is-invalid @enderror" wire:model.blur="photo" value="{{ old('photo') }}" id="photo" placeholder="Enter Mobile">
                                                     @error('photo')
                                                         <div class="invalid-feedback">
@@ -720,7 +729,7 @@
                                 <div class="row">
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
-                                            <label for="academic_year_id" class="form-label">Select Academic Year</label>
+                                            <label for="academic_year_id" class="form-label">Select Academic Year <span class="text-danger fw-bold">*</span></label>
                                             <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model.change="academic_year_id">
                                                 <option  hidden value="">Select Academic Year</option>
                                                 @foreach($academicyears as $item2)
@@ -736,7 +745,7 @@
                                     </div>
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
-                                            <label for="stream" class="form-label">Select Stream</label>
+                                            <label for="stream" class="form-label">Select Stream <span class="text-danger fw-bold">*</span></label>
                                             <select class="form-select @error('stream') is-invalid @enderror" id="stream" wire:model.change="stream">
                                                 <option  hidden value="">Select Stream</option>
                                                 @forelse($streams as $item2)
@@ -754,7 +763,7 @@
                                     </div>
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
-                                            <label for="stream_type" class="form-label">Select Student Level</label>
+                                            <label for="stream_type" class="form-label">Select Student Level <span class="text-danger fw-bold">*</span></label>
                                             <select class="form-select @error('stream_type') is-invalid @enderror" id="stream_type" wire:model.change="stream_type">
                                                 <option  hidden value="">Select Student Level</option>
                                                 @forelse ($types as $item2)
@@ -772,7 +781,7 @@
                                     </div>
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
-                                            <label for="class_id" class="form-label">Select Class</label>
+                                            <label for="class_id" class="form-label">Select Class <span class="text-danger fw-bold">*</span></label>
                                             <select class="form-select @error('class_id') is-invalid @enderror" id="class_id" wire:model.change="class_id">
                                                 <option  hidden value="">Select Class</option>
                                                 @forelse ($classes as $item2)
@@ -797,7 +806,7 @@
                                 <div class="row">
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
-                                            <label for="last_academic_year_id" class="form-label">Select Last Academic Year</label>
+                                            <label for="last_academic_year_id" class="form-label">Select Last Academic Year <span class="text-danger fw-bold">*</span></label>
                                             <select class="form-select @error('last_academic_year_id') is-invalid @enderror" id="last_academic_year_id" wire:model.change="last_academic_year_id">
                                                 <option  hidden value="">Select Last Academic Year</option>
                                                 @foreach($lastacademicyears as $item2)
@@ -813,7 +822,7 @@
                                     </div>
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
-                                            <label for="last_class_id" class="form-label">Select Last Class</label>
+                                            <label for="last_class_id" class="form-label">Select Last Class <span class="text-danger fw-bold">*</span></label>
                                             <select class="form-select @error('last_class_id') is-invalid @enderror" id="last_class_id" wire:model.change="last_class_id">
                                                 <option  hidden value="">Select Last Class</option>
                                                 @foreach ($classes as $item2)
@@ -840,7 +849,7 @@
                                     </div>
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
-                                            <label for="percentage" class="form-label">Percentage</label>
+                                            <label for="percentage" class="form-label">Percentage <span class="text-danger fw-bold">*</span></label>
                                             <input type="text"  class="form-control @error('percentage') is-invalid @enderror" wire:model.blur="percentage" value="{{ old('percentage') }}" id="percentage" placeholder="Enter Percentage">
                                             @error('percentage')
                                                 <div class="invalid-feedback">
@@ -858,7 +867,7 @@
                                 <div class="row">
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
-                                            <label for="parent_name" class="form-label">Parent Name</label>
+                                            <label for="parent_name" class="form-label">Parent Name <span class="text-danger fw-bold">*</span></label>
                                             <input type="text"   class="form-control @error('parent_name') is-invalid @enderror" wire:model.blur="parent_name" value="{{ old('parent_name') }}" id="parent_name" placeholder="Enter Parent Name">
                                             @error('parent_name')
                                                 <div class="invalid-feedback">
@@ -869,7 +878,7 @@
                                     </div>
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
-                                            <label for="parent_mobile" class="form-label">Parent Mobile Number</label>
+                                            <label for="parent_mobile" class="form-label">Parent Mobile Number <span class="text-danger fw-bold">*</span></label>
                                             <input type="text"   class="form-control @error('parent_mobile') is-invalid @enderror" wire:model.blur="parent_mobile" value="{{ old('parent_mobile') }}" id="parent_mobile" placeholder="Enter Parent Mobile Number">
                                             @error('parent_mobile')
                                                 <div class="invalid-feedback">
@@ -880,7 +889,18 @@
                                     </div>
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
-                                            <label for="mother_name" class="form-label">Mother Name</label>
+                                            <label for="parent_email" class="form-label">Parent Email <span class="text-danger fw-bold">*</span></label>
+                                            <input type="email"  class="form-control @error('parent_email') is-invalid @enderror" wire:model.blur="parent_email" value="{{ old('parent_email') }}" id="parent_email" placeholder="Enter Parent Email">
+                                            @error('parent_email')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="mb-3 form-group">
+                                            <label for="mother_name" class="form-label">Mother Name <span class="text-danger fw-bold">*</span></label>
                                             <input type="text"  class="form-control @error('mother_name') is-invalid @enderror" wire:model.blur="mother_name" value="{{ old('mother_name') }}" id="mother_name" placeholder="Enter Mother Name">
                                             @error('mother_name')
                                                 <div class="invalid-feedback">
@@ -889,8 +909,6 @@
                                             @enderror
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
                                             <label for="local_parent_name" class="form-label">Parent Name In Sangamner</label>
@@ -922,7 +940,7 @@
                                 <div class="row">
                                     <div class="col-12 col-md-2">
                                         <div class="mb-3 form-group">
-                                            <label for="address_type" class="form-label">Select Address Type</label>
+                                            <label for="address_type" class="form-label">Select Address Type <span class="text-danger fw-bold">*</span></label>
                                             <select class="form-select  @error('address_type') is-invalid @enderror" id="address_type" wire:model.change="address_type" >
                                                 <option hidden value="" >Select </option>
                                                 <option  value="0" >Rural</option>
@@ -937,7 +955,7 @@
                                     </div>
                                     <div class="col-12 col-md-5">
                                         <div class="mb-3 form-group">
-                                            <label for="parent_address" class="form-label">Parent Address</label>
+                                            <label for="parent_address" class="form-label">Parent Address <span class="text-danger fw-bold">*</span></label>
                                             <textarea class="w-100 @error('parent_address') is-invalid @enderror" wire:model.blur="parent_address" id="parent_address" placeholder="Enter Parent Address"   cols="30" rows="4"> {{ old('parent_address') }}{{ $parent_address }}</textarea>
                                             @error('parent_address')
                                                 <div class="invalid-feedback">
