@@ -80,7 +80,8 @@
         <!-- Container Start -->
         <div class="container-scroller">
             <!-- Navbar -->
-              @include('layouts.student.navbar')
+              {{-- @include('layouts.student.navbar') --}}
+              @livewire('frontend.student.navbar')
             <!-- navbar End -->
 
             <!-- Body start -->

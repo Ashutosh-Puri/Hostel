@@ -22,13 +22,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="save" method="post" action="" id="myForm">
+                            <form  wire:submit="save" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="name" class="form-label">Name</label>
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model.live="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
                                             @error('name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -39,7 +39,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="email" class="form-label">Email</label>
-                                            <input type="email" class="form-control @error('email') is-invalid @enderror" wire:model="email" value="{{ old('email') }}" id="email" placeholder="Enter Email">
+                                            <input type="email" class="form-control @error('email') is-invalid @enderror" wire:model.live="email" value="{{ old('email') }}" id="email" placeholder="Enter Email">
                                             @error('email')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -50,7 +50,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="mobile" class="form-label">Mobile</label>
-                                            <input type="text" class="form-control @error('mobile') is-invalid @enderror" wire:model="mobile" value="{{ old('mobile') }}" id="mobile" placeholder="Enter Mobile">
+                                            <input type="text" class="form-control @error('mobile') is-invalid @enderror" wire:model.live="mobile" value="{{ old('mobile') }}" id="mobile" placeholder="Enter Mobile">
                                             @error('mobile')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -61,7 +61,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="subject" class="form-label">Subject</label>
-                                            <input type="text" class="form-control @error('subject') is-invalid @enderror" wire:model="subject" value="{{ old('subject') }}" id="subject" placeholder="Enter Subject">
+                                            <input type="text" class="form-control @error('subject') is-invalid @enderror" wire:model.live="subject" value="{{ old('subject') }}" id="subject" placeholder="Enter Subject">
                                             @error('subject')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -72,7 +72,7 @@
                                     <div class="col-12 col-md-12">
                                         <div class="mb-3 form-group">
                                             <label for="message" class="form-label">Message</label>
-                                            <textarea class="w-100 @error('message') is-invalid @enderror" wire:model.debounce.1000ms="message" id="message" placeholder="Enter Message"   cols="30" rows="5">{{ old('message') }}</textarea>
+                                            <textarea class="w-100 @error('message') is-invalid @enderror" wire:model.live.debounce.1000ms="message" id="message" placeholder="Enter Message"   cols="30" rows="5">{{ old('message') }}</textarea>
                                             @error('message')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -109,13 +109,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
+                            <form  wire:submit="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="name" class="form-label">Name</label>
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model.live="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
                                             @error('name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -126,7 +126,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="email" class="form-label">Email</label>
-                                            <input type="email" class="form-control @error('email') is-invalid @enderror" wire:model="email" value="{{ old('email') }}" id="email" placeholder="Enter Email">
+                                            <input type="email" class="form-control @error('email') is-invalid @enderror" wire:model.live="email" value="{{ old('email') }}" id="email" placeholder="Enter Email">
                                             @error('email')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -137,7 +137,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="mobile" class="form-label">Mobile</label>
-                                            <input type="text" class="form-control @error('mobile') is-invalid @enderror" wire:model="mobile" value="{{ old('mobile') }}" id="mobile" placeholder="Enter Mobile">
+                                            <input type="text" class="form-control @error('mobile') is-invalid @enderror" wire:model.live="mobile" value="{{ old('mobile') }}" id="mobile" placeholder="Enter Mobile">
                                             @error('mobile')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -148,7 +148,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="subject" class="form-label">Subject</label>
-                                            <input type="text" class="form-control @error('subject') is-invalid @enderror" wire:model="subject" value="{{ old('subject') }}" id="subject" placeholder="Enter Subject">
+                                            <input type="text" class="form-control @error('subject') is-invalid @enderror" wire:model.live="subject" value="{{ old('subject') }}" id="subject" placeholder="Enter Subject">
                                             @error('subject')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -159,7 +159,7 @@
                                     <div class="col-12 col-md-12">
                                         <div class="mb-3 form-group">
                                             <label for="message" class="form-label">Message</label>
-                                            <textarea class="w-100 @error('message') is-invalid @enderror" wire:model.debounce.1000ms="message" id="message" placeholder="Enter Message"   cols="30" rows="5">{{ old('message') }}</textarea>
+                                            <textarea class="w-100 @error('message') is-invalid @enderror" wire:model.live.debounce.1000ms="message" id="message" placeholder="Enter Message"   cols="30" rows="5">{{ old('message') }}</textarea>
                                             @error('message')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -212,7 +212,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -228,7 +228,7 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input  class="w-100" wire:model.debounce.1000ms="search" type="search" placeholder="Name">
+                                                <input  class="w-100" wire:model.live.debounce.1000ms="search" type="search" placeholder="Name">
                                             </div>
                                         </span>
                                     </span>
@@ -254,7 +254,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($contact as $key => $item)
-                                            <tr>
+                                            <tr wire:key='{{ $item->id }}'>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->name }}</td>
                                                 <td>{{ $item->mobile }}</td>
@@ -271,14 +271,16 @@
 
                                                 @can('Edit Contact')
                                                     <td>
-                                                        @can('Edit Contact')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                            @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
-                                                            @else
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
-                                                            @endif
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Edit Contact')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                                @if ($item->status==1)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                @else
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                @endif
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Contact')
                                                             @if ($item->deleted_at)
                                                                 <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
@@ -290,14 +292,16 @@
                                                     </td>
                                                 @elsecan('Delete Contact')
                                                     <td>
-                                                        @can('Edit Contact')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                            @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
-                                                            @else
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
-                                                            @endif
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Edit Contact')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                                @if ($item->status==1)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                @else
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                @endif
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Contact')
                                                             @if ($item->deleted_at)
                                                                 <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
@@ -313,7 +317,7 @@
                                     </tbody>
                                 </table>
                                 <div class="mt-4">
-                                    {{ $contact->links('pagination::bootstrap-5') }}
+                                    {{ $contact->links() }}
                                 </div>
                             </div>
                         </div>

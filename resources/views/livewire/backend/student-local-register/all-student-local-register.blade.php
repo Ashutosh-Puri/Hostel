@@ -22,14 +22,30 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form wire:submit.prevent="save" method="post" action="" id="myForm">
+                        <form wire:submit="save" method="post" action="" id="myForm">
                             @csrf
                             <div class="row">
-                                <div class="col-12 col-md-6">
+                                <div class="col-12 col-md-4">
+                                    <div class="mb-3 form-group">
+                                        <label for="student_id" class="form-label">Select Student</label>
+                                        <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.change="student_id">
+                                            <option  hidden value="">Select Students</option>
+                                            @foreach($students as $item2)
+                                                <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name!=null?$item2->name: $item2->username; }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('student_id')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
                                     <div class="mb-3 form-group">
                                         <label for="exit_time" class="form-label">Exit Time</label>
                                         <input type="time" class="form-control @error('exit_time') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="exit_time" value="{{ old('exit_time') }}"
+                                            wire:model.live.debounce.1000ms="exit_time" value="{{ old('exit_time') }}"
                                             id="exit_time" placeholder="Enter exit time" />
                                         @error('exit_time')
                                         <div class="invalid-feedback">
@@ -38,12 +54,12 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6">
+                                <div class="col-12 col-md-4">
                                     <div class="mb-3 form-group">
                                         <label for="entry_time" class="form-label">Entry Time</label>
                                         <input type="time"
                                             class="form-control @error('entry_time') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="entry_time" value="{{ old('entry_time') }}"
+                                            wire:model.live.debounce.1000ms="entry_time" value="{{ old('entry_time') }}"
                                             id="entry_time" placeholder="Enter entry time" />
                                         @error('entry_time')
                                         <div class="invalid-feedback">
@@ -58,7 +74,7 @@
                                     <div class="mb-3 form-group">
                                         <label for="reason" class="form-label">Hostel Leaving Reasone</label>
                                         <textarea class="w-100 @error('reason') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="reason" id="reason"
+                                            wire:model.live.debounce.1000ms="reason" id="reason"
                                             placeholder="Enter Reasone To Leave Hostel" cols="30" rows="4">
                                             {{ old('reason') }}</textarea>
                                         @error('reason')
@@ -100,15 +116,31 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form wire:submit.prevent="update({{ isset($c_id) ? $c_id : '' }})" method="post" action=""
+                        <form wire:submit="update({{ isset($c_id) ? $c_id : '' }})" method="post" action=""
                             id="myForm">
                             @csrf
                             <div class="row">
-                                <div class="col-12 col-md-6">
+                                <div class="col-12 col-md-4">
+                                    <div class="mb-3 form-group">
+                                        <label for="student_id" class="form-label">Select Student</label>
+                                        <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.change="student_id">
+                                            <option  hidden value="">Select Students</option>
+                                            @foreach($students as $item2)
+                                                <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name!=null?$item2->name: $item2->username; }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('student_id')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
                                     <div class="mb-3 form-group">
                                         <label for="exit_time" class="form-label">Exit Time</label>
                                         <input type="time" class="form-control @error('exit_time') is-invalid @enderror"
-                                        wire:model.debounce.1000ms="exit_time" value="{{ old('exit_time') }}"
+                                        wire:model.live.debounce.1000ms="exit_time" value="{{ old('exit_time') }}"
                                         id="exit_time" placeholder="Enter exit time" />
                                         @error('exit_time')
                                         <div class="invalid-feedback">
@@ -117,12 +149,12 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6">
+                                <div class="col-12 col-md-4">
                                     <div class="mb-3 form-group">
                                         <label for="entry_time" class="form-label">Entry Time</label>
                                         <input type="time"
                                             class="form-control @error('entry_time') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="entry_time" value="{{ old('entry_time') }}"
+                                            wire:model.live.debounce.1000ms="entry_time" value="{{ old('entry_time') }}"
                                             id="entry_time" placeholder="Enter entry time" />
                                         @error('entry_time')
                                         <div class="invalid-feedback">
@@ -137,7 +169,7 @@
                                     <div class="mb-3 form-group">
                                         <label for="reason" class="form-label">Hostel Leaving Reasone</label>
                                         <textarea class="w-100 @error('reason') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="reason" id="reason"
+                                            wire:model.live.debounce.1000ms="reason" id="reason"
                                             placeholder="Enter Reasone To Leave Hostel" cols="30" rows="4">
                                             {{ old('reason') }}</textarea>
                                         @error('reason')
@@ -196,7 +228,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <label class="col-4 col-md-1 py-1">Per Page</label>
-                                <select class="col-4 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                <select class="col-4 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                                     <option value="10">10</option>
                                     <option value="50">50</option>
                                     <option value="100">100</option>
@@ -210,15 +242,15 @@
                                             <label class="w-100 p-1 text-md-end">Search</label>
                                         </div>
                                         <div class="col-12 col-md-3">
-                                            <input class="w-100" wire:model.debounce.1000ms="year" type="search"
+                                            <input class="w-100" wire:model.live.debounce.1000ms="year" type="search"
                                                 placeholder="Academic Year" />
                                         </div>
                                         <div class="col-12 col-md-3">
-                                            <input class="w-100" wire:model.debounce.1000ms="class_name" type="search"
+                                            <input class="w-100" wire:model.live.debounce.1000ms="class_name" type="search"
                                                 placeholder="Class Name" />
                                         </div>
                                         <div class="col-12 col-md-3">
-                                            <input class="w-100" wire:model.debounce.1000ms="student_name" type="search"
+                                            <input class="w-100" wire:model.live.debounce.1000ms="student_name" type="search"
                                                 placeholder="Student Name" />
                                         </div>
                                     </div>
@@ -244,7 +276,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($local_registers as $key => $item)
-                                    <tr>
+                                    <tr wire:key='{{ $item->id }}'>
                                         <td>{{ $key + 1 }}</td>
                                         <td>
                                             {{ $item->allocation->admission->academicyear->year }}
@@ -282,54 +314,44 @@
                                         </td>
                                         @can('Edit Student Local Register Form')
                                         <td>
-                                            @can('Edit Student Local Register Form')
-                                            <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})"
-                                                class="btn btn-success "><i
-                                                    class="mdi mdi-lead-pencil"></i></a>
-                                            @if ($item->status == 1)
-                                            <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
-                                                class="btn btn-danger ">
-                                                <i class="mdi mdi-thumb-down"></i>
-                                            </a>
-                                            @elseif ($item->status == 0)
-                                            <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
-                                                class="btn btn-success ">
-                                                <i class="mdi mdi-thumb-up"></i>
-                                            </a>
+                                            @if (!$item->deleted_at)
+                                                @can('Edit Student Local Register Form')
+                                                    <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                    @if ($item->status == 1)
+                                                        <a wire:loading.attr="disabled" wire:click="update_status({{ $item->id }})" class="btn btn-danger "><i class="mdi mdi-thumb-down"></i></a>
+                                                    @elseif ($item->status == 0)
+                                                        <a wire:loading.attr="disabled" wire:click="update_status({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-thumb-up"></i></a>
+                                                    @endif
+                                                @endcan 
                                             @endif
-                                            @endcan @can('Delete Student Local Register Form')
-                                            @if ($item->deleted_at)
-                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
-                                            <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
-                                        @else
-                                            <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
-                                        @endif
+                                            @can('Delete Student Local Register Form')
+                                                @if ($item->deleted_at)
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
+                                                @else
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
+                                                @endif
                                             @endcan
                                         </td>
                                         @elsecan('Delete Student Local Register Form')
                                         <td>
-                                            @can('Edit Student Local Register Form')
-                                            <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})"
-                                                class="btn btn-success "><i
-                                                    class="mdi mdi-lead-pencil"></i></a>
-                                            @if ($item->status == 1)
-                                            <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
-                                                class="btn btn-danger ">
-                                                <i class="mdi mdi-thumb-down"></i>
-                                            </a>
-                                            @elseif ($item->status == 0)
-                                            <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
-                                                class="btn btn-success ">
-                                                <i class="mdi mdi-thumb-up"></i>
-                                            </a>
+                                            @if (!$item->deleted_at)
+                                                @can('Edit Student Local Register Form')
+                                                    <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                    @if ($item->status == 1)
+                                                        <a wire:loading.attr="disabled" wire:click="update_status({{ $item->id }})" class="btn btn-danger "><i class="mdi mdi-thumb-down"></i></a>
+                                                    @elseif ($item->status == 0)
+                                                        <a wire:loading.attr="disabled" wire:click="update_status({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-thumb-up"></i> </a>
+                                                    @endif
+                                                @endcan 
                                             @endif
-                                            @endcan @can('Delete Student Local Register Form')
-                                            @if ($item->deleted_at)
-                                                                <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
-                                                                <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
-                                                            @else
-                                                                <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
-                                                            @endif
+                                            @can('Delete Student Local Register Form')
+                                                @if ($item->deleted_at)
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
+                                                @else
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
+                                                @endif
                                             @endcan
                                         </td>
                                         @endcan
@@ -338,7 +360,7 @@
                                 </tbody>
                             </table>
                             <div class="mt-4">
-                                {{ $local_registers->links('pagination::bootstrap-5') }}
+                                {{ $local_registers->links() }}
                             </div>
                         </div>
                     </div>

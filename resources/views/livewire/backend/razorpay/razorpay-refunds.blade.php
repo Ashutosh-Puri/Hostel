@@ -39,7 +39,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($refunds->items as  $item)
-                                        <tr>
+                                        <tr wire:key='{{ $item->id }}'>
                                             <td>{{  $item->id }}</td>
                                             <td>{{  $item->payment_id }}</td>
                                             <td>{{  $item->amount/100}}</td>

@@ -22,13 +22,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form wire:submit.prevent="save" method="post" action="" id="myForm">
+                            <form wire:submit="save" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row text-start">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="student_id" class="form-label">Select Student</label>
-                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model="student_id">
+                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.change="student_id">
                                                 <option  hidden value="">Select Students</option>
                                                 @foreach($students as $item2)
                                                     <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name!=null?$item2->name: $item2->username; }}</option>
@@ -44,7 +44,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="rfid" class="form-label">RFID</label>
-                                            <input type="text" class="form-control @error('rfid') is-invalid @enderror"  wire:model="rfid" value="{{ old('rfid') }}" id="rfid" placeholder="Enter RFID">
+                                            <input type="text" class="form-control @error('rfid') is-invalid @enderror"  wire:model.live="rfid" value="{{ old('rfid') }}" id="rfid" placeholder="Enter RFID">
                                             @error('rfid')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -68,13 +68,6 @@
                     <div class="bg-success">
                         <div class="float-start pt-2 px-2">
                             <h2>Edit Attendance</h2>
-                            <div wire:loading class="loading-overlay">
-                                <div class="loading-spinner">
-                                    <div class="spinner-border spinner-border-lg text-primary" role="status">
-                                        <span class="visually-hidden">Loading...</span>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div class="float-end">
                             <a wire:loading.attr="disabled"  wire:click="setmode('all')"class="btn btn-success ">
@@ -88,13 +81,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
+                            <form  wire:submit="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row text-start">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="student_id" class="form-label">Select Student</label>
-                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model="student_id">
+                                            <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.change="student_id">
                                                 <option  hidden value="">Select Students</option>
                                                 @foreach($students as $item2)
                                                     <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name!=null?$item2->name: $item2->username; }}</option>
@@ -110,7 +103,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="rfid" class="form-label">RFID</label>
-                                            <input type="text" class="form-control @error('rfid') is-invalid @enderror"  wire:model="rfid" value="{{ old('rfid') }}" id="rfid" placeholder="Enter RFID">
+                                            <input type="text" class="form-control @error('rfid') is-invalid @enderror"  wire:model.live="rfid" value="{{ old('rfid') }}" id="rfid" placeholder="Enter RFID">
                                             @error('rfid')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -169,7 +162,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                    <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -182,13 +175,13 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input class="w-100 py-1" wire:model.debounce.1000ms="s_name" type="search" placeholder="Student Name">
+                                                <input class="w-100 py-1" wire:model.live.debounce.1000ms="s_name" type="search" placeholder="Student Name">
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input class="w-100 py-1" wire:model.debounce.1000ms="s_rfid" type="search" placeholder="Student RFID">
+                                                <input class="w-100 py-1" wire:model.live.debounce.1000ms="s_rfid" type="search" placeholder="Student RFID">
                                             </div>
                                             <div class="col-6 col-md-3">
-                                                <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="sortby_feild">
+                                                <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.change="sortby_feild">
                                                     <option value="" hidden>Sort By</option>
                                                     <option value="student_id">Name</option>
                                                     <option value="rfid">RFID</option>
@@ -196,7 +189,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-4 col-md-1">
-                                                <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="sortby_order">
+                                                <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.change="sortby_order">
                                                     <option value="ASC">ASC</option>
                                                     <option value="DESC">DESC</option>
                                                 </select>
@@ -226,7 +219,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($attendance as $key => $item)
-                                            <tr>
+                                            <tr wire:key='{{ $item->id }}'>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->Student->name!==null?$item->Student->name:$item->Student->username;}}</td>
                                                 <td>{{ $item->rfid}}</td>
@@ -234,9 +227,11 @@
                                                 <td> @if ($item->exit_time) {{ date('d / m / Y - h : i : s - A',strtotime($item->exit_time)) }} @endif</td>
                                                 @can('Edit Attendance')
                                                 <td>
-                                                    @can('Edit Attendance')
-                                                        <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                    @endcan
+                                                    @if (!$item->deleted_at)
+                                                        @can('Edit Attendance')
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                        @endcan
+                                                    @endif
                                                     @can('Delete Attendance')
                                                         @if ($item->deleted_at)
                                                             <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
@@ -248,9 +243,11 @@
                                                 </td>
                                             @elsecan('Delete Attendance')
                                                 <td>
-                                                    @can('Edit Attendance')
-                                                        <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                    @endcan
+                                                    @if (!$item->deleted_at)
+                                                        @can('Edit Attendance')
+                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                        @endcan
+                                                    @endif
                                                     @can('Delete Attendance')
                                                         @if ($item->deleted_at)
                                                             <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
@@ -267,7 +264,7 @@
 
                                 </table>
                                 <div class="mt-4">
-                                    {{ $attendance->links('pagination::bootstrap-5') }}
+                                    {{ $attendance->links() }}
                                 </div>
                             </div>
                         </div>

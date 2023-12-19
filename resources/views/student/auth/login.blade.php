@@ -38,12 +38,12 @@
                         </div>
                         <div class="form-group">
                             <div class="row">
-                                <div class="col">
-                                    <input id="remember_me" type="checkbox" class="form-check-input" name="remember">
-                                    <label for="remember_me" class="form-check-label mx-2 mt-2">Remember Me</label>
+                                <div class="col-6">
+                                    <input id="remember_me" type="checkbox" class="form-check-input mt-2" name="remember">
+                                    <label for="remember_me" class="form-check-label mx-2 mt-1">Remember Me</label>
                                 </div>
-                                <div class="col">
-                                    <a href="{{ route('student.password.request') }}" class="form-check-label mx-2 mt-2">Forgot
+                                <div class="col-6">
+                                    <a wire:navigate href="{{ route('student.password.request') }}" class="form-check-label mx-2 mt-1">Forgot
                                         Password?</a>
                                 </div>
                             </div>

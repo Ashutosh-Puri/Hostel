@@ -50,7 +50,7 @@ Admin Register
                                     <button type="submit" class="btn btn-lg bg-primary btn-primary ">Register</button>
                                 </div>
                                 <div class="col py-2">
-                                    <a href="{{ route('admin.login') }}" class="form-check-label mx-2 ">Already registered?</a>
+                                    <a wire:navigate href="{{ route('admin.login') }}" class="form-check-label mx-2 ">Already registered?</a>
                                 </div>
                             </div>
                         </div>

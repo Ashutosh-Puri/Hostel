@@ -41,7 +41,7 @@
                                                 </div>
                                             </div>
                                             @endforeach
-                                            {{ $gallery->links('pagination::bootstrap-5') }}
+                                            {{ $gallery->links() }}
                                         </div>
                                 </div>
                             </div>

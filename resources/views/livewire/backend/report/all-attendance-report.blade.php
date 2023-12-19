@@ -30,8 +30,8 @@
                             Processing..<span class="btn-label-right"><i
                                     class=" mdi mdi-arrow-down-bold fw-bold"></i></span>
                         </a>
-                        @endcan
-                    </div>
+                    @endcan
+                </div>
             </div>
         </div>
     </div>
@@ -41,7 +41,7 @@
                 <div class="card-header">
                     <div class="row">
                         <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                        <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                        <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                             <option value="10">10</option>
                             <option value="50">50</option>
                             <option value="100">100</option>
@@ -53,26 +53,26 @@
                                 <div class="col-6 col-md-1  ">
                                 </div>
                                 <div class="col-6 col-md-1 ">
-                                    <input  class=" w-100 py-1"type="search" wire:model="year" id="" placeholder="Year">
+                                    <input  class=" w-100 py-1"type="search" wire:model.live="year" id="" placeholder="Year">
                                 </div>
                                 <div class="col-6 col-md-1 ">
-                                    <input  class=" w-100 py-1"type="search" wire:model="month" id="" placeholder="Month">
+                                    <input  class=" w-100 py-1"type="search" wire:model.live="month" id="" placeholder="Month">
                                 </div>
                                 <div class="col-6 col-md-2 ">
-                                    <input  class=" w-100 py-1"type="date" wire:model="date" id="" >
+                                    <input  class=" w-100 py-1"type="date" wire:model.live="date" id="" >
                                 </div>
                                 <div class="col-6 col-md-2 ">
-                                    <input  class=" w-100 py-1"type="search" wire:model="student_name" id="" placeholder="Student Name">
+                                    <input  class=" w-100 py-1"type="search" wire:model.live="student_name" id="" placeholder="Student Name">
                                 </div>
                                 <div class="col-6 col-md-2">
-                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="gender">
+                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.change="gender">
                                         <option value="" hidden>Gender</option>
                                         <option value="0">Male</option>
                                         <option value="1">Female</option>
                                     </select>
                                 </div>
                                 <div class="col-6 col-md-2">
-                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model="filter">
+                                    <select class="w-100 py-1" wire:loading.attr="disabled" wire:model.change="filter">
                                         <option value="" hidden>Filter</option>
                                         <option value="1">Today</option>
                                         <option value="2">Yesterday</option>
@@ -101,7 +101,7 @@
                         </thead>
                         <tbody>
                             @foreach ($attendance as $key => $a)
-                                <tr>
+                                <tr wire:key='{{ $a->id }}'>
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $a->Student->name!=null?$a->Student->name:$a->Student->username; }}</td>
                                     <th>{{ $a->Student->gender===1?'Female':'Male'; }}</th>
@@ -120,7 +120,7 @@
                         </tbody>
                     </table>
                     <div class="mt-4">
-                        {{ $attendance->links('pagination::bootstrap-5') }}
+                        {{ $attendance->links() }}
                     </div>
                 </div>
             </div>
@@ -139,8 +139,15 @@
             </div>
             <div class="col-12 col-md-6">
                 <div class="card my-3">
-                    <div class="card-header">
+                    <div class="card-header d-inline">
                         <h3>Absent Students ( {{ count($absent_students) }} )</h3>
+                      
+                        <a wire:loading.attr="disabled"  wire:click="notifyall()"class="btn btn-sm btn-primary float-end">
+                            <span wire:loading  wire:target='notifyall' class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
+                            <span wire:loading  wire:target='notifyall'>Sending Email</span>
+                            <span wire:loading.remove  wire:target='notifyall'> Notify All</span> 
+                        </a>
+                       
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -150,14 +157,22 @@
                                         <th>ID</th>
                                         <th>Name</th>
                                         <th>Gender</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                     <tbody>
                                         @foreach ($absent_students as $as)  
-                                            <tr>
+                                            <tr wire:key='{{ $as->id }}'>
                                                 <td scope="row">{{ $as->id }}</td>
                                                 <td>{{ $as->name }}</td>
                                                 <td>{{ $as->gender==1?'Female':'Male'; }}</td>
+                                                <td>
+                                                    <a wire:loading.attr="disabled"  wire:click="notify({{ $as->id }})"class="btn btn-sm btn-primary ">
+                                                        <span wire:loading  wire:target='notify' class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
+                                                        <span wire:loading  wire:target='notify'>Sending Email</span>
+                                                        <span wire:loading.remove  wire:target='notify'> Notify </span>
+                                                    </a>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -183,7 +198,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($present_students as $as)  
-                                            <tr>
+                                            <tr wire:key='{{ $as->id }}'>
                                                 <td scope="row">{{ $as->id }}</td>
                                                 <td>{{ $as->name }}</td>
                                                 <td>{{ $as->gender==1?'Female':'Male'; }}</td>

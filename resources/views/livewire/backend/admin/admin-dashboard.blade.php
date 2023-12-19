@@ -6,6 +6,9 @@
         <div class="col-md-12">
             <div class="d-sm-flex justify-content-between align-items-center transaparent-tab-border {">
                 <h1>Dashboard Overview</h1>
+                <div class="float-end">
+                    Visiters<span class="badge  bg-white mx-1"> <strong class=" text-dark fw-bold">{{ $loggedInUserCount}}</strong></span>
+                </div>
             </div>
             <div class="tab-content tab-transparent-content">
                 <div class="tab-pane fade show active" id="business-1" role="tabpanel" aria-labelledby="business-tab">
@@ -365,22 +368,22 @@
 
     @section('dashboard')
     <script>
-        @if ($students)
+        @if ($students> 0)
                 var students = "{{ $students_a / $students }}";
             @else
                 var students = 0;
             @endif
-            @if ($rooms)
+            @if ($rooms> 0)
                 var rooms = "{{ $rooms_f / $rooms }}";
             @else
                 var rooms = 0;
             @endif
-            @if ($admissions)
+            @if ($admissions> 0)
                 var admissions = "{{ $admissions_c / $admissions }}";
             @else
                 var admissions = 0;
             @endif
-            @if ($allocations)
+            @if ($allocations> 0)
                 var allocations = "{{ $allocations_c / $allocations }}";
             @else
                 var allocations = 0;

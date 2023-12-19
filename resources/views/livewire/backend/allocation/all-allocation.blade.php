@@ -26,13 +26,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="save" method="post" action="" id="myForm">
+                            <form  wire:submit="save" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="academic_year_id" class="form-label">Select  Academic Year</label>
-                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
+                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model.change="academic_year_id" >
                                                 <option value="" hidden>Select  Academic Year</option>
                                                 @foreach ($academicyears as $item1)
                                                     <option  value="{{ $item1->id }}">{{ $item1->year }} </option>
@@ -48,7 +48,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="admission_id" class="form-label">Select  Admission ID</label>
-                                            <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model="admission_id" >
+                                            <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model.change="admission_id" >
                                                 <option value="" hidden>Select  Admission ID</option>
                                                 @foreach ($admissions as $item1)
                                                     <option  value="{{ $item1->id }}">{{ $item1->id }} </option>
@@ -94,13 +94,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
+                            <form  wire:submit="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="academic_year_id" class="form-label">Select  Academic Year</label>
-                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model="academic_year_id" >
+                                            <select class="form-select @error('academic_year_id') is-invalid @enderror" id="academic_year_id" wire:model.change="academic_year_id" >
                                                 <option value="" hidden>Select  Academic Year</option>
                                                 @foreach ($academicyears as $item1)
                                                     <option  value="{{ $item1->id }}">{{ $item1->year }} </option>
@@ -116,7 +116,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="admission_id" class="form-label">Select  Admission ID</label>
-                                            <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model="admission_id" >
+                                            <select class="form-select @error('admission_id') is-invalid @enderror" id="admission_id" wire:model.change="admission_id" >
                                                 <option value="" hidden>Select  Admission ID</option>
                                                 @foreach ($admissions as $item1)
                                                     <option  value="{{ $item1->id }}">{{ $item1->id }} </option>
@@ -162,7 +162,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="allocatebed({{ isset($admission->id)?$admission->id:''; }})" method="post" action="" id="myForm">
+                            <form  wire:submit="allocatebed({{ isset($admission->id)?$admission->id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 col-md-3">
@@ -249,7 +249,7 @@
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="hostel_id" class="form-label">Select Hostel</label>
-                                            <select class="form-select @error('hostel_id') is-invalid @enderror" id="hostel_id" wire:model="hostel_id" >
+                                            <select class="form-select @error('hostel_id') is-invalid @enderror" id="hostel_id" wire:model.change="hostel_id" >
                                                 <option hidden >Select Hostel</option>
                                                 @foreach ($hostels as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
@@ -265,7 +265,7 @@
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="building_id" class="form-label">Select Building</label>
-                                            <select class="form-select @error('building_id') is-invalid @enderror" id="building_id" wire:model="building_id" >
+                                            <select class="form-select @error('building_id') is-invalid @enderror" id="building_id" wire:model.change="building_id" >
                                                 <option hidden >Select Building</option>
                                                 @foreach ($buildings as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->name }} </option>
@@ -281,7 +281,7 @@
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="floor_id" class="form-label">Select Floor</label>
-                                            <select class="form-select @error('floor_id') is-invalid @enderror" id="floor_id" wire:model="floor_id" >
+                                            <select class="form-select @error('floor_id') is-invalid @enderror" id="floor_id" wire:model.change="floor_id" >
                                                 <option hidden >Select Floor</option>
                                                 @foreach ($floors as $item1)
                                                     <option  value="{{ $item1->id }}">
@@ -299,7 +299,7 @@
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="room_id" class="form-label">Select Room</label>
-                                            <select class="form-select @error('room_id') is-invalid @enderror" id="room_id" wire:model="room_id" >
+                                            <select class="form-select @error('room_id') is-invalid @enderror" id="room_id" wire:model.change="room_id" >
                                                 <option hidden >Select Room</option>
                                                 @foreach ($rooms as $item1)
                                                     <option  value="{{ $item1->id }}">Room ID : {{ $item1->id }} - ( {{ $item1->label }} ) </option>
@@ -326,7 +326,7 @@
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="fee" class="form-label">Fee Amount</label>
-                                            <label for="fee"class="form-control @error('fee') is-invalid @enderror" wire:model="fee">{{ isset($fee)?$fee.' Rs.':''; }} </label>
+                                            <label for="fee"class="form-control @error('fee') is-invalid @enderror" wire:model.live="fee">{{ isset($fee)?$fee.' Rs.':''; }} </label>
                                             @error('fee')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -337,7 +337,7 @@
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="bed_id" class="form-label">Select  Bed</label>
-                                            <select class="form-select @error('bed_id') is-invalid @enderror" id="bed_id" wire:model="bed_id" >
+                                            <select class="form-select @error('bed_id') is-invalid @enderror" id="bed_id" wire:model.change="bed_id" >
                                                 <option value="" hidden>Select  Bed</option>
                                                 @foreach ($beds as $item1)
                                                     <option  value="{{ $item1->id }}"> {{ $item1->id }} </option>
@@ -384,7 +384,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="exchangebed({{ $admission->id }})" method="post" action="" id="myForm">
+                            <form  wire:submit="exchangebed({{ $admission->id }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 col-md-12">
@@ -500,7 +500,7 @@
                                     <div class="col-12 col-md-3">
                                         <div class="mb-3 form-group">
                                             <label for="admissionid2" class="form-label">Admission ID</label>
-                                            <input type="number"class="form-control  @error('admissionid2') is-invalid @enderror" wire:model.debounce.500ms="admissionid2">
+                                            <input type="number"class="form-control  @error('admissionid2') is-invalid @enderror" wire:model.live.debounce.500ms="admissionid2">
                                             @error('admissionid2')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -659,7 +659,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -673,16 +673,16 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                                 </div>
                                                 <div class="col-12 col-md-2 ">
-                                                    <input  class="w-100" wire:model.debounce.1000ms="ad" type="search" placeholder="Admission ID ">
+                                                    <input  class="w-100" wire:model.live.debounce.1000ms="ad" type="search" placeholder="Admission ID ">
                                                 </div>
                                                 <div class="col-12 col-md-2">
-                                                    <input  class="w-100" wire:model.debounce.1000ms="a" type="search" placeholder="Academic Year">
+                                                    <input  class="w-100" wire:model.live.debounce.1000ms="a" type="search" placeholder="Academic Year">
                                                 </div>
                                                 <div class="col-12 col-md-3">
-                                                    <input class="w-100"  wire:model.debounce.1000ms="s" type="search" placeholder="Student Name">
+                                                    <input class="w-100"  wire:model.live.debounce.1000ms="s" type="search" placeholder="Student Name">
                                                 </div>
                                                 <div class="col-12 col-md-3">
-                                                    <input class="w-100"  wire:model.debounce.1000ms="c" type="search" placeholder="Class Name">
+                                                    <input class="w-100"  wire:model.live.debounce.1000ms="c" type="search" placeholder="Class Name">
                                                 </div>
                                             </div>
                                     </span>
@@ -717,7 +717,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($allocations as $key => $item)
-                                            <tr>
+                                            <tr wire:key='{{ $item->id }}'>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->Admission->id }}</td>
                                                 <td>{{ $item->Admission->AcademicYear->year }}</td>
@@ -733,10 +733,9 @@
                                                     @endif
                                                 </td>
                                                 <td>
-
                                                     @if (isset($item->Admission->Seated->Fees))
                                                         @foreach ($item->Admission->Seated->Fees as $fee)
-                                                            @if ($fee->academic_year_id==$item->Admission->academic_year_id)
+                                                            @if ($fee->academic_year_id===$item->Admission->academic_year_id)
                                                                 @if ($fee->amount)
                                                                     {{ $fee->amount }}
                                                                 @endif
@@ -765,18 +764,20 @@
                                                 </td>
                                                 @can('Allocate Bed')
                                                     <td>
-                                                        @can('Allocate Bed')
-                                                            <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success "> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('Exchange Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning "><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('De Allocate Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger "><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('Edit Allocation')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Allocate Bed')
+                                                                <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success "> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('Exchange Bed')
+                                                                <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning "><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('De Allocate Bed')
+                                                                <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger "><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('Edit Allocation')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Allocation')
                                                             @if ($item->deleted_at)
                                                                 <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
@@ -788,18 +789,20 @@
                                                     </td>
                                                 @elsecan('Exchange Bed')
                                                     <td>
-                                                        @can('Allocate Bed')
-                                                            <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success "> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('Exchange Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning "><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('De Allocate Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger "><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('Edit Allocation')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Allocate Bed')
+                                                                <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success "> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('Exchange Bed')
+                                                                <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning "><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('De Allocate Bed')
+                                                                <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger "><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('Edit Allocation')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Allocation')
                                                             @if ($item->deleted_at)
                                                                 <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
@@ -811,18 +814,20 @@
                                                     </td>
                                                 @elsecan('De Allocate Bed')
                                                     <td>
-                                                        @can('Allocate Bed')
-                                                            <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success "> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('Exchange Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning "><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('De Allocate Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger "><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('Edit Allocation')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Allocate Bed')
+                                                                <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success "> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('Exchange Bed')
+                                                                <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning "><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('De Allocate Bed')
+                                                                <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger "><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('Edit Allocation')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Allocation')
                                                             @if ($item->deleted_at)
                                                                 <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
@@ -834,18 +839,20 @@
                                                     </td>
                                                 @elsecan('Edit Allocation')
                                                     <td>
-                                                        @can('Allocate Bed')
-                                                            <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success "> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('Exchange Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning "><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('De Allocate Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger "><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('Edit Allocation')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Allocate Bed')
+                                                                <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success "> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('Exchange Bed')
+                                                                <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning "><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('De Allocate Bed')
+                                                                <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger "><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('Edit Allocation')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Allocation')
                                                             @if ($item->deleted_at)
                                                                 <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
@@ -857,18 +864,20 @@
                                                     </td>
                                                 @elsecan('Delete Allocation')
                                                     <td>
-                                                        @can('Allocate Bed')
-                                                            <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success "> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('Exchange Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning "><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('De Allocate Bed')
-                                                            <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger "><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
-                                                        @endcan
-                                                        @can('Edit Allocation')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Allocate Bed')
+                                                                <a wire:loading.attr="disabled"  wire:click="allocate({{ $item->Admission->id }})" class="btn btn-success "> @if($item->bed_id==null) <i class="mdi mdi-checkbox-marked mx-1"></i> @else <i class="mdi mdi-reload mx-1"></i>  @endif <i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('Exchange Bed')
+                                                                <a wire:loading.attr="disabled" wire:click="exchange({{ $item->Admission->id }})"  class="btn btn-warning "><i class="mdi mdi-sync mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('De Allocate Bed')
+                                                                <a wire:loading.attr="disabled" wire:click="deallocate({{ $item->Admission->id }})"  class="btn btn-danger "><i class="mdi mdi-close-box mx-1"></i><i class="mdi mdi-hotel"></i></a>
+                                                            @endcan
+                                                            @can('Edit Allocation')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-primary "><i class="mdi mdi-pencil"></i></a>
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Allocation')
                                                             @if ($item->deleted_at)
                                                                 <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
@@ -884,7 +893,7 @@
                                     </tbody>
                                 </table>
                                 <div class="mt-4">
-                                    {{ $allocations->links('pagination::bootstrap-5') }}
+                                    {{ $allocations->links() }}
                                 </div>
                             </div>
                         </div>

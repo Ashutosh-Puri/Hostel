@@ -24,6 +24,7 @@ return new class extends Migration
             $table->unsignedBigInteger('cast_id')->nullable();
             $table->string('parent_name')->nullable();
             $table->string('parent_mobile')->nullable();
+            $table->string('parent_email')->nullable();
             $table->string('parent_address')->nullable();
             $table->string('local_parent_name')->nullable();
             $table->string('local_parent_mobile')->nullable();

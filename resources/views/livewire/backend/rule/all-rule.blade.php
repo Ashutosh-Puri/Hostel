@@ -22,13 +22,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="save" method="post" action="" id="myForm">
+                            <form  wire:submit="save" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 col-md-10">
                                         <div class="mb-3 form-group">
                                             <label for="name" class="form-label">Rule Name</label>
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Rule Name">
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model.live="name" value="{{ old('name') }}" id="name" placeholder="Enter Rule Name">
                                             @error('name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -39,7 +39,7 @@
                                     <div class="col-12 col-md-2">
                                         <div class="mb-3 form-group ">
                                             <label for="description" class="form-label mb-3">Status</label><br>
-                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ $status==1?'checked':''; }} id="class_status"  wire:model="status" >
+                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ $status==1?'checked':''; }} id="class_status"  wire:model.live="status" >
                                             <label class="form-check-label m-1" for="class_status">In-Active Rule</label>
                                             @error('status')
                                                 <div class="invalid-feedback">
@@ -51,7 +51,7 @@
                                     <div class="col-12 col-md-12">
                                         <div class="mb-3 form-group">
                                             <label for="description" class="form-label">Rule Description</label>
-                                            <textarea class=" w-100 @error('description') is-invalid @enderror" wire:model.debounce.1000ms="description" id="description" placeholder="Enter Rule Description"   cols="30" rows="5">{{ old('description') }}</textarea>
+                                            <textarea class=" w-100 @error('description') is-invalid @enderror" wire:model.live.debounce.1000ms="description" id="description" placeholder="Enter Rule Description"   cols="30" rows="5">{{ old('description') }}</textarea>
                                             @error('description')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -88,13 +88,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
+                            <form  wire:submit="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 col-md-10">
                                         <div class="mb-3 form-group">
                                             <label for="name" class="form-label">Rule Name</label>
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Rule Name">
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model.live="name" value="{{ old('name') }}" id="name" placeholder="Enter Rule Name">
                                             @error('name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -105,7 +105,7 @@
                                     <div class="col-12 col-md-2">
                                         <div class="mb-3 form-group ">
                                             <label for="description" class="form-label mb-3">Status</label><br>
-                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ $status==1?'checked':''; }} id="class_status"  wire:model="status" >
+                                            <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ $status==1?'checked':''; }} id="class_status"  wire:model.live="status" >
                                             <label class="form-check-label m-1" for="class_status">In-Active Rule</label>
                                             @error('status')
                                                 <div class="invalid-feedback">
@@ -117,7 +117,7 @@
                                     <div class="col-12 col-md-12">
                                         <div class="mb-3 form-group">
                                             <label for="description" class="form-label">Rule Description</label>
-                                            <textarea class=" w-100 @error('description') is-invalid @enderror" wire:model.debounce.1000ms="description" id="description" placeholder="Enter Rule Description"   cols="30" rows="5">{{ old('description') }}</textarea>
+                                            <textarea class=" w-100 @error('description') is-invalid @enderror" wire:model.live.debounce.1000ms="description" id="description" placeholder="Enter Rule Description"   cols="30" rows="5">{{ old('description') }}</textarea>
                                             @error('description')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -139,7 +139,7 @@
                 @endsection
                 <div class="row">
                     <div class="col-12">
-                        <div class="bg-success">
+                        <div class="">
                             <div class="float-start pt-2 px-2">
                                 <h2>Data Rules</h2>
                                 <div wire:loading wire:target="per_page" class="loading-overlay">
@@ -150,11 +150,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <a wire:loading class="btn btn-primary btn-sm " style="padding:10px; ">
-                                <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
-                                <span class="visually-hidden">Loading...</span>
-                            </a>
                             <div class="float-end">
+                                <a wire:loading class="btn btn-primary btn-sm " style="padding:10px; ">
+                                    <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Loading...</span>
+                                </a>
                                 @can('Add Rule')
                                     <a wire:loading.attr="disabled"  wire:click="setmode('add')"class="btn btn-success ">
                                         Add Rule<span class="btn-label-right mx-2"><i class=" mdi mdi-plus-circle fw-bold"></i></span>
@@ -170,7 +170,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -186,7 +186,7 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <input  class="w-100"wire:model.debounce.1000ms="search" type="search" placeholder="Description">
+                                                <input  class="w-100"wire:model.live.debounce.1000ms="search" type="search" placeholder="Description">
                                             </div>
                                         </span>
                                     </span>
@@ -209,7 +209,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($rule as $key => $item)
-                                            <tr>
+                                            <tr wire:key='{{ $item->id }}'>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->name }}</td>
                                                 <td class="text-wrap lh-lg">{{ $item->description }}</td>
@@ -222,14 +222,16 @@
                                                 </td>
                                                 @can('Edit Rule')
                                                     <td>
-                                                        @can('Edit Rule')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                            @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
-                                                            @else
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
-                                                            @endif
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Edit Rule')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                                @if ($item->status==1)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                @else
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                @endif
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Rule')
                                                             @if ($item->deleted_at)
                                                                 <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
@@ -241,14 +243,16 @@
                                                     </td>
                                                 @elsecan('Delete Rule')
                                                     <td>
-                                                        @can('Edit Rule')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                            @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
-                                                            @else
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
-                                                            @endif
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Edit Rule')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                                @if ($item->status==1)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                @else
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                @endif
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Rule')
                                                             @if ($item->deleted_at)
                                                                 <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
@@ -264,7 +268,7 @@
                                     </tbody>
                                 </table>
                                 <div class="mt-4">
-                                    {{ $rule->links('pagination::bootstrap-5') }}
+                                    {{ $rule->links() }}
                                 </div>
                             </div>
                         </div>

@@ -59,7 +59,7 @@
 
         </div>
         <div>
-            {{ $notice->links('pagination::bootstrap-5') }}
+            {{ $notice->links() }}
         </div>
     </div>
 </div> --}}

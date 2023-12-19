@@ -131,29 +131,28 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link rel="stylesheet" href="{{ asset('assets/guest_template/css/bootstrap.min.css') }}">
-    
+
     <!-- Template Stylesheet -->
     <link href="{{ asset('assets/guest_template/css/style.css') }}" rel="stylesheet">
-@endsection
-<body>  
-   
-    
-    <div id="wrapper">
-        @include('layouts.guest.navbar')
-        <div class="content-page guest-bg" >
-           @yield('guest')
-        </div>
-        @include('layouts.guest.footer')
-
-        @section('scripts')
+    @endsection
+    <body>  
+        <div id="wrapper">
+            @include('layouts.guest.navbar')
+            <div class="content-page guest-bg" >
+                @yield('guest')
+            </div>
+            @include('layouts.guest.footer')
+            
+            @section('scripts')
             <!-- JavaScript Libraries -->
+            <script src="{{ asset('assets/bootstrap/bootstrap.min.js') }}"></script>
             <script src="{{ asset('assets/guest_template/lib/wow/wow.min.js') }}"></script>
             <script src="{{ asset('assets/guest_template/lib/easing/easing.min.js') }}"></script>
             <script src="{{ asset('assets/guest_template/lib/waypoints/waypoints.min.js') }}"></script>
             <script src="{{ asset('assets/guest_template/lib/owlcarousel/owl.carousel.min.js') }}"></script>
             <!-- Template Javascript -->
             <script src="{{ asset('assets/guest_template/js/main.js') }}"></script>
-        @endsection
-    </div>
-</body>
+            @endsection
+        </div>
+    </body>
 @endsection

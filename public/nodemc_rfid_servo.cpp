@@ -30,7 +30,7 @@ const int port = 80;
 const String secrate_key="scolerstay_rfid_secrate";
 
 const int RED_LED_PIN = D0;
-const int GREEN_LED_PIN = D1;8*
+const int GREEN_LED_PIN = D1;
 const int BLUE_LED_PIN = D2;
 const int SERVO_PIN = D8;
 constexpr uint8_t RST_PIN = D3;
@@ -49,8 +49,6 @@ void setup() {
     pinMode(GREEN_LED_PIN, OUTPUT);
     pinMode(RED_LED_PIN, OUTPUT);
     pinMode(BLUE_LED_PIN, OUTPUT);
-    pinMode(TRIGER_PIN, OUTPUT);
-    pinMode(ECHO_PIN, INPUT);
     WiFi.begin(ssid, password);
     Serial.println("Connected to WiFi");
     digitalWrite(BLUE_LED_PIN, HIGH);

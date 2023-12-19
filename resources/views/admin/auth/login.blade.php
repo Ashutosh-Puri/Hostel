@@ -39,11 +39,11 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                    <input id="remember_me" type="checkbox" class="form-check-input" name="remember">
-                                    <label for="remember_me" class="form-check-label mx-2 mt-2">Remember Me</label>
+                                    <input id="remember_me" type="checkbox" class="form-check-input form-check-primary mt-2" name="remember">
+                                    <label for="remember_me" class="form-check-label mx-2 mt-1">Remember Me</label>
                                 </div>
                                 <div class="col">
-                                    <a href="{{ route('admin.password.request') }}" class="form-check-label mx-2 mt-2">Forgot
+                                    <a wire:navigate href="{{ route('admin.password.request') }}" class="form-check-label mx-2 mt-1">Forgot
                                         Password?</a>
                                 </div>
                             </div>

@@ -4,19 +4,19 @@
         <div class="row g-5">
             <div class="col-lg-3 col-md-6">
                 <h4 class="text-white mb-3">Quick Link</h4>
-                <a class="btn btn-link " href="{{ route('about') }}"><span class="mdi mdi-chevron-right"></span>About</a>
-                <a class="btn btn-link" href="{{ route('contact') }}"><span class="mdi mdi-chevron-right"></span>Contact</a>
-                <a class="btn btn-link" href="{{ route('notice') }}"><span class="mdi mdi-chevron-right"></span>Notice</a>
-                {{-- <a class="btn btn-link" href="#"><span class="mdi mdi-chevron-right"></span>Privacy Policy</a>
-                <a class="btn btn-link" href="#"><span class="mdi mdi-chevron-right"></span>Terms & Condition</a>
-                <a class="btn btn-link" href="#"><span class="mdi mdi-chevron-right"></span>FAQs & Help</a> --}}
+                <a wire:navigate class="btn btn-link " href="{{ route('about') }}"><span class="mdi mdi-chevron-right"></span>About</a>
+                <a wire:navigate class="btn btn-link" href="{{ route('contact') }}"><span class="mdi mdi-chevron-right"></span>Contact</a>
+                <a wire:navigate class="btn btn-link" href="{{ route('notice') }}"><span class="mdi mdi-chevron-right"></span>Notice</a>
+                {{-- <a wire:navigate class="btn btn-link" href="#"><span class="mdi mdi-chevron-right"></span>Privacy Policy</a>
+                <a wire:navigate class="btn btn-link" href="#"><span class="mdi mdi-chevron-right"></span>Terms & Condition</a>
+                <a wire:navigate class="btn btn-link" href="#"><span class="mdi mdi-chevron-right"></span>FAQs & Help</a> --}}
             </div>
             <div class="col-lg-3 col-md-6">
                 <h4 class="text-white mb-3">Quick Link</h4>
-                {{-- <a class="btn btn-link" href="{{ route('admin.login') }}"><span class="mdi mdi-chevron-right"></span>Admin Login</a> --}}
-                <a class="btn btn-link" href="{{ route('rules') }}"><span class="mdi mdi-chevron-right"></span>Rules</a>
-                <a class="btn btn-link" href="{{ route('gallery') }}"><span class="mdi mdi-chevron-right"></span>Gallery</a>
-                <a class="btn btn-link" href="{{ route('team') }}"><span class="mdi mdi-chevron-right"></span>Team</a>
+                {{-- <a wire:navigate class="btn btn-link" href="{{ route('admin.login') }}"><span class="mdi mdi-chevron-right"></span>Admin Login</a> --}}
+                <a wire:navigate class="btn btn-link" href="{{ route('rules') }}"><span class="mdi mdi-chevron-right"></span>Rules</a>
+                <a wire:navigate class="btn btn-link" href="{{ route('gallery') }}"><span class="mdi mdi-chevron-right"></span>Gallery</a>
+                <a wire:navigate class="btn btn-link" href="{{ route('team') }}"><span class="mdi mdi-chevron-right"></span>Team</a>
             </div>
             <div class="col-lg-3 col-md-6">
                 @php
@@ -39,10 +39,10 @@
                     @endif
                 </p>
                 {{-- <div class="d-flex pt-2">
-                    <a class="btn btn-outline-light btn-social" href=""><i class="mdi mdi-twitter"></i></a>
-                    <a class="btn btn-outline-light btn-social" href=""><i class="mdi mdi-facebook"></i></a>
-                    <a class="btn btn-outline-light btn-social" href=""><i class="mdi mdi-youtube"></i></a>
-                    <a class="btn btn-outline-light btn-social" href=""><i class="mdi mdi-linkedin"></i></a>
+                    <a wire:navigate class="btn btn-outline-light btn-social" href=""><i class="mdi mdi-twitter"></i></a>
+                    <a wire:navigate class="btn btn-outline-light btn-social" href=""><i class="mdi mdi-facebook"></i></a>
+                    <a wire:navigate class="btn btn-outline-light btn-social" href=""><i class="mdi mdi-youtube"></i></a>
+                    <a wire:navigate class="btn btn-outline-light btn-social" href=""><i class="mdi mdi-linkedin"></i></a>
                 </div> --}}
             </div>
             <div class="col-lg-3 col-md-6">
@@ -54,13 +54,23 @@
         <div class="copyright">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    &copy; <a class="border-bottom" target="_blank" href="http://cmdsoft.rf.gd">CMDSoft</a>, All Right Reserved.
-                    Designed By <a class="border-bottom" target="_blank" href="http://cmdsoft.rf.gd">Ashutosh Puri</a>
+                    &copy; <a wire:navigate class="border-bottom" target="_blank" href="http://cmdsoft.rf.gd">CMDSoft</a>, All Right Reserved.
+                    Designed By <a wire:navigate class="border-bottom" target="_blank" href="http://cmdsoft.rf.gd">Ashutosh Puri</a>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
                     <div class="footer-menu">
-                        <a href="{{ route('home') }}">Home</a>
-                        <a data-turbolinks="false" href="{{ route('admin.login') }}">Admin Login</a>
+                        <a wire:navigate href="{{ route('home') }}">Home</a>
+                        @auth('admin')
+                        <a  href="{{ route('admin.dashboard') }}">Dashboard</a>
+                        <form method="POST" action="{{ route('admin.logout') }}" class="d-inline">
+                            @csrf
+                            <button class="d-inline btn btn-link text-decoration-none" onclick="event.preventDefault(); this.closest('form').submit();" type="submit">
+                              <span>Logout</span>
+                            </button>
+                          </form>
+                        @else 
+                            <a href="{{ route('admin.login') }}">Admin Login</a>
+                        @endauth
                     </div>
                 </div>
             </div>

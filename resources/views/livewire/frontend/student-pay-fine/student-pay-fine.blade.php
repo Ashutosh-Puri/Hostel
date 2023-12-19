@@ -28,7 +28,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -54,7 +54,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($student_fines as $key => $item)
-                                            <tr>
+                                            <tr wire:key='{{ $item->id }}'>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->AcademicYear->year}}</td>
                                                 <td>{{ $item->Student->name!=null? $item->Student->name: $item->Student->username; }}</td>
@@ -74,34 +74,31 @@
                                                 <td>
                                                     @if ($item->status==0)                    
                                                         @if ($item->amount >0)
-                                                            <a class="btn btn-sm btn-success" data-turbolinks="false" href="{{ route('student_pay_fine',$item->id) }}" >Pay</a>
+                                                            <a  class="btn btn-sm btn-success"  href="{{ route('student_pay_fine',$item->id) }}" >Pay</a>
                                                         @endif
                                                     @endif
                                                     @if ($item->status==2)                    
                                                         @if ($item->amount >=0)
                                                             @if (isset($item->transaction->status))
                                                                 @if ($item->transaction->status==2)
-                                                                    <a  class="btn  btn-sm btn-primary" data-turbolinks="false" href="{{ route('student_refund_fine',$item->id) }}" >Refund</a>
+                                                                    <a  class="btn  btn-sm btn-primary"  href="{{ route('student_refund_fine',$item->id) }}" >Refund</a>
                                                                 @endif
                                                             @endif
                                                         @endif
                                                     @endif
                                                 </td>
-                                                
-                                                    <td>
-                                                        @if ($item->status==1)   
-                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('student.view_fine_recipet', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
-                                                            <a   target="_blank"  class="btn btn-warning " href="{{ route('student.download_fine_recipet', $item->id) }}"> <i class="mdi mdi-download"></i></a>
-                                                       @endif
-                                                        
-                                                    </td>
-                                               
+                                                <td>
+                                                    @if ($item->status==1)   
+                                                        <a target="_blank"  class="btn btn-warning " href="{{ route('student.view_fine_recipet', $item->id) }}"> <i class="mdi mdi-eye"></i></a>
+                                                        <a target="_blank"  class="btn btn-warning " href="{{ route('student.download_fine_recipet', $item->id) }}"> <i class="mdi mdi-download"></i></a>
+                                                    @endif     
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
                                 <div class="mt-4">
-                                    {{ $student_fines->links('pagination::bootstrap-5') }}
+                                    {{ $student_fines->links() }}
                                 </div>
                             </div>
                         </div>

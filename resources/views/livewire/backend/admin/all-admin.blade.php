@@ -22,13 +22,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="save" method="post" action="" id="myForm">
+                            <form  wire:submit="save" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="role" class="form-label">Select Role</label>
-                                            <select class="form-select @error('role') is-invalid @enderror" id="role" wire:model="role" >
+                                            <select class="form-select @error('role') is-invalid @enderror" id="role" wire:model.change="role" >
                                                 <option hidden value="">Select Role</option>
                                                 @foreach ($roles as $item1)
                                                     <option  value="{{ $item1->name}}"> {{ $item1->name }} </option>
@@ -44,7 +44,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="name" class="form-label">Name</label>
-                                            <input type="text"  class="form-control @error('name') is-invalid @enderror" wire:model.debounce.1000ms="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
+                                            <input type="text"  class="form-control @error('name') is-invalid @enderror" wire:model.live.debounce.1000ms="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
                                             @error('name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -57,7 +57,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="email" class="form-label">Email</label>
-                                            <input type="email"   class="form-control @error('email') is-invalid @enderror" wire:model.debounce.1000ms="email" value="{{ old('email') }}" id="email" placeholder="Enter Email">
+                                            <input type="email"   class="form-control @error('email') is-invalid @enderror" wire:model.live.debounce.1000ms="email" value="{{ old('email') }}" id="email" placeholder="Enter Email">
                                             @error('email')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -68,7 +68,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="password" class="form-label">Password</label>
-                                            <input type="password"   class="form-control @error('password') is-invalid @enderror" wire:model.debounce.1000ms="password" value="{{ old('password') }}" id="password" placeholder="Enter Password">
+                                            <input type="password"   class="form-control @error('password') is-invalid @enderror" wire:model.live.debounce.1000ms="password" value="{{ old('password') }}" id="password" placeholder="Enter Password">
                                             @error('password')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -81,7 +81,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="password_confirmation" class="form-label">Confirm Password</label>
-                                            <input type="password"   class="form-control @error('password_confirmation') is-invalid @enderror" wire:model.debounce.1000ms="password_confirmation" value="{{ old('password_confirmation') }}" id="password_confirmation" placeholder="Enter Confirm Password">
+                                            <input type="password"   class="form-control @error('password_confirmation') is-invalid @enderror" wire:model.live.debounce.1000ms="password_confirmation" value="{{ old('password_confirmation') }}" id="password_confirmation" placeholder="Enter Confirm Password">
                                             @error('password_confirmation')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -92,7 +92,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="mobile" class="form-label">Mobile</label>
-                                            <input type="number"   class="form-control @error('mobile') is-invalid @enderror" wire:model.debounce.1000ms="mobile" value="{{ old('mobile') }}" id="mobile" placeholder="Enter Mobile">
+                                            <input type="number"   class="form-control @error('mobile') is-invalid @enderror" wire:model.live.debounce.1000ms="mobile" value="{{ old('mobile') }}" id="mobile" placeholder="Enter Mobile">
                                             @error('mobile')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -105,7 +105,7 @@
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
                                             <label for="photo" class="form-label">Photo</label>
-                                            <input type="file" class="form-control  @error('photo') is-invalid @enderror" wire:model.debounce.1000ms="photo" id="photo"   >
+                                            <input type="file" class="form-control  @error('photo') is-invalid @enderror" wire:model.live.debounce.1000ms="photo" id="photo"   >
                                             @error('photo')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -123,7 +123,7 @@
                                         <div class="mb-3 form-group">
                                             <label for="status" class="form-label">Status</label>
                                             <div class="form-group ">
-                                                <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ $status==1?'checked':''; }} id="class_status"  wire:model.debounce.1000ms="status" >
+                                                <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ $status==1?'checked':''; }} id="class_status"  wire:model.live.debounce.1000ms="status" >
                                                 <label class="form-check-label m-1" for="class_status">In-Active Admin</label>
                                                 @error('status')
                                                     <div class="invalid-feedback">
@@ -162,13 +162,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
+                            <form  wire:submit="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="role" class="form-label">Select Role</label>
-                                            <select class="form-select @error('role') is-invalid @enderror" id="role" wire:model="role" >
+                                            <select class="form-select @error('role') is-invalid @enderror" id="role" wire:model.change="role" >
                                                 <option hidden value="">Select Role</option>
                                                 @foreach ($roles as $item1)
                                                     <option  value="{{ $item1->name  }}"> {{ $item1->name }} </option>
@@ -184,7 +184,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="name" class="form-label">Name</label>
-                                            <input type="text"  class="form-control @error('name') is-invalid @enderror" wire:model.debounce.1000ms="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
+                                            <input type="text"  class="form-control @error('name') is-invalid @enderror" wire:model.live.debounce.1000ms="name" value="{{ old('name') }}" id="name" placeholder="Enter Name">
                                             @error('name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -197,7 +197,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="email" class="form-label">Email</label>
-                                            <input type="email"   class="form-control @error('email') is-invalid @enderror" wire:model.debounce.1000ms="email" value="{{ old('email') }}" id="email" placeholder="Enter Email">
+                                            <input type="email"   class="form-control @error('email') is-invalid @enderror" wire:model.live.debounce.1000ms="email" value="{{ old('email') }}" id="email" placeholder="Enter Email">
                                             @error('email')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -208,7 +208,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="mobile" class="form-label">Mobile</label>
-                                            <input type="number"   class="form-control @error('mobile') is-invalid @enderror" wire:model.debounce.1000ms="mobile" value="{{ old('mobile') }}" id="mobile" placeholder="Enter Mobile">
+                                            <input type="number"   class="form-control @error('mobile') is-invalid @enderror" wire:model.live.debounce.1000ms="mobile" value="{{ old('mobile') }}" id="mobile" placeholder="Enter Mobile">
                                             @error('mobile')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -221,7 +221,7 @@
                                     <div class="col-12 col-md-4">
                                         <div class="mb-3 form-group">
                                             <label for="photo" class="form-label">Photo</label>
-                                            <input type="file" class="form-control  @error('photo') is-invalid @enderror" wire:model.debounce.1000ms="photo" id="photo"   >
+                                            <input type="file" class="form-control  @error('photo') is-invalid @enderror" wire:model.live.debounce.1000ms="photo" id="photo"   >
                                             @error('photo')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -248,7 +248,7 @@
                                         <div class="mb-3 form-group">
                                             <label for="status" class="form-label">Status</label>
                                             <div class="form-group ">
-                                                <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ $status==1?'checked':''; }} id="class_status"  wire:model.debounce.1000ms="status" >
+                                                <input class="form-check-input @error('status') is-invalid @enderror" type="checkbox" value="1" {{ $status==1?'checked':''; }} id="class_status"  wire:model.live.debounce.1000ms="status" >
                                                 <label class="form-check-label m-1" for="class_status">In-Active Admin</label>
                                                 @error('status')
                                                     <div class="invalid-feedback">
@@ -303,7 +303,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -319,7 +319,7 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                    <input class="w-100" wire:model.debounce.1000ms="search" type="search" placeholder="Admin Name">
+                                                    <input class="w-100" wire:model.live.debounce.1000ms="search" type="search" placeholder="Admin Name">
                                             </div>
                                         </span>
                                     </span>
@@ -345,10 +345,10 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($admins as $key => $item)
-                                            <tr>
+                                            <tr wire:key='{{ $item->id }}'>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>
-                                                    <img id="showImage" src="{{ (!empty($item->photo)) ? asset($item->photo) : asset('assets/images/no_image.jpg') }}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image" style="height: 45px; width:45px;">
+                                                    <img id="showImage" src="{{ (!empty($item->photo)) ? asset($item->photo) : asset('assets/images/no_image.jpg') }}" class="rounded-circle avatar-lg " alt="profile-image" style="height: 45px; width:45px;">
                                                 </td>
                                                 <td>{{ $item->name }}</td>
                                                 <td>{{ $item->email }}</td>
@@ -370,11 +370,13 @@
                                                 @can('Edit Admin')
                                                     <td>
                                                         @can('Edit Admin')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                            @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
-                                                            @else
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                            @if (!$item->deleted_at)
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                                @if ($item->status==1)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                @else
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                @endif
                                                             @endif
                                                         @endcan
                                                         @can('Delete Admin')
@@ -389,11 +391,13 @@
                                                 @elsecan('Delete Admin')
                                                     <td>
                                                         @can('Edit Admin')
-                                                        <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                            @if ($item->status==1)
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
-                                                            @else
-                                                                <a wire:loading.attr="disabled"  wire:click="status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                            @if (!$item->deleted_at)
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                                @if ($item->status==1)
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-success "> <i class="mdi mdi-thumb-up"></i> </a>
+                                                                @else
+                                                                    <a wire:loading.attr="disabled"  wire:click="update_status({{ $item->id }})" class="btn btn-danger "> <i class="mdi mdi-thumb-down"></i> </a>
+                                                                @endif
                                                             @endif
                                                         @endcan
                                                         @can('Delete Admin')
@@ -411,7 +415,7 @@
                                     </tbody>
                                 </table>
                                 <div class="mt-4">
-                                    {{ $admins->links('pagination::bootstrap-5') }}
+                                    {{ $admins->links() }}
                                 </div>
                             </div>
                         </div>

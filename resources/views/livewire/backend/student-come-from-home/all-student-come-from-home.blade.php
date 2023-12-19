@@ -22,13 +22,29 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form wire:submit.prevent="save" method="post" action="" id="myForm">
+                        <form wire:submit="save" method="post" action="" id="myForm">
                             @csrf
                             <div class="row">
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3 form-group">
+                                        <label for="student_id" class="form-label">Select Student</label>
+                                        <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.change="student_id">
+                                            <option  hidden value="">Select Students</option>
+                                            @foreach($students as $item2)
+                                                <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name!=null?$item2->name: $item2->username; }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('student_id')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3 form-group">
                                         <label for="come_time" class="form-label">Come Time</label>
-                                        <input type="time" wire:model="come_time"
+                                        <input type="time" wire:model.live="come_time"
                                             class="form-control @error('come_time') is-invalid @enderror " id="time"
                                             placeholder="Enter Come Time" />
                                         @error('come_time')
@@ -70,14 +86,30 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form wire:submit.prevent="update({{ isset($c_id) ? $c_id : '' }})" method="post" action=""
+                        <form wire:submit="update({{ isset($c_id) ? $c_id : '' }})" method="post" action=""
                             id="myForm">
                             @csrf
                             <div class="row">
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3 form-group">
+                                        <label for="student_id" class="form-label">Select Student</label>
+                                        <select class="form-select @error('student_id') is-invalid @enderror" id="student_id" wire:model.change="student_id">
+                                            <option  hidden value="">Select Students</option>
+                                            @foreach($students as $item2)
+                                                <option class="py-4" value="{{ $item2->id  }}">{{  $item2->name!=null?$item2->name: $item2->username; }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('student_id')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3 form-group">
                                         <label for="come_time" class="form-label">Come Time</label>
-                                        <input type="time" wire:model="come_time"
+                                        <input type="time" wire:model.live="come_time"
                                             class="form-control @error('come_time') is-invalid @enderror " id="time"
                                             placeholder="Enter Come Time" />
                                         @error('come_time')
@@ -136,7 +168,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <label class="col-4 col-md-1 py-1">Per Page</label>
-                                <select class="col-4 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                <select class="col-4 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                                     <option value="10">10</option>
                                     <option value="50">50</option>
                                     <option value="100">100</option>
@@ -150,15 +182,15 @@
                                             <label class="w-100 p-1 text-md-end">Search</label>
                                         </div>
                                         <div class="col-12 col-md-3">
-                                            <input class="w-100" wire:model.debounce.1000ms="year" type="search"
+                                            <input class="w-100" wire:model.live.debounce.1000ms="year" type="search"
                                                 placeholder="Academic Year" />
                                         </div>
                                         <div class="col-12 col-md-3">
-                                            <input class="w-100" wire:model.debounce.1000ms="class_name" type="search"
+                                            <input class="w-100" wire:model.live.debounce.1000ms="class_name" type="search"
                                                 placeholder="Class Name" />
                                         </div>
                                         <div class="col-12 col-md-3">
-                                            <input class="w-100" wire:model.debounce.1000ms="student_name" type="search"
+                                            <input class="w-100" wire:model.live.debounce.1000ms="student_name" type="search"
                                                 placeholder="Student Name" />
                                         </div>
                                     </div>
@@ -184,7 +216,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($come_from_home as $key => $item)
-                                    <tr>
+                                    <tr wire:key='{{ $item->id }}'>
                                         <td>{{ $key + 1 }}</td>
                                         <td>
                                             {{ $item->allocation->admission->academicyear->year }}
@@ -224,54 +256,44 @@
                                         </td>
                                         @can('Edit Student Come From Home Form')
                                         <td>
-                                            @can('Edit Student Come From Home Form')
-                                            <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})"
-                                                class="btn btn-success "><i
-                                                    class="mdi mdi-lead-pencil"></i></a>
-                                            @if ($item->status == 1)
-                                            <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
-                                                class="btn btn-danger ">
-                                                <i class="mdi mdi-thumb-down"></i>
-                                            </a>
-                                            @elseif ($item->status == 0)
-                                            <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
-                                                class="btn btn-success ">
-                                                <i class="mdi mdi-thumb-up"></i>
-                                            </a>
+                                            @if (!$item->deleted_at)
+                                                @can('Edit Student Come From Home Form')
+                                                    <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                    @if ($item->status == 1)
+                                                        <a wire:loading.attr="disabled" wire:click="update_status({{ $item->id }})" class="btn btn-danger "><i class="mdi mdi-thumb-down"></i></a>
+                                                    @elseif ($item->status == 0)
+                                                        <a wire:loading.attr="disabled" wire:click="update_status({{ $item->id }})"class="btn btn-success "> <i class="mdi mdi-thumb-up"></i></a>
+                                                    @endif
+                                                @endcan 
                                             @endif
-                                            @endcan @can('Delete Student Come From Home Form')
-                                            @if ($item->deleted_at)
-                                            <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
-                                            <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
-                                        @else
-                                            <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
-                                        @endif
+                                            @can('Delete Student Come From Home Form')
+                                                @if ($item->deleted_at)
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
+                                                @else
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
+                                                @endif
                                             @endcan
                                         </td>
                                         @elsecan('Delete Student Come From Home Form')
                                         <td>
-                                            @can('Edit Student Come From Home Form')
-                                            <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})"
-                                                class="btn btn-success "><i
-                                                    class="mdi mdi-lead-pencil"></i></a>
-                                            @if ($item->status == 1)
-                                            <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
-                                                class="btn btn-danger ">
-                                                <i class="mdi mdi-thumb-down"></i>
-                                            </a>
-                                            @elseif ($item->status == 0)
-                                            <a wire:loading.attr="disabled" wire:click="status({{ $item->id }})"
-                                                class="btn btn-success ">
-                                                <i class="mdi mdi-thumb-up"></i>
-                                            </a>
+                                            @if (!$item->deleted_at)
+                                                @can('Edit Student Come From Home Form')
+                                                    <a wire:loading.attr="disabled" wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                    @if ($item->status == 1)
+                                                        <a wire:loading.attr="disabled" wire:click="update_status({{ $item->id }})" class="btn btn-danger "><i class="mdi mdi-thumb-down"></i> </a>
+                                                    @elseif ($item->status == 0)
+                                                        <a wire:loading.attr="disabled" wire:click="update_status({{ $item->id }})"class="btn btn-success "><i class="mdi mdi-thumb-up"></i></a>
+                                                    @endif
+                                                @endcan 
                                             @endif
-                                            @endcan @can('Delete Student Come From Home Form')
-                                            @if ($item->deleted_at)
-                                                                <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
-                                                                <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
-                                                            @else
-                                                                <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
-                                                            @endif
+                                            @can('Delete Student Come From Home Form')
+                                                @if ($item->deleted_at)
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete-forever"></i></a>
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="restore({{ $item->id }})"  class="btn btn-success "><i class="mdi mdi-backup-restore"></i></a>
+                                                @else
+                                                    <a wire:loading.attr="disabled" wire:click.prevent="softdelete({{ $item->id }})"  class="btn btn-primary "><i class="mdi mdi-delete"></i></a>
+                                                @endif
                                             @endcan
                                         </td>
                                         @endcan
@@ -280,7 +302,7 @@
                                 </tbody>
                             </table>
                             <div class="mt-4">
-                                {{ $come_from_home->links('pagination::bootstrap-5') }}
+                                {{ $come_from_home->links() }}
                             </div>
                         </div>
                     </div>

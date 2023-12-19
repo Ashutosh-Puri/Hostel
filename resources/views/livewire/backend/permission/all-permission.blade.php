@@ -22,13 +22,13 @@
                 <div class="col-12">
                     <div class="card ">
                         <div class="card-body">
-                            <form  wire:submit.prevent="save" method="post" action="" id="myForm">
+                            <form  wire:submit="save" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="name" class="form-label">Permission Name</label>
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Permission Name">
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model.live="name" value="{{ old('name') }}" id="name" placeholder="Enter Permission Name">
                                             @error('name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -39,8 +39,8 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="group_name" class="form-label ">Group Name</label>
-                                            <input list="group_name" class="form-control @error('group_name') is-invalid @enderror"  wire:model="group_name" id="group_name">
-                                            <datalist id="group_name">
+                                            <input list="group_name_1" class="form-control @error('group_name') is-invalid @enderror"  wire:model.live="group_name" id="group_name">
+                                            <datalist id="group_name_1">
                                                 @foreach ($groups as $item)
                                                     <option value="{{ $item->group_name }}">{{ $item->group_name }}</option>
                                                 @endforeach
@@ -81,13 +81,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form  wire:submit.prevent="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
+                            <form  wire:submit="update({{ isset($c_id)?$c_id:''; }})" method="post" action="" id="myForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="name" class="form-label">Permission Name</label>
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" value="{{ old('name') }}" id="name" placeholder="Enter Permission Name">
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model.live="name" value="{{ old('name') }}" id="name" placeholder="Enter Permission Name">
                                             @error('name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -98,8 +98,8 @@
                                     <div class="col-12 col-md-6">
                                         <div class="mb-3 form-group">
                                             <label for="group_name" class="form-label ">Group Name</label>
-                                            <input list="group_name" class="form-control @error('group_name') is-invalid @enderror"  wire:model="group_name" id="group_name">
-                                            <datalist id="group_name">
+                                            <input list="group_name_2" class="form-control @error('group_name') is-invalid @enderror"  wire:model.live="group_name" id="group_name">
+                                            <datalist id="group_name_2">
                                                 @foreach ($groups as $item)
                                                     <option value="{{ $item->group_name }}">{{ $item->group_name }}</option>
                                                 @endforeach
@@ -156,7 +156,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                    <select class=" col-4 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                                         <option value="10">10</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
@@ -172,7 +172,7 @@
                                                     <label class="w-100 p-1  text-md-end">Search</label>
                                                 </div>
                                                 <div class="col-12 col-md-3">
-                                                    <input class="w-100" wire:model.debounce.1000ms="search" type="search" placeholder="Permission Name">
+                                                    <input class="w-100" wire:model.live.debounce.1000ms="search" type="search" placeholder="Permission Name">
                                                 </div>
                                             </div>
                                     </span>
@@ -194,24 +194,28 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($permissions as $key => $item)
-                                            <tr>
+                                            <tr wire:key='{{ $item->id }}'>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $item->group_name }}</td>
                                                 <td>{{ $item->name }}</td>
                                                 @can('Edit Permission')
                                                     <td>
-                                                        @can('Edit Permission')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Edit Permission')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Permission')
                                                             <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete"></i></a>
                                                         @endcan
                                                     </td>
                                                 @elsecan('Delete Permission')
                                                     <td>
-                                                        @can('Edit Permission')
-                                                            <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
-                                                        @endcan
+                                                        @if (!$item->deleted_at)
+                                                            @can('Edit Permission')
+                                                                <a wire:loading.attr="disabled"  wire:click="edit({{ $item->id }})" class="btn btn-success "><i class="mdi mdi-lead-pencil"></i></a>
+                                                            @endcan
+                                                        @endif
                                                         @can('Delete Permission')
                                                             <a wire:loading.attr="disabled" wire:click.prevent="deleteconfirmation({{ $item->id }})"  class="btn btn-danger "><i class="mdi mdi-delete"></i></a>
                                                         @endcan
@@ -222,7 +226,7 @@
                                     </tbody>
                                 </table>
                                 <div class="mt-4">
-                                    {{ $permissions->links('pagination::bootstrap-5') }}
+                                    {{ $permissions->links() }}
                                 </div>
                             </div>
                         </div>

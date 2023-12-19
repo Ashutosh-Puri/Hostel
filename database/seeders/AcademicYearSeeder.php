@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Faker\Factory as Faker;
 use App\Models\AcademicYear;
 use Illuminate\Database\Seeder;
@@ -13,9 +14,9 @@ class AcademicYearSeeder extends Seeder
      * Run the database seeds.
      */
     public function run(): void
-    {
-        $faker = Faker::create();
-        $year=2023;
+    {   
+
+        $year= Carbon::now()->year;
         $status=0;
         for ($i = 0; $i < 5; $i++) {
             AcademicYear::create([

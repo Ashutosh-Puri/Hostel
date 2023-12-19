@@ -32,7 +32,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <label class=" col-4 col-md-1 py-1 ">Per Page</label>
-                                <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model="per_page">
+                                <select class=" col-8 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                                     <option value="10">10</option>
                                     <option value="50">50</option>
                                     <option value="100">100</option>
@@ -42,19 +42,19 @@
                                 <span class="col-12 col-md-10 px-1">
                                     <span class="row">
                                         <div class="col-12 col-md-3">
-                                            <input class="w-100 py-1" wire:model.debounce.500ms="student_name" type="search" placeholder="Student Name">
+                                            <input class="w-100 py-1" wire:model.live.debounce.500ms="student_name" type="search" placeholder="Student Name">
                                         </div>
                                         <div class="col-12 col-md-3">
-                                            <input class="w-100 py-1" wire:model.debounce.500ms="payment_id" type="search" placeholder="Payment ID">
+                                            <input class="w-100 py-1" wire:model.live.debounce.500ms="payment_id" type="search" placeholder="Payment ID">
                                         </div>
                                         <div class="col-12 col-md-2">
-                                            <input class="w-100  py-1" wire:model.debounce.500ms="refund_id" type="search" placeholder="Refund ID">
+                                            <input class="w-100  py-1" wire:model.live.debounce.500ms="refund_id" type="search" placeholder="Refund ID">
                                         </div>
                                         <div class="col-12 col-md-2">
-                                            <input class="w-100  py-1" wire:model.debounce.500ms="order_id" type="search" placeholder="Order ID">
+                                            <input class="w-100  py-1" wire:model.live.debounce.500ms="order_id" type="search" placeholder="Order ID">
                                         </div>
                                         <div class="col-12 col-md-2">
-                                            <select class="py-1"  wire:model="status">
+                                            <select class="py-1"  wire:model.change="status">
                                                
                                                 <option value="0">Created</option>
                                                 <option value="1">Authorized</option>
@@ -86,7 +86,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($transactions as $key => $item)
-                                        <tr>
+                                        <tr wire:key='{{ $item->id }}'>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $item->student->name }}</td>
                                             <td>{{ $item->student_payment_id }}</td>
@@ -97,15 +97,15 @@
                                             <td>{{ $item->amount}}</td>
                                             <td>
                                                 @if ($item->status ==0)
-                                                <span class="badge bg-warning text-white">Created</span>
+                                                    <span class="badge bg-warning text-white">Created</span>
                                                 @elseif ($item->status ==1)
-                                                <span class="badge bg-info text-white">Authorized</span>
+                                                    <span class="badge bg-info text-white">Authorized</span>
                                                 @elseif ($item->status ==2)
-                                                <span class="badge bg-success text-white">Captured</span>
+                                                    <span class="badge bg-success text-white">Captured</span>
                                                 @elseif ($item->status ==3)
-                                                <span class="badge bg-primary text-white">Refunded</span>
+                                                    <span class="badge bg-primary text-white">Refunded</span>
                                                 @elseif ($item->status ==4)
-                                                <span class="badge bg-danger text-white">Failed</span>
+                                                    <span class="badge bg-danger text-white">Failed</span>
                                                 @endif
                                             </td>
                                             {{-- <td>{{ $item->razorpay_signature }}</td> --}}
@@ -114,7 +114,7 @@
                                 </tbody>
                             </table>
                             <div class="mt-4">
-                                {{ $transactions->links('pagination::bootstrap-5') }}
+                                {{ $transactions->links() }}
                             </div>
                         </div>
                     </div>

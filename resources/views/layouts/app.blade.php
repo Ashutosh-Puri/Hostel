@@ -4,13 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-   
+    
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('assets/logo/favicon.ico') }}">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <!-- Title -->
     <title>{{preg_replace('/(?<!\ )[A-Z]/', ' $0', config('app.name', 'Laravel'))  }} | @yield('title')</title>
     <!-- admin template -->     <link rel="stylesheet" href="{{ asset('assets/admin_template/vendors/mdi/css/materialdesignicons.min.css') }}">                                                <!-- admin template -->
@@ -27,27 +26,33 @@
 
     <!-- data Table-->
     {{-- <link rel="stylesheet" href="{{ asset('assets/datatable/jquery.dataTables.min.css') }}"> --}}
-   
+    
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
     <!-- Styles-->
     @yield('styles')
     @stack('styles')
-
+    <style>
+        .internet{
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            z-index: 999999;
+        }
+    </style>
     <!-- Livewire Styles-->
     @livewireStyles()
 </head>
 <body>
     <div id="app">
         @yield('content')
+        @livewire('guestend.internet.internet')
     </div>
-
     <!-- Livewire JS -->
     @livewireScripts()
-
     <!-- Livewire Turbolinks -->
-    <script src="{{ asset('assets/turbolinks/turbolinks.js') }}" data-turbolinks-eval="false" data-turbo-eval="false"></script>   
+    {{-- <script src="{{ asset('assets/turbolinks/turbolinks.js') }}" data-turbolinks-eval="false" data-turbo-eval="false"></script>    --}}
 
     @auth
         <!-- admin template -->
@@ -62,19 +67,24 @@
         {{-- <!-- admin template 1-->     <script src="{{ asset('assets/admin_template/js/dashboard.js') }}" ></script>                                                 <!-- admin template --> --}}
         <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --> <!-- admin template --><!-- admin template -->
     @endauth
-        
-    <!-- data Table-->
-    {{-- <script src="{{ asset('assets/datatable/jquery.dataTables.min.js') }}"></script> --}}
-
-    <!-- bootstrap  -->
-    <script src="{{ asset('assets/bootstrap/bootstrap.min.js') }}"></script>
     
+    
+    
+    {{-- <!-- data Table-->
+    <script src="{{ asset('assets/datatable/jquery.dataTables.min.js') }}"></script> --}}
+    <!-- bootstrap  -->
+    {{-- <script src="{{ asset('assets/bootstrap/bootstrap.min.js') }}"></script> --}}
+
     <!-- jquery -->
     <script src="{{ asset('assets/jquery/jquery-3.6.0.min.js') }}"></script>
-
+    
+    
+    
+    
     <!-- Sweet Alert JS -->
     <script src="{{ asset('assets/sweetalert/sweetalert.js') }}"></script>
     <script>
+        document.addEventListener('livewire:init', () => {
             // Toster Config
             var Toast = Swal.mixin({
                 toast: true,
@@ -89,15 +99,15 @@
                 }
             });
             
-            // Notification Fire
-            window.addEventListener('alert',({detail:{type,message}})=>{
-                Toast.fire({
-                    icon:type,
-                    title:message
-                })
-
+         //  Notification Fire
+        window.addEventListener('alert', ({ detail: { type, message } }) => {
+            Toast.fire({
+                icon: type,
+                title: message
             });
-            
+        });
+    
+         
             // Delete Fire
             window.addEventListener('delete-confirmation',event=>{
                 Swal.fire({
@@ -110,12 +120,11 @@
                     confirmButtonText: 'Yes, Delete It !'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                    Livewire.emit('delete-confirmed')
+                    Livewire.dispatch('delete-confirmed')
                     }
                 });
             });
-    </script>
-    <script>
+
             @if(session('alert'))
                 const toastEvent = @json(session('alert'));
                 Toast.fire({
@@ -124,8 +133,10 @@
                 });
                 @php session()->forget('alert') @endphp
             @endif
+
+        })
     </script>
-    
     @yield('scripts')
+    @stack('scripts')
 </body>
 </html>

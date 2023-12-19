@@ -52,7 +52,7 @@
                 <span>Password Change</span>
                 <i class="mdi mdi-lock ms-1"></i>
               </a> --}}
-              <a class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="{{ route('student.profile.edit') }}">
+              <a wire:navigate class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="{{ route('student.profile.edit') }}">
                 <span>Profile</span>
                 <span class="p-0">
                   <i class="mdi mdi-account-outline ms-1"></i>

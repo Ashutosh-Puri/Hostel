@@ -22,7 +22,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form wire:submit.prevent="save" method="post" action="" id="myForm">
+                        <form wire:submit="save" method="post" action="" id="myForm">
                             @csrf
                             <div class="row">
                                 <div class="col-12 col-md-6">
@@ -30,7 +30,7 @@
                                         <label for="going_date" class="form-label">Going Date</label>
                                         <input type="date"
                                             class="form-control @error('going_date') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="going_date" value="{{ old('going_date') }}"
+                                            wire:model.change="going_date" value="{{ old('going_date') }}"
                                             min="{{ date('Y-m-d') }}" id="going_date" />
                                         @error('going_date')
                                             <div class="invalid-feedback">
@@ -44,7 +44,7 @@
                                         <label for="comming_date" class="form-label">Comming Date</label>
                                         <input type="date"
                                             class="form-control @error('comming_date') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="comming_date"
+                                            wire:model.change="comming_date"
                                             value="{{ old('comming_date') }}" min="{{ date('Y-m-d') }}"
                                             id="comming_date" />
                                         @error('comming_date')
@@ -59,7 +59,7 @@
                                 <div class="col-12 col-md-12">
                                     <div class="mb-3 form-group">
                                         <label for="reason" class="form-label">Hostel Leaving Reasone</label>
-                                        <textarea class="w-100 @error('reason') is-invalid @enderror" wire:model.debounce.1000ms="reason" id="reason"
+                                        <textarea class="w-100 @error('reason') is-invalid @enderror" wire:model.blur="reason" id="reason"
                                             placeholder="Enter Reasone To Leave Hostel" cols="30" rows="4">
                                             {{ old('reason') }}</textarea>
                                         @error('reason')
@@ -101,7 +101,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form wire:submit.prevent="update({{ isset($c_id) ? $c_id : '' }})" method="post"
+                        <form wire:submit="update({{ isset($c_id) ? $c_id : '' }})" method="post"
                             action="" id="myForm">
                             @csrf
                             <div class="row">
@@ -110,7 +110,7 @@
                                         <label for="going_date" class="form-label">Going Date</label>
                                         <input type="date"
                                             class="form-control @error('going_date') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="going_date" value="{{ old('going_date') }}"
+                                            wire:model.change="going_date" value="{{ old('going_date') }}"
                                             min="{{ date('Y-m-d') }}" id="going_date" />
                                         @error('going_date')
                                             <div class="invalid-feedback">
@@ -124,7 +124,7 @@
                                         <label for="comming_date" class="form-label">Comming Date</label>
                                         <input type="date"
                                             class="form-control @error('comming_date') is-invalid @enderror"
-                                            wire:model.debounce.1000ms="comming_date"
+                                            wire:model.change="comming_date"
                                             value="{{ old('comming_date') }}" min="{{ date('Y-m-d') }}"
                                             id="comming_date" />
                                         @error('comming_date')
@@ -139,7 +139,7 @@
                                 <div class="col-12 col-md-12">
                                     <div class="mb-3 form-group">
                                         <label for="reason" class="form-label">Hostel Leaving Reasone</label>
-                                        <textarea class="w-100 @error('reason') is-invalid @enderror" wire:model.debounce.1000ms="reason" id="reason"
+                                        <textarea class="w-100 @error('reason') is-invalid @enderror" wire:model.blur="reason" id="reason"
                                             placeholder="Enter Reasone To Leave Hostel" cols="30" rows="4">
                                             {{ old('reason') }}</textarea>
                                         @error('reason')
@@ -190,8 +190,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <label class="col-4 col-md-1 py-1">Per Page</label>
-                                <select class="col-4 col-md-1" wire:loading.attr="disabled"
-                                    wire:model="per_page">
+                                <select class="col-4 col-md-1" wire:loading.attr="disabled" wire:model.change="per_page">
                                     <option value="10">10</option>
                                     <option value="50">50</option>
                                     <option value="100">100</option>
@@ -219,7 +218,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($night_out as $key => $item)
-                                        <tr>
+                                        <tr wire:key='{{ $item->id }}'>
                                             <td>{{ $key + 1 }}</td>
                                             <td>
                                                 {{ $item->allocation->admission->academicyear->year }}
@@ -267,7 +266,7 @@
                                 </tbody>
                             </table>
                             <div class="mt-4">
-                                {{ $night_out->links('pagination::bootstrap-5') }}
+                                {{ $night_out->links() }}
                             </div>
                         </div>
                     </div>
