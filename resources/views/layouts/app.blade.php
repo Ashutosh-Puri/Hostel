@@ -73,7 +73,7 @@
     {{-- <!-- data Table-->
     <script src="{{ asset('assets/datatable/jquery.dataTables.min.js') }}"></script> --}}
     <!-- bootstrap  -->
-    {{-- <script src="{{ asset('assets/bootstrap/bootstrap.min.js') }}"></script> --}}
+    <script src="{{ asset('assets/bootstrap/bootstrap.min.js') }}"></script>
 
     <!-- jquery -->
     <script src="{{ asset('assets/jquery/jquery-3.6.0.min.js') }}"></script>

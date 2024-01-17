@@ -5,7 +5,7 @@
       @can('Access Dashboard')
       <li class="nav-item nav-category">Navigation</li>
       <li class="nav-item">
-        <a wire:navigate  class="nav-link"  href="{{ route('admin.dashboard') }}">
+        <a   class="nav-link"  href="{{ route('admin.dashboard') }}">
           <span class="icon-bg"><i class="mdi mdi-view-dashboard-outline menu-icon"></i></span>
           <span class="menu-title">Dashboard</span>
         </a>

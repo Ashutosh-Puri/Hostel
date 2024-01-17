@@ -73,6 +73,7 @@ class Student extends Authenticatable implements MustVerifyEmail
         'address_type',
         'status',
         'rfid',
+        'password',
     ];
 
     protected $hidden = [
