@@ -168,9 +168,9 @@
                                                 <td>{{ $as->gender==1?'Female':'Male'; }}</td>
                                                 <td>
                                                     <a wire:loading.attr="disabled"  wire:click="notify({{ $as->id }})"class="btn btn-sm btn-primary ">
-                                                        <span wire:loading  wire:target='notify' class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
-                                                        <span wire:loading  wire:target='notify'>Sending Email</span>
-                                                        <span wire:loading.remove  wire:target='notify'> Notify </span>
+                                                        <span wire:loading  wire:target='notify({{ $as->id }})' class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
+                                                        <span wire:loading  wire:target='notify({{ $as->id }})'>Sending Email</span>
+                                                        <span wire:loading.remove  wire:target='notify({{ $as->id }})'> Notify </span>
                                                     </a>
                                                 </td>
                                             </tr>

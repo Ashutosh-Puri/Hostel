@@ -29,6 +29,10 @@ class PaymentSuccessNotification extends Notification
             'payment_method'=> $this->response['method'],
             'payment_amount'=> $this->response['amount']/100,
             'payment_status'=> $this->response['status'],
+
+
+            'payment_fail_description'=> $this->response['error_description'],
+            'payment_fail_reason'=> $this->response['error_reason'],
         ];
 
         return (new MailMessage)
