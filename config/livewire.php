@@ -38,7 +38,7 @@ return [
     |
     */
 
-    'layout' => 'layouts.app',
+    'layout' => 'components.layouts.app',
 
     /*
     |---------------------------------------------------------------------------
@@ -74,6 +74,7 @@ return [
             'jpg', 'jpeg', 'mpga', 'webp', 'wma',
         ],
         'max_upload_time' => 5, // Max duration (in minutes) before an upload is invalidated...
+        'cleanup' => true, // Should cleanup temporary uploads older than 24 hrs...
     ],
 
     /*
@@ -95,7 +96,7 @@ return [
     |---------------------------------------------------------------------------
     |
     | Previous versions of Livewire supported binding directly to eloquent model
-    | properties using wire:model.live by default. However, this behavior has been
+    | properties using wire:model by default. However, this behavior has been
     | deemed too "magical" and has therefore been put under a feature flag.
     |
     */
@@ -128,7 +129,7 @@ return [
 
     'navigate' => [
         'show_progress_bar' => true,
-        'progress_bar_color' => '#0000ff',
+        'progress_bar_color' => '#2299dd',
     ],
 
     /*
@@ -155,5 +156,5 @@ return [
     |
     */
 
-    'pagination_theme' => 'bootstrap',
+    'pagination_theme' => 'tailwind',
 ];

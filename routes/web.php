@@ -91,10 +91,10 @@ use App\Livewire\Frontend\StudentLocalRegister\StudentLocalRegister;
 use App\Livewire\Backend\StudentLocalRegister\AllStudentLocalRegister;
 
 Livewire::setUpdateRoute(function ($handle) {
-    return Route::post(env('LIVEWIRE_ROOT').'/livewire/update', $handle);
+    return Route::post('/livewire/update', $handle);
 });
 Livewire::setScriptRoute(function ($handle) {
-    return Route::get(env('LIVEWIRE_ROOT').'/livewire/livewire.js', $handle);
+    return Route::get('/livewire/livewire.js', $handle);
 });
 
 // Guest Routes
